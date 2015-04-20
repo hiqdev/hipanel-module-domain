@@ -1,0 +1,49 @@
+{
+    "name": "hiqdev/hipanel-module-domain",
+    "type": "yii2-extension",
+    "description": "Domain Plugin for HiPanel",
+    "keywords": ["domain","registration","hipanel","plugin"],
+    "homepage": "https://hiqdev.com/hipanel-module-domain",
+    "license": "BSD-3-clause",
+    "support": {
+        "email":  "support@hiqdev.com",
+        "source": "https://github.com/hiqdev/hipanel-module-domain",
+        "issues": "https://github.com/hiqdev/hipanel-module-domain/issues",
+        "wiki":   "https://github.com/hiqdev/hipanel-module-domain/wiki",
+        "forum":  "https://forum.hiqdev.com/yii2"
+    },
+    "authors": [
+        {
+            "role":     "Project lead",
+            "name":     "Andrii Vasyliev",
+            "email":    "sol@hiqdev.com",
+            "homepage": "https://hipanel.com/"
+        },
+        {
+            "role":     "Lead backend developer",
+            "name":     "Dmitry Naumenko",
+            "email":    "silverfire@hiqdev.com",
+            "homepage": "https://hiqdev.com/"
+        },
+        {
+            "role":     "Lead frontend developer",
+            "name":     "Andrey Klochok",
+            "email":    "tafid@hiqdev.com",
+            "homepage": "https://hiqdev.com/"
+        },
+        {
+            "role":     "QA Lead",
+            "name":     "Yuriy Myronchuk",
+            "email":    "bladeroot@hiqdev.com",
+            "homepage": "https://hiqdev.com/"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "hipanel\\modules\\domain\\": ""
+        }
+    }
+}
