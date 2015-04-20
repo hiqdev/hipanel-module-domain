@@ -40,7 +40,7 @@
     ],
     "require": {
         "yiisoft/yii2": "2.*",
-        "hiqdev/hipanel-modules-client": "*@dev"
+        "hiqdev/hipanel-module-client": "*@dev"
     },
     "autoload": {
         "psr-4": {
