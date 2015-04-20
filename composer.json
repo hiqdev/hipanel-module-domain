@@ -10,7 +10,7 @@
         "source": "https://github.com/hiqdev/hipanel-module-domain",
         "issues": "https://github.com/hiqdev/hipanel-module-domain/issues",
         "wiki":   "https://github.com/hiqdev/hipanel-module-domain/wiki",
-        "forum":  "https://forum.hiqdev.com/yii2"
+        "forum":  "https://forum.hiqdev.com/hipanel"
     },
     "authors": [
         {
@@ -39,7 +39,8 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "2.*"
+        "yiisoft/yii2": "2.*",
+        "hiqdev/hipanel-modules-client": "*@dev"
     },
     "autoload": {
         "psr-4": {
