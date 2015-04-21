@@ -39,7 +39,7 @@ class Domain extends \hipanel\base\Model
 
     /** @inheritdoc */
     public function attributeLabels () {
-        return $this->margeAttributeLabels([
+        return $this->mergeAttributeLabels([
             'epp_client_id'         => Yii::t('app', 'EPP client ID'),
             'remoteid'              => Yii::t('app', 'Remote ID'),
             'statuses'              => Yii::t('app', 'Statuses'),
