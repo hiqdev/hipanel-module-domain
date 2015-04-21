@@ -7,7 +7,7 @@
 
 namespace hipanel\modules\domain\grid;
 
-use hipanel\modules\domain\widgets\State;
+use hipanel\modules\domain\widgets\State as DomainState;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\grid\BoxedGridView;
 use hipanel\grid\RefColumn;
@@ -30,7 +30,7 @@ class DomainGridView extends BoxedGridView
                 'format'                => 'raw',
                 'gtype'                 => 'state,domain',
                 'value'                 => function ($model) {
-                    return State::widget(compact('model'));
+                    return DomainState::widget(compact('model'));
                 }
             ],
             'whois_protected' => [
