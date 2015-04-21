@@ -12,7 +12,4 @@ namespace hipanel\modules\domain;
  */
 class Module extends \hipanel\base\Module
 {
-    public $controllerNamespace = 'hipanel\modules\domain\controllers';
-    public $defaultRoute = 'domain/index';
-
 }
