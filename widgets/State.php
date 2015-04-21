@@ -9,19 +9,14 @@ namespace hipanel\modules\domain\widgets;
 
 use hipanel\base\Re;
 
-class State extends \hipanel\widgets\Label
+class State extends \hipanel\widgets\State
 {
+    /** @inheritdoc */
     public $model = [];
-
-    public function run () {
-        $state = $this->model->state;
-        if ($state=='ok') $class = 'info';
-        elseif ($state=='blocked' || $state=='expired') $class = 'danger';
-        else $class = 'warning';
-
-        $this->zclass   = $class;
-        $this->label    = Re::l($this->model->state_label);
-        parent::run();
-    }
-
+    public $states = [];
+    public $defaultStates = [
+        'info'      => ['ok'],
+        'danger'    => ['blocked','expired'],
+        'warning'   => [],
+    ];
 }
