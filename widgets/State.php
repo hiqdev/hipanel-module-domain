@@ -9,14 +9,15 @@ namespace hipanel\modules\domain\widgets;
 
 use hipanel\base\Re;
 
-class State extends \hipanel\widgets\State
+class State extends \hipanel\widgets\Type
 {
     /** @inheritdoc */
     public $model = [];
-    public $states = [];
-    public $defaultStates = [
+    public $values = [];
+    public $defaultValues = [
         'info'      => ['ok'],
         'danger'    => ['blocked','expired'],
         'warning'   => [],
     ];
+    public $field = 'state';
 }
