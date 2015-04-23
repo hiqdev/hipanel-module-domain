@@ -12,8 +12,8 @@ use hipanel\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Json;
-use dosamigos\google\maps\LatLng;
-use dosamigos\google\maps\Map;
+use yii\widgets\Menu;
+use hipanel\modules\domain\widgets\GeoIP;
 
 $this->title                   = Html::encode($model->domain);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Domains'), 'url' => ['index']];
@@ -28,19 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Box::begin(); ?>
                 <p class="text-center">
                     <span class="profile-user-name"><?= $this->title; ?></span>
-                    <?php if (function_exists('geoip_record_by_name')) : ?>
-                        <?php if ($iprecord = @geoip_record_by_name(gethostbyname($model->domain))) : ?>
-                            <?= (new Map([
-                                'center'    => new LatLng([
-                                    'lat'       => $iprecord['latitude'],
-                                    'lng'       => $iprecord['longitude'],
-                                ]),
-                                'zoom'  => 9,
-                                'width' => '100%',
-                                'height'=> 200,
-                            ]))->display(); ?>
-                        <?php endif; ?>
-                    <?php endif; ?>
+                            <?= GeoIP::widget([
+                                'ip'        => gethostbyname($model->domain),
+                            ]); ?>
                 </p>
                 <div class="profile-usermenu">
                     <ul class="nav">
