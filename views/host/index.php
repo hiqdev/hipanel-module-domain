@@ -7,9 +7,11 @@
 
 use hipanel\modules\domain\grid\HostGridView;
 
-$this->title                    = Yii::t('app', 'Name Servers');
-$this->params['breadcrumbs'][]  = $this->title;
-$this->params['subtitle']       = Yii::$app->request->queryParams ? 'filtered list' : 'full list';
+$this->title    = Yii::t('app', 'Name Servers');
+$this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list' : 'full list');
+$this->breadcrumbs->setItems([
+    $this->title
+]);
 
 ?>
 

@@ -7,17 +7,16 @@
 
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\widgets\Box;
-use hipanel\widgets\RequestState;
 use hipanel\widgets\Pjax;
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
-use yii\helpers\Json;
-use yii\widgets\Menu;
 use hipanel\modules\domain\widgets\GeoIP;
 
-$this->title                   = Html::encode($model->domain);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Domains'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title    = Html::encode($model->domain);
+$this->subtitle = Yii::t('app','domain detailed information');
+$this->breadcrumbs->setItems([
+    ['label' => Yii::t('app', 'Domains'), 'url' => ['index']],
+    $this->title,
+]);
 
 ?>
 

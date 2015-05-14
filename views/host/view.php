@@ -9,9 +9,12 @@ use hipanel\modules\domain\grid\HostGridView;
 use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 
-$this->title                   = Html::encode($model->domain);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Name servers'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title    = Html::encode($model->host);
+$this->subtitle = Yii::t('app','name server detailed information');
+$this->breadcrumbs->setItems([
+    ['label' => Yii::t('app', 'Name servers'), 'url' => ['index']],
+    $this->title,
+]);
 
 ?>
 
