@@ -12,18 +12,29 @@ $this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list
 $this->breadcrumbs->setItems([
     $this->title
 ]);
-
+$this->registerCss(<<<CSS
+.editable-unsaved {
+  font-weight: normal;
+}
+CSS
+);
 ?>
-
+<?= ?>
 <?= DomainGridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
     'columns'      => [
+        'domain',
+        'seller_id',
+        'client_id',
+        'state',
+        'whois_protected',
+        'is_secured',
+//        'note',
+        'created_date',
+        'expires',
+        'autorenewal',
+        'actions',
         'checkbox',
-        'seller_id','client_id',
-        'domain','state',
-        'whois_protected','is_secured',
-        'note',
-        'created_date','expires','autorenewal',
     ],
 ]) ?>

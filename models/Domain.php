@@ -33,7 +33,10 @@ class Domain extends \hipanel\base\Model
             [['nameservers'],                                   'safe'],
             [['note'],                                          'safe', 'on' => ['set-note','default']],
             [['registrant','admin','tech','billing'],           'safe', 'on' => ['set-contacts']],
-            [['enable'],                                        'safe', 'on' => ['set-lock','set-autorenewal','set-whois-protect']],
+            [['enable'],                                        'safe', 'on' => ['set-lock','set-whois-protect']],
+            [['id', 'autorenewal', 'domain'], 'safe', 'on' => 'set-autorenewal'],
+            [['id', 'whois_protected', 'domain'], 'safe', 'on' => 'set-whois-protec'],
+            [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
         ];
     }
 
