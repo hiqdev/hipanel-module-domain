@@ -19,6 +19,7 @@ class Domain extends \hipanel\base\Model
         return [
             [['id'],                                            'safe'],
             [['domain'],                                        'safe'],
+            [['prem_expires'],                                  'safe'],
             [['remoteid','epp_client_id'],                      'safe'],
             [['seller_id','client_id'],                         'safe'],
             [['seller','client'],                               'safe'],

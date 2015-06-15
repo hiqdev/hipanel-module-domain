@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\modules\domain\models\Domain;
+use Yii;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -19,21 +20,84 @@ class DomainController extends \hipanel\base\CrudController
                 'scenario' => 'set-note',
                 'modelclass' => Domain::className(),
             ],
-            'autorenew' => [
-                'class' => 'hiqdev\bootstrap_switch\BootstrapSwitchAction',
-                'scenario' => 'set-autorenewal',
-                'modelclass' => Domain::className(),
+            'set-autorenewal' => [
+                'class'   => 'hipanel\actions\SwitchAction',
+                'success' => Yii::t('app', 'Record was changed'),
+                'error'   => Yii::t('app', 'Error occurred!'),
+                'POST pjax' => [
+                    'save' => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\ProxyAction',
+                        'action' => 'index'
+                    ]
+                ],
+                'POST'    => [
+                    'save'    => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\RenderJsonAction',
+                        'return' => function ($action) {
+                            /** @var \hipanel\actions\Action $action */
+                            return $action->collection->models;
+                        }
+                    ]
+                ],
             ],
-            'SetWhoisProtect' => [
-                'class' => 'hiqdev\bootstrap_switch\BootstrapSwitchAction',
-                'scenario' => 'set-whois-protect',
-                'modelclass' => Domain::className(),
+            'set-whois-protect' => [
+                'class'   => 'hipanel\actions\SwitchAction',
+                'success' => Yii::t('app', 'Record was changed'),
+                'error'   => Yii::t('app', 'Error occurred!'),
+                'POST pjax' => [
+                    'save' => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\ProxyAction',
+                        'action' => 'index'
+                    ]
+                ],
+                'POST'    => [
+                    'save'    => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\RenderJsonAction',
+                        'return' => function ($action) {
+                            /** @var \hipanel\actions\Action $action */
+                            return $action->collection->models;
+                        }
+                    ]
+                ],
             ],
-            'SetLock' => [
-                'class' => 'hiqdev\bootstrap_switch\BootstrapSwitchAction',
-                'scenario' => 'set-lock',
-                'modelclass' => Domain::className(),
+            'set-lock' => [
+                'class' => 'hipanel\actions\SwitchAction',
+                'success' => Yii::t('app', 'Record was changed'),
+                'error'   => Yii::t('app', 'Error occurred!'),
+                'POST pjax' => [
+                    'save' => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\ProxyAction',
+                        'action' => 'index'
+                    ]
+                ],
+                'POST'    => [
+                    'save'    => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\RenderJsonAction',
+                        'return' => function ($action) {
+                            /** @var \hipanel\actions\Action $action */
+                            return $action->collection->models;
+                        }
+                    ]
+                ],
             ],
         ];
+    }
+
+    public function actionView($id)
+    {
+//        $model = Domain::findOne(['id' => $id, 'with_dns' => 1]);
+        $model = Domain::findOne($id);
+        $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
+
+        return $this->render('view', [
+            'model' => $model,
+            'domainContactInfo' => $domainContactInfo,
+        ]);
     }
 }
