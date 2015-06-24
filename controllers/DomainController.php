@@ -103,4 +103,9 @@ class DomainController extends \hipanel\base\CrudController
             'domainContactInfo' => $domainContactInfo,
         ]);
     }
+
+    public function actionSync($id)
+    {
+
+    }
 }
