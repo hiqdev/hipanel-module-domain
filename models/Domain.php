@@ -11,6 +11,7 @@ use Yii;
 
 class Domain extends \hipanel\base\Model
 {
+    public $authCode;
 
     use \hipanel\base\ModelTrait;
 

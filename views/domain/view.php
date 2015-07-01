@@ -6,11 +6,13 @@
  */
 
 use hipanel\modules\domain\grid\DomainGridView;
+use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitch;
 use hiqdev\xeditable\widgets\XEditable;
 use Yii;
+use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -73,20 +75,23 @@ CSS
             <div class="profile-usermenu">
                 <ul class="nav">
                     <li>
+                        <?php Modal::begin([
+                            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Push ' . Html::tag('b', $this->title)) . '</h4>',
+                            'footer' => Html::submitButton(Yii::t('app', 'Push'), ['class' => 'btn btn-default push' ]),
+                            'toggleButton' => ['label' => '<i class="ion-ios-paperplane-outline"></i>' . Yii::t('app', 'Push domain'), 'tag' => 'a', 'class' => 'clickable'],
+                        ]); ?>
+
+
                         <?php
-                        Modal::begin([
-                            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Push') . '</h4>',
-                            'toggleButton' => ['label' => '<i class="ion-ios-paperplane-outline"></i>' . Yii::t('app', 'Push domain'), 'tag' => 'a'],
-                        ]);
+                        $form = ActiveForm::begin([
+                            'id' => 'push-domain-form',
+                        ]) ?>
 
+                        <?= $form->field($model, 'client_id')->widget(\hipanel\modules\client\widgets\combo\ClientCombo::className())->hint(Yii::t('app', 'Client, you push your domain to')) ?>
 
-                        print \hipanel\modules\client\widgets\combo\ClientCombo::widget([
-                            'model' => $model,
-                            'attribute' => 'client_id'
-                        ]);
+                        <?php $form::end() ?>
 
-                        Modal::end();
-                        ?>
+                        <?php Modal::end(); ?>
                     </li>
                     <li>
                         <?= Html::a('<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize data'), ['sync', 'id' => $model->id]); ?>
@@ -127,8 +132,17 @@ CSS
                                 'created_date',
                                 'expires',
                                 'autorenewal',
+
+                                [
+                                    'attribute' => 'authCode',
+                                    'value' => function ($model){
+                                        return AuthCode::widget(['domainId' => $model->id]);
+                                    },
+                                    'format' => 'raw'
+                                ]
                             ],
                         ]) ?>
+
                     </div>
 
                     <!-- NS records -->
