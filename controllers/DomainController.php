@@ -89,21 +89,21 @@ class DomainController extends \hipanel\base\CrudController
                     ]
                 ],
             ],
-            'change-password' => [
-                'class' => 'hipanel\actions\SwitchAction',
-                'success' => Yii::t('app', 'Record was changed'),
-                'error'   => Yii::t('app', 'Error occurred!'),
-                'POST'    => [
-                    'save'    => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\RefreshAction',
-                        'return' => function ($action) {
-                            /** @var \hipanel\actions\Action $action */
-                            return $action->collection->models;
-                        }
-                    ]
-                ],
-            ],
+//            'change-password' => [
+//                'class' => 'hipanel\actions\SwitchAction',
+//                'success' => Yii::t('app', 'Record was changed'),
+//                'error'   => Yii::t('app', 'Error occurred!'),
+//                'POST'    => [
+//                    'save'    => true,
+//                    'success' => [
+//                        'class'  => 'hipanel\actions\RefreshAction',
+//                        'return' => function ($action) {
+//                            /** @var \hipanel\actions\Action $action */
+//                            return $action->collection->models;
+//                        }
+//                    ]
+//                ],
+//            ],
         ];
     }
 
@@ -137,7 +137,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionGetPassword()
     {
-        sleep(1);
+        sleep(2);
         $return = ['status' => 'error'];
         $id = Yii::$app->request->post('id');
         $pincode = Yii::$app->request->post('pincode');
@@ -157,14 +157,29 @@ class DomainController extends \hipanel\base\CrudController
                 $return = array_merge($return, ['info' => $e->getMessage()]);
             }
         } else
-            $return = array_merge($return, ['info' => Yii::t('app', 'Invalid data input')]);
+            $return = array_merge($return, ['info' => $model->getFirstError('pincode')]);
 
         return $return;
     }
 
-//    public function actionChangePassword($id)
-//    {
-////        Domain::perform('RegenPassword', ['id' => $id]);
-//        return $this->refresh();
-//    }
+    public function actionChangePassword()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $return = ['status' => 'error'];
+        $id = Yii::$app->request->post('id');
+        $model = DynamicModel::validateData(compact('id'), [
+            [['id'], 'required'],
+            [['id'], 'integer'],
+        ]);
+        if (!$model->hasErrors()) {
+            try {
+                $return = Domain::perform('RegenPassword', ['id' => $id]);
+            } catch (\Exception $e) {
+                $return = array_merge($return, ['info' => $e->getMessage()]);
+            }
+        } else
+            $return = array_merge($return, ['info' => Yii::t('app', 'Invalid data input')]);
+
+        return $return;
+    }
 }

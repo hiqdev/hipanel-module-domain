@@ -22,7 +22,23 @@ $this->registerCss(<<<CSS
 }
 CSS
 );
+\yii\bootstrap\BootstrapPluginAsset::register($this);
+$this->registerJs("
+jQuery('#myButton').on('click', function () {
+    console.log('123');
+    var btn = jQuery(this).button('loading');
+    // business logic...
+//    btn.button('reset');
+})
+");
+
 ?>
+
+
+    <button type="button" data-toggle="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+        Loading state
+    </button>
+
 
 <? Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])); ?>
 

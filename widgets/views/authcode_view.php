@@ -9,15 +9,22 @@ $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('change-password');
 
 $view->registerJs(<<<JS
+
 jQuery('#pincode-modal').on('shown.bs.modal', function () {
   $('#pincode').focus();
+});
+
+jQuery('#pincode-modal').on('show.bs.modal', function (e) {
+    jQuery('#pincode').val('');
+    jQuery('#pincode-modal .form-group').removeClass('has-error');
+    jQuery('#pincode-modal .help-block').text('');
 });
 
 jQuery('#get-authcode-button').on('click', function() {
     jQuery('#pincode-modal .form-group').removeClass('has-error');
     jQuery('#pincode-modal .help-block').text('');
 
-    var btn = jQuery(this).button('$loadingText');
+    var btn = jQuery(this);
     var pin = jQuery('#pincode').val();
 
     jQuery.ajax({
@@ -25,9 +32,19 @@ jQuery('#get-authcode-button').on('click', function() {
         type: 'POST',
         dataType: 'json',
         timeout: 0,
+        statusCode: {
+            500: function() {
+                alert( "Something goes wrong. Try again later." );
+            }
+        },
         data: {id: '$domainId', pincode: pin},
-        success: function(data) {
+        beforeSend: function() {
+            btn.button('$loadingText');
+        },
+        complete: function() {
             btn.button('reset');
+        },
+        success: function(data) {
             if (data.status == 'error') {
                 jQuery('#pincode-modal .form-group').addClass('has-error');
                 jQuery('#pincode-modal .help-block').text(data.info);
@@ -41,19 +58,30 @@ jQuery('#get-authcode-button').on('click', function() {
 });
 
 jQuery('#change-password-button').on('click', function() {
-    jQuery('#pincode-modal .help-block').text('');
-    var btn = jQuery(this).button('$loadingText');
+    jQuery('#authcode-form .help-block').text('');
+
+    var btn = jQuery(this);
 
     jQuery.ajax({
         url: '$changePasswordUrl',
         type: 'POST',
         dataType: 'json',
         timeout: 0,
+        statusCode: {
+            500: function() {
+                alert( "Something goes wrong. Try again later." );
+            }
+        },
         data: {id: '$domainId'},
-        success: function(data) {
+        beforeSend: function() {
+            btn.button('$loadingText');
+        },
+        complete: function() {
             btn.button('reset');
+        },
+        success: function(data) {
             if (data.status == 'error') {
-                jQuery('#pincode-modal .help-block').text(data.info);
+                jQuery('#authcode-form .help-block').text(data.info);
             } else {
                 jQuery('#modal-show-button').removeAttr('disabled');
                 jQuery('#pincode-static').text('*******');
@@ -72,13 +100,14 @@ JS
 <div class="row">
     <!-- /.col-lg-6 -->
     <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-        <div class="input-group">
+        <div id="authcode-form" class="input-group">
             <p id="pincode-static" class="form-control-static bg-warning text-center" style="vertical-align: middle;font-size: larger;">*******</p>
             <span class="input-group-btn">
                 <?= Html::button(Yii::t('app', 'Show'), ['id' => 'modal-show-button', 'data-toggle' => 'modal', 'data-target' => '#pincode-modal', 'class' => 'btn btn-default']); ?>
                 <?= Html::button(Yii::t('app', 'Copy'), ['id' => 'copy-to-clipboard', 'class' => 'btn btn-default', 'style' => 'display: none;']); ?>
                 <?= Html::button(Yii::t('app', 'Change password'), ['id' => 'change-password-button', 'class' => 'btn btn-default']); ?>
             </span>
+            <p class="help-block"></p>
         </div>
         <!-- /input-group -->
     </div>
@@ -101,7 +130,13 @@ JS
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close'); ?></button>
-                <button type="button" class="btn btn-primary" id="get-authcode-button"><?= Yii::t('app', 'Send'); ?></button>
+                <?= Html::button(Yii::t('app', 'Send'), [
+                    'id' => 'get-authcode-button',
+                    'class' => 'btn btn-primary',
+                    'autocomplete' => 'off',
+                    'data-toggle' => 'button',
+                    'data-loading-text' => $loadingText,
+                ]); ?>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
