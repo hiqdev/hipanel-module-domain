@@ -7,6 +7,7 @@
 
 namespace hipanel\modules\domain\controllers;
 
+use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\base\DynamicModel;
@@ -137,7 +138,6 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionGetPassword()
     {
-        sleep(2);
         $return = ['status' => 'error'];
         $id = Yii::$app->request->post('id');
         $pincode = Yii::$app->request->post('pincode');
@@ -181,5 +181,13 @@ class DomainController extends \hipanel\base\CrudController
             $return = array_merge($return, ['info' => Yii::t('app', 'Invalid data input')]);
 
         return $return;
+    }
+
+    public function actionDomainContacts()
+    {
+//        $model = Contact::find()->all();
+        return $this->render('domainContacts', [
+            'model' => $model
+        ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace hipanel\modules\domain\widgets;
 
 use Yii;
-use yii\bootstrap\Modal;
 
 class AuthCode extends \yii\base\Widget
 {

@@ -7,7 +7,8 @@ use yii\web\View;
 $loadingText = Yii::t('app', 'loading') . '...';
 $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('change-password');
-
+$criticalError = Yii::t('app', 'Critical error. Try later.');
+\yii\bootstrap\BootstrapPluginAsset::register($view);
 $view->registerJs(<<<JS
 
 jQuery('#pincode-modal').on('shown.bs.modal', function () {
@@ -32,10 +33,15 @@ jQuery('#get-authcode-button').on('click', function() {
         type: 'POST',
         dataType: 'json',
         timeout: 0,
-        statusCode: {
-            500: function() {
-                alert( "Something goes wrong. Try again later." );
-            }
+        error: function() {
+            new PNotify({
+                text: "$criticalError",
+                type: 'error',
+                buttons: {
+                    sticker: false
+                },
+                icon: false
+            });
         },
         data: {id: '$domainId', pincode: pin},
         beforeSend: function() {
@@ -58,19 +64,21 @@ jQuery('#get-authcode-button').on('click', function() {
 });
 
 jQuery('#change-password-button').on('click', function() {
-    jQuery('#authcode-form .help-block').text('');
-
     var btn = jQuery(this);
-
     jQuery.ajax({
         url: '$changePasswordUrl',
         type: 'POST',
         dataType: 'json',
         timeout: 0,
-        statusCode: {
-            500: function() {
-                alert( "Something goes wrong. Try again later." );
-            }
+        error: function() {
+            new PNotify({
+                text: "$criticalError",
+                type: 'error',
+                buttons: {
+                    sticker: false
+                },
+                icon: false
+            });
         },
         data: {id: '$domainId'},
         beforeSend: function() {
@@ -81,10 +89,25 @@ jQuery('#change-password-button').on('click', function() {
         },
         success: function(data) {
             if (data.status == 'error') {
-                jQuery('#authcode-form .help-block').text(data.info);
+                new PNotify({
+                    text: data.info,
+                    type: 'error',
+                    buttons: {
+                        sticker: false
+                    },
+                    icon: false
+                });
             } else {
                 jQuery('#modal-show-button').removeAttr('disabled');
                 jQuery('#pincode-static').text('*******');
+                new PNotify({
+                    text: data.result_msg,
+                    type: 'success',
+                    buttons: {
+                        sticker: false
+                    },
+                    icon: false
+                });
             }
         }
     });
