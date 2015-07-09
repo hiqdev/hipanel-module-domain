@@ -7,11 +7,16 @@
 
 namespace hipanel\modules\domain\controllers;
 
+use hipanel\helpers\ArrayHelper;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Yii;
 use yii\base\DynamicModel;
+use yii\base\InvalidParamException;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class DomainController extends \hipanel\base\CrudController
@@ -23,6 +28,26 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => 'hiqdev\xeditable\XEditableAction',
                 'scenario' => 'set-note',
                 'modelclass' => Domain::className(),
+            ],
+            'set-ns' => [
+                'class' => 'hipanel\actions\SwitchAction',
+                'POST' => [
+                    'save' => true,
+                    'success' => [
+                        'class'  => 'hipanel\actions\RenderJsonAction',
+                        'return' => function ($action) {
+                            /** @var \hipanel\actions\Action $action */
+                            return $action->collection->models;
+                        }
+                    ],
+                    'error' => [
+                        'class'  => 'hipanel\actions\RenderJsonAction',
+                        'return' => function ($action) {
+                            /** @var \hipanel\actions\Action $action */
+                            return $action->collection->getFirstError();
+                        }
+                    ]
+                ],
             ],
             'set-autorenewal' => [
                 'class'   => 'hipanel\actions\SwitchAction',
@@ -183,11 +208,80 @@ class DomainController extends \hipanel\base\CrudController
         return $return;
     }
 
-    public function actionDomainContacts()
+    /**
+     * @return string
+     * @throws \HttpInvalidParamException
+     * @throws \hiqdev\hiart\HiResException
+     */
+    public function actionModalContactsBody()
     {
-//        $model = Contact::find()->all();
-        return $this->render('domainContacts', [
-            'model' => $model
+        $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
+        if ($ids) {
+            $domainContacts = Domain::perform('GetContacts', ArrayHelper::make_sub($ids, 'id'), true);
+            $modelContactInfo = Contact::perform('GetList', ['domain_ids' => $ids, 'limit' => 1000], true);
+            return $this->renderAjax('_modalContactsBody', [
+                'domainContacts' => $domainContacts,
+                'modelContactInfo' => $modelContactInfo,
+            ]);
+        } else return Yii::t('app', 'No domains is check');
+    }
+
+    public function actionModalNsBody()
+    {
+        $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
+        if ($ids) {
+            return $this->renderAjax('_modalNsBody', [
+                'domainsList' => Domain::perform('GetNSs', ArrayHelper::make_sub($ids, 'id'), true)
+            ]);
+        } else return Yii::t('app', 'No domains is check');
+    }
+
+    public function actionSetContacts()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $post = Yii::$app->request->post();
+        $model = DynamicModel::validateData($post, [
+            [Domain::$contactOptions, 'required'],
         ]);
+
+        if ($model->hasErrors())
+            return ['errors' => $model->errors];
+
+        $ids = Yii::$app->request->post('id');
+        $data = iterator_to_array(
+            new RecursiveIteratorIterator(
+                new RecursiveArrayIterator(
+                    array_map(
+                        function($i) use ($post) {
+                            return [$i => $post[$i]];
+                        },
+                        Domain::$contactOptions)
+                )
+            )
+        );
+        $preparedData = [];
+        foreach ($ids as $id) {
+            $preparedData[] = ArrayHelper::merge(['id' => $id], $data);
+        }
+        try {
+            $result = Domain::perform('SetContacts', $preparedData, true);
+        } catch (\Exception $e) {
+            $result = [
+                'errors' => [
+                    'title' => $e->getMessage(),
+                    'detail' => $e->getMessage(),
+                ]
+            ];
+        }
+        return $result;
+    }
+
+    public function actionGetContactsByAjax($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
+            return $this->renderAjax('_contactsTables', ['domainContactInfo' => $domainContactInfo]);
+        } else
+            Yii::$app->end();
     }
 }

@@ -6,6 +6,7 @@
  */
 
 use hipanel\modules\domain\grid\DomainGridView;
+use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
@@ -175,7 +176,7 @@ CSS
                                 'placement' => 'bottom',
                                 'type' => 'textarea',
                                 'emptytext' => Yii::t('app', 'There are no NS. Domain may not work properly'),
-                                'url' => Url::to('setnote')
+                                'url' => Url::to('set-ns')
                             ]
                         ]); ?>
                     </div>
@@ -264,21 +265,12 @@ CSS
                     <!--  -->
                     <div class=" tab-pane" id="contacts">
                         <div class="row">
-                        <?php foreach (['registrant', 'admin', 'tech', 'billing'] as $item) : ?>
-                            <div class="col-md-6">
-                                <?= Html::tag('h3', ucfirst($item) . ' ' . Yii::t('app', 'contact')); ?>
-                            <?= DetailView::widget([
-                                'model' => $domainContactInfo[$item],
-                                'attributes' => [
-                                    'name',
-                                    'email',
-                                    'organization',
-                                    'voice_phone',
-                                    'fax_phone',
-                                ]
-                            ]); ?>
+                            <div class="col-md-12">
+                                <?= $this->render('_modalContacts', ['model' => $model]) ?>
                             </div>
-                        <?php endforeach; ?>
+                        <div id="contacts-tables">
+                            <?= $this->render('_contactsTables', ['domainContactInfo' => $domainContactInfo]) ?>
+                        </div>
                         </div>
                     </div>
                 </div>

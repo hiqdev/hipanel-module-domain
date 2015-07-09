@@ -7,11 +7,19 @@
 
 namespace hipanel\modules\domain\models;
 
+use hipanel\helpers\StringHelper;
 use Yii;
 
 class Domain extends \hipanel\base\Model
 {
     public $authCode;
+
+    public static $contactOptions = [
+        'registrant',
+        'admin',
+        'tech',
+        'billing',
+    ];
 
     use \hipanel\base\ModelTrait;
 
@@ -72,11 +80,21 @@ class Domain extends \hipanel\base\Model
                 'counters',
             ], 'safe'],
             [['note'],                                          'safe', 'on' => ['set-note','default']],
+
             [['registrant','admin','tech','billing'],           'safe', 'on' => ['set-contacts']],
+            [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
+
             [['enable'],                                        'safe', 'on' => ['set-lock','set-whois-protect']],
             [['id', 'autorenewal', 'domain'], 'safe', 'on' => 'set-autorenewal'],
             [['id', 'whois_protected', 'domain'], 'safe', 'on' => 'set-whois-protec'],
             [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
+            [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
+
+            [['nameservers'], 'required', 'on' => 'set-ns'],
+            [['nameservers'], 'filter', 'filter' => function($value) {
+                return StringHelper::mexplode($value);
+            }, 'on' => 'set-ns'],
+            [['nameservers'], 'each', 'rule' => ['url'], 'on' => 'set-ns'],
         ];
     }
 
@@ -114,5 +132,10 @@ class Domain extends \hipanel\base\Model
             'is_expired'            => Yii::t('app', ' label'),
             'expires_soon'          => Yii::t('app', ' label'),
         ]);
+    }
+
+    public static function getZone($domain)
+    {
+        return substr($domain, strpos($domain,'.')+1);
     }
 }

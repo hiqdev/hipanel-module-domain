@@ -119,6 +119,8 @@ CSS
     ],
 ]) ?>
 
+<?= $this->render('_modalNs'); ?>
+<?= $this->render('_modalContacts', ['model' => null]); ?>
 <?php
 //print \hipanel\widgets\BulkButtons::widget([
 //    'model' => new \hipanel\modules\domain\models\Domain,
