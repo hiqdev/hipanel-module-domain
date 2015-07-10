@@ -21,10 +21,10 @@ jQuery('input.radio').on('switchChange.bootstrapSwitch', function(event, state) 
 
     var elem = jQuery(this),
         family = elem.data('family'),
-        input = jQuery('.input').not('.input[data-family="' + family + '"]');
+        input = jQuery('.input');
 
     if (state == true) {
-        input.attr('readonly', 1);
+        input.attr('readonly', 1).filter('.input[data-family="' + family + '"]').removeAttr('readonly');
     } else {
         input.removeAttr('readonly');
     }
@@ -33,12 +33,13 @@ jQuery('input.radio').on('switchChange.bootstrapSwitch', function(event, state) 
 
 
 });
+
 JS
 );
 
 ?>
 
-<?= Html::beginForm(Url::toRoute('set-contacts'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal']) ?>
+<?= Html::beginForm(Url::toRoute('set-ns'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal form-ajax']) ?>
 <div class="row">
     <div class="col-sm-offset-9 sol-sm-3 hidden-xs text-right margin-bottom"><?= Html::tag('span', Yii::t('app', 'Use the same ns for all domains'), ['class' => 'label label-info']) ?></div>
 </div>
@@ -68,3 +69,4 @@ JS
     </div>
 <?php endforeach; ?>
 <?= Html::endForm() ?>
+

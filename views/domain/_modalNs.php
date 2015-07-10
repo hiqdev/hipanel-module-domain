@@ -5,13 +5,11 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 
 $ajaxNsLink = Url::toRoute('set-ns');
-
 $this->registerJs(<<<JS
     var ids;
     var ajaxRequestNS = 0;
     jQuery('#modal-save-ns-button').on('click', function(event) {
-        console.log(ids);
-        var btn = jQuery(this);
+        var btn = jQuery(this).button('loading');
         if (ids && ajaxRequestNS == 0) {
             ajaxRequestNS = 1;
             btn.attr('disabled','disabled').addClass('disabled');
@@ -21,7 +19,7 @@ $this->registerJs(<<<JS
                 type: 'POST',
                 dataType: 'json',
                 timeout: 0,
-                data: {ids: ids, nameservers: jQuery('#nameservers').val()},
+                data: jQuery('#set-ns-form').serialize(),
                 error: function() {
                     new PNotify({
                         text: "123",
@@ -46,11 +44,12 @@ $this->registerJs(<<<JS
                 }
             });
         }
+
     });
 JS
-);
+); ?>
 
-Modal::begin([
+<?php Modal::begin([
     'id' => 'ns-modal',
     'size' => Modal::SIZE_LARGE,
     'header' => '<h4 class="modal-title">' . Yii::t('app', 'Change NS') . '</h4>',
@@ -72,7 +71,12 @@ Modal::begin([
             }
         ")
     ],
-    'footer' => Html::button(Yii::t('app', 'Save'), ['id' => 'modal-save-ns-button', 'class' => 'btn btn-default']),
+    'footer' => Html::submitButton(Yii::t('app', 'Save'), [
+        'id' => 'modal-save-ns-button',
+        'class' => 'btn btn-default btn-loading',
+        'data-loading-text' => Yii::t('app', 'Loading') . '...',
+        'data-loading-icon' => 'glyphicon glyphicon-refresh',
+    ]),
 ]); ?>
 
 <div class="progress">
@@ -82,3 +86,4 @@ Modal::begin([
 </div>
 
 <?php Modal::end(); ?>
+
