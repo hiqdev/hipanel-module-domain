@@ -65,7 +65,7 @@ CSS
                 ]
             ]); ?>
             <div class="profile-user-img text-center">
-                <img src="http://mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
+                <img src="//mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
             </div>
             <p class="text-center">
                 <span class="profile-user-name"><?= $this->title; ?></span>
