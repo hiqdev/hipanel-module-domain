@@ -65,7 +65,7 @@ CSS
                 ]
             ]); ?>
             <div class="profile-user-img text-center">
-                <i class="ion-ios-world-outline" style="font-size: 95px; color: #5b9bd1;"></i>
+                <img src="//mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
             </div>
             <p class="text-center">
                 <span class="profile-user-name"><?= $this->title; ?></span>
