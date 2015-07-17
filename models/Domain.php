@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
+use hipanel\modules\domain\validators\DomainValidator;
 use Yii;
 
 class Domain extends \hipanel\base\Model
@@ -86,15 +87,14 @@ class Domain extends \hipanel\base\Model
 
             [['enable'],                                        'safe', 'on' => ['set-lock','set-whois-protect']],
             [['id', 'autorenewal', 'domain'], 'safe', 'on' => 'set-autorenewal'],
-            [['id', 'whois_protected', 'domain'], 'safe', 'on' => 'set-whois-protec'],
+            [['id', 'whois_protected', 'domain'], 'safe', 'on' => 'set-whois-protect'],
             [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
             [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
-
 
             [['nameservers'], 'filter', 'filter' => function($value) {
-                return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : true;
+                return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'set-ns'],
-            [['nameservers'], 'each', 'rule' => ['url'], 'on' => 'set-ns'],
+            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'set-ns'],
         ];
     }
 

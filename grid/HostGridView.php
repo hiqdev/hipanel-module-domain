@@ -9,8 +9,12 @@ namespace hipanel\modules\domain\grid;
 
 use hipanel\grid\BoxedGridView;
 use hipanel\grid\MainColumn;
-use hipanel\grid\EditableColumn;
+use hipanel\modules\domain\models\Host;
+use hiqdev\xeditable\grid\XEditableColumn;
 use Yii;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 
 class HostGridView extends BoxedGridView
 {
@@ -18,15 +22,27 @@ class HostGridView extends BoxedGridView
     {
         return [
             'host' => [
-                'class'                 => MainColumn::className(),
-                'filterAttribute'       => 'host_like',
+                'value' => function($model) {
+                    return Html::tag('b', $model->host);
+                },
+                'filterAttribute' => 'host_like',
+                'format' => 'html'
             ],
+//            'ips' => [
+//                'class'                 => EditableColumn::className(),
+//                'filterAttribute'       => 'ips_like',
+//                'popover'               => Yii::t('app','Up to 13 IP addresses'),
+//                'action'                => ['update'],
+//            ],
             'ips' => [
-                'class'                 => EditableColumn::className(),
-                'filterAttribute'       => 'ips_like',
-                'popover'               => Yii::t('app','Up to 13 IP addresses'),
-                'action'                => ['update'],
-            ],
+                'class' => XEditableColumn::className(),
+
+                'pluginOptions' => [
+                    'url' => 'update',
+                ],
+                'format' => 'raw'
+            ]
+
         ];
     }
 }

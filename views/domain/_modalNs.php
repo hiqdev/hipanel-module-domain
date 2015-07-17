@@ -22,7 +22,7 @@ $this->registerJs(<<<JS
                 data: jQuery('#set-ns-form').serialize(),
                 error: function() {
                     new PNotify({
-                        text: "123",
+                        text: "Error",
                         type: 'error',
                         buttons: {
                             sticker: false

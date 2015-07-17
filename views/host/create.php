@@ -5,5 +5,5 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php \hipanel\widgets\Box::begin() ?>
-<?= $this->render('_form', ['model' => $model]); ?>
+<?= $this->render('_form', ['models' => $models]); ?>
 <?php \hipanel\widgets\Box::end() ?>

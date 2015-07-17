@@ -10,6 +10,7 @@ namespace hipanel\modules\domain\controllers;
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
+use hiqdev\hiart\Collection;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Yii;
@@ -24,13 +25,29 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'validate-form' => [
+                'class' => 'hipanel\actions\FormValidateAction',
+            ],
             'setnote' => [
                 'class' => 'hiqdev\xeditable\XEditableAction',
                 'scenario' => 'set-note',
-                'modelclass' => Domain::className(),
+                'modelClass' => Domain::className(),
             ],
             'set-ns' => [
                 'class' => 'hipanel\actions\SwitchAction',
+                'beforeSave' => function ($action) {
+                    $templateModel = null;
+                    $template = Yii::$app->request->post('check');
+                    foreach ($action->collection->models as $model) {
+                        if ($model->id == $template) {
+                            $templateModel = $model;
+                        }
+                    }
+
+                    foreach ($action->collection->models as $model) {
+                        $model->nameservers = $templateModel->nameservers;
+                    }
+                },
                 'POST' => [
                     'save' => true,
                     'success' => [
@@ -230,8 +247,21 @@ class DomainController extends \hipanel\base\CrudController
     {
         $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
         if ($ids) {
+//            $models = static::newModel()->find()->where([
+//                'id' => $ids,
+//            ])->search(null, ['scenario' => 'GetNSs']);
+//
+//            /*
+//             * Domain[12323][id] = 12323
+//             * Domain[12322][id] = 12322
+//             * Domain[12324][id] = 12324
+//             * Domain[12325][id] = 12325
+//             */
+            $model = $this->newModel(['scenario' => 'set-ns']);
+            $collection = (new Collection(['model' => $model]))->load($model::perform('GetNSs', ArrayHelper::make_sub($ids, 'id'), true));
+//            $collection = (new Collection(['model' => $this->newModel()]))->load()->perform('GetNSs');
             return $this->renderAjax('_modalNsBody', [
-                'domainsList' => Domain::perform('GetNSs', ArrayHelper::make_sub($ids, 'id'), true)
+                'models' => $collection->models
             ]);
         } else return Yii::t('app', 'No domains is check');
     }
@@ -284,4 +314,6 @@ class DomainController extends \hipanel\base\CrudController
         } else
             Yii::$app->end();
     }
+
+
 }

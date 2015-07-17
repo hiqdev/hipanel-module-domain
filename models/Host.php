@@ -7,6 +7,9 @@
 
 namespace hipanel\modules\domain\models;
 
+use hipanel\helpers\StringHelper;
+use hipanel\modules\domain\validators\DomainValidator;
+use hipanel\validators\IpValidator;
 use Yii;
 
 class Host extends \hipanel\base\Model
@@ -23,7 +26,20 @@ class Host extends \hipanel\base\Model
             [['domain','host'],                         'safe'],
             [['ip'],                                    'safe'],
             [['ips'],                                   'safe'],
-            [['ips'],                                   'safe', 'on' => 'update'],
+//            [['ips'],                                   'safe', 'on' => 'update'],
+            [['host', 'ips'], 'required', 'on' => 'create'],
+            [['host'], DomainValidator::className()],
+
+            [['ips'], 'filter', 'filter' => function($value) {
+                if (!is_array($value)) {
+                    return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : true;
+                } else {
+                    return $value;
+                }
+
+            }, 'on' => ['create', 'update']],
+
+            [['ips'], 'each', 'rule' => [IpValidator::className()], 'on' => ['create', 'update']],
         ];
     }
 

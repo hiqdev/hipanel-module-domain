@@ -1,4 +1,5 @@
 <?php
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -30,8 +31,6 @@ jQuery('input.radio').on('switchChange.bootstrapSwitch', function(event, state) 
     }
 
     console.log(family);
-
-
 });
 
 JS
@@ -39,15 +38,33 @@ JS
 
 ?>
 
-<?= Html::beginForm(Url::toRoute('set-ns'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal form-ajax']) ?>
+<?//= $form = \yii\bootstrap\ActiveForm::beginForm(Url::toRoute('set-ns'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal form-ajax']) ?>
+
+<?php $form = ActiveForm::begin([
+    'id' => 'set-ns-form',
+    'method' => 'POST',
+    'action' => Url::to('set-ns'),
+    'enableClientValidation' => true,
+    'validateOnBlur' => true,
+    'enableAjaxValidation' => true,
+    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => reset($models)->scenario]),
+]) ?>
 <div class="row">
-    <div class="col-sm-offset-9 sol-sm-3 hidden-xs text-right margin-bottom"><?= Html::tag('span', Yii::t('app', 'Use the same ns for all domains'), ['class' => 'label label-info']) ?></div>
+    <div class="col-sm-offset-9 sol-sm-3 hidden-xs text-right margin-bottom">
+        <?= Html::tag('span', Yii::t('app', 'Use the same ns for all domains'), ['class' => 'label label-info']) ?>
+    </div>
 </div>
-<?php foreach ($domainsList as $id => $domainInfo) : ?>
+<?php /** @var array $models */
+foreach ($models as $id => $model) : ?>
     <div class="form-group">
-        <label for="inputEmail3" class="col-sm-4 control-label"><?= $domainInfo['domain'] ?></label>
+        <label for="inputEmail3" class="col-sm-4 control-label"><?= $model['domain'] ?></label>
         <div class="col-sm-6">
-            <?= Html::input('text', 'Domain[' . $id . '][nameservers]', $domainInfo['nss'], ['class' => 'form-control input', 'data-family' => $id, 'placeholder' => 'Type NS servers here...']) ?>
+            <?= $form->field($model, "[$id]nameservers")->textInput([
+                'value' => $model['nameservers'],
+                'class' => 'form-control input',
+                'data-family' => $id,
+                'placeholder' => 'Type NS servers here...'
+            ])->label(false); ?>
         </div>
         <div class="col-sm-2">
             <?= \hiqdev\bootstrap_switch\BootstrapSwitch::widget([
@@ -68,5 +85,5 @@ JS
         </div>
     </div>
 <?php endforeach; ?>
-<?= Html::endForm() ?>
+<?php $form->end() ?>
 
