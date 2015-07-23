@@ -24,7 +24,7 @@ use yii\widgets\DetailView;
 //\yii\helpers\VarDumper::dump($domainContactInfo, 10, true);
 
 $this->title    = Html::encode($model->domain);
-$this->subtitle = Yii::t('app','domain detailed information');
+$this->subtitle = Yii::t('app','domain detailed information') . ' #'.$model->id;
 $this->breadcrumbs->setItems([
     ['label' => Yii::t('app', 'Domains'), 'url' => ['index']],
     $this->title,
