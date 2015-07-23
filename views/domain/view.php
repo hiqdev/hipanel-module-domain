@@ -65,12 +65,12 @@ CSS
                 ]
             ]); ?>
             <div class="profile-user-img text-center">
-                <img src="//mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
+                <img class="img-thumbnail" src="//mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
             </div>
             <p class="text-center">
-                <span class="profile-user-name"><?= $this->title; ?></span>
+                <span class="profile-user-role"><?= $this->title; ?></span>
                 <br>
-                <span class="profile-user-role"><?= $model->seller . ' / ' . $model->client; ?></span
+                <span class="profile-user-name"><?= $model->seller . ' / ' . $model->client; ?></span>
             </p>
 
             <div class="profile-usermenu">
@@ -125,7 +125,8 @@ CSS
                                 'seller_id',
                                 'client_id',
                                 [
-                                    'attribute' => 'domain'
+                                    'attribute' => 'domain',
+                                    'headerOptions' => ['class' => 'text-nowrap'],
                                 ],
                                 'state',
                                 'whois_protected',
