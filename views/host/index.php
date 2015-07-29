@@ -29,7 +29,7 @@ $this->breadcrumbs->setItems([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
     'columns'      => [
-        'host', 'ips',
+        'host', 'ips', 'domain',
         'client_id', 'seller_id',
         'checkbox',
     ],
