@@ -28,10 +28,10 @@ class DomainController extends \hipanel\base\CrudController
             'validate-form' => [
                 'class' => 'hipanel\actions\FormValidateAction',
             ],
-            'setnote' => [
-                'class' => 'hiqdev\xeditable\XEditableAction',
-                'scenario' => 'set-note',
-                'modelClass' => Domain::className(),
+            'set-note' => [
+                'class'     => 'hipanel\actions\SmartUpdateAction',
+                'success'   => Yii::t('app', 'Note changed'),
+                'error'     => Yii::t('app', 'Failed change note'),
             ],
             'set-ns' => [
                 'class' => 'hipanel\actions\SwitchAction',

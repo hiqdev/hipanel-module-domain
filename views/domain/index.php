@@ -24,13 +24,13 @@ CSS
 );
 ?>
 
-<? Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])); ?>
+<? Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
 
 <?php $box = ActionBox::begin(['bulk' => true, 'options' => ['class' => 'box-info']]) ?>
-<?php $box->beginActions(); ?>
+<?php $box->beginActions() ?>
 
-<?php $box->endActions(); ?>
-<?php $box->beginBulkActions(); ?>
+<?php $box->endActions() ?>
+<?php $box->beginBulkActions() ?>
 
 <?= \hipanel\widgets\BulkButtons::widget([
     'model' => new \hipanel\modules\domain\models\Domain,
@@ -119,8 +119,8 @@ CSS
     ],
 ]) ?>
 
-<?= $this->render('_modalNs'); ?>
-<?= $this->render('_modalContacts', ['model' => null]); ?>
+<?= $this->render('_modalNs') ?>
+<?= $this->render('_modalContacts', ['model' => null]) ?>
 <?php
 //print \hipanel\widgets\BulkButtons::widget([
 //    'model' => new \hipanel\modules\domain\models\Domain,
@@ -140,21 +140,18 @@ CSS
 //])
 ?>
 &nbsp;
-<?php $box->endBulkActions(); ?>
-<?php $box::end(); ?>
-
+<?php $box->endBulkActions() ?>
+<?php $box::end() ?>
 
 <?= DomainGridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
     'columns'      => [
         'domain',
-        'seller_id',
-        'client_id',
+        'client_id', 'seller_id',
         'state',
         'whois_protected',
         'is_secured',
-//        'note',
         'created_date',
         'expires',
         'autorenewal',
@@ -163,4 +160,4 @@ CSS
     ],
 ]) ?>
 
-<? Pjax::end(); ?>
+<? Pjax::end() ?>

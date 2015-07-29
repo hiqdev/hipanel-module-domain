@@ -68,9 +68,9 @@ CSS
                 <img class="img-thumbnail" src="//mini.s-shot.ru/1024x768/PNG/200/Z100/?<?= $model->domain ?>"/>
             </div>
             <p class="text-center">
-                <span class="profile-user-role"><?= $this->title; ?></span>
+                <span class="profile-user-role"><?= $this->title ?></span>
                 <br>
-                <span class="profile-user-name"><?= $model->seller . ' / ' . $model->client; ?></span>
+                <span class="profile-user-name"><?= $model->client . ' / ' . $model->seller ?></span>
             </p>
 
             <div class="profile-usermenu">

@@ -35,7 +35,7 @@ class DomainGridView extends BoxedGridView
                             'attribute' => 'note',
                             'pluginOptions' => [
                                 'emptytext' => Yii::t('app', 'set note'),
-                                'url' => Url::to('setnote')
+                                'url' => Url::to('set-note')
                             ]
                         ]);
                     return $domainLink . $note;
