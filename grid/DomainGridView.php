@@ -68,13 +68,15 @@ class DomainGridView extends BoxedGridView
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('app', 'Protection from transfer'),
             ],
-//            'note' => [
-//                'class'                 => EditableColumn::className(),
-//                'attribute'             => 'note',
-//                'filter'                => true,
-//                'popover'               => Yii::t('app','Make any notes for your convenience'),
-//                'action'                => ['set-note'],
-//            ],
+            'note' => [
+                'class'         => 'hiqdev\xeditable\grid\XEditableColumn',
+                'attribute'     => 'note',
+                'filter'        => true,
+                'popover'       => Yii::t('app','Make any notes for your convenience'),
+                'pluginOptions' => [
+                    'url' => 'set-note',
+                ],
+            ],
             'created_date' => [
                 'attribute' => 'created_date',
                 'format' => 'date',
