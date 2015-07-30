@@ -36,7 +36,6 @@ class HostController extends \hipanel\base\CrudController
 
     public function actionUpdate($id = null)
     {
-
         $condition = Yii::$app->request->get('selection') ?: $id;
         $models = $this->findModels($condition);
         if (Yii::$app->request->isPost) {

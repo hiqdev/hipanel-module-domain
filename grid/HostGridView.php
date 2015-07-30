@@ -6,7 +6,6 @@ use hipanel\grid\BoxedGridView;
 use hipanel\modules\domain\controllers\DomainController;
 use Yii;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 class HostGridView extends BoxedGridView
 {
@@ -24,7 +23,7 @@ class HostGridView extends BoxedGridView
                     $domain = explode('.', $model->host,2)[1];
                     return $model->domain_id
                         ? Html::a($domain, DomainController::getActionUrl('view',$model->domain_id))
-                        : Html::tab('b', $domain)
+                        : Html::tag('b', $domain)
                     ;
                 }
             ],
