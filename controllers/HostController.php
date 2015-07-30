@@ -7,8 +7,6 @@
 
 namespace hipanel\modules\domain\controllers;
 
-use hipanel\base\Model;
-use hipanel\modules\domain\models\Host;
 use hiqdev\hiart\Collection;
 use Yii;
 use yii\base\ErrorException;
@@ -19,7 +17,25 @@ use yii\widgets\ActiveForm;
 class HostController extends \hipanel\base\CrudController
 {
 
-    public function actionCreate()
+    public function actions()
+    {
+        return [
+            'create' => [
+                'class'     => 'hipanel\actions\SmartCreateAction',
+                'success'   => Yii::t('app', 'Name server created'),
+            ],
+            'update' => [
+                'class'     => 'hipanel\actions\SmartUpdateAction',
+                'success'   => Yii::t('app', 'Name server updated'),
+            ],
+            'delete' => [
+                'class'     => 'hipanel\actions\SmartDeleteAction',
+                'success'   => Yii::t('app', 'Name server deleted'),
+            ],
+        ];
+    }
+
+    public function actionCreateOld()
     {
         $model = static::newModel(['scenario' => 'create']);
         if (Yii::$app->request->isPost) {
@@ -34,7 +50,7 @@ class HostController extends \hipanel\base\CrudController
         return $this->render('create', ['models' => [$model]]);
     }
 
-    public function actionUpdate($id = null)
+    public function actionUpdateOld($id = null)
     {
 
         $condition = Yii::$app->request->get('selection') ?: $id;
@@ -75,7 +91,7 @@ class HostController extends \hipanel\base\CrudController
         }
     }
 
-    public function actionDelete()
+    public function actionDeleteOld()
     {
         $condition = Yii::$app->request->post('selection');
         if (!empty($condition)) {

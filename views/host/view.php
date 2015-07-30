@@ -54,11 +54,9 @@ $this->breadcrumbs->setItems([
                 'model'   => $model,
                 'columns' => [
                     'seller_id','client_id',
-                    'domain',
-                    ['attribute' => 'host'],'ips',
+                    'domain', 'bold_host', 'ips',
                 ],
             ]) ?>
         </div>
     </div>
-</div>
 <? Pjax::end() ?>

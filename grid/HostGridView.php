@@ -17,6 +17,13 @@ class HostGridView extends BoxedGridView
                 'class' => 'hipanel\grid\MainColumn',
                 'filterAttribute' => 'host_like',
             ],
+            'bold_host' => [
+                'format'    => 'html',
+                'attribute' => 'host',
+                'value'     => function ($model) {
+                    return Html::tag('b', $model->host);
+                }
+            ],
             'domain' => [
                 'format' => 'html',
                 'filterAttribute' => 'domain_like',

@@ -7,12 +7,10 @@ use yii\helpers\Url;
 
 $this->title    = Yii::t('app', 'Name Servers');
 $this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list' : 'full list');
-$this->breadcrumbs->setItems([
-    $this->title
-]);
+$this->breadcrumbs[] = $this->title;
 
 ?>
-<?= Html::beginForm('', '') ?>
+<?= Html::beginForm() ?>
 
 <?php $box = ActionBox::begin(['bulk' => true, 'options' => ['class' => 'box-info']]) ?>
     <?php $box->beginActions() ?>
@@ -21,7 +19,7 @@ $this->breadcrumbs->setItems([
     <?php $box->beginBulkActions() ?>
         <?= Html::submitButton(Yii::t('app', 'Change IP'), ['id' => 'change-ip-button', 'class' => 'btn btn-primary', 'formmethod' => 'GET', 'formaction' => Url::to('update')]) ?>
         &nbsp;
-        <?= Html::submitButton(Yii::t('app', 'Delete'), ['id' => 'change-ip-button', 'class' => 'btn btn-danger', 'formmethod' => 'POST', 'formaction' => Url::to('delete')]) ?>
+        <?= Html::submitButton(Yii::t('app', 'Delete'), ['id' => 'delete-button', 'class' => 'btn btn-danger', 'formmethod' => 'POST', 'formaction' => Url::to('delete')]) ?>
     <?php $box->endBulkActions() ?>
 <?php $box::end() ?>
 
