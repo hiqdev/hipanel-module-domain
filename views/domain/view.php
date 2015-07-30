@@ -122,19 +122,16 @@ CSS
                         <?= DomainGridView::detailView([
                             'model'   => $model,
                             'columns' => [
-                                'seller_id',
-                                'client_id',
+                                'seller_id', 'client_id',
                                 [
                                     'attribute' => 'domain',
                                     'headerOptions' => ['class' => 'text-nowrap'],
                                 ],
+                                'note',
                                 'state',
-                                'whois_protected',
-                                'is_secured',
-                                'created_date',
-                                'expires',
+                                'whois_protected', 'is_secured',
+                                'created_date', 'expires',
                                 'autorenewal',
-
                                 [
                                     'attribute' => 'authCode',
                                     'value' => function ($model){

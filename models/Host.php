@@ -21,12 +21,12 @@ class Host extends \hipanel\base\Model
         return [
             [['host'],                                  'safe'],
             [['id'],                                    'safe'],
+            [['id'],                                    'integer', 'on' => 'delete'],
             [['seller_id','client_id','domain_id'],     'safe'],
             [['seller','client'],                       'safe'],
             [['domain','host'],                         'safe'],
             [['ip'],                                    'safe'],
             [['ips'],                                   'safe'],
-//            [['ips'],                                   'safe', 'on' => 'update'],
             [['host', 'ips'], 'required', 'on' => 'create'],
             [['host'], DomainValidator::className()],
 
@@ -36,7 +36,6 @@ class Host extends \hipanel\base\Model
                 } else {
                     return $value;
                 }
-
             }, 'on' => ['create', 'update']],
 
             [['ips'], 'each', 'rule' => [IpValidator::className()], 'on' => ['create', 'update']],
