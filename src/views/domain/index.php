@@ -132,6 +132,7 @@ CSS
         'dataProvider' => $dataProvider,
         'filterModel'  => $model,
         'columns'      => [
+            'checkbox',
             'domain',
             'client_id', 'seller_id',
             'state',
@@ -139,7 +140,6 @@ CSS
             'created_date', 'expires',
             'autorenewal',
             'actions',
-            'checkbox',
         ],
     ]) ?>
 

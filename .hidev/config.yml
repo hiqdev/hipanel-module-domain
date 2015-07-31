@@ -1,0 +1,11 @@
+package:
+    name:           hipanel-module-domain
+    namespace:      hipanel\modules\domain
+    label:          HiPanel DomainModule
+    title:          Domain Plugin for HiPanel
+    type:           yii2-extension
+    keywords:       domain, hipanel, plugin
+    year:           2014
+
+require:
+    hiqdev/hidev-config-php:    "*@dev"
