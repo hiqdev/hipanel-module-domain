@@ -9,6 +9,7 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ActionBox;
 use hipanel\widgets\BulkButtons;
+use hipanel\widgets\LinkSorter;
 use hipanel\widgets\Pjax;
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
@@ -31,6 +32,18 @@ CSS
     <?php $box = ActionBox::begin(['bulk' => true, 'options' => ['class' => 'box-info']]) ?>
         <?php $box->beginActions() ?>
             <?= Html::a(Yii::t('app', 'Advanced search'), '#', ['class' => 'btn btn-info search-button']) ?>
+            &nbsp;
+            <?=  LinkSorter::widget([
+                'show' => true,
+                'sort' => $dataProvider->getSort(),
+                'attributes' => [
+                    'domain', 'note',
+                    'client', 'client_id', 'seller', 'seller_id',
+                    'state', 'whois_protected', 'is_secured',
+                    'created_date', 'expires',
+                    'autorenewal', 'id',
+                ],
+            ]) ?>
         <?php $box->endActions() ?>
 
         <?php $box->beginBulkActions() ?>
