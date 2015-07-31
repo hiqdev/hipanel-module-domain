@@ -7,7 +7,20 @@
 
 namespace hipanel\modules\domain\models;
 
+use hipanel\base\SearchModelTrait;
+use hipanel\helpers\ArrayHelper;
+
 class DomainSearch extends Domain
 {
-    use \hipanel\base\SearchModelTrait;
+    use SearchModelTrait {
+        searchAttributes as defaultSearchAttributes;
+    }
+
+    public function searchAttributes()
+    {
+        return ArrayHelper::merge($this->defaultSearchAttributes(), [
+            'created_from', 'created_till',
+        ]);
+    }
+
 }

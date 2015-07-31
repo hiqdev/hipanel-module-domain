@@ -38,11 +38,11 @@ CSS
                 'model' => new Domain,
                 'items' => [
                     ButtonDropdown::widget([
-                        'label' => Yii::t('app', 'Whois protect'),
+                        'label' => Yii::t('app', 'WHOIS protect'),
                         'dropdown' => [
                             'items' => [
                                 [
-                                    'label' => Yii::t('app', 'Set protect'),
+                                    'label' => Yii::t('app', 'Enable WHOIS protect'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -52,7 +52,7 @@ CSS
                                     ],
                                 ],
                                 [
-                                    'label' => Yii::t('app', 'Unset protect'),
+                                    'label' => Yii::t('app', 'Disable WHOIS protect'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -69,7 +69,7 @@ CSS
                         'dropdown' => [
                             'items' => [
                                 [
-                                    'label' => Yii::t('app', 'Set lock'),
+                                    'label' => Yii::t('app', 'Enable lock'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -79,7 +79,7 @@ CSS
                                     ]
                                 ],
                                 [
-                                    'label' => Yii::t('app', 'Unset lock'),
+                                    'label' => Yii::t('app', 'Disable lock'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -96,7 +96,7 @@ CSS
                         'dropdown' => [
                             'items' => [
                                 [
-                                    'label' => Yii::t('app', 'On autorenew'),
+                                    'label' => Yii::t('app', 'Enable autorenew'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -106,7 +106,7 @@ CSS
                                     ]
                                 ],
                                 [
-                                    'label' => Yii::t('app', 'Off autorenew'),
+                                    'label' => Yii::t('app', 'Disable autorenew'),
                                     'url' => '#',
                                     'linkOptions' => [
                                         'class' => 'bulk-action',
@@ -123,31 +123,14 @@ CSS
 
             <?= $this->render('_modalNs') ?>
             <?= $this->render('_modalContacts', ['model' => null]) ?>
-            <?php
-            //print \hipanel\widgets\BulkButtons::widget([
-            //    'model' => new \hipanel\modules\domain\models\Domain,
-            //    'items' => [
-            //        [
-            //            'label' => 'Some actions',
-            //            'dropdown' => [
-            //                'items' => [
-            //                    ['label' => 'Set protect', 'attribute' => 'whois_protected', 'value' => '1', 'url' => 'set-whois-protect'],
-            //                    ['label' => 'Remove protect', 'attribute' => 'whois_protected', 'value' => '0', 'url' => 'set-whois-protect']
-            //                ]
-            //            ],
-            //
-            //        ],
-            //        ['label' => 'Some another action', 'attribute' => 'whois_protected', 'value' => '1', 'url' => 'set-whois-protect'],
-            //    ],
-            //])
-            ?>
             &nbsp;
         <?php $box->endBulkActions() ?>
+        <?= $this->render('_search', compact('model')) ?>
     <?php $box::end() ?>
 
     <?= DomainGridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel'  => $searchModel,
+        'filterModel'  => $model,
         'columns'      => [
             'domain',
             'client_id', 'seller_id',
