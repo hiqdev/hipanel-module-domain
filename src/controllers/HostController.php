@@ -21,6 +21,9 @@ class HostController extends \hipanel\base\CrudController
             'view' => [
                 'class'     => 'hipanel\actions\ViewAction',
             ],
+            'validate-form' => [
+                'class'     => 'hipanel\actions\ValidateFormAction',
+            ],
             'create' => [
                 'class'     => 'hipanel\actions\SmartCreateAction',
                 'success'   => Yii::t('app', 'Name server created'),
@@ -32,9 +35,6 @@ class HostController extends \hipanel\base\CrudController
             'delete' => [
                 'class'     => 'hipanel\actions\SmartDeleteAction',
                 'success'   => Yii::t('app', 'Name server deleted'),
-            ],
-            'validate-form' => [
-                'class'     => 'hipanel\actions\ValidateFormAction',
             ],
         ];
     }
