@@ -103,7 +103,7 @@ CSS
         </div>
 
         <div class="col-md-9">
-            <div class="nav-tabs-custom" style="cursor: move;">
+            <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#domain-details" data-toggle="tab" ><?= Yii::t('app', 'Domain details') ?></a></li>

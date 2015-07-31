@@ -7,8 +7,6 @@
 
 namespace hipanel\modules\domain\widgets;
 
-use hipanel\base\Re;
-
 class State extends \hipanel\widgets\Type
 {
     /** @inheritdoc */

@@ -7,9 +7,14 @@
 
 namespace hipanel\modules\domain\widgets;
 
+use hipanel\modules\domain\models\Domain;
+
 class Expires extends \hipanel\widgets\Label
 {
-    public $model = [];
+    /**
+     * @var Domain
+     */
+    public $model;
 
     public function run () {
         $expires = $this->model->expires;
