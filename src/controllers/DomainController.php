@@ -152,11 +152,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionView($id)
     {
-//        $model = Domain::findOne(['id' => $id, 'with_dns' => 1]);
-//        $model = Domain::findOne($id);
-        $rawData = Domain::perform('GetInfo', ['id' => $id, 'with_dns' => 1]);
-        $model = new Domain();
-        $model->load($rawData, '');
+        $model = Domain::findOne(['id' => $id, 'with_dns' => 1]);
         $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
 
         $pincodeModel = new DynamicModel(['pincode']);
