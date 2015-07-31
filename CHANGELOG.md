@@ -1,7 +1,8 @@
 hiqdev/hipanel-module-domain changelog
 --------------------------------------
 
-### 0.1.0 under development
+## Under development
 
-- inited
+
+## Development started 2015-04-20
 

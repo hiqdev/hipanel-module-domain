@@ -2,49 +2,52 @@
     "name": "hiqdev/hipanel-module-domain",
     "type": "yii2-extension",
     "description": "Domain Plugin for HiPanel",
-    "keywords": ["domain","registration","hipanel","plugin"],
-    "homepage": "https://hiqdev.com/hipanel-module-domain",
-    "license": "BSD-3-clause",
+    "keywords": [
+        "domain",
+        "hipanel",
+        "plugin"
+    ],
+    "homepage": "https://github.com/hiqdev/hipanel-module-domain",
+    "license": "BSD-3-Clause",
     "support": {
-        "email":  "support@hiqdev.com",
+        "email": "support@hiqdev.com",
         "source": "https://github.com/hiqdev/hipanel-module-domain",
         "issues": "https://github.com/hiqdev/hipanel-module-domain/issues",
-        "wiki":   "https://github.com/hiqdev/hipanel-module-domain/wiki",
-        "forum":  "https://forum.hiqdev.com/hipanel"
+        "wiki": "https://github.com/hiqdev/hipanel-module-domain/wiki",
+        "forum": "https://forum.hiqdev.com/hipanel"
     },
     "authors": [
         {
-            "role":     "Project lead",
-            "name":     "Andrii Vasyliev",
-            "email":    "sol@hiqdev.com",
+            "name": "Andrii Vasyliev",
+            "role": "Project lead",
+            "email": "sol@hiqdev.com",
             "homepage": "https://hipanel.com/"
         },
         {
-            "role":     "Lead backend developer",
-            "name":     "Dmitry Naumenko",
-            "email":    "silverfire@hiqdev.com",
+            "name": "Dmitry Naumenko",
+            "role": "Lead backend developer",
+            "email": "silverfire@hiqdev.com",
+            "homepage": "http://silverfire.me/"
+        },
+        {
+            "name": "Andrey Klochok",
+            "role": "Lead frontend developer",
+            "email": "tafid@hiqdev.com",
             "homepage": "https://hiqdev.com/"
         },
         {
-            "role":     "Lead frontend developer",
-            "name":     "Andrey Klochok",
-            "email":    "tafid@hiqdev.com",
-            "homepage": "https://hiqdev.com/"
-        },
-        {
-            "role":     "QA Lead",
-            "name":     "Yuriy Myronchuk",
-            "email":    "bladeroot@hiqdev.com",
+            "name": "Yuriy Myronchuk",
+            "role": "QA Lead",
+            "email": "bladeroot@hiqdev.com",
             "homepage": "https://hiqdev.com/"
         }
     ],
     "require": {
-        "yiisoft/yii2": "2.*",
         "hiqdev/hipanel-module-client": "*@dev"
     },
     "autoload": {
         "psr-4": {
-            "hipanel\\modules\\domain\\": ""
+            "hipanel\\modules\\domain\\": "src"
         }
     }
 }
