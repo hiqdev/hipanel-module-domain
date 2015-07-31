@@ -25,8 +25,11 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'index' => [
+                'class'     => 'hipanel\actions\IndexAction',
+            ],
             'validate-form' => [
-                'class' => 'hipanel\actions\FormValidateAction',
+                'class' => 'hipanel\actions\ValidateFormAction',
             ],
             'set-note' => [
                 'class'     => 'hipanel\actions\SmartUpdateAction',

@@ -15,6 +15,12 @@ class HostController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'index' => [
+                'class'     => 'hipanel\actions\IndexAction',
+            ],
+            'view' => [
+                'class'     => 'hipanel\actions\ViewAction',
+            ],
             'create' => [
                 'class'     => 'hipanel\actions\SmartCreateAction',
                 'success'   => Yii::t('app', 'Name server created'),
