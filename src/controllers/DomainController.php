@@ -28,6 +28,16 @@ class DomainController extends \hipanel\base\CrudController
             'index' => [
                 'class'     => 'hipanel\actions\IndexAction',
             ],
+            'view' => [
+                'class'       => 'hipanel\actions\ViewAction',
+                'findOptions' => ['with_dns' => 1],
+                'data'        => function ($action, $id) {
+                    return [
+                        'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $id]),
+                        'pincodeModel'      => new DynamicModel(['pincode']),
+                    ];
+                },
+            ],
             'validate-form' => [
                 'class' => 'hipanel\actions\ValidateFormAction',
             ],
@@ -151,20 +161,6 @@ class DomainController extends \hipanel\base\CrudController
 //                ],
 //            ],
         ];
-    }
-
-    public function actionView($id)
-    {
-        $model = Domain::findOne(['id' => $id, 'with_dns' => 1]);
-        $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
-
-        $pincodeModel = new DynamicModel(['pincode']);
-
-        return $this->render('view', [
-            'model' => $model,
-            'domainContactInfo' => $domainContactInfo,
-            'pincodeModel' => $pincodeModel,
-        ]);
     }
 
     public function actionSync($id)
