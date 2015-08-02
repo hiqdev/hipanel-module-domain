@@ -10,6 +10,10 @@ namespace hipanel\modules\domain;
 class Plugin extends \hiqdev\pluginmanager\Plugin
 {
     protected $_items = [
+        'aliases' => [
+            "@domain" => "/domain/domain",
+            "@host"   => "/domain/host",
+        ],
         'menus' => [
             [
                 'class' => 'hipanel\modules\domain\SidebarMenu',
