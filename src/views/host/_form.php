@@ -38,19 +38,19 @@ use yii\helpers\Url;
             // necessary for update action.
             if (!$model->isNewRecord) {
                 $model->setScenario('update');
-                echo Html::activeHiddenInput($model, "[{$i}]id");
+                echo Html::activeHiddenInput($model, "[$i]id");
             }
             ?>
             <div class="row input-row margin-bottom">
                 <div class="col-sm-5">
                     <?php if ($model->isNewRecord) : ?>
-                        <?= $form->field($model, "[{$i}]host")->textInput(['placeholder' => Yii::t('app', 'Name server')])->label(false) ?>
+                        <?= $form->field($model, "[$i]host")->textInput(['placeholder' => Yii::t('app', 'Name server')])->label(false) ?>
                     <?php else : ?>
                         <p class="form-control-static text-center"><?= $model->host; ?></p>
                     <?php endif; ?>
                 </div>
                 <div class="col-sm-5">
-                    <?= $form->field($model, "[{$i}]ips")->textInput(['placeholder' => Yii::t('app', 'IP addresses')])->label(false)->hint('Up to 13 items, IPv4 or IPv6, comma or space delimited') ?>
+                    <?= $form->field($model, "[$i]ips")->textInput(['placeholder' => Yii::t('app', 'IP addresses')])->label(false)->hint('Up to 13 items, IPv4 or IPv6, comma or space delimited') ?>
                 </div>
                 <div class="col-sm-2">
                     <?php if ($model->isNewRecord) : ?>
