@@ -94,7 +94,7 @@ CSS
         <?php $box->endBulkActions() ?>
         <?= $this->render('_search', compact('model')) ?>
     <?php $box::end() ?>
-
+<?php $box->beginBulkForm() ?>
     <?= DomainGridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel'  => $model,
@@ -109,5 +109,5 @@ CSS
             'actions',
         ],
     ]) ?>
-
+<?php $box::endBulkForm() ?>
 <? Pjax::end() ?>

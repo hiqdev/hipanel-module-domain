@@ -10,11 +10,10 @@ $this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list
 $this->breadcrumbs[] = $this->title;
 
 ?>
-<?= Html::beginForm() ?>
 
-<?php $box = ActionBox::begin(['model' => $model, 'bulk' => true, 'options' => ['class' => 'box-info']]) ?>
+<?php $box = ActionBox::begin(['model' => $model, 'options' => ['class' => 'box-info']]) ?>
     <?php $box->beginActions() ?>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', ['modelClass' => Yii::t('app', 'Name server')]), ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= $box->renderCreateButton(Yii::t('app', 'Create {modelClass}', ['modelClass' => Yii::t('app', 'Name server')])) ?>
         &nbsp;
         <?= $box->renderSearchButton() ?>
     <?php $box->endActions() ?>
@@ -25,6 +24,7 @@ $this->breadcrumbs[] = $this->title;
     <?= $box->renderSearchForm() ?>
 <?php $box::end() ?>
 
+<?php $box->beginBulkForm() ?>
 <?= HostGridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
@@ -39,4 +39,4 @@ $this->breadcrumbs[] = $this->title;
     ],
 ]) ?>
 
-<?= Html::endForm() ?>
+<?php $box::endBulkForm() ?>
