@@ -8,7 +8,7 @@ Modal::begin([
     'id' => 'domain-contacts-modal',
     'header' => '<h4 class="modal-title">' . Yii::t('app', 'Change contacts') . '</h4>',
     'toggleButton' => [
-        'label' => '<i class="fa fa-pencil"></i> ' . Yii::t('app', 'Change contacts'),
+        'label' => Yii::t('app', 'Change contacts'),
         'class' => 'btn btn-default',
     ],
     'clientEvents' => [

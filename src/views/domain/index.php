@@ -29,9 +29,9 @@ CSS
 
 <? Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
 
-    <?php $box = ActionBox::begin(['bulk' => true, 'options' => ['class' => 'box-info']]) ?>
+    <?php $box = ActionBox::begin(['model' => $model, 'bulk' => true, 'options' => ['class' => 'box-info']]) ?>
         <?php $box->beginActions() ?>
-            <?= Html::a(Yii::t('app', 'Advanced search'), '#', ['class' => 'btn btn-info search-button']) ?>
+            <?= $box->renderSearchButton() ?>
             &nbsp;
             <?=  LinkSorter::widget([
                 'show' => true,
@@ -47,93 +47,47 @@ CSS
         <?php $box->endActions() ?>
 
         <?php $box->beginBulkActions() ?>
-            <?= BulkButtons::widget([
-                'model' => new Domain,
-                'items' => [
-                    ButtonDropdown::widget([
-                        'label' => Yii::t('app', 'WHOIS protect'),
-                        'dropdown' => [
-                            'items' => [
-                                [
-                                    'label' => Yii::t('app', 'Enable WHOIS protect'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'whois_protected',
-                                        'data-value' => '1',
-                                        'data-url' => 'set-whois-protect'
-                                    ],
-                                ],
-                                [
-                                    'label' => Yii::t('app', 'Disable WHOIS protect'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'whois_protected',
-                                        'data-value' => '0',
-                                        'data-url' => 'set-whois-protect'
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ]),
-                    ButtonDropdown::widget([
-                        'label' => Yii::t('app', 'Lock'),
-                        'dropdown' => [
-                            'items' => [
-                                [
-                                    'label' => Yii::t('app', 'Enable lock'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'is_secured',
-                                        'data-value' => '1',
-                                        'data-url' => 'set-lock'
-                                    ]
-                                ],
-                                [
-                                    'label' => Yii::t('app', 'Disable lock'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'is_secured',
-                                        'data-value' => '0',
-                                        'data-url' => 'set-lock'
-                                    ]
-                                ]
-                            ]
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= Yii::t('app', 'WHOIS protect') ?> <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu dropdown-content">
+                    <?= \yii\bootstrap\ButtonGroup::widget([
+                        'buttons' => [
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
                         ]
-                    ]),
-                    ButtonDropdown::widget([
-                        'label' => Yii::t('app', 'Autorenew'),
-                        'dropdown' => [
-                            'items' => [
-                                [
-                                    'label' => Yii::t('app', 'Enable autorenew'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'autorenewal',
-                                        'data-value' => '1',
-                                        'data-url' => 'set-autorenewal'
-                                    ]
-                                ],
-                                [
-                                    'label' => Yii::t('app', 'Disable autorenew'),
-                                    'url' => '#',
-                                    'linkOptions' => [
-                                        'class' => 'bulk-action',
-                                        'data-attribute' => 'autorenewal',
-                                        'data-value' => '0',
-                                        'data-url' => 'set-autorenewal'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]),
-                ],
-            ]) ?>
+                    ]); ?>
+                </div>
+            </div>
 
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= Yii::t('app', 'Lock') ?> <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu dropdown-content">
+                    <?= \yii\bootstrap\ButtonGroup::widget([
+                        'buttons' => [
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
+                        ]
+                    ]); ?>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= Yii::t('app', 'Autorenew') ?> <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu dropdown-content">
+                    <?= \yii\bootstrap\ButtonGroup::widget([
+                        'buttons' => [
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
+                        ]
+                    ]); ?>
+                </div>
+            </div>
             <?= $this->render('_modalNs') ?>
             <?= $this->render('_modalContacts', ['model' => null]) ?>
             &nbsp;

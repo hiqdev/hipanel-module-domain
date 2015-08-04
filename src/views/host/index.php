@@ -15,6 +15,7 @@ $this->breadcrumbs[] = $this->title;
 <?php $box = ActionBox::begin(['bulk' => true, 'options' => ['class' => 'box-info']]) ?>
     <?php $box->beginActions() ?>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', ['modelClass' => Yii::t('app', 'Name server')]), ['create'], ['class' => 'btn btn-primary']) ?>&nbsp;
+        <?= Html::a(Yii::t('app', 'Advanced search'), '#', ['class' => 'btn btn-info search-button']) ?>
     <?php $box->endActions() ?>
     <?php $box->beginBulkActions() ?>
         <?= Html::submitButton(Yii::t('app', 'Change IP'), ['id' => 'change-ip-button', 'class' => 'btn btn-primary', 'formmethod' => 'GET', 'formaction' => Url::to('update')]) ?>
