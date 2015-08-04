@@ -13,30 +13,25 @@ $this->breadcrumbs[] = $this->title;
 
 <?php $box = ActionBox::begin(['model' => $model, 'options' => ['class' => 'box-info']]) ?>
     <?php $box->beginActions() ?>
-        <?= $box->renderCreateButton(Yii::t('app', 'Create {modelClass}', ['modelClass' => Yii::t('app', 'Name server')])) ?>
+        <?= $box->renderCreateButton(Yii::t('app', 'Create name server')) ?>
         &nbsp;
         <?= $box->renderSearchButton() ?>
     <?php $box->endActions() ?>
     <?php $box->beginBulkActions() ?>
-        <?= $box->renderBulkButton(Yii::t('app', 'Change IP'), Url::to('update')) ?>
-        <?= $box->renderBulkButton(Yii::t('app', 'Delete'), Url::to('delete')) ?>
+        <?= $box->renderBulkButton(Yii::t('app', 'Change IP'), 'update') ?>
+        <?= $box->renderDeleteButton() ?>
     <?php $box->endBulkActions() ?>
     <?= $box->renderSearchForm() ?>
 <?php $box::end() ?>
 
 <?php $box->beginBulkForm() ?>
-<?= HostGridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel'  => $searchModel,
-    'columns'      => [
-        'checkbox',
-        'host',
-        'ips',
-        'domain',
-        'client_id',
-        'seller_id',
-
-    ],
-]) ?>
-
+    <?= HostGridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel'  => $model,
+        'columns'      => [
+            'checkbox',
+            'host', 'ips', 'domain',
+            'client_id', 'seller_id',
+        ],
+    ]) ?>
 <?php $box::endBulkForm() ?>
