@@ -54,7 +54,7 @@ class DomainController extends \hipanel\base\CrudController
                 'success'   => Yii::t('app', 'Name server updated'),
             ],
             'delete' => [
-                'class'     => 'hipanel\actions\SmartDeleteAction',
+                'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'Name server deleted'),
             ],
             'set-ns' => [
