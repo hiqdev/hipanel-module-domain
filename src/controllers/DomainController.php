@@ -17,7 +17,6 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\InvalidParamException;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class DomainController extends \hipanel\base\CrudController
