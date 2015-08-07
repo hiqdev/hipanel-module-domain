@@ -98,10 +98,10 @@ CSS
                     <li>
                         <?= $this->render('_sync_button', compact('model')) ?>
                     </li>
-                <?php endif; ?>
+                <?php endif ?>
                 </ul>
             </div>
-            <?php Box::end(); ?>
+            <?php Box::end() ?>
         </div>
 
         <div class="col-md-9">
