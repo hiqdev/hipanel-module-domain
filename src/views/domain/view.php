@@ -96,7 +96,7 @@ CSS
                     </li>
                     <?php if (Yii::$app->user->can('manage') || 1) : ?>
                     <li>
-                        <?php Pjax::begin(Yii::$app->params['pjax']) ?>
+                        <?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['clientOptions' => ['type'=>'POST']])) ?>
                             <?= Html::a('<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'), ['sync', 'id' => $model->id], ['data-pjax' => 1]); ?>
                         <?php Pjax::end() ?>
                     </li>
