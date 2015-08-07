@@ -94,9 +94,11 @@ CSS
 
                         <?php Modal::end(); ?>
                     </li>
+                    <?php if (Yii::$app->user->can('manage') || 1) : ?>
                     <li>
-                        <?= Html::a('<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize data'), ['sync', 'id' => $model->id]); ?>
+                        <?= Html::a('<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'), ['sync', 'id' => $model->id]); ?>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
             <?php Box::end(); ?>

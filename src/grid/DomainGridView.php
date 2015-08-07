@@ -11,14 +11,15 @@ use hipanel\grid\ActionColumn;
 use hipanel\grid\MainColumn;
 use hipanel\modules\domain\widgets\State;
 use hipanel\modules\domain\widgets\Expires;
+use hipanel\grid\BoxedGridView;
 use hipanel\grid\RefColumn;
 use hipanel\widgets\ArraySpoiler;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
-use hiqdev\higrid\GridView;
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
-class DomainGridView extends GridView
+class DomainGridView extends BoxedGridView
 {
     static public function defaultColumns()
     {
@@ -95,8 +96,13 @@ class DomainGridView extends GridView
             ],
             'actions'         => [
                 'class'    => ActionColumn::className(),
-                'template' => '{view} {delete}', // {state}
+                'template' => '{view} {block} {delete} {update}', // {state}
                 'header'   => Yii::t('app', 'Actions'),
+                'buttons'  => [
+                    'block' => function ($url, $model, $key) {
+                        return Html::a('Close', ['block', 'id' => $model->id]);
+                    },
+                ],
             ],
         ];
     }

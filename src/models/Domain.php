@@ -91,6 +91,8 @@ class Domain extends \hipanel\base\Model
             [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
             [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
 
+            [['id', 'domain'], 'safe', 'on' => 'sync'],
+
             [['nameservers'], 'filter', 'filter' => function($value) {
                 return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'set-ns'],
