@@ -158,7 +158,6 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'sync' => [
                 'class'      => 'hipanel\actions\SmartPerformAction',
-                'scenario'   => 'sync',
                 'success'    => Yii::t('app', 'Domain contacts synced'),
             ],
 //            'change-password' => [

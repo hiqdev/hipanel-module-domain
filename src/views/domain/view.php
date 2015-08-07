@@ -94,13 +94,11 @@ CSS
 
                         <?php Modal::end() ?>
                     </li>
-                    <?php if (Yii::$app->user->can('manage') || 1) : ?>
+                <?php if (Yii::$app->user->can('manage') || 1) : ?>
                     <li>
-                        <?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['clientOptions' => ['type'=>'POST']])) ?>
-                            <?= Html::a('<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'), ['sync', 'id' => $model->id], ['data-pjax' => 1]); ?>
-                        <?php Pjax::end() ?>
+                        <?= $this->render('_sync_button', compact('model')) ?>
                     </li>
-                    <?php endif; ?>
+                <?php endif; ?>
                 </ul>
             </div>
             <?php Box::end(); ?>
