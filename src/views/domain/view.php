@@ -120,6 +120,7 @@ CSS
                     <!-- Morris t - Sales -->
                     <div class="tab-pane active" id="domain-details">
                         <?= DomainGridView::detailView([
+                            'boxed' => false,
                             'model'   => $model,
                             'columns' => [
                                 'seller_id', 'client_id',
