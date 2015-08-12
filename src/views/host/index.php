@@ -11,11 +11,20 @@ $this->breadcrumbs[] = $this->title;
 
 ?>
 
-<?php $box = ActionBox::begin(['model' => $model, 'options' => ['class' => 'box-info']]) ?>
+<?php $box = ActionBox::begin(['model' => $model, 'dataProvider' => $dataProvider]) ?>
     <?php $box->beginActions() ?>
         <?= $box->renderCreateButton(Yii::t('app', 'Create name server')) ?>
-        &nbsp;
         <?= $box->renderSearchButton() ?>
+        <?= $box->renderSorter([
+            'attributes' => [
+                'host',
+                'domain',
+                'ip',
+                'client',
+                'seller'
+            ],
+        ]) ?>
+        <?= $box->renderPerPage() ?>
     <?php $box->endActions() ?>
     <?php $box->beginBulkActions() ?>
         <?= $box->renderBulkButton(Yii::t('app', 'Change IP'), 'update') ?>
