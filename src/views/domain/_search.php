@@ -6,13 +6,12 @@ use hiqdev\combo\StaticCombo;
 use kartik\widgets\DatePicker;
 use yii\helpers\Url;
 use yii\helpers\Html;
-
 ?>
 
 <?php $form = AdvancedSearch::begin(compact('model')) ?>
 
     <div class="col-md-4">
-        <?= $form->field('domain') ?>
+        <?= $form->field('domain_like') ?>
         <?= $form->field('note') ?>
     </div>
 
@@ -23,11 +22,11 @@ use yii\helpers\Html;
 
     <div class="col-md-4">
         <?= $form->field('state')->widget(StaticCombo::classname(), [
-            'data' => $state_data,
+            'data' => $stateData,
             'hasId' => true,
             'pluginOptions' => [
                 'select2Options' => [
-                    'multiple' => true,
+                    'multiple' => false,
                 ]
             ],
         ]) ?>

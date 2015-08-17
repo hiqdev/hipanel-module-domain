@@ -11,7 +11,6 @@ use Yii;
 
 class HostController extends \hipanel\base\CrudController
 {
-
     public function actions()
     {
         return [
@@ -38,5 +37,4 @@ class HostController extends \hipanel\base\CrudController
             ],
         ];
     }
-
 }

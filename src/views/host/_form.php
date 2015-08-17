@@ -4,15 +4,13 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\helpers\Url;
-
 ?>
-
 <?php $form = ActiveForm::begin([
     'id' => 'dynamic-form',
     'enableClientValidation' => true,
     'validateOnBlur' => true,
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->isNewRecord ? reset($models)->scenario : 'update']),
+    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => reset($models)->isNewRecord ? 'create' : 'update']),
 ]) ?>
 
 <?php DynamicFormWidget::begin([
@@ -31,8 +29,7 @@ use yii\helpers\Url;
 ]) ?>
 
 <div class="container-items"><!-- widgetContainer -->
-    <?php foreach ($models as $i => $model): ?>
-
+    <?php foreach ($models as $i => $model) : ?>
         <div class="item"><!-- widgetBody -->
             <?php
             // necessary for update action.
@@ -62,9 +59,7 @@ use yii\helpers\Url;
         </div>
     <?php endforeach; ?>
 </div>
-
 <?php DynamicFormWidget::end() ?>
-
 <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default']) ?>
 &nbsp;
 <?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>

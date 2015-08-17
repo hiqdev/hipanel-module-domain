@@ -27,7 +27,8 @@ class DomainGridView extends BoxedGridView
             'domain'          => [
                 'class'     => MainColumn::className(),
                 'attribute' => 'domain',
-                'note'      => true
+                'note'      => true,
+                'filterAttribute' => 'domain_like'
             ],
             'state'           => [
                 'class'         => RefColumn::className(),

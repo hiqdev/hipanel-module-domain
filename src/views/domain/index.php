@@ -13,7 +13,6 @@ use hipanel\widgets\LinkSorter;
 use hipanel\widgets\Pjax;
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
-
 $this->title    = Yii::t('app', 'Domains');
 $this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list' : 'full list');
 $this->breadcrumbs->setItems([
@@ -35,7 +34,7 @@ CSS
             <?= $box->renderSorter([
                 'attributes' => [
                     'domain', 'note',
-                    'client', 'client_id', 'seller', 'seller_id',
+                    'client', 'seller',
                     'state', 'whois_protected', 'is_secured',
                     'created_date', 'expires',
                     'autorenewal', 'id',
@@ -89,7 +88,7 @@ CSS
             <?= $this->render('_modalContacts', ['model' => null]) ?>
             &nbsp;
         <?php $box->endBulkActions() ?>
-        <?= $this->render('_search', compact('model')) ?>
+        <?= $this->render('_search', ['model' => $model, 'stateData' => $stateData]) ?>
     <?php $box::end() ?>
 <?php $box->beginBulkForm() ?>
     <?= DomainGridView::widget([
@@ -98,7 +97,8 @@ CSS
         'columns'      => [
             'checkbox',
             'domain',
-            'client_id', 'seller_id',
+            'client',
+            'seller',
             'state',
             'whois_protected', 'is_secured',
             'created_date', 'expires',

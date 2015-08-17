@@ -108,6 +108,7 @@ class Domain extends \hipanel\base\Model
             'statuses'              => Yii::t('app', 'Statuses'),
             'zone_id'               => Yii::t('app', 'Zone ID'),
             'domain'                => Yii::t('app', 'Domain Name'),
+            'domain_like'           => Yii::t('app', 'Domain Name'),
             'note'                  => Yii::t('app', 'Notes'),
             'nameservers'           => Yii::t('app', 'Name Servers'),
             'created_date'          => Yii::t('app', 'Registered'),

@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\helpers\ArrayHelper;
+use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
 use hiqdev\hiart\Collection;
@@ -26,6 +27,11 @@ class DomainController extends \hipanel\base\CrudController
         return [
             'index' => [
                 'class'     => 'hipanel\actions\IndexAction',
+                'data'  => function ($action) {
+                    return [
+                        'stateData' => $action->controller->getStateData(),
+                    ];
+                }
             ],
             'view' => [
                 'class'       => 'hipanel\actions\ViewAction',
@@ -325,5 +331,8 @@ class DomainController extends \hipanel\base\CrudController
             Yii::$app->end();
     }
 
-
+    public function getStateData()
+    {
+        return Ref::getList('state,domain');
+    }
 }
