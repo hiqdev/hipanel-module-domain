@@ -81,7 +81,7 @@ class DomainGridView extends BoxedGridView
             ],
             'autorenewal'     => [
                 'class'         => BootstrapSwitchColumn::className(),
-                'label'         => 'Autorenew',
+                'label'         => Yii::t('app', 'Autorenew'),
                 'filter'        => false,
                 'url'           => Url::toRoute('set-autorenewal'),
                 'popover'       => 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',

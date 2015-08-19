@@ -11,7 +11,8 @@ use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitch;
-use hiqdev\xeditable\widgets\XEditable;
+    use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
+    use hiqdev\xeditable\widgets\XEditable;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
@@ -95,9 +96,9 @@ CSS
                         <?php Modal::end() ?>
                     </li>
                 <?php if (Yii::$app->user->can('manage') || 1) : ?>
-                    <li>
+                    <!--li>
                         <?= $this->render('_sync_button', compact('model')) ?>
-                    </li>
+                    </li-->
                 <?php endif ?>
                 </ul>
             </div>
@@ -168,6 +169,7 @@ CSS
 //                                ]
 //                            ]
 //                        ]);
+                            \yii\helpers\VarDumper::dump($model, 10, true);die();
                         ?>
                         <?= Html::tag('b', $model->getAttributeLabel('nameservers') . ': '); ?>
                         <?= XEditable::widget([
@@ -187,40 +189,45 @@ CSS
 
                     <!-- DNS records -->
                     <div class=" tab-pane" id="dns-records">
-                        <?= DetailView::widget([
+                        <?= DomainGridView::detailView([
                             'model' => $model,
-                            'attributes' => [
-                                [
+                            'boxed' => false,
+                            'columns' => [
+                                'is_premium' => [
                                     'label' => Yii::t('app', 'Premium package'),
-//                                    'value' => $model->is_premium == 't' ? Yii::t('app', 'Activated to ') . Yii::$app->formatter->asDatetime($model->prem_expires) : Yii::t('app', 'Not activated'),
-                                    'value' => BootstrapSwitch::widget([
-                                        'model' => $model,
-                                        'attribute' => 'premium_autorenewal',
-                                        'options' => [
-                                            'label' => false
-                                        ],
-                                        'pluginOptions' => [
-                                            'inlineLabel' => false,
-                                            'labelText' => false
-                                        ]
-                                    ]),
+                                    'value' => function($model) {
+                                        $enablePremiumLink = Html::a(Yii::t('app', 'Enable premium'), Url::toRoute(''), ['class' => 'btn btn-success btn-xs pull-right']);
+                                        return $model->is_premium == 't' ? Yii::t('app', 'Activated to ') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('app', 'Not enabled'), $enablePremiumLink);
+                                    },
                                     'format' => 'raw'
                                 ],
-                                [
-                                    'label' => Yii::t('app', 'Premium package autorenewal'),
-                                    'value' => BootstrapSwitch::widget([
-                                        'model' => $model,
-                                        'attribute' => 'premium_autorenewal',
-                                        'options' => [
-                                            'label' => false
-                                        ],
-                                        'pluginOptions' => [
-                                            'inlineLabel' => false,
-                                            'labelText' => false
-                                        ]
-                                    ]),
-                                    'format' => 'raw',
-                                ]
+                                'premium_autorenewal'     => [
+                                    'class'         => BootstrapSwitchColumn::className(),
+                                    'attribute'     => 'premium_autorenewal',
+                                    'label'         => Yii::t('app', 'Premium package autorenewal'),
+                                    'filter'        => false,
+                                    'url'           => Url::toRoute(['@hdomain/set-paid-feature-autorenewal']),
+                                    'popover'       => 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',
+                                    'visible'       => $model->is_premium == 't' ? true : false,
+                                    'pluginOptions' => [
+                                        'onColor' => 'info',
+                                    ],
+                                ],
+//                                [
+//                                    'label' => Yii::t('app', 'Premium package autorenewal'),
+//                                    'value' => BootstrapSwitch::widget([
+//                                        'model' => $model,
+//                                        'attribute' => 'premium_autorenewal',
+//                                        'options' => [
+//                                            'label' => false
+//                                        ],
+//                                        'pluginOptions' => [
+//                                            'inlineLabel' => false,
+//                                            'labelText' => false
+//                                        ]
+//                                    ]),
+//                                    'format' => 'raw',
+//                                ]
                             ]
                         ]); ?>
                         <?php if (!empty($model->dns)) : ?>

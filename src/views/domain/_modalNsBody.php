@@ -86,4 +86,5 @@ foreach ($models as $id => $model) : ?>
     </div>
 <?php endforeach; ?>
 <?php $form->end() ?>
+<div class="clearfix"></div>
 

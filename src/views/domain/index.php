@@ -50,8 +50,8 @@ CSS
                 <div class="dropdown-menu dropdown-content">
                     <?= \yii\bootstrap\ButtonGroup::widget([
                         'buttons' => [
-                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
-                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-whois-protect'),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-whois-protect'),
                         ]
                     ]); ?>
                 </div>
@@ -64,8 +64,8 @@ CSS
                 <div class="dropdown-menu dropdown-content">
                     <?= \yii\bootstrap\ButtonGroup::widget([
                         'buttons' => [
-                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
-                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-lock'),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-lock'),
                         ]
                     ]); ?>
                 </div>
@@ -78,8 +78,8 @@ CSS
                 <div class="dropdown-menu dropdown-content">
                     <?= \yii\bootstrap\ButtonGroup::widget([
                         'buttons' => [
-                            $box->renderBulkButton(Yii::t('app', 'Enable'), ''),
-                            $box->renderBulkButton(Yii::t('app', 'Disable'), ''),
+                            $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-autorenewal'),
+                            $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-autorenewal'),
                         ]
                     ]); ?>
                 </div>
