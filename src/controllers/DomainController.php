@@ -181,6 +181,10 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => 'hipanel\actions\SmartPerformAction',
                 'success' => Yii::t('app', 'Domain contacts synced'),
             ],
+            'buy' => [
+                'class' => 'hipanel\actions\RedirectAction',
+                'url'   => Yii::$app->params['orgUrl'],
+            ],
 
 //            'change-password' => [
 //                'class' => 'hipanel\actions\SwitchAction',
