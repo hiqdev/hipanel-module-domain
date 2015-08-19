@@ -3,8 +3,39 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
-- moved to src, hideved
+- Added domain buy redirect
+    - 1794982 2015-08-19 + domain/buy redirect (sol@hiqdev.com)
+    - d072fd0 2015-08-19 minor: fixed indenting (sol@hiqdev.com)
+- Fixed: many for first release
+    - a8a28d0 2015-08-19 Some fixes on both inline and bulk actions (andreyklochok@gmail.com)
+    - 665436e 2015-08-19 All inline actions are work (andreyklochok@gmail.com)
+    - 2fa224a 2015-08-17 Numerious fixes (andreyklochok@gmail.com)
+    - 8ada5ce 2015-08-12 Add sorter and per page to Host and Domain (andreyklochok@gmail.com)
+    - f41bc66 2015-08-07 + sync button not finished (sol@hiqdev.com)
+    - 1d6c6a3 2015-08-07 Pjax is working (andreyklochok@gmail.com)
+    - d807bed 2015-08-07 doing domain syncing (sol@hiqdev.com)
+    - 3f2e63a 2015-08-07 some changes (andreyklochok@gmail.com)
+    - 4a0264c 2015-08-07 Remove unnecessary USE and extend DomainGridView not for BoxedGridView (andreyklochok@gmail.com)
+    - 33c3308 2015-08-07 Remove unnecessary USE and extend DomainGridView not for BoxedGridView (andreyklochok@gmail.com)
+    - d2931dd 2015-08-06 renamed SmartDeleteAction to SmartPerformAction (sol@hiqdev.com)
+    - 3394b44 2015-08-04 fixed filtering back (sol@hiqdev.com)
+    - 474d6a7 2015-08-04 Refactor index pages (andreyklochok@gmail.com)
+    - 9b6a2a6 2015-08-04 Add ActionBox to Host (andreyklochok@gmail.com)
+    - dd5239a 2015-08-04 Index page: add ActionBox (andreyklochok@gmail.com)
+    - 2f55a29 2015-08-02 Code style fixes (d.naumenko.a@gmail.com)
+    - 667e754 2015-08-02 * Plugin: + aliases (sol@hiqdev.com)
+    - 0cc25e9 2015-07-31 + smart actions (sol@hiqdev.com)
+    - 42178d0 2015-07-31 used ViewAction (sol@hiqdev.com)
+    - 3cddfbe 2015-07-31 used ValidateFormAction and IndexAction (sol@hiqdev.com)
+    - b8a17a6 2015-07-31 actionView fix (andreyklochok@gmail.com)
+    - 76d123a 2015-07-31 + ValidateFormAction (sol@hiqdev.com)
+    - ca2104a 2015-07-31 + sort button (sol@hiqdev.com)
+    - 7c3b40d 2015-07-31 Minor (d.naumenko.a@gmail.com)
+    - 01dd9fa 2015-07-31 checkbox moved left (sol@hiqdev.com)
+    - 63864f7 2015-07-31 + commits.md (sol@hiqdev.com)
+- Changed: moved to src, hideved
     - 36714cf 2015-07-31 moved to src, hideved (sol@hiqdev.com)
+- Added basics
     - cf36043 2015-07-31 + AdvancedSearch for domains (sol@hiqdev.com)
     - cd94143 2015-07-30 Fixed typos (d.naumenko.a@gmail.com)
     - b133e6a 2015-07-30 + note xeditable in details (sol@hiqdev.com)

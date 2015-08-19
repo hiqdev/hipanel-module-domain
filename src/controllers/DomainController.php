@@ -4,7 +4,6 @@
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
-
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\helpers\ArrayHelper;
@@ -16,9 +15,6 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Yii;
 use yii\base\DynamicModel;
-use yii\base\InvalidParamException;
-use yii\helpers\Html;
-use yii\web\NotFoundHttpException;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -185,6 +181,11 @@ class DomainController extends \hipanel\base\CrudController
             'sync' => [
                 'class' => 'hipanel\actions\SmartPerformAction',
                 'success' => Yii::t('app', 'Domain contacts synced'),
+            ],
+
+            'buy' => [
+                'class' => 'hipanel\actions\RedirectAction',
+                'url' => Yii::$app->params['orgUrl'],
             ],
 
 //            'change-password' => [
