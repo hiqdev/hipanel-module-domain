@@ -97,70 +97,16 @@ class DomainController extends \hipanel\base\CrudController
                 ],
             ],
             'set-autorenewal' => [
-                'class'   => 'hipanel\actions\SwitchAction',
+                'class'     => 'hipanel\actions\SmartPerformAction',
                 'success' => Yii::t('app', 'Record was changed'),
-                'error'   => Yii::t('app', 'Error occurred!'),
-                'POST pjax' => [
-                    'save' => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\ProxyAction',
-                        'action' => 'index'
-                    ]
-                ],
-                'POST'    => [
-                    'save'    => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\RenderJsonAction',
-                        'return' => function ($action) {
-                            /** @var \hipanel\actions\Action $action */
-                            return $action->collection->models;
-                        }
-                    ]
-                ],
             ],
             'set-whois-protect' => [
-                'class'   => 'hipanel\actions\SwitchAction',
-                'success' => Yii::t('app', 'Record was changed'),
-                'error'   => Yii::t('app', 'Error occurred!'),
-                'POST pjax' => [
-                    'save' => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\ProxyAction',
-                        'action' => 'index'
-                    ]
-                ],
-                'POST'    => [
-                    'save'    => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\RenderJsonAction',
-                        'return' => function ($action) {
-                            /** @var \hipanel\actions\Action $action */
-                            return $action->collection->models;
-                        }
-                    ]
-                ],
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'whois protect is changed'),
             ],
             'set-lock' => [
-                'class' => 'hipanel\actions\SwitchAction',
-                'success' => Yii::t('app', 'Record was changed'),
-                'error'   => Yii::t('app', 'Error occurred!'),
-                'POST pjax' => [
-                    'save' => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\ProxyAction',
-                        'action' => 'index'
-                    ]
-                ],
-                'POST'    => [
-                    'save'    => true,
-                    'success' => [
-                        'class'  => 'hipanel\actions\RenderJsonAction',
-                        'return' => function ($action) {
-                            /** @var \hipanel\actions\Action $action */
-                            return $action->collection->models;
-                        }
-                    ]
-                ],
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Record was changed'),
             ],
             'sync' => [
                 'class'      => 'hipanel\actions\SmartPerformAction',
@@ -182,16 +128,6 @@ class DomainController extends \hipanel\base\CrudController
 //                ],
 //            ],
         ];
-    }
-
-    public function actionSync($id)
-    {
-
-    }
-
-    public function actionPush()
-    {
-
     }
 
     public function actionGetPassword()
