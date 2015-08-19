@@ -3,6 +3,9 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Added domain buy redirect
+    - 1794982 2015-08-19 + domain/buy redirect (sol@hiqdev.com)
+    - d072fd0 2015-08-19 minor: fixed indenting (sol@hiqdev.com)
 - Fixed: many for first release
     - a8a28d0 2015-08-19 Some fixes on both inline and bulk actions (andreyklochok@gmail.com)
     - 665436e 2015-08-19 All inline actions are work (andreyklochok@gmail.com)
