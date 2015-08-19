@@ -27,7 +27,6 @@ CSS
 ?>
 
 <? Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
-
     <?php $box = ActionBox::begin(['model' => $model, 'dataProvider' => $dataProvider]) ?>
         <?php $box->beginActions() ?>
             <?= $box->renderSearchButton() ?>
@@ -88,8 +87,8 @@ CSS
             <?= $this->render('_modalContacts', ['model' => null]) ?>
             &nbsp;
         <?php $box->endBulkActions() ?>
-        <?= $this->render('_search', ['model' => $model, 'stateData' => $stateData]) ?>
-    <?php $box::end() ?>
+        <?= $box->renderSearchForm(['stateData' => $stateData]) ?>
+    <?php $box->end() ?>
 <?php $box->beginBulkForm() ?>
     <?= DomainGridView::widget([
         'dataProvider' => $dataProvider,
@@ -106,5 +105,5 @@ CSS
             'actions',
         ],
     ]) ?>
-<?php $box::endBulkForm() ?>
+<?php $box->endBulkForm() ?>
 <? Pjax::end() ?>

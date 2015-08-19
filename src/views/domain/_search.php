@@ -8,20 +8,18 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 ?>
 
-<?php $form = AdvancedSearch::begin(compact('model')) ?>
-
     <div class="col-md-4">
-        <?= $form->field('domain_like') ?>
-        <?= $form->field('note') ?>
+        <?= $search->field('domain_like') ?>
+        <?= $search->field('note') ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field('client_id')->widget(ClientCombo::classname()) ?>
-        <?= $form->field('seller_id')->widget(ClientCombo::classname()) ?>
+        <?= $search->field('client_id')->widget(ClientCombo::classname()) ?>
+        <?= $search->field('seller_id')->widget(ClientCombo::classname()) ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field('state')->widget(StaticCombo::classname(), [
+        <?= $search->field('state')->widget(StaticCombo::classname(), [
             'data' => $stateData,
             'hasId' => true,
             'pluginOptions' => [
@@ -33,7 +31,7 @@ use yii\helpers\Html;
         <div class="form-group">
             <?= Html::tag('label', 'Registered range', ['class' => 'control-label']); ?>
             <?= DatePicker::widget([
-                'model'         => $model,
+                'model'         => $search->model,
                 'type'          => DatePicker::TYPE_RANGE,
                 'attribute'     => 'created_from',
                 'attribute2'    => 'created_till',
@@ -44,4 +42,3 @@ use yii\helpers\Html;
             ]) ?>
         </div>
     </div>
-<?php $form::end() ?>
