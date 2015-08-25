@@ -95,10 +95,8 @@ CSS
 
                         <?php Modal::end() ?>
                     </li>
-                <?php if (Yii::$app->user->can('manage') || 1) : ?>
-                    <!--li>
-                        <?= $this->render('_sync_button', compact('model')) ?>
-                    </li-->
+                <?php if (Yii::$app->user->can('manage')) : ?>
+                    <li><?= $this->render('_sync_button', compact('model')) ?></li>
                 <?php endif ?>
                 </ul>
             </div>
@@ -150,27 +148,6 @@ CSS
 
                     <!-- NS records -->
                     <div class=" tab-pane" id="ns-records">
-                        <?php
-//                        print DetailView::widget([
-//                            'model' => $model,
-//                            'attributes' => [
-//                                [
-//                                    'format' => 'raw',
-//                                    'label' => 'Name Servers',
-//                                    'value' => XEditable::widget([ // $model->nameservers
-//                                        'model' => $model,
-//                                        'attribute' => 'nameservers',
-//                                        'pluginOptions' => [
-//                                            'type' => 'textarea',
-//                                            'emptytext' => Yii::t('app', 'There are no NS. Domain may not work properly'),
-//                                            'url' => Url::to('setnote')
-//                                        ]
-//                                    ])
-//                                ]
-//                            ]
-//                        ]);
-                            \yii\helpers\VarDumper::dump($model, 10, true);die();
-                        ?>
                         <?= Html::tag('b', $model->getAttributeLabel('nameservers') . ': '); ?>
                         <?= XEditable::widget([
                             'model' => $model,
