@@ -256,7 +256,6 @@ class DomainController extends \hipanel\base\CrudController
     /**
      * @return string
      * @throws \HttpInvalidParamException
-     * @throws \hiqdev\hiart\HiResException
      */
     public function actionModalContactsBody()
     {
