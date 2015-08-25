@@ -26,23 +26,19 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                 'domains' => [
                     'label' => 'My domains',
                     'url'   => ['/domain/domain/index'],
-                    'icon'  => 'fa-globe',
                 ],
                 'nameservers' => [
                     'label' => 'Name Servers',
                     'url'   => ['/domain/host/index'],
-                    'icon'  => 'fa-circle-o',
                 ],
                 'contacts' => [
                     'label' => 'Contacts',
                     'url'   => ['/client/contact/index'],
-                    'icon'  => 'fa-circle-o',
                 ],
-                'seo' => [
-                    'label' => 'SEO',
-                    'url'   => ['/domain/domain/index'],
-                    'icon'  => 'fa-circle-o',
-                ],
+//                'seo' => [
+//                    'label' => 'SEO',
+//                    'url'   => ['/domain/domain/index'],
+//                ],
             ],
         ],
     ];

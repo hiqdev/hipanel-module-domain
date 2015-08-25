@@ -97,13 +97,8 @@ class DomainGridView extends BoxedGridView
             ],
             'actions'         => [
                 'class'    => ActionColumn::className(),
-                'template' => '{view} {block} {delete} {update}', // {state}
+                'template' => '{view}', // {state}
                 'header'   => Yii::t('app', 'Actions'),
-                'buttons'  => [
-                    'block' => function ($url, $model, $key) {
-                        return Html::a('Close', ['block', 'id' => $model->id]);
-                    },
-                ],
             ],
         ];
     }
