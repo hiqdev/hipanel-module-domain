@@ -1,19 +1,14 @@
 <?php
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
+use hipanel\widgets\ClientSellerLink;
 use hiqdev\bootstrap_switch\BootstrapSwitch;
-    use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
-    use hiqdev\xeditable\widgets\XEditable;
-use Yii;
+use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
+use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
@@ -71,7 +66,7 @@ CSS
             <p class="text-center">
                 <span class="profile-user-role"><?= $this->title ?></span>
                 <br>
-                <span class="profile-user-name"><?= $model->client . ' / ' . $model->seller ?></span>
+                <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
             </p>
 
             <div class="profile-usermenu">
