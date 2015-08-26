@@ -3,6 +3,13 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Fixed PHP warnings
+    - 7ccb975 2015-08-26 fixed PHP warnings (sol@hiqdev.com)
+    - bcba156 2015-08-25 Fix icons and fix warnings (andreyklochok@gmail.com)
+    - 8b72875 2015-08-25 Removed debug and commented code (d.naumenko.a@gmail.com)
+    - aa14c34 2015-08-19 Index page redone with actual standarts (d.naumenko.a@gmail.com)
+    - bdb83ab 2015-08-19 Fix merge (andreyklochok@gmail.com)
+    - d1c3a43 2015-08-19 Some label fix (andreyklochok@gmail.com)
 - Added domain buy redirect
     - 1794982 2015-08-19 + domain/buy redirect (sol@hiqdev.com)
     - d072fd0 2015-08-19 minor: fixed indenting (sol@hiqdev.com)
@@ -33,7 +40,7 @@ hiqdev/hipanel-module-domain commits history
     - 7c3b40d 2015-07-31 Minor (d.naumenko.a@gmail.com)
     - 01dd9fa 2015-07-31 checkbox moved left (sol@hiqdev.com)
     - 63864f7 2015-07-31 + commits.md (sol@hiqdev.com)
-- Changed: moved to src, hideved
+- Changed: moved to src
     - 36714cf 2015-07-31 moved to src, hideved (sol@hiqdev.com)
 - Added basics
     - cf36043 2015-07-31 + AdvancedSearch for domains (sol@hiqdev.com)
@@ -68,7 +75,6 @@ hiqdev/hipanel-module-domain commits history
     - 637a7ca 2015-04-21 renamed to mergeAttributeLabels from margeA... (sol@hiqdev.com)
     - d19b36d 2015-04-20 typo (sol@hiqdev.com)
     - fc028b3 2015-04-20 composer (sol@hiqdev.com)
-- inited
     - aeec2f7 2015-04-20 inited (sol@hiqdev.com)
 
 ## Development started 2015-04-20
