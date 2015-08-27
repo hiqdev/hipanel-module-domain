@@ -3,8 +3,10 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Added details/edit buttons at domain contacts
+- Fixed breadcrumbs subtitle
 - Fixed setting domain nameservers
-- Fixed PHP warnings
+- Fixed PHP warnings and deprecated
 - Added domain buy redirect
 - Fixed: many for first release
 - Changed: moved to src

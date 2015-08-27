@@ -3,9 +3,14 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Added details/edit buttons at domain contacts
+    - 1152284 2015-08-27 + details/edit buttons at domain contacts (sol@hiqdev.com)
+- Fixed breadcrumbs subtitle
+    - a1b37b0 2015-08-27 Fixed breadcrumbs subtitle (d.naumenko.a@gmail.com)
 - Fixed setting domain nameservers
     - f4dbd8c 2015-08-27 fixed domain set nss (sol@hiqdev.com)
-- Fixed PHP warnings
+- Fixed PHP warnings and deprecated
+    - 426728d 2015-08-27 Fixed deprecated method calling syntax (d.naumenko.a@gmail.com)
     - 7ccb975 2015-08-26 fixed PHP warnings (sol@hiqdev.com)
     - bcba156 2015-08-25 Fix icons and fix warnings (andreyklochok@gmail.com)
     - 8b72875 2015-08-25 Removed debug and commented code (d.naumenko.a@gmail.com)
