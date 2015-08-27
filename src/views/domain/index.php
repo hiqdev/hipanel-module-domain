@@ -14,7 +14,7 @@ use hipanel\widgets\Pjax;
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 $this->title    = Yii::t('app', 'Domains');
-$this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list' : 'full list');
+$this->subtitle = Yii::t('app', array_filter(Yii::$app->request->get($model->formName(), [])) ? 'filtered list' : 'full list');
 $this->breadcrumbs->setItems([
     $this->title
 ]);

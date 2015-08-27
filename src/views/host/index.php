@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title    = Yii::t('app', 'Name Servers');
-$this->subtitle = Yii::t('app', Yii::$app->request->queryParams ? 'filtered list' : 'full list');
+$this->subtitle = Yii::t('app', array_filter(Yii::$app->request->get($model->formName(), [])) ? 'filtered list' : 'full list');
 $this->breadcrumbs[] = $this->title;
 
 ?>
