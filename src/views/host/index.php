@@ -31,7 +31,7 @@ $this->breadcrumbs[] = $this->title;
         <?= $box->renderDeleteButton() ?>
     <?php $box->endBulkActions() ?>
     <?= $box->renderSearchForm() ?>
-<?php $box::end() ?>
+<?php $box->end() ?>
 
 <?php $box->beginBulkForm() ?>
     <?= HostGridView::widget([
@@ -43,4 +43,4 @@ $this->breadcrumbs[] = $this->title;
             'client_id', 'seller_id',
         ],
     ]) ?>
-<?php $box::endBulkForm() ?>
+<?php $box->endBulkForm() ?>

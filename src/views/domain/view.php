@@ -88,7 +88,7 @@ CSS
 
                         <?= $form->field($model, 'client_id')->widget(\hipanel\modules\client\widgets\combo\ClientCombo::className())->hint(Yii::t('app', 'Client, you push your domain to')) ?>
 
-                        <?php $form::end() ?>
+                        <?php $form->end() ?>
 
                         <?php Modal::end() ?>
                     </li>
