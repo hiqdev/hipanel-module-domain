@@ -47,19 +47,15 @@ class DomainController extends \hipanel\base\CrudController
                 'success' => Yii::t('app', 'Note changed'),
                 'error' => Yii::t('app', 'Failed change note'),
             ],
-            'create' => [
-                'class' => 'hipanel\actions\SmartCreateAction',
-                'success' => Yii::t('app', 'Name server created'),
-            ],
-            'update' => [
+            'set-nss' => [
                 'class' => 'hipanel\actions\SmartUpdateAction',
-                'success' => Yii::t('app', 'Name server updated'),
+                'success' => Yii::t('app', 'Nameservers changed'),
             ],
             'delete' => [
                 'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Name server deleted'),
+                'success' => Yii::t('app', 'Domain deleted'),
             ],
-            'set-ns' => [
+            'OLD-set-ns' => [
                 'class' => 'hipanel\actions\SwitchAction',
                 'beforeSave' => function ($action) {
                     $templateModel = null;

@@ -19,6 +19,8 @@ use yii\widgets\DetailView;
 //\yii\helpers\VarDumper::dump($model, 10, true);
 //\yii\helpers\VarDumper::dump($domainContactInfo, 10, true);
 
+$model->nameservers = str_replace(',', ', ', $model->nameservers);
+
 $this->title    = Html::encode($model->domain);
 $this->subtitle = Yii::t('app','domain detailed information') . ' #'.$model->id;
 $this->breadcrumbs->setItems([
@@ -151,7 +153,7 @@ CSS
                                 'placement' => 'bottom',
                                 'type' => 'textarea',
                                 'emptytext' => Yii::t('app', 'There are no NS. Domain may not work properly'),
-                                'url' => Url::to('set-ns')
+                                'url' => Url::to('set-nss')
                             ]
                         ]); ?>
                     </div>

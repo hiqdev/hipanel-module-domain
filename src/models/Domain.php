@@ -86,17 +86,16 @@ class Domain extends \hipanel\base\Model
             [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
 
             [['enable'],                                        'safe', 'on' => ['set-lock','set-whois-protect']],
-            [['id', 'autorenewal', 'domain'], 'safe', 'on' => 'set-autorenewal'],
-            [['id', 'whois_protected', 'domain'], 'safe', 'on' => 'set-whois-protect'],
-            [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
-            [['id', 'is_secured', 'domain'], 'safe', 'on' => 'set-lock'],
+            [['id', 'domain', 'autorenewal'],                   'safe', 'on' => 'set-autorenewal'],
+            [['id', 'domain', 'whois_protected'],               'safe', 'on' => 'set-whois-protect'],
+            [['id', 'domain', 'is_secured'],                    'safe', 'on' => 'set-lock'],
+            [['id', 'domain'],                                  'safe', 'on' => 'sync'],
 
-            [['id', 'domain'], 'safe', 'on' => 'sync'],
-
+            [['id', 'domain', 'nameservers'],                   'safe', 'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {
                 return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
-            }, 'on' => 'set-ns'],
-            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'set-ns'],
+            }, 'on' => 'OLD-set-ns'],
+            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-nss'],
         ];
     }
 
