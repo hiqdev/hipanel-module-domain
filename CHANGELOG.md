@@ -3,6 +3,7 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Fixed setting domain nameservers
 - Fixed PHP warnings
 - Added domain buy redirect
 - Fixed: many for first release

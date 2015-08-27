@@ -3,6 +3,8 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Fixed setting domain nameservers
+    - f4dbd8c 2015-08-27 fixed domain set nss (sol@hiqdev.com)
 - Fixed PHP warnings
     - 7ccb975 2015-08-26 fixed PHP warnings (sol@hiqdev.com)
     - bcba156 2015-08-25 Fix icons and fix warnings (andreyklochok@gmail.com)
