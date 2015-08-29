@@ -3,6 +3,11 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Added go to site link at domain details
+    - 1de7446 2015-08-29 + go to site link (sol@hiqdev.com)
+- Fixed requires at composer.json
+    - 2bb123b 2015-08-28 Added dependencies on related projects (d.naumenko.a@gmail.com)
+    - 9e83d06 2015-08-29 - require yii2 (sol@hiqdev.com)
 - Added details/edit buttons at domain contacts
     - 1152284 2015-08-27 + details/edit buttons at domain contacts (sol@hiqdev.com)
 - Fixed breadcrumbs subtitle

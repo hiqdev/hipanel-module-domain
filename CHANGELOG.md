@@ -3,6 +3,8 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Added go to site link at domain details
+- Fixed requires at composer.json
 - Added details/edit buttons at domain contacts
 - Fixed breadcrumbs subtitle
 - Fixed setting domain nameservers
