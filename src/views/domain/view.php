@@ -74,6 +74,10 @@ CSS
             <div class="profile-usermenu">
                 <ul class="nav">
                     <li>
+                        <?php $url = 'http://' . $model->domain . '/' ?>
+                        <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('app', 'Go to site ') . $url, $url, ['target' => '_blank']); ?>
+                    </li>
+                    <li>
                         <?php Modal::begin([
                             'header' => '<h4 class="modal-title">' . Yii::t('app', 'Push ' . Html::tag('b', $this->title)) . '</h4>',
                             'footer' => Html::submitButton(Yii::t('app', 'Push'), ['class' => 'btn btn-default push' ]),
