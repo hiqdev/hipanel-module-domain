@@ -8,6 +8,7 @@
 use hipanel\modules\domain\grid\HostGridView;
 use hipanel\widgets\Pjax;
 use hipanel\widgets\Box;
+use hipanel\widgets\ClientSellerLink;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
@@ -36,7 +37,7 @@ $this->breadcrumbs->setItems([
             <p class="text-center">
                 <span class="profile-user-role"><?= $this->title ?></span>
                 <br>
-                <span class="profile-user-name"><?= $model->client . ' / ' . $model->seller ?></span>
+                <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
             </p>
 
             <div class="profile-usermenu">
