@@ -3,6 +3,7 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Added use of ClientSellerLink widget at host details
 - Added go to site link at domain details
 - Fixed requires at composer.json
 - Added details/edit buttons at domain contacts

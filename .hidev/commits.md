@@ -3,6 +3,8 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Added use of ClientSellerLink widget at host details
+    - d751f9f 2015-08-30 used ClientSellerLink widget at host details (sol@hiqdev.com)
 - Added go to site link at domain details
     - 1de7446 2015-08-29 + go to site link (sol@hiqdev.com)
 - Fixed requires at composer.json
