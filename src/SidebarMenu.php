@@ -1,11 +1,8 @@
 <?php
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 
 namespace hipanel\modules\domain;
+
+use Yii;
 
 class SidebarMenu extends \hiqdev\menumanager\Menu
 {
@@ -17,30 +14,33 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
         'before'    => ['servers', 'hosting'],
     ];
 
-    protected $_items = [
-        'domains' => [
-            'label' => 'Domains',
-            'url'   => ['/domains/default/index'],
-            'icon'  => 'fa-globe',
-            'items' => [
-                'domains' => [
-                    'label' => 'My domains',
-                    'url'   => ['/domain/domain/index'],
+    public function items()
+    {
+        return [
+            'domains' => [
+                'label' => Yii::t('app', 'Domains'),
+                'url'   => ['/domains/default/index'],
+                'icon'  => 'fa-globe',
+                'items' => [
+                    'domains' => [
+                        'label' => Yii::t('app', 'Domains'),
+                        'url'   => ['/domain/domain/index'],
+                    ],
+                    'nameservers' => [
+                        'label' => Yii::t('app', 'Name Servers'),
+                        'url'   => ['/domain/host/index'],
+                    ],
+                    'contacts' => [
+                        'label' => Yii::t('app', 'Contacts'),
+                        'url'   => ['/client/contact/index'],
+                    ],
+//                  'seo' => [
+//                      'label' => Yii::t('app', 'SEO'),
+//                      'url'   => ['/domain/domain/index'],
+//                  ],
                 ],
-                'nameservers' => [
-                    'label' => 'Name Servers',
-                    'url'   => ['/domain/host/index'],
-                ],
-                'contacts' => [
-                    'label' => 'Contacts',
-                    'url'   => ['/client/contact/index'],
-                ],
-//                'seo' => [
-//                    'label' => 'SEO',
-//                    'url'   => ['/domain/domain/index'],
-//                ],
             ],
-        ],
-    ];
+        ];
+    }
 
 }

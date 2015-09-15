@@ -15,9 +15,7 @@ class Plugin extends \hiqdev\pluginmanager\Plugin
             "@host"   => "/domain/host",
         ],
         'menus' => [
-            [
-                'class' => 'hipanel\modules\domain\SidebarMenu',
-            ],
+            'hipanel\modules\domain\SidebarMenu',
         ],
         'modules' => [
             'domain' => [
