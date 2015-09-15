@@ -5,6 +5,7 @@ Domain Plugin for HiPanel
 
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hipanel-module-domain/v/stable.png)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hipanel-module-domain/downloads.png)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
+[![Dependency Status](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master)
 
 ## Installation
 

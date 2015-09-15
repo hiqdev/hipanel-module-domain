@@ -3,19 +3,21 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Fixed minor issues
+    - 359d017 2015-09-15 localized menu (sol@hiqdev.com)
+    - 0969cab 2015-09-09 PSR fix (andreyklochok@gmail.com)
+    - 2bb123b 2015-08-28 Added dependencies on related projects (d.naumenko.a@gmail.com)
+    - 9e83d06 2015-08-29 - require yii2 (sol@hiqdev.com)
+    - a1b37b0 2015-08-27 Fixed breadcrumbs subtitle (d.naumenko.a@gmail.com)
+    - f4dbd8c 2015-08-27 fixed domain set nss (sol@hiqdev.com)
+    - 1794982 2015-08-19 + domain/buy redirect (sol@hiqdev.com)
+    - d072fd0 2015-08-19 minor: fixed indenting (sol@hiqdev.com)
 - Added use of ClientSellerLink widget at host details
     - d751f9f 2015-08-30 used ClientSellerLink widget at host details (sol@hiqdev.com)
 - Added go to site link at domain details
     - 1de7446 2015-08-29 + go to site link (sol@hiqdev.com)
-- Fixed requires at composer.json
-    - 2bb123b 2015-08-28 Added dependencies on related projects (d.naumenko.a@gmail.com)
-    - 9e83d06 2015-08-29 - require yii2 (sol@hiqdev.com)
 - Added details/edit buttons at domain contacts
     - 1152284 2015-08-27 + details/edit buttons at domain contacts (sol@hiqdev.com)
-- Fixed breadcrumbs subtitle
-    - a1b37b0 2015-08-27 Fixed breadcrumbs subtitle (d.naumenko.a@gmail.com)
-- Fixed setting domain nameservers
-    - f4dbd8c 2015-08-27 fixed domain set nss (sol@hiqdev.com)
 - Fixed PHP warnings and deprecated
     - 426728d 2015-08-27 Fixed deprecated method calling syntax (d.naumenko.a@gmail.com)
     - 7ccb975 2015-08-26 fixed PHP warnings (sol@hiqdev.com)
@@ -24,9 +26,6 @@ hiqdev/hipanel-module-domain commits history
     - aa14c34 2015-08-19 Index page redone with actual standarts (d.naumenko.a@gmail.com)
     - bdb83ab 2015-08-19 Fix merge (andreyklochok@gmail.com)
     - d1c3a43 2015-08-19 Some label fix (andreyklochok@gmail.com)
-- Added domain buy redirect
-    - 1794982 2015-08-19 + domain/buy redirect (sol@hiqdev.com)
-    - d072fd0 2015-08-19 minor: fixed indenting (sol@hiqdev.com)
 - Fixed: many for first release
     - a8a28d0 2015-08-19 Some fixes on both inline and bulk actions (andreyklochok@gmail.com)
     - 665436e 2015-08-19 All inline actions are work (andreyklochok@gmail.com)
