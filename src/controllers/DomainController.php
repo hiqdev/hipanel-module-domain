@@ -32,9 +32,9 @@ class DomainController extends \hipanel\base\CrudController
             'view' => [
                 'class' => 'hipanel\actions\ViewAction',
                 'findOptions' => ['with_dns' => 1],
-                'data' => function ($action, $id) {
+                'data' => function ($action) {
                     return [
-                        'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $id]),
+                        'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $action->getId()]),
                         'pincodeModel' => new DynamicModel(['pincode']),
                     ];
                 },
