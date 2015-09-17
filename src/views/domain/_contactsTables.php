@@ -23,11 +23,11 @@ use yii\widgets\DetailView;
         <?= DetailView::widget([
             'model' => $contact,
             'attributes' => [
-                'name',
-                'email',
-                'organization',
-                'voice_phone',
-                'fax_phone',
+                'name:raw:' . Yii::t('app', 'Name'),
+                'email:email:' . Yii::t('app', 'Email'),
+                'organization:raw:' . Yii::t('app', 'Organization'),
+                'voice_phone:raw:' . Yii::t('app', 'Phone'),
+                'fax_phone:raw:' . Yii::t('app', 'Fax'),
             ]
         ]) ?>
     </div>

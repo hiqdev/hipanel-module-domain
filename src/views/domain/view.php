@@ -22,7 +22,7 @@ use yii\widgets\DetailView;
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
 $this->title    = Html::encode($model->domain);
-$this->subtitle = Yii::t('app','domain detailed information') . ' #'.$model->id;
+$this->subtitle = Yii::t('app','Domain detailed information') . ' #'.$model->id;
 $this->breadcrumbs->setItems([
     ['label' => Yii::t('app', 'Domains'), 'url' => ['index']],
     $this->title,
@@ -137,6 +137,7 @@ CSS
                                 'autorenewal',
                                 [
                                     'attribute' => 'authCode',
+                                    'label' => Yii::t('app', 'Auth code'),
                                     'value' => function ($model){
                                         return AuthCode::widget(['domainId' => $model->id]);
                                     },
