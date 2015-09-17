@@ -104,8 +104,6 @@ class Domain extends \hipanel\base\Model
         return $this->mergeAttributeLabels([
             'epp_client_id'         => Yii::t('app', 'EPP client ID'),
             'remoteid'              => Yii::t('app', 'Remote ID'),
-            'statuses'              => Yii::t('app', 'Statuses'),
-            'zone_id'               => Yii::t('app', 'Zone ID'),
             'domain'                => Yii::t('app', 'Domain Name'),
             'domain_like'           => Yii::t('app', 'Domain Name'),
             'note'                  => Yii::t('app', 'Notes'),
