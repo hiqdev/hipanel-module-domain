@@ -12,7 +12,7 @@ use hipanel\widgets\ClientSellerLink;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
-$this->subtitle = Yii::t('app','name server detailed information') . ' #'.$model->id;
+$this->subtitle = Yii::t('app','Name server detailed information') . ' #'.$model->id;
 $this->breadcrumbs->setItems([
     ['label' => Yii::t('app', 'Name servers'), 'url' => ['index']],
     $this->title,
