@@ -52,8 +52,34 @@ class DomainController extends \hipanel\base\CrudController
                 'success' => Yii::t('app', 'Nameservers changed'),
             ],
             'delete' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
+                'class' => 'hipanel\actions\SmartDeleteAction',
+                'scenario' => 'only-object',
                 'success' => Yii::t('app', 'Domain deleted'),
+            ],
+            'delete-agp' => [
+                'class' => 'hipanel\actions\SmartPerformAction',
+                'scenario' => 'only-object',
+                'success' => Yii::t('app', 'Domain deleted'),
+            ],
+            'enable-hold' => [
+                'class' => 'hipanel\actions\SmartPerformAction',
+                'scenario' => 'only-object',
+                'success' => Yii::t('app', 'Hold was enabled'),
+            ],
+            'disable-hold' => [
+                'class' => 'hipanel\actions\SmartPerformAction',
+                'scenario' => 'only-object',
+                'success' => Yii::t('app', 'Hold was disabled'),
+            ],
+            'enable-freeze' => [
+                'class' => 'hipanel\actions\SmartPerformAction',
+                'scenario' => 'only-object',
+                'success' => Yii::t('app', 'Freeze was enabled'),
+            ],
+            'disable-freeze' => [
+                'class' => 'hipanel\actions\SmartPerformAction',
+                'scenario' => 'only-object',
+                'success' => Yii::t('app', 'Freeze was disabled'),
             ],
             'OLD-set-ns' => [
                 'class' => 'hipanel\actions\SwitchAction',

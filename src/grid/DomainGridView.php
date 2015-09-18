@@ -18,6 +18,7 @@ use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use hipanel\modules\domain\models\Domain;
 
 class DomainGridView extends BoxedGridView
 {
@@ -25,9 +26,9 @@ class DomainGridView extends BoxedGridView
     {
         return [
             'domain'          => [
-                'class'     => MainColumn::className(),
-                'attribute' => 'domain',
-                'note'      => true,
+                'class'           => MainColumn::className(),
+                'attribute'       => 'domain',
+                'note'            => true,
                 'filterAttribute' => 'domain_like'
             ],
             'state'           => [
@@ -60,6 +61,7 @@ class DomainGridView extends BoxedGridView
                 'class'         => 'hiqdev\xeditable\grid\XEditableColumn',
                 'attribute'     => 'note',
                 'filter'        => true,
+                'url'           => Url::toRoute('set-note'),
                 'popover'       => Yii::t('app', 'Make any notes for your convenience'),
                 'pluginOptions' => [
                     'url' => 'set-note',
@@ -97,8 +99,60 @@ class DomainGridView extends BoxedGridView
             ],
             'actions'         => [
                 'class'    => ActionColumn::className(),
-                'template' => '{view}', // {state}
+                'template' => '{view} {delete-agp} {delete} {enable-lock} {disable-lock} {enable-freeze} {disable-freeze} {enable-hold} {disable-hold}', // {state}
                 'header'   => Yii::t('app', 'Actions'),
+                'buttons'  => [
+                    'delete-agp'    => function($url, $model, $key) {
+                        if (time() >= strtotime('+5 days', strtotime($model->created_date))) return '';
+                        if (strtotime('+1 year', time()) < strtotime($model->expires)) return '';
+                        return in_array(Domain::getZone($model->domain), ['com', 'net'])
+                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('app', 'Delete by AGP'), $url) : '';
+                    },
+                    'enable-lock'   => function($url, $model, $key) {
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                        } else {
+                            return '';
+                        }
+                    },
+                    'disable-lock'  => function($url, $model, $key) {
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                        } else {
+                            return '';
+                        }
+
+                    },
+                    'enable-freeze' => function($url, $model, $key) {
+                        if ($model->is_freezed) return '';
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                            return Html::a('<i class="fa fa-anchor"></i>' . Yii::t('app', 'Freeze domain'), $url);
+                        } else {
+                            return '';
+                        }
+                    },
+                    'disable-freeze'=> function($url, $model, $key) {
+                        if (!$model->is_freezed) return '';
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                            return Html::a('<i class="fa fa-unlock-alt"></i>' . Yii::t('app', 'Unfreeze domain'), $url);
+                        } else {
+                            return '';
+                        }
+                    },
+                    'enable-hold'   => function($url, $model, $key, $class) {
+                        if ($model->is_holded) return '';
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                            return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('app', 'Enable Hold'), $url);
+                            return '';
+                        }
+                    },
+                    'disable-hold'  => function($url, $model, $key) {
+                        if (!$model->is_holded) return '';
+                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                            return Html::a('<i class="fa fa-bolt"></i>' . Yii::t('app', 'Disable Hold'), $url);
+                        } else {
+                            return '';
+                        }
+                    },
+                ],
             ],
         ];
     }

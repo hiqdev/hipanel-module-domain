@@ -16,7 +16,7 @@ Pjax::begin(array_merge(Yii::$app->params['pjax'], [
 echo Html::a(
     '<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'),
     ['sync', 'id' => $model->id],
-    ['onClick' => new JsExpression("$(this).button('loading');")]
+    ['onClick' => new JsExpression("$(this).html('<i class=\"ion-ios-loop-strong\">" . Yii::t('app', 'Loading...') . "');")]
 );
 
 Pjax::end();

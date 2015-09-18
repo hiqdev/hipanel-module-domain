@@ -96,7 +96,7 @@ CSS
 
                         <?php Modal::end() ?>
                     </li>
-                <?php if (Yii::$app->user->can('manage')) : ?>
+                <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_sync_button', compact('model')) ?></li>
                 <?php endif ?>
                 </ul>

@@ -89,7 +89,7 @@ class Domain extends \hipanel\base\Model
             [['id', 'domain', 'autorenewal'],                   'safe', 'on' => 'set-autorenewal'],
             [['id', 'domain', 'whois_protected'],               'safe', 'on' => 'set-whois-protect'],
             [['id', 'domain', 'is_secured'],                    'safe', 'on' => 'set-lock'],
-            [['id', 'domain'],                                  'safe', 'on' => 'sync'],
+            [['id', 'domain'],                                  'safe', 'on' => ['sync', 'only-object']],
 
             [['id', 'domain', 'nameservers'],                   'safe', 'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {
