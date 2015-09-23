@@ -3,7 +3,8 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
-- Fixed minor issues
+- Added Hold, Freeze, Delete actions
+- Fixed translation and minor issues
 - Added use of ClientSellerLink widget at host details
 - Added go to site link at domain details
 - Added details/edit buttons at domain contacts

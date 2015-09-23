@@ -3,7 +3,16 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
-- Fixed minor issues
+- Added Hold, Freeze, Delete actions
+    - 81e0c14 2015-09-18 + new action: Hold, Freeze, Delete (bladeroot@gmail.com)
+- Fixed translation and minor issues
+    - f97108a 2015-09-23 improved index page look (sol@hiqdev.com)
+    - e6340c9 2015-09-23 DomainGridView - enable-hold removed extra argument in callback function (d.naumenko.a@gmail.com)
+    - 9792fc7 2015-09-23 + new function and action (bladeroot@gmail.com)
+    - 1b8d518 2015-09-18 * improve language pack (bladeroot@gmail.com)
+    - 53e7450 2015-09-17 * improve language pack; - remove unnessary lines (bladeroot@gmail.com)
+    - aa20645 2015-09-17 * improve language (bladeroot@gmail.com)
+    - 552dc85 2015-09-16 fixed problem with ViewAction data closure (sol@hiqdev.com)
     - 359d017 2015-09-15 localized menu (sol@hiqdev.com)
     - 0969cab 2015-09-09 PSR fix (andreyklochok@gmail.com)
     - 2bb123b 2015-08-28 Added dependencies on related projects (d.naumenko.a@gmail.com)
