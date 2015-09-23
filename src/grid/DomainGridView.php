@@ -137,7 +137,7 @@ class DomainGridView extends BoxedGridView
                             return '';
                         }
                     },
-                    'enable-hold'   => function($url, $model, $key, $class) {
+                    'enable-hold'   => function($url, $model, $key) {
                         if ($model->is_holded) return '';
                         if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
                             return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('app', 'Enable Hold'), $url);
