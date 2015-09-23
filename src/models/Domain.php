@@ -27,71 +27,29 @@ class Domain extends \hipanel\base\Model
     /** @inheritdoc */
     public function rules () {
         return [
-            [[
-                'id',
-                'domain',
-                'statuses',
-                'name',
-                'zone_id',
-                'zone',
-                'state',
-                'block',
-                'lastop',
-                'seller',
-                'seller_name',
-                'seller_id',
-                'client_id',
-                'client',
-                'client_name',
-                'remoteid',
-                'prem_expires',
-                'epp_client_id',
-                'nameservers',
-                'created_date',
-                'updated_date',
-                'transfer_date',
-                'expiration_date',
-                'expires',
-                'since',
-                'operated',
-                'is_holded',
-                'is_freezed',
-                'is_premium',
-                'whois_protected',
-                'is_secured',
-                'autorenewal',
-                'registrant',
-                'admin',
-                'tech',
-                'billing',
-                'state_label',
-                'registered',
-                'foa_sent_to',
-                'prem_daysleft',
-                'daysleft',
-                'premium_autorenewal',
-                'url_fwval',
-                'mailval',
-                'parkval',
-                'is_expired',
-                'expires_soon',
-                'soa',
-                'dns',
-                'is_served',
-                'counters',
-            ], 'safe'],
-            [['note'],                                          'safe', 'on' => ['set-note','default']],
+            [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'],                      'integer'],
+            [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'],                                  'safe'],
+            [['seller', 'seller_name', 'client', 'client_name'],                                                        'safe'],
+            [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'],  'date'],
+            [['registered', 'operated'],                                                                                'date'],
+            [['is_expired', 'is_served', 'is_holded', 'is_freezed', 'is_premium', 'is_secured','whois_protected'],      'boolean'],
+            [['premium_autorenewal', 'expires_soon', 'autorenewal'],                                                    'boolean'],
+            [['foa_sent_to'],                                                                                           'email'],
+            [['url_fwval' ,'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
+            [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
+            [['block', 'epp_client_id', 'nameservers'],                                                                 'safe'],
+            [['note'],                                          'safe',     'on' => ['set-note','default']],
 
-            [['registrant','admin','tech','billing'],           'safe', 'on' => ['set-contacts']],
+            [['registrant','admin','tech','billing'],           'safe',     'on' => ['set-contacts']],
             [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
 
-            [['enable'],                                        'safe', 'on' => ['set-lock','set-whois-protect']],
-            [['id', 'domain', 'autorenewal'],                   'safe', 'on' => 'set-autorenewal'],
-            [['id', 'domain', 'whois_protected'],               'safe', 'on' => 'set-whois-protect'],
-            [['id', 'domain', 'is_secured'],                    'safe', 'on' => 'set-lock'],
-            [['id', 'domain'],                                  'safe', 'on' => ['sync', 'only-object']],
+            [['enable'],                                        'safe',     'on' => ['set-lock','set-whois-protect']],
+            [['id', 'domain', 'autorenewal'],                   'safe',     'on' => 'set-autorenewal'],
+            [['id', 'domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
+            [['id', 'domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
+            [['id', 'domain'],                                  'safe',     'on' => ['sync', 'only-object']],
 
-            [['id', 'domain', 'nameservers'],                   'safe', 'on' => 'set-nss'],
+            [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {
                 return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'OLD-set-ns'],
@@ -137,5 +95,14 @@ class Domain extends \hipanel\base\Model
     public static function getZone($domain)
     {
         return substr($domain, strpos($domain,'.')+1);
+    }
+
+    public static function isDomainOwner ($model) {
+         return Yii::$app->user->is($model->client_id)
+             || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id == $model->client_id);
+    }
+
+    public static function notDomainOwner ($model) {
+        return Yii::$app->user->not($model->client_id) && (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id != $model->client_id);
     }
 }

@@ -52,38 +52,66 @@ class DomainController extends \hipanel\base\CrudController
                 'success' => Yii::t('app', 'Nameservers changed'),
             ],
             'delete' => [
-                'class' => 'hipanel\actions\SmartDeleteAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Domain deleted'),
+                'class'     => 'hipanel\actions\SmartDeleteAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Domain deleted'),
+                'error'     => Yii::t('app', 'Failed delete domain'),
             ],
             'delete-agp' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Domain deleted'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Domain deleted'),
+                'error'     => Yii::t('app', 'Failed delete domain'),
+            ],
+            'cancel-transfer'=> [
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Domain transfer was canceled'),
+                'error'     => Yii::t('app', 'Failed cancel transfer domain'),
+            ],
+            'reject-transfer'=> [
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Domain transfer was rejected'),
+                'error'     => Yii::t('app', 'Failed reject transfer domain'),
+            ],
+            'approve-transfer'=> [
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Domain transfer was approved'),
+                'error'     => Yii::t('app', 'Failed approve transfer domain'),
+            ],
+            'notify-transfer-in'=> [
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'FOA sended'),
+                'error'     => Yii::t('app', 'Failed FOA send'),
             ],
             'enable-hold' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Hold was enabled'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Hold was enabled'),
+                'error'     => Yii::t('app', 'Failed enabling Hold'),
             ],
             'disable-hold' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Hold was disabled'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Hold was disabled'),
+                'error'     => Yii::t('app', 'Failed disabling Hold'),
             ],
             'enable-freeze' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Freeze was enabled'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Freeze was enabled'),
             ],
             'disable-freeze' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Freeze was disabled'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'only-object',
+                'success'   => Yii::t('app', 'Freeze was disabled'),
             ],
             'OLD-set-ns' => [
-                'class' => 'hipanel\actions\SwitchAction',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SwitchAction',
+                'beforeSave'=> function ($action) {
                     $templateModel = null;
                     $template = Yii::$app->request->post('check');
                     foreach ($action->collection->models as $model) {
@@ -116,10 +144,10 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Premium Autorenewal
             'set-paid-feature-autorenewal' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'scenario' => 'set-autorenewal',
-                'success' => Yii::t('app', 'Premium autorenewal has been changed'),
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'scenario'  => 'set-autorenewal',
+                'success'   => Yii::t('app', 'Premium autorenewal has been changed'),
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 1;
                     }
@@ -127,24 +155,24 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Autorenewal
             'set-autorenewal' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Autorenewal has been change'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Autorenewal has been change'),
             ],
             'enable-autorenewal' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Autorenewal has been enabled'),
-                'scenario' => 'set-autorenewal',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Autorenewal has been enabled'),
+                'scenario'  => 'set-autorenewal',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 1;
                     }
                 },
             ],
             'disable-autorenewal' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Autorenewal has been disabled'),
-                'scenario' => 'set-autorenewal',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Autorenewal has been disabled'),
+                'scenario'  => 'set-autorenewal',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 0;
                     }
@@ -152,24 +180,24 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Whois protect
             'set-whois-protect' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'whois protect is changed'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'whois protect is changed'),
             ],
             'enable-whois-protect' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'whois protect is enabled'),
-                'scenario' => 'set-whois-protect',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'whois protect is enabled'),
+                'scenario'  => 'set-whois-protect',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->enable = 1;
                     }
                 },
             ],
             'disable-whois-protect' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'whois protect is disabled'),
-                'scenario' => 'set-whois-protect',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'whois protect is disabled'),
+                'scenario'  => 'set-whois-protect',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->enable = 0;
                     }
@@ -177,37 +205,37 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Lock
             'set-lock' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Records was changed'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Records was changed'),
             ],
             'enable-lock' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Lock was enabled'),
-                'scenario' => 'set-lock',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Lock was enabled'),
+                'scenario'  => 'set-lock',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->enable = 1;
                     }
                 },
             ],
             'disable-lock' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Lock was disabled'),
-                'scenario' => 'set-lock',
-                'beforeSave' => function ($action) {
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Lock was disabled'),
+                'scenario'  => 'set-lock',
+                'beforeSave'=> function ($action) {
                     foreach ($action->collection->models as $model) {
                         $model->enable = 0;
                     }
                 },
             ],
             'sync' => [
-                'class' => 'hipanel\actions\SmartPerformAction',
-                'success' => Yii::t('app', 'Domain contacts synced'),
+                'class'     => 'hipanel\actions\SmartPerformAction',
+                'success'   => Yii::t('app', 'Domain contacts synced'),
             ],
 
             'buy' => [
-                'class' => 'hipanel\actions\RedirectAction',
-                'url' => Yii::$app->params['orgUrl'],
+                'class'     => 'hipanel\actions\RedirectAction',
+                'url'       => Yii::$app->params['orgUrl'],
             ],
 
 //            'change-password' => [
