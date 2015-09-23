@@ -61,7 +61,6 @@ class DomainGridView extends BoxedGridView
                 'class'         => 'hiqdev\xeditable\grid\XEditableColumn',
                 'attribute'     => 'note',
                 'filter'        => true,
-                'url'           => Url::toRoute('set-note'),
                 'popover'       => Yii::t('app', 'Make any notes for your convenience'),
                 'pluginOptions' => [
                     'url' => 'set-note',
@@ -99,43 +98,104 @@ class DomainGridView extends BoxedGridView
             ],
             'actions'         => [
                 'class'    => ActionColumn::className(),
-                'template' => '{view} {delete-agp} {delete} {enable-lock} {disable-lock} {enable-freeze} {disable-freeze} {enable-hold} {disable-hold}', // {state}
+                'template' => '{view} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
                 'header'   => Yii::t('app', 'Actions'),
                 'buttons'  => [
+                    'notify-transfer-in' => function($url, $model, $key) {
+                        return $model->state == 'preincoming'
+                            ? Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('app', 'Send FOA again'), $url, [
+                                'data' => [
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
+                    },
+                    'approve-preincoming' => function($url, $model, $key) {
+                    },
+                    'reject-preincoming' => function($url, $model, $key) {
+                    },
+                    'approve-transfer' => function($url, $model, $key) {
+                        return ($model->state == 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                            ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('app', 'Approve transfer'), $url, [
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
+                    },
+                    'reject-transfer' => function($url, $model, $key) {
+                        return $model->state == 'outgoing'
+                            ? Html::a('<i class="fa fa-anchor"></i>' . Yii::t('app', 'Reject transfer'), $url, [
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure you want to reject outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
+                    },
+                    'cancel-transfer' => function($url, $model, $key) {
+                        return $model->state == 'incoming'
+                            ? Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('app', 'Cancel transfer'), $url, [
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
+                    },
+                    'sync'          => function($url, $model, $key) {
+                        return (in_array($model->state, ['ok', 'expired']) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                            ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'), $url, [
+                                'data' => [
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
+                    },
+                    'delete'        => function($url, $model, $key) {
+                        return in_array($model->state, ['ok', 'expired', 'outgoing']) ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('yii', 'Delete'), $url, [
+                                'title'        => Yii::t('yii', 'Delete'),
+                                'aria-label'   => Yii::t('yii', 'Delete'),
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                        ]) : '';
+                    },
                     'delete-agp'    => function($url, $model, $key) {
+                        if (!in_array($model->state, ['ok'])) return '';
                         if (time() >= strtotime('+5 days', strtotime($model->created_date))) return '';
                         if (strtotime('+1 year', time()) < strtotime($model->expires)) return '';
                         return in_array(Domain::getZone($model->domain), ['com', 'net'])
-                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('app', 'Delete by AGP'), $url) : '';
-                    },
-                    'enable-lock'   => function($url, $model, $key) {
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                        } else {
-                            return '';
-                        }
-                    },
-                    'disable-lock'  => function($url, $model, $key) {
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                        } else {
-                            return '';
-                        }
-
+                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('app', 'Delete by AGP'), $url, [
+                                'title'        => Yii::t('app', 'Delete by AGP'),
+                                'aria-label'   => Yii::t('app', 'Delete by AGP'),
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
                     },
                     'enable-freeze' => function($url, $model, $key) {
-                        if ($model->is_freezed) return '';
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                            return Html::a('<i class="fa fa-anchor"></i>' . Yii::t('app', 'Freeze domain'), $url);
-                        } else {
-                            return '';
-                        }
+                        return (!$model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                            ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('app', 'Freeze domain'), $url, [
+                                'data' => [
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
                     },
                     'disable-freeze'=> function($url, $model, $key) {
-                        if (!$model->is_freezed) return '';
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                            return Html::a('<i class="fa fa-unlock-alt"></i>' . Yii::t('app', 'Unfreeze domain'), $url);
-                        } else {
-                            return '';
-                        }
+                        return ($model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                            ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('app', 'Unfreeze domain'), $url, [
+                                'data' => [
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
                     },
                     'enable-hold'   => function($url, $model, $key) {
                         if ($model->is_holded) return '';
@@ -145,12 +205,13 @@ class DomainGridView extends BoxedGridView
                         }
                     },
                     'disable-hold'  => function($url, $model, $key) {
-                        if (!$model->is_holded) return '';
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                            return Html::a('<i class="fa fa-bolt"></i>' . Yii::t('app', 'Disable Hold'), $url);
-                        } else {
-                            return '';
-                        }
+                        return ($model->is_holded && in_array($model->state, ['ok', 'expired']) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                            ? Html::a('<i class="fa fa-link"></i>' . Yii::t('app', 'Disable Hold'), $url, [
+                                'data' => [
+                                    'method'  => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]) : '';
                     },
                 ],
             ],
