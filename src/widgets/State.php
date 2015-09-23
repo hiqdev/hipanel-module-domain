@@ -13,7 +13,7 @@ class State extends \hipanel\widgets\Type
     public $model = [];
     public $values = [];
     public $defaultValues = [
-        'info'      => ['ok'],
+        'none'   => ['ok'],
         'danger'    => ['blocked','expired'],
         'warning'   => [],
     ];
