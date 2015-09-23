@@ -25,17 +25,17 @@ class DomainGridView extends BoxedGridView
     static public function defaultColumns()
     {
         return [
-            'domain'          => [
+            'domain' => [
                 'class'           => MainColumn::className(),
                 'attribute'       => 'domain',
                 'note'            => true,
                 'filterAttribute' => 'domain_like'
             ],
-            'state'           => [
+            'state' => [
                 'class'         => RefColumn::className(),
                 'format'        => 'raw',
                 'gtype'         => 'state,domain',
-                'headerOptions' => ['style' => 'width: 1em'],
+                'filterInputOptions' => ['style' => 'width:120px'],
                 'value'         => function ($model) {
                     return State::widget(compact('model'));
                 }
