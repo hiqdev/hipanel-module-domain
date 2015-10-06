@@ -3,9 +3,12 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Deleted DomainValidator, moved to hipanel-core
+    - b36ede5 2015-10-06 moved DomainValidator to hipanel-core (sol@hiqdev.com)
 - Added Hold, Freeze, Delete actions
     - 81e0c14 2015-09-18 + new action: Hold, Freeze, Delete (bladeroot@gmail.com)
 - Fixed translation and minor issues
+    - d8b65a4 2015-09-23 used none Label type for State and Expires columns (sol@hiqdev.com)
     - f97108a 2015-09-23 improved index page look (sol@hiqdev.com)
     - e6340c9 2015-09-23 DomainGridView - enable-hold removed extra argument in callback function (d.naumenko.a@gmail.com)
     - 9792fc7 2015-09-23 + new function and action (bladeroot@gmail.com)

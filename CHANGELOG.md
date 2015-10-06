@@ -3,6 +3,7 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Deleted DomainValidator, moved to hipanel-core
 - Added Hold, Freeze, Delete actions
 - Fixed translation and minor issues
 - Added use of ClientSellerLink widget at host details
