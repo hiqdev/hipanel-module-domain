@@ -234,7 +234,7 @@ CSS
                             ]); ?>
                         <?php else : ?>
                             <div class="callout callout-warning">
-                                <p><?= Yii::t('app', 'There is no DNS-records') ?></p>
+                                <p><?= Yii::t('app', 'There are no DNS-records') ?></p>
                             </div>
 
                         <?php endif; ?>
