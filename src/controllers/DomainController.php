@@ -21,6 +21,10 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'add-to-cart-renewal' => [
+                'class' => 'hipanel\actions\AddToCartAction',
+                'productClass' => 'hipanel\modules\domain\models\DomainRenewalProduct',
+            ],
             'index' => [
                 'class' => 'hipanel\actions\IndexAction',
                 'data' => function ($action) {
