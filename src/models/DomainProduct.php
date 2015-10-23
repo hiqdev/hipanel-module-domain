@@ -11,7 +11,7 @@ class DomainProduct extends CartPosition
      */
     public $model;
 
-    public $icon = '<i class="fa fa-server text-muted"></i>';
+    public $icon = '<i class="fa fa-globe"></i>'; //'<i class="fa fa-server text-muted"></i>';
 
 //    public function getName() {
 //        return $this->model->domain;
