@@ -19,4 +19,8 @@ class DomainRenewalProduct extends DomainProduct
         return $result;
     }
 
+    public function getId()
+    {
+        return implode('_', ['domain', 'renewal', $this->_model->id]);
+    }
 }
