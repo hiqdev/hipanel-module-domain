@@ -3,6 +3,7 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Added domain products for cart
 - Deleted DomainValidator, moved to hipanel-core
 - Added Hold, Freeze, Delete actions
 - Fixed translation and minor issues

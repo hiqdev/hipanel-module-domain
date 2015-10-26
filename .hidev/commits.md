@@ -3,6 +3,12 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Added domain products for cart
+    - 027f210 2015-10-23 Change icon in Product Model (andreyklochok@gmail.com)
+    - a113416 2015-10-23 Add Cart functionality (andreyklochok@gmail.com)
+    - 0d5594b 2015-10-23 Work on DomainProduct (andreyklochok@gmail.com)
+    - 1ec293c 2015-10-23 Add DomainRenewProduct (andreyklochok@gmail.com)
+    - 73349c8 2015-10-22 Add DomainProduct (andreyklochok@gmail.com)
 - Deleted DomainValidator, moved to hipanel-core
     - b36ede5 2015-10-06 moved DomainValidator to hipanel-core (sol@hiqdev.com)
 - Added Hold, Freeze, Delete actions
