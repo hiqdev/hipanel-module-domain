@@ -1,0 +1,1 @@
+<?php \yii\helpers\VarDumper::dump($domains, 10, true); ?>

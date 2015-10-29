@@ -10,6 +10,7 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -258,6 +259,28 @@ class DomainController extends \hipanel\base\CrudController
 //                ],
 //            ],
         ];
+    }
+
+    public function actionCheckDomain()
+    {
+        $tariffs = Tariff::find()->joinWith('resources')
+            ->andFilterWhere(['type' => 'domain'])
+            ->andFilterWhere(['seller' => 'ahnames'])
+            ->all();
+
+
+
+        $data = Tariff::perform('GetAvailableInfo', [
+            'type' => 'domain',
+            'seller' => 'ahnames',
+        ], true);
+
+
+
+        return $this->render('checkDomain', [
+            'domains' => $data,
+            'tariffs' => $tariffs,
+        ]);
     }
 
     public function actionGetPassword()

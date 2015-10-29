@@ -34,6 +34,10 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                         'label' => Yii::t('app', 'Contacts'),
                         'url'   => ['/client/contact/index'],
                     ],
+                    'check-domain' => [
+                        'label' => Yii::t('app', 'Check domain'),
+                        'url'   => ['/domain/domain/check-domain'],
+                    ],
 //                  'seo' => [
 //                      'label' => Yii::t('app', 'SEO'),
 //                      'url'   => ['/domain/domain/index'],
