@@ -10,12 +10,14 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Yii;
 use yii\base\DynamicModel;
+use yii\data\ArrayDataProvider;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -261,25 +263,39 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+    /**
+     * @return string
+     */
     public function actionCheckDomain()
     {
-        $tariffs = Tariff::find()->joinWith('resources')
+        $tariffs = Tariff::find(['scenario' => 'get-available-info'])
+            ->joinWith('resources')
             ->andFilterWhere(['type' => 'domain'])
             ->andFilterWhere(['seller' => 'ahnames'])
-            ->all();
+            ->one();
+        $zones = array_filter($tariffs->resources, function($resource) {
+            return ($resource->type == Resource::TYPE_DOMAIN_REGISTRATION);
+        });
+        $dropDownZones = [];
+        foreach ($zones as $obj) {
+            if ($obj->zone !== null) {
+                $dropDownZones[$obj->zone] = '.' . $obj->zone;
+            }
+        }
 
+        $domainCheckDataProvider = new ArrayDataProvider();
 
-
-        $data = Tariff::perform('GetAvailableInfo', [
-            'type' => 'domain',
-            'seller' => 'ahnames',
-        ], true);
-
-
+        if (Yii::$app->request->isPost) {
+            $res = Domain::perform('Check', ['domains' => 'ukr.net'], true);
+//            $res = Domain::find(['scenario' => 'check'])
+//                ->andFilterWhere(['domains' => 'asdf.com.ua'])
+//                ->all();
+            \yii\helpers\VarDumper::dump($res, 10, true);die();
+        }
 
         return $this->render('checkDomain', [
-            'domains' => $data,
-            'tariffs' => $tariffs,
+            'dropDownZonesOptions' => $dropDownZones,
+            'domainCheckDataProvider' => $domainCheckDataProvider,
         ]);
     }
 
