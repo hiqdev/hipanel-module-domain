@@ -1,30 +1,40 @@
 <?php
 use hipanel\grid\GridView;
+use hipanel\helpers\Url;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use hipanel\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
 ?>
-
+<?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"><?= Yii::t('app', 'Domain check'); ?></h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <?= Html::beginForm('', 'post', ['class' => 'inline-form']) ?>
+        <?php $form = ActiveForm::begin([
+            'id' => 'check-domain',
+            'fieldConfig' => [
+                'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            ],
+            'enableAjaxValidation' => true,
+            'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
+        ]) ?>
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
-                    <?= Html::textInput('domain_name', $_POST['domain_name'], ['class' => 'form-control input-lg', 'placeholder' => Yii::t('app', 'Domain search...')]) ?>
+                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
                 </div>
             </div>
             <!-- /.col-md-8 -->
             <div class="col-md-3">
                 <div class="form-group">
-                    <?= Html::dropDownList('zone', $_POST['zone'], $dropDownZonesOptions, ['class' => 'form-control input-lg']) ?>
+                    <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
                 </div>
             </div>
             <!-- /.col-md-3 -->
@@ -32,7 +42,7 @@ $this->breadcrumbs->setItems([
             <!-- /.col-md-1 -->
         </div>
         <!-- /.row -->
-        <?= Html::endForm(); ?>
+        <?php ActiveForm::end() ?>
     </div>
     <!-- /.box-body -->
 </div><!-- /.box -->
@@ -67,3 +77,4 @@ $this->breadcrumbs->setItems([
     </div>
     <!-- /.box-body -->
 </div><!-- /.box -->
+<?php Pjax::end() ?>

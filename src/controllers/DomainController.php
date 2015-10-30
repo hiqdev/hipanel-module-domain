@@ -268,6 +268,9 @@ class DomainController extends \hipanel\base\CrudController
      */
     public function actionCheckDomain()
     {
+        $model = new Domain();
+        $model->scenario = 'check-domain';
+
         $tariffs = Tariff::find(['scenario' => 'get-available-info'])
             ->joinWith('resources')
             ->andFilterWhere(['type' => 'domain'])
@@ -290,10 +293,10 @@ class DomainController extends \hipanel\base\CrudController
 //            $res = Domain::find(['scenario' => 'check'])
 //                ->andFilterWhere(['domains' => 'asdf.com.ua'])
 //                ->all();
-            \yii\helpers\VarDumper::dump($res, 10, true);die();
         }
 
         return $this->render('checkDomain', [
+            'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
             'domainCheckDataProvider' => $domainCheckDataProvider,
         ]);

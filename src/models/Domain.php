@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
+use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
 use Yii;
 
@@ -48,6 +49,10 @@ class Domain extends \hipanel\base\Model
             [['id', 'domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
             [['id', 'domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
             [['id', 'domain'],                                  'safe',     'on' => ['sync', 'only-object']],
+
+            // Check domain
+            [['domain'], DomainPartValidator::className(), 'on' => ['check-domain']],
+            [['zone'], 'safe', 'on' => ['check-domain']],
 
             [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {
