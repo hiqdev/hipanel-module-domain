@@ -12,6 +12,7 @@ use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
+use hiqdev\hiart\ActiveDataProvider;
 use hiqdev\hiart\Collection;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -263,6 +264,30 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+    public function actionCheck()
+    {
+        $domain = Yii::$app->request->post('domain');
+        $result = Domain::perform('Check', ['domains' => $domain], true);
+        return "<td>" . $domain . "</td><td>com</td><td>123</td><td>asdf</td>";
+    }
+
+    public function actionTestSleep()
+    {
+        sleep(5);
+        return 'wake';
+    }
+
+    public function actionTestPerform()
+    {
+        $result = Domain::perform('Check', ['domains' => 'test' . microtime() . '.com'], true);
+        return 'wake';
+    }
+
+    public function actionTestFastAnswer()
+    {
+        return 'fast ok';
+    }
+
     /**
      * @return string
      */
@@ -277,7 +302,7 @@ class DomainController extends \hipanel\base\CrudController
             ->andFilterWhere(['seller' => 'ahnames'])
             ->one();
         $zones = array_filter($tariffs->resources, function($resource) {
-            return ($resource->type == Resource::TYPE_DOMAIN_REGISTRATION);
+            return ($resource->zone != null && $resource->type == Resource::TYPE_DOMAIN_REGISTRATION);
         });
         $dropDownZones = [];
         foreach ($zones as $obj) {
@@ -288,11 +313,30 @@ class DomainController extends \hipanel\base\CrudController
 
         $domainCheckDataProvider = new ArrayDataProvider();
 
-        if (Yii::$app->request->isPost) {
-            $res = Domain::perform('Check', ['domains' => 'ukr.net'], true);
-//            $res = Domain::find(['scenario' => 'check'])
-//                ->andFilterWhere(['domains' => 'asdf.com.ua'])
-//                ->all();
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            $domains = [$model->domain . '.' . $model->zone];
+            foreach ($dropDownZones as $zone => $label) {
+                $domains[] = $model->domain . '.' . $zone;
+            }
+//            $data = Yii::$app->get('cache')->getTimeCached(120, [$domains], function ($domains) use ($model) {
+//                return $model->perform('Check', ['domains' => implode(',', array_unique($domains))], true);
+//            });
+            $results = [];
+            foreach ($domains as $domain) {
+                foreach ($zones as $resource) {
+                    if ($resource->zone == substr($domain, strpos($domain, '.')+1)) {
+                        $tariff = $resource;
+                        break;
+                    }
+                }
+                $results[] = new Domain([
+                    'domain' => $domain,
+                    'is_available' => (bool)1,
+                    'zone' => substr($domain, strpos($domain, '.') + 1),
+                    'resource' => $tariff
+                ]);
+            }
+            $domainCheckDataProvider->setModels($results);
         }
 
         return $this->render('checkDomain', [
