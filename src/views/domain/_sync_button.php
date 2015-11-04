@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 
 Pjax::begin(array_merge(Yii::$app->params['pjax'], [
+    'id' => 'domain-view-sync-button',
     'enablePushState' => false,
     'clientOptions'   => [
         'type' => 'POST',
