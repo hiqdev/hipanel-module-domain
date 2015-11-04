@@ -9,6 +9,8 @@ namespace hipanel\modules\domain\controllers;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
+use hipanel\modules\dns\controllers\ZoneController;
+use hipanel\modules\dns\models\Record;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
@@ -34,16 +36,6 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'stateData' => $action->controller->getStateData(),
-                    ];
-                },
-            ],
-            'view' => [
-                'class' => 'hipanel\actions\ViewAction',
-                'findOptions' => ['with_dns' => 1],
-                'data' => function ($action) {
-                    return [
-                        'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $action->getId()]),
-                        'pincodeModel' => new DynamicModel(['pincode']),
                     ];
                 },
             ],
@@ -264,6 +256,7 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+<<<<<<< HEAD
     public function actionCheck()
     {
         $domain = Yii::$app->request->post('domain');
@@ -286,6 +279,16 @@ class DomainController extends \hipanel\base\CrudController
     public function actionTestFastAnswer()
     {
         return 'fast ok';
+    }
+
+    public function actionView ($id) {
+        $model = $this->newModel()->find()->with('dnsRecords')->where(['id' => $id])->one();
+
+        return $this->render('view', [
+            'model' => $model,
+            'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $id]),
+            'pincodeModel' => new DynamicModel(['pincode']),
+        ]);
     }
 
     /**

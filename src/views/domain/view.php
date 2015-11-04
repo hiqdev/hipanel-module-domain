@@ -13,6 +13,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
@@ -160,7 +161,7 @@ CSS
                 <!--                    <div class=" tab-pane" id="authorization-code"></div>-->
 
                 <!-- DNS records -->
-                <div class=" tab-pane" id="dns-records">
+                <div class="tab-pane" id="dns-records">
                     <?= DomainGridView::detailView([
                         'model' => $model,
                         'boxed' => false,
@@ -203,34 +204,28 @@ CSS
 //                                ]
                         ],
                     ]); ?>
-                    <?php if (!empty($model->dns)) : ?>
-                        <?= GridView::widget([
-                            'dataProvider' => (new \yii\data\ArrayDataProvider([
-                                'allModels' => $model->dns,
-                            ])),
-                            'layout' => "{items}\n{pager}",
-                            'columns' => [
-                                [
-                                    'attribute' => 'name',
-                                    'label' => Yii::t('app', 'Domain'),
-                                ],
-                                [
-                                    'attribute' => 'type',
-                                    'value' => function ($model, $key, $index, $column) {
-                                        return mb_strtoupper($model['type']);
-                                    },
-                                ],
-                                [
-                                    'attribute' => 'value',
-                                    'label' => false,
-                                ],
-                            ],
-                        ]); ?>
-                    <?php else : ?>
-                        <div class="callout callout-warning">
-                            <p><?= Yii::t('app', 'There are no DNS-records') ?></p>
-                        </div>
+                    <?php if (Yii::$app->hasModule('dns')): ?>
+                        <?php
+                        Pjax::begin(['id' => 'dns_zone_view', 'enablePushState' => false, 'enableReplaceState' => false]);
+                        $url = Json::htmlEncode(Url::to(['@dns/zone/view', 'id' => $model->id]));
 
+                        $this->registerJs("
+                            $('a[data-toggle=tab]').filter(function () {
+                                return $(this).attr('href') == '#dns-records';
+                            }).on('shown.bs.tab', function (e) {
+                                var tab = $(e.target);
+                                $.pjax({url: $url, container: '#dns_zone_view', 'push': false, 'replace': false});
+                                console.log(tab);
+                            })
+                        ");
+                        Pjax::end();
+                        ?>
+<!--                        --><?//= $this->render('dns/zone/view', [
+//                            'model' => $model,
+//                            'recordsDataProvider' => (new \yii\data\ArrayDataProvider([
+//                                'allModels' => $model->dnsRecords,
+//                            ])),
+//                        ]); ?>
                     <?php endif; ?>
                 </div>
 

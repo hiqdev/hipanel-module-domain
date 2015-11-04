@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
+use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
 use Yii;
@@ -114,4 +115,9 @@ class Domain extends \hipanel\base\Model
     public static function notDomainOwner ($model) {
         return Yii::$app->user->not($model->client_id) && (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id != $model->client_id);
     }
+
+    public function getDnsRecords() {
+        return $this->hasMany(Record::className(), ['hdomain_id' => 'id']);
+    }
+
 }
