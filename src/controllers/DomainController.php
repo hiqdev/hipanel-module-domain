@@ -301,7 +301,7 @@ class DomainController extends \hipanel\base\CrudController
             ->andFilterWhere(['type' => 'domain'])
             ->andFilterWhere(['seller' => 'ahnames'])
             ->one();
-        $zones = array_filter($tariffs->resources, function($resource) {
+        $zones = array_filter($tariffs->resources ? : [], function($resource) {
             return ($resource->zone != null && $resource->type == Resource::TYPE_DOMAIN_REGISTRATION);
         });
         $dropDownZones = [];

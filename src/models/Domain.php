@@ -52,6 +52,7 @@ class Domain extends \hipanel\base\Model
 
             // Check domain
             [['domain'], DomainPartValidator::className(), 'on' => ['check-domain']],
+            [['domain', 'zone'], 'required', 'on' => ['check-domain']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
             [['is_available'], 'boolean', 'on' => ['check-domain']],

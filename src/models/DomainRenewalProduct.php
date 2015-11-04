@@ -23,14 +23,4 @@ class DomainRenewalProduct extends DomainProduct
     {
         return implode('_', ['domain', 'renewal', $this->_model->id]);
     }
-
-    public function getQuantityOptions()
-    {
-        $result = [];
-        foreach ([1,2,3,4,5,6,7,8,9,10] as $n) {
-            $result[$n] = Yii::t('app', '{0, plural, one{# year} other{# years}}', $n);
-        }
-
-        return $result;
-    }
 }

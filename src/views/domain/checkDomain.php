@@ -98,20 +98,20 @@ $this->registerJs(<<<'JS'
     };
 })(jQuery, window, document);
 
-jQuery(document).on('pjax:complete', function() {
-    $('.domainsCheck').domainsCheck({
-        domainRowClass: '.check-item',
-        success: function(data, domain, element) {
-            console.log('123');
-            var $elem = $(element).find("tr[data-domain='" + domain + "']");
-            $elem.html(data);
-            return this;
-        },
-        finally: function() {
-            console.log('finally');
-        }
-    });
-});
+//jQuery(document).on('pjax:complete', function() {
+//    $('.domainsCheck').domainsCheck({
+//        domainRowClass: '.check-item',
+//        success: function(data, domain, element) {
+//            console.log('123');
+//            var $elem = $(element).find("tr[data-domain='" + domain + "']");
+//            $elem.html(data);
+//            return this;
+//        },
+//        finally: function() {
+//            console.log('finally');
+//        }
+//    });
+//});
 JS
 );
 ?>
