@@ -11,6 +11,7 @@ use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
+use yii\bootstrap\Progress;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -36,7 +37,7 @@ CSS
 );
 ?>
 
-<? Pjax::begin(Yii::$app->params['pjax']); ?>
+<?php Pjax::begin(Yii::$app->params['pjax']); ?>
 <div class="row" xmlns="http://www.w3.org/1999/html">
 
     <div class="col-md-3">
@@ -101,14 +102,14 @@ CSS
                                       data-toggle="tab"><?= Yii::t('app', 'Domain details') ?></a></li>
                 <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('app', 'NS records') ?></a></li>
                 <!--                    <li><a href="#authorization-code" data-toggle="tab">-->
-                <? //= Yii::t('app', 'Authorization code') ?><!--</a></li>-->
+                <?php//= Yii::t('app', 'Authorization code') ?><!--</a></li>-->
                 <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('app', 'DNS records') ?></a></li>
                 <!--                    <li><a href="#url-forwarding" data-toggle="tab">-->
-                <? //= Yii::t('app', 'URL forwarding') ?><!--</a></li>-->
+                <?php//= Yii::t('app', 'URL forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#email-forwarding" data-toggle="tab">-->
-                <? //= Yii::t('app', 'Email forwarding') ?><!--</a></li>-->
+                <?php//= Yii::t('app', 'Email forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#parking" data-toggle="tab">-->
-                <? //= Yii::t('app', 'Parking') ?><!--</a></li>-->
+                <?php//= Yii::t('app', 'Parking') ?><!--</a></li>-->
                 <li><a href="#contacts" data-toggle="tab"><?= Yii::t('app', 'Contacts') ?></a></li>
             </ul>
             <div class="tab-content">
@@ -206,7 +207,18 @@ CSS
                     ]); ?>
                     <?php if (Yii::$app->hasModule('dns')): ?>
                         <?php
-                        Pjax::begin(['id' => 'dns_zone_view', 'enablePushState' => false, 'enableReplaceState' => false]);
+                        Pjax::begin([
+                            'id' => 'dns_zone_view',
+                            'enablePushState' => false,
+                            'enableReplaceState' => false,
+                        ]);
+
+                        echo Progress::widget([
+                            'id' => 'progress-bar',
+                            'percent' => 100,
+                            'barOptions' => ['class' => 'active progress-bar-striped', 'style' => 'width: 100%'],
+                        ]);
+
                         $url = Json::htmlEncode(Url::to(['@dns/zone/view', 'id' => $model->id]));
 
                         $this->registerJs("
