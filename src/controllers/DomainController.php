@@ -294,6 +294,16 @@ class DomainController extends \hipanel\base\CrudController
         ]);
     }
 
+    public function actionTransfer()
+    {
+        $model = new Domain();
+        $model->scenario = 'transfer';
+
+        return $this->render('transfer', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * @return string
      */

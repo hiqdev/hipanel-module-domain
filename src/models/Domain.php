@@ -59,6 +59,9 @@ class Domain extends \hipanel\base\Model
             [['is_available'], 'boolean', 'on' => ['check-domain']],
             [['resource'], 'safe', 'on' => ['check-domain']], /// Array inside. Should be a relation hasOne
 
+            // Domain transfer
+            [['domain', 'password', 'domains'], 'required', 'on' => ['transfer']],
+
             [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {
                 return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
@@ -100,6 +103,9 @@ class Domain extends \hipanel\base\Model
             'daysleft'              => Yii::t('app', ' label'),
             'is_expired'            => Yii::t('app', ' label'),
             'expires_soon'          => Yii::t('app', ' label'),
+
+            // Domain transfer
+            'password' => Yii::t('app', ' Code'),
         ]);
     }
 
