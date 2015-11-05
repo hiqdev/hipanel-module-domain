@@ -227,7 +227,6 @@ CSS
                             }).on('shown.bs.tab', function (e) {
                                 var tab = $(e.target);
                                 $.pjax({url: $url, container: '#dns_zone_view', 'push': false, 'replace': false});
-                                console.log(tab);
                             })
                         ");
                         Pjax::end();
