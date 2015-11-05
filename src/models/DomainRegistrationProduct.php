@@ -12,4 +12,13 @@ class DomainRegistrationProduct extends DomainProduct
     {
         return implode('_', ['domain', 'registration', $this->name]);
     }
+
+    public function load($data, $formName = null)
+    {
+        $result = parent::load($data, '');
+        if ($result) {
+            $this->description = Yii::t('app', 'Registration');
+        }
+        return $result;
+    }
 }

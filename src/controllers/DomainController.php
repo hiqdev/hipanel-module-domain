@@ -31,6 +31,10 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => 'hipanel\actions\AddToCartAction',
                 'productClass' => 'hipanel\modules\domain\models\DomainRenewalProduct',
             ],
+            'add-to-cart-registration' => [
+                'class' => 'hipanel\actions\AddToCartAction',
+                'productClass' => 'hipanel\modules\domain\models\DomainRegistrationProduct',
+            ],
             'index' => [
                 'class' => 'hipanel\actions\IndexAction',
                 'data' => function ($action) {
@@ -297,7 +301,7 @@ class DomainController extends \hipanel\base\CrudController
     {
         $model = new Domain();
         $model->scenario = 'check-domain';
-
+        $zones_z = Domain::perform('GetZones');
         $tariffs = Tariff::find(['scenario' => 'get-available-info'])
             ->joinWith('resources')
             ->andFilterWhere(['type' => 'domain'])
@@ -307,15 +311,11 @@ class DomainController extends \hipanel\base\CrudController
             return ($resource->zone != null && $resource->type == Resource::TYPE_DOMAIN_REGISTRATION);
         });
         $dropDownZones = [];
-        foreach ($zones as $obj) {
-            if ($obj->zone !== null) {
-                $dropDownZones[$obj->zone] = '.' . $obj->zone;
-            }
+        foreach ($zones_z as $zone) {
+            $dropDownZones[$zone] = '.' . $zone;
         }
-
         $domainCheckDataProvider = new ArrayDataProvider();
-
-        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->get())) {
             $domains = [$model->domain . '.' . $model->zone];
             foreach ($dropDownZones as $zone => $label) {
                 $domains[] = $model->domain . '.' . $zone;

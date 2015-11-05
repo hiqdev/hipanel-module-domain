@@ -64,6 +64,7 @@ class Domain extends \hipanel\base\Model
                 return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'OLD-set-ns'],
             [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-nss'],
+            [['dumb'], 'safe', 'on' => ['get-zones']]
         ];
     }
 
@@ -105,6 +106,13 @@ class Domain extends \hipanel\base\Model
     public static function getZone($domain)
     {
         return substr($domain, strpos($domain,'.')+1);
+    }
+
+    public function scenarioCommands()
+    {
+        return [
+            'get-zones' => ['aux', 'get-zones'],
+        ];
     }
 
     public static function isDomainOwner ($model) {

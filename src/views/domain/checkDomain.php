@@ -1,9 +1,9 @@
 <?php
+
 use hipanel\grid\GridView;
 use hipanel\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use hipanel\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
@@ -115,85 +115,88 @@ $this->registerJs(<<<'JS'
 JS
 );
 ?>
-<?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title"><?= Yii::t('app', 'Domain check'); ?></h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <?php $form = ActiveForm::begin([
-                'id' => 'check-domain',
-                'options' => [
-                    'data-pjax' => true,
-                ],
-                'fieldConfig' => [
-                    'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
-                ],
-                'enableAjaxValidation' => true,
-                'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
-            ]) ?>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
-                    </div>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= Yii::t('app', 'Domain check'); ?></h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <?php $form = ActiveForm::begin([
+            'id' => 'check-domain',
+            'method' => 'get',
+            'options' => [
+                'data-pjax' => false,
+            ],
+            'fieldConfig' => [
+                'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            ],
+//            'enableAjaxValidation' => true,
+//            'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
+        ]) ?>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
                 </div>
-                <!-- /.col-md-8 -->
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
-                    </div>
-                </div>
-                <!-- /.col-md-3 -->
-                <div
-                    class="col-md-1"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-lg btn-block']); ?></div>
-                <!-- /.col-md-1 -->
             </div>
-            <!-- /.row -->
-            <?php ActiveForm::end() ?>
+            <!-- /.col-md-8 -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
+                </div>
+            </div>
+            <!-- /.col-md-3 -->
+            <div
+                class="col-md-1"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-lg btn-block']); ?></div>
+            <!-- /.col-md-1 -->
         </div>
-        <!-- /.box-body -->
-    </div><!-- /.box -->
+        <!-- /.row -->
+        <?php ActiveForm::end() ?>
+    </div>
+    <!-- /.box-body -->
+</div><!-- /.box -->
 
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title"><?= Yii::t('app', 'Check results'); ?></h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <?= GridView::widget([
-                'dataProvider' => $domainCheckDataProvider,
-                'layout' => "{items}\n{pager}",
-                'rowOptions' => function ($model, $key, $index, $grid) {
-                    return ['class' => 'check-item', 'data-domain' => $model->domain];
-                },
-                'options' => [
-                    'class' => 'domainsCheck'
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= Yii::t('app', 'Check results'); ?></h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <?= GridView::widget([
+            'dataProvider' => $domainCheckDataProvider,
+            'layout' => "{items}\n{pager}",
+            'rowOptions' => function ($model, $key, $index, $grid) {
+                return ['class' => 'check-item', 'data-domain' => $model->domain];
+            },
+            'options' => [
+                'class' => 'domainsCheck'
+            ],
+            'columns' => [
+                'domain',
+                'zone',
+                [
+                    'attribute' => 'is_available',
+                    'value' => function ($model) {
+                        return $model->is_available ? 'REG NOW!' : 'sorry bro :(';
+                    },
                 ],
-                'columns' => [
-                    'domain',
-                    'zone',
-                    [
-                        'attribute' => 'is_available',
-                        'value' => function ($model) {
-                            return $model->is_available ? 'REG NOW!' : 'sorry bro :(';
+                'actions' => [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{buy}',
+                    'header' => Yii::t('app', 'Action'),
+                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
+                    'buttons' => [
+                        'buy' => function ($url, $model, $key) {
+                            if ($model->is_available == false) {
+                                return Html::tag('sapn', Yii::t('app', 'Is not free!'));
+                            } else {
+                                return Html::a(Yii::t('app', 'Buy domain'), ['add-to-cart-registration', 'name' => $model->domain], ['data-pjax' => 0]);
+                            }
                         },
                     ],
-                    'actions' => [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => '{but}',
-                        'header' => Yii::t('app', 'Action'),
-                        'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-                        'buttons' => [
-                            'buy' => function ($url, $model, $key) {
-                                return Html::a(Yii::t('app', 'Add to cart'), ['remove', 'id' => $model['id']]);
-                            },
-                        ],
-                    ],
                 ],
-            ]); ?>
-        </div>
-        <!-- /.box-body -->
-    </div><!-- /.box -->
-<?php Pjax::end() ?>
+            ],
+        ]); ?>
+    </div>
+    <!-- /.box-body -->
+</div><!-- /.box -->
