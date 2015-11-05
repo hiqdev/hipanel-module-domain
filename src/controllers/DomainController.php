@@ -256,7 +256,6 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
-<<<<<<< HEAD
     public function actionCheck()
     {
         $domain = Yii::$app->request->post('domain');
