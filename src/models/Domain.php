@@ -7,6 +7,7 @@
 
 namespace hipanel\modules\domain\models;
 
+use Exception;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
@@ -60,7 +61,27 @@ class Domain extends \hipanel\base\Model
             [['resource'], 'safe', 'on' => ['check-domain']], /// Array inside. Should be a relation hasOne
 
             // Domain transfer
-            [['domain', 'password', 'domains'], 'required', 'on' => ['transfer']],
+            [['domain', 'password'], 'required', 'when' => function($model) {
+                return empty($model->domains);
+            }, 'on' => ['transfer']],
+            [['password'], 'required', 'when' => function ($model) {
+                return empty($model->domains) && $model->domain;
+            }, 'on' => ['transfer']],
+            [['domains'], 'required', 'when' => function($model) {
+                return empty($model->domain) && empty($model->password);
+            }, 'on' => ['transfer']],
+            [['domain'], DomainValidator::className(), 'on' => ['transfer']],
+            [['password'], function ($attribute) {
+                try {
+                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
+                } catch (Exception $e) {
+                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+                }
+            }, 'when' => function ($model) {
+                return $model->domain;
+            }, 'on' => ['transfer']],
+
+
 
             [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function($value) {

@@ -17,15 +17,18 @@ $this->registerCss('
     text-align: center;
 }
 ');
+$this->registerJs(<<<JS
+    jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        jQuery('#' + e.relatedTarget.getAttribute('href').substr(1)).find('input:text, textarea').val(''); //e.target
+    });
+JS
+);
+$id = $model->id ? : 0 ;
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'domain-transfer-single',
-    'options' => [
-    ],
-//    'fieldConfig' => [
-//        'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
-//    ],
     'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
     'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
 ]) ?>
 
@@ -50,15 +53,15 @@ $this->registerCss('
                 <div class="row">
                     <div class="col-md-1 step">2.</div>
                     <!-- /.col-md-1 -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <?= $form->field($model, 'domain'); ?>
+                            <?= $form->field($model, "[$id]domain"); ?>
                         </div>
                     </div>
                     <!-- /.col-md-6 -->
                     <div class="col-md-2">
                         <div class="form-group">
-                            <?= $form->field($model, 'password'); ?>
+                            <?= $form->field($model, "[$id]password"); ?>
                         </div>
                     </div>
                     <!-- /.col-md-5 -->
@@ -75,11 +78,11 @@ $this->registerCss('
             </div>
 
             <div class="tab-pane" id="bulk">
-                <?= $form->field($model, 'domains')->textarea(); ?>
+                <?= $form->field($model, "[$id]domains")->textarea(); ?>
                 <p class="help-block">
                     <?= Yii::t('app', 'For separation of the domain and code use a space, a comma or a semicolon.') ?><br>
                     <?= Yii::t('app', 'Example') ?>:<br>
-                    yourdomain.com uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com, uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com; uGt6shlad<br>
+                    <b>yourdomain.com uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com, uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com; uGt6shlad</b></b><br>
                     <?= Yii::t('app', 'each pair (domain + code) should be written with a new line') ?>
                 </p>
             </div>
