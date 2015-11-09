@@ -1,25 +1,17 @@
 <?php
 
+use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
 use hipanel\widgets\ClientSellerLink;
-use hiqdev\bootstrap_switch\BootstrapSwitch;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
-use yii\bootstrap\Progress;
-use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\widgets\DetailView;
-
-//\yii\helpers\VarDumper::dump($model, 10, true);
-//\yii\helpers\VarDumper::dump($domainContactInfo, 10, true);
 
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
@@ -205,39 +197,20 @@ CSS
 //                                ]
                         ],
                     ]); ?>
-                    <?php if (Yii::$app->hasModule('dns')): ?>
-                        <?php
-                        Pjax::begin([
-                            'id' => 'dns_zone_view',
-                            'enablePushState' => false,
-                            'enableReplaceState' => false,
+                    <?php if (Yii::$app->hasModule('dns')) {
+                        echo DnsZoneEditWidget::widget([
+                            'domainId' => $model->id,
+                            'clientScriptWrap' => function ($js) {
+                                return new \yii\web\JsExpression("
+                                    $('a[data-toggle=tab]').filter(function () {
+                                        return $(this).attr('href') == '#dns-records';
+                                    }).on('shown.bs.tab', function (e) {
+                                        $js
+                                    });
+                                ");
+                            }
                         ]);
-
-                        echo Progress::widget([
-                            'id' => 'progress-bar',
-                            'percent' => 100,
-                            'barOptions' => ['class' => 'active progress-bar-striped', 'style' => 'width: 100%'],
-                        ]);
-
-                        $url = Json::htmlEncode(Url::to(['@dns/zone/view', 'id' => $model->id]));
-
-                        $this->registerJs("
-                            $('a[data-toggle=tab]').filter(function () {
-                                return $(this).attr('href') == '#dns-records';
-                            }).on('shown.bs.tab', function (e) {
-                                var tab = $(e.target);
-                                $.pjax({url: $url, container: '#dns_zone_view', 'push': false, 'replace': false});
-                            })
-                        ");
-                        Pjax::end();
-                        ?>
-<!--                        --><?//= $this->render('dns/zone/view', [
-//                            'model' => $model,
-//                            'recordsDataProvider' => (new \yii\data\ArrayDataProvider([
-//                                'allModels' => $model->dnsRecords,
-//                            ])),
-//                        ]); ?>
-                    <?php endif; ?>
+                    } ?>
                 </div>
 
                 <!-- URL forwarding -->
