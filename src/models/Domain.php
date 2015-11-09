@@ -8,6 +8,7 @@
 namespace hipanel\modules\domain\models;
 
 use Exception;
+use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
@@ -71,15 +72,15 @@ class Domain extends \hipanel\base\Model
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::className(), 'on' => ['transfer']],
-            [['password'], function ($attribute) {
-                try {
-                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-                } catch (Exception $e) {
-                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-                }
-            }, 'when' => function ($model) {
-                return $model->domain;
-            }, 'on' => ['transfer']],
+//            [['password'], function ($attribute) {
+//                try {
+//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
+//                } catch (Exception $e) {
+//                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+//                }
+//            }, 'when' => function ($model) {
+//                return $model->domain;
+//            }, 'on' => ['transfer']],
 
 
 
@@ -153,6 +154,38 @@ class Domain extends \hipanel\base\Model
 
     public function getDnsRecords() {
         return $this->hasMany(Record::className(), ['hdomain_id' => 'id']);
+    }
+
+    public function getTransferDataProvider() {
+        $result = [
+            'success' => null,
+            'error' => null,
+        ];
+
+        $this->domains = trim($this->domains);
+        $list = ArrayHelper::csplit($this->domains,"\n");
+        foreach ($list as $key=> $value) {
+            $strCheck .= "\n$value";
+            $strCheck = trim($strCheck);
+            preg_match("/^([a-z0-9][0-9a-z.-]+)( +|\t+|,|;)(.*)/i", $value, $matches);
+            if ($matches) {
+                $domain = check::domain(trim(strtolower($matches[1])));
+                if ($domain) {
+                    $password = check::password(trim($matches[3]));
+                    if ($password) $doms[$domain] = compact('domain','password');
+                    else $dom2err[$domain] = "wrong input password";
+                } else $dom2err[$value] = 'unknown error';
+            } else {
+                $dom2err[$value] = "empty code";
+            }
+        }
+
+        return $result;
+    }
+
+    public function getTransferErrorDataProvider() {
+        $result = [];
+        return $result;
     }
 
 }

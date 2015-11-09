@@ -1,5 +1,6 @@
 <?php
 
+use yii\grid\GridView;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
@@ -27,11 +28,12 @@ $id = $model->id ? : 0 ;
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'domain-transfer-single',
+    'action' => ['transfer'],
     'enableAjaxValidation' => true,
     'enableClientValidation' => false,
     'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
 ]) ?>
-
+<?php if (!Yii::$app->session->getFlash('transferGrid')) : ?>
 <div class="box box-solid">
     <!-- /.box-header -->
     <div class="box-body">
@@ -94,5 +96,24 @@ $id = $model->id ? : 0 ;
     </div>
     <!-- /.box-body -->
 </div><!-- /.box -->
-
+<?php else : ?>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= Yii::t('app', 'Cannot transfer following domains'); ?></h3>
+        </div>
+        <div class="box-body">
+            <?= GridView::widget([
+                'dataProvider' => $transferDataProvider['success'],
+                'layout' => "{items}\n{pager}",
+                'rowOptions' => function ($model, $key, $index, $grid) {
+                    return ['class' => 'check-item', 'data-domain' => $model->domain];
+                },
+                'columns' => [
+                    'domain',
+                    'password',
+                ],
+            ]); ?>
+        </div>
+    </div>
+<?php endif; ?>
 <?php ActiveForm::end() ?>
