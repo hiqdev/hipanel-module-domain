@@ -73,15 +73,15 @@ class Domain extends \hipanel\base\Model
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::className(), 'on' => ['transfer']],
-            [['password'], function ($attribute) {
-                try {
-                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-                } catch (Exception $e) {
-                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-                }
-            }, 'when' => function ($model) {
-                return $model->domain;
-            }, 'on' => ['transfer']],
+//            [['password'], function ($attribute) {
+//                try {
+//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
+//                } catch (Exception $e) {
+//                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+//                }
+//            }, 'when' => function ($model) {
+//                return $model->domain;
+//            }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
 
@@ -184,6 +184,16 @@ class Domain extends \hipanel\base\Model
         return $result;
     }
 
+    protected function checkDomainTransfer(array $data)
+    {
+        try {
+            $response = $this->perform('CheckTransfer', $data, true);
+        } catch (\yii\base\Exception $e) {
+            $response = $e->errorInfo['response'];
+        }
+        return $response;
+    }
+
     public function getTransferDataProviderOptions()
     {
         $result = $domains = [];
@@ -197,30 +207,30 @@ class Domain extends \hipanel\base\Model
                     $domains[$domain] = compact('domain', 'password');
                 }
             }
-            try {
-                $response = $this->perform('CheckTransfer', $domains, true);
-            } catch (\yii\base\Exception $e) {
-                $response = $e->errorInfo['response'];
-            }
             $i = 0;
+            $response = $this->checkDomainTransfer($domains);
             foreach ($response as $k => $v) {
                 if (is_array($v)) {
                     $domain = $v['domain'];
                     $password = $domains[$v['domain']]['password'];
+                    $isError = isset($v['_error']);
                     $result[] = [
-                        'domain' => $domain . Html::hiddenInput("DomainTransferProduct[$i][name]", $domain),
-                        'password' => $password . Html::hiddenInput("DomainTransferProduct[$i][password]", $password),
-                        'status' => !isset($v['_error']),
+                        'domain' => $domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][name]", $domain) : ''),
+                        'password' => $password . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][password]", $password) : ''),
+                        'status' => !$isError,
                         'errorMessage' => $v['_error'],
                     ];
                     $i++;
                 }
             }
         } else {
-            $result = [
-                'domain' => $this->domain . Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain),
-                'password' => $this->password . Html::hiddenInput("DomainTransferProduct[0][password]", $this->password),
-                'status' => true,
+            $response = $this->checkDomainTransfer([$this->domain => ['domain' => $this->domain, 'password' => $this->password]]);
+            $isError = isset($response[$this->domain]['_error']);
+            $result[] = [
+                'domain' => $this->domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain) : ''),
+                'password' => $this->password . (!$isError ? Html::hiddenInput("DomainTransferProduct[0][password]", $this->password) : ''),
+                'status' => !isset($response['_error']),
+                'errorMessage' => $response[$this->domain]['_error'],
             ];
         }
         return $result;
