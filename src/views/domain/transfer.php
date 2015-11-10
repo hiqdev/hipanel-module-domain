@@ -24,96 +24,118 @@ $this->registerJs(<<<JS
     });
 JS
 );
-$id = $model->id ? : 0 ;
+$id = $model->id ?: 0;
 ?>
-<?php $form = ActiveForm::begin([
-    'id' => 'domain-transfer-single',
-    'action' => ['transfer'],
-    'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
-    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
-]) ?>
+
 <?php if (!Yii::$app->session->getFlash('transferGrid')) : ?>
-<div class="box box-solid">
-    <!-- /.box-header -->
-    <div class="box-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#single" data-toggle="tab"><?= Yii::t('app', 'Single domain transfer') ?></a></li>
-            <li><a href="#bulk" data-toggle="tab"><?= Yii::t('app', 'Bulk domain transfer') ?></a></li>
-        </ul>
+    <?php $form = ActiveForm::begin([
+        'id' => 'domain-transfer-single',
+        'action' => ['transfer'],
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => false,
+        'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
+    ]) ?>
+    <div class="box box-solid">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#single"
+                                      data-toggle="tab"><?= Yii::t('app', 'Single domain transfer') ?></a></li>
+                <li><a href="#bulk" data-toggle="tab"><?= Yii::t('app', 'Bulk domain transfer') ?></a></li>
+            </ul>
 
-        <div class="tab-content" style="padding-top: 1em">
+            <div class="tab-content" style="padding-top: 1em">
 
-            <div class="tab-pane active" id="single">
-                <div class="row">
-                    <div class="col-md-1 step">1.</div>
-                    <!-- /.col-md-1 -->
-                    <div class="col-md-11"><?= Yii::t('app', 'Remove whois protection from the current registrar.') ?></div>
-                    <!-- /.col-md-11 -->
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div class="col-md-1 step">2.</div>
-                    <!-- /.col-md-1 -->
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <?= $form->field($model, "[$id]domain"); ?>
+                <div class="tab-pane active" id="single">
+                    <div class="row">
+                        <div class="col-md-1 step">1.</div>
+                        <!-- /.col-md-1 -->
+                        <div
+                            class="col-md-11"><?= Yii::t('app', 'Remove whois protection from the current registrar.') ?></div>
+                        <!-- /.col-md-11 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-md-1 step">2.</div>
+                        <!-- /.col-md-1 -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <?= $form->field($model, "[$id]domain"); ?>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /.col-md-6 -->
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <?= $form->field($model, "[$id]password"); ?>
+                        <!-- /.col-md-6 -->
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <?= $form->field($model, "[$id]password"); ?>
+                            </div>
                         </div>
+                        <!-- /.col-md-5 -->
                     </div>
-                    <!-- /.col-md-5 -->
-                </div>
-                <div class="row">
-                    <div class="col-md-1 step">3.</div>
-                    <!-- /.col-md-1 -->
-                    <div class="col-md-11">
-                        <?= Yii::t('app', 'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.') ?>
+                    <div class="row">
+                        <div class="col-md-1 step">3.</div>
+                        <!-- /.col-md-1 -->
+                        <div class="col-md-11">
+                            <?= Yii::t('app', 'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.') ?>
+                        </div>
+                        <!-- /.col-md-11 -->
                     </div>
-                    <!-- /.col-md-11 -->
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
-            </div>
 
-            <div class="tab-pane" id="bulk">
-                <?= $form->field($model, "[$id]domains")->textarea(); ?>
-                <p class="help-block">
-                    <?= Yii::t('app', 'For separation of the domain and code use a space, a comma or a semicolon.') ?><br>
-                    <?= Yii::t('app', 'Example') ?>:<br>
-                    <b>yourdomain.com uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com, uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com; uGt6shlad</b></b><br>
-                    <?= Yii::t('app', 'each pair (domain + code) should be written with a new line') ?>
-                </p>
+                <div class="tab-pane" id="bulk">
+                    <?= $form->field($model, "[$id]domains")->textarea(); ?>
+                    <p class="help-block">
+                        <?= Yii::t('app', 'For separation of the domain and code use a space, a comma or a semicolon.') ?>
+                        <br>
+                        <?= Yii::t('app', 'Example') ?>:<br>
+                        <b>yourdomain.com uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com,
+                            uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com; uGt6shlad</b></b><br>
+                        <?= Yii::t('app', 'each pair (domain + code) should be written with a new line') ?>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="box-footer">
-        <?= Html::submitButton(Yii::t('app', 'Transfer'), ['class' => 'btn btn-default']); ?>
+        <div class="box-footer">
+            <?= Html::submitButton(Yii::t('app', 'Transfer'), ['class' => 'btn btn-default']); ?>
 
-    </div>
-    <!-- /.box-body -->
-</div><!-- /.box -->
+        </div>
+        <!-- /.box-body -->
+    </div><!-- /.box -->
+    <?php ActiveForm::end() ?>
 <?php else : ?>
+    <?= Html::beginForm(['add-to-cart-transfer']) ?>
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title"><?= Yii::t('app', 'Cannot transfer following domains'); ?></h3>
         </div>
         <div class="box-body">
             <?= GridView::widget([
-                'dataProvider' => $transferDataProvider['success'],
+                'dataProvider' => $transferDataProvider,
                 'layout' => "{items}\n{pager}",
                 'rowOptions' => function ($model, $key, $index, $grid) {
-                    return ['class' => 'check-item', 'data-domain' => $model->domain];
+                    return ['class' => $model->status ? '' : 'danger'];
                 },
                 'columns' => [
-                    'domain',
-                    'password',
+                    [
+                        'attribute' => 'domain',
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'password',
+                        'format' => 'raw',
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Additional message'),
+                        'attribute' => 'errorMessage',
+                    ],
                 ],
             ]); ?>
         </div>
+        <div class="box-footer">
+            <?= Html::submitButton(Yii::t('app', 'Add to cart'), ['class' => 'btn btn-default']) ?> or
+            <?= Html::a(Yii::t('app', 'Return transfer form'), ['transfer'], ['class' => '']) ?>
+        </div>
+        <!-- /.box-footer -->
     </div>
+    <?= Html::endForm(); ?>
 <?php endif; ?>
-<?php ActiveForm::end() ?>

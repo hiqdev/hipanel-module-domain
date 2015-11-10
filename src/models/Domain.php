@@ -14,6 +14,7 @@ use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
 use Yii;
+use yii\helpers\Html;
 
 class Domain extends \hipanel\base\Model
 {
@@ -72,16 +73,16 @@ class Domain extends \hipanel\base\Model
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::className(), 'on' => ['transfer']],
-//            [['password'], function ($attribute) {
-//                try {
-//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-//                } catch (Exception $e) {
-//                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-//                }
-//            }, 'when' => function ($model) {
-//                return $model->domain;
-//            }, 'on' => ['transfer']],
-
+            [['password'], function ($attribute) {
+                try {
+                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
+                } catch (Exception $e) {
+                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+                }
+            }, 'when' => function ($model) {
+                return $model->domain;
+            }, 'on' => ['transfer']],
+            [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
 
             [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
@@ -183,9 +184,45 @@ class Domain extends \hipanel\base\Model
         return $result;
     }
 
-    public function getTransferErrorDataProvider() {
-        $result = [];
+    public function getTransferDataProviderOptions()
+    {
+        $result = $domains = [];
+        if ($this->domains) {
+            $listOfDomains = ArrayHelper::csplit($this->domains, "\n");
+            foreach ($listOfDomains as $k => $v) {
+                preg_match("/^([a-z0-9][0-9a-z.-]+)( +|\t+|,|;)(.*)/i", $v, $matches);
+                if ($matches) {
+                    $domain = trim(strtolower($matches[1]));
+                    $password = trim($matches[3]);
+                    $domains[$domain] = compact('domain', 'password');
+                }
+            }
+            try {
+                $response = $this->perform('CheckTransfer', $domains, true);
+            } catch (\yii\base\Exception $e) {
+                $response = $e->errorInfo['response'];
+            }
+            $i = 0;
+            foreach ($response as $k => $v) {
+                if (is_array($v)) {
+                    $domain = $v['domain'];
+                    $password = $domains[$v['domain']]['password'];
+                    $result[] = [
+                        'domain' => $domain . Html::hiddenInput("DomainTransferProduct[$i][name]", $domain),
+                        'password' => $password . Html::hiddenInput("DomainTransferProduct[$i][password]", $password),
+                        'status' => !isset($v['_error']),
+                        'errorMessage' => $v['_error'],
+                    ];
+                    $i++;
+                }
+            }
+        } else {
+            $result = [
+                'domain' => $this->domain . Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain),
+                'password' => $this->password . Html::hiddenInput("DomainTransferProduct[0][password]", $this->password),
+                'status' => true,
+            ];
+        }
         return $result;
     }
-
 }

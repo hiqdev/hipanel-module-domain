@@ -35,6 +35,7 @@ class DomainController extends \hipanel\base\CrudController
             'add-to-cart-transfer' => [
                 'class' => 'hipanel\actions\AddToCartAction',
                 'productClass' => 'hipanel\modules\domain\models\DomainTransferProduct',
+                'bulkLoad' => true,
             ],
             'index' => [
                 'class' => 'hipanel\actions\IndexAction',
@@ -299,21 +300,17 @@ class DomainController extends \hipanel\base\CrudController
     {
         $model = new Domain();
         $model->scenario = 'transfer';
-        $transferDataProvider = $transferErrorDataProvider = null;
-        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+        $transferDataProvider = null;
+        if (Yii::$app->request->isPost) {
+            $model = (new Collection(['model' => $model]))->load()->first;
             Yii::$app->session->setFlash('transferGrid', 1);
-            $transferDataProvider = new ArrayDataProvider($model->getTransferDataProvider());
+            $transferDataProvider = new ArrayDataProvider();
+            $transferDataProvider->setModels($model->getTransferDataProviderOptions());
         }
         return $this->render('transfer', [
             'model' => $model,
             'transferDataProvider' => $transferDataProvider,
         ]);
-
-    }
-
-    public function actionPerformTransfer()
-    {
-
     }
 
     /**
