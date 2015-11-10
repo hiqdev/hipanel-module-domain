@@ -9,7 +9,8 @@ class DomainTransferProduct extends DomainProduct
 {
     protected $_operation = 'transfer';
 
-    public function init() {
+    public function init()
+    {
         $this->description = Yii::t('app', 'Transfer');
     }
 
@@ -18,13 +19,15 @@ class DomainTransferProduct extends DomainProduct
         return implode('_', ['domain', 'transfer', $this->name]);
     }
 
-    public function rules() {
+    public function rules()
+    {
         return ArrayHelper::merge(parent::rules(), [
-            [['password'], 'string'],
+            [['name', 'password'], 'required'],
         ]);
     }
 
-    public function attributes() {
+    public function attributes()
+    {
         return ArrayHelper::merge(parent::attributes(), [
             'password'
         ]);

@@ -73,15 +73,15 @@ class Domain extends \hipanel\base\Model
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::className(), 'on' => ['transfer']],
-//            [['password'], function ($attribute) {
-//                try {
-//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-//                } catch (Exception $e) {
-//                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-//                }
-//            }, 'when' => function ($model) {
-//                return $model->domain;
-//            }, 'on' => ['transfer']],
+            [['password'], function ($attribute) {
+                try {
+                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
+                } catch (Exception $e) {
+                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+                }
+            }, 'when' => function ($model) {
+                return $model->domain;
+            }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
 
@@ -218,19 +218,19 @@ class Domain extends \hipanel\base\Model
                         'domain' => $domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][name]", $domain) : ''),
                         'password' => $password . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][password]", $password) : ''),
                         'status' => !$isError,
-                        'errorMessage' => $v['_error'],
+                        'errorMessage' => $isError ? $v['_error'] : '',
                     ];
                     $i++;
                 }
             }
         } else {
-            $response = $this->checkDomainTransfer([$this->domain => ['domain' => $this->domain, 'password' => $this->password]]);
-            $isError = isset($response[$this->domain]['_error']);
+            $response = reset($this->checkDomainTransfer([$this->domain => ['domain' => $this->domain, 'password' => $this->password]]));
+            $isError = isset($response['_error']);
             $result[] = [
-                'domain' => $this->domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain) : ''),
+                'domain' => $this->domain . ((!$isError) ? Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain) : ''),
                 'password' => $this->password . (!$isError ? Html::hiddenInput("DomainTransferProduct[0][password]", $this->password) : ''),
                 'status' => !isset($response['_error']),
-                'errorMessage' => $response[$this->domain]['_error'],
+                'errorMessage' => $isError ? $response['_error'] : '',
             ];
         }
         return $result;
