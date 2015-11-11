@@ -16,15 +16,20 @@ class Expires extends \hipanel\widgets\Label
      */
     public $model;
 
-    public function run () {
+    public function init()
+    {
         $expires = $this->model->expires;
-        if (strtotime("+30 days", time()) < strtotime($expires)) $class = 'none';
-        elseif (strtotime("+0 days", time()) < strtotime($expires)) $class = 'warning';
-        else $class = 'danger';
+        if (strtotime("+30 days", time()) < strtotime($expires)) {
+            $class = 'none';
+        } elseif (strtotime("+0 days", time()) < strtotime($expires)) {
+            $class = 'warning';
+        } else {
+            $class = 'danger';
+        }
 
         $this->color = $class;
         $this->label = \Yii::$app->formatter->asDate($expires);
-        parent::run();
+        parent::init();
     }
 
 }
