@@ -3,7 +3,8 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
-- Added domain products for cart
+- Added yii2-cart integration
+- Added DNS management
 - Deleted DomainValidator, moved to hipanel-core
 - Added Hold, Freeze, Delete actions
 - Fixed translation and minor issues

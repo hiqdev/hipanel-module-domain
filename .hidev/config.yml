@@ -1,12 +1,17 @@
 package:
     name:           hipanel-module-domain
     namespace:      hipanel\modules\domain
-    label:          HiPanel DomainModule
-    title:          Domain Plugin for HiPanel
+    headline:       HiPanel Domain Module
+    title:          Domain plugin for HiPanel
     type:           yii2-extension
     keywords:       domain, hipanel, plugin
     year:           2014
+    description:    |
+        [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)
+
+        [HiPanel](http://hipanel.com) is next generation control panel for hosting, domains and more.
+        This package provides domain management for HiPanel.
 
 require:
-    hiqdev/hidev-config:        "*@dev"
-    hiqdev/hidev-config-php:    "*@dev"
+    hiqdev/hidev-config:        "*"
+    hiqdev/hidev-config-php:    "*"

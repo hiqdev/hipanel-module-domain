@@ -1,7 +1,7 @@
 {
     "name": "hiqdev/hipanel-module-domain",
     "type": "yii2-extension",
-    "description": "Domain Plugin for HiPanel",
+    "description": "Domain plugin for HiPanel",
     "keywords": [
         "domain",
         "hipanel",

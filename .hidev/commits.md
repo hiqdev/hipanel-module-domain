@@ -3,12 +3,34 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
-- Added domain products for cart
+- Added yii2-cart integration
+    - 2049fc9 2015-11-12 redone hipanel-module-cart -> yii2-cart (sol@hiqdev.com)
+    - 5b99929 2015-11-10 Add validation before AddToCart (andreyklochok@gmail.com)
+    - 00c498d 2015-11-10 Remove hiddenInputs where error occured (andreyklochok@gmail.com)
+    - f1271ef 2015-11-10 Add transfered domains to cart (andreyklochok@gmail.com)
+    - 4b3a9a9 2015-11-09 Add DomainTransferProduct model (andreyklochok@gmail.com)
+    - 7e7ffd2 2015-11-09 domain/view: DNS edit now loads with DnsZoneEditWidget, removed unned uses (d.naumenko.a@gmail.com)
+    - 16b6739 2015-11-06 Add validation (andreyklochok@gmail.com)
+    - 3eb3cc5 2015-11-06 Add translations (andreyklochok@gmail.com)
+    - b30920d 2015-11-05 Add domain transfer view (andreyklochok@gmail.com)
+    - 30ecab7 2015-11-05 DomainController::view() turned back to standalone action (d.naumenko.a@gmail.com)
+    - 616c5c2 2015-11-05 Add Domain Registration add to cart functionality (andreyklochok@gmail.com)
+    - bc15164 2015-11-04 Add DomainRegistrationProduct, add validation to DomainCheck (andreyklochok@gmail.com)
+    - 57a44d3 2015-11-03 Domain check (andreyklochok@gmail.com)
+    - 6b2b55e 2015-10-30 Add model validation on domain-check (andreyklochok@gmail.com)
+    - 569f10c 2015-10-30 Add checkDomain view template (andreyklochok@gmail.com)
+    - 5ebede8 2015-10-29 Add Check Domain (andreyklochok@gmail.com)
+    - a008c29 2015-10-28 Comment some code (andreyklochok@gmail.com)
+    - 3db5032 2015-10-26 Add data for source (andreyklochok@gmail.com)
+    - 191eeaf 2015-10-26 Add DomainRregistrationProduct. Fix getId (andreyklochok@gmail.com)
     - 027f210 2015-10-23 Change icon in Product Model (andreyklochok@gmail.com)
     - a113416 2015-10-23 Add Cart functionality (andreyklochok@gmail.com)
     - 0d5594b 2015-10-23 Work on DomainProduct (andreyklochok@gmail.com)
     - 1ec293c 2015-10-23 Add DomainRenewProduct (andreyklochok@gmail.com)
     - 73349c8 2015-10-22 Add DomainProduct (andreyklochok@gmail.com)
+- Added DNS management
+    - 7a26546 2015-11-04  + Added domain DNS management (d.naumenko.a@gmail.com)
+    - 2dd6135 2015-11-04  * Fixed domain/view incorrect layout on Pjax load (d.naumenko.a@gmail.com)
 - Deleted DomainValidator, moved to hipanel-core
     - b36ede5 2015-10-06 moved DomainValidator to hipanel-core (sol@hiqdev.com)
 - Added Hold, Freeze, Delete actions
