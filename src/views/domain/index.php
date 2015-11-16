@@ -1,22 +1,19 @@
 <?php
 /**
  * @link    http://hiqdev.com/hipanel-module-domain
+ *
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
-
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ActionBox;
-use hipanel\widgets\BulkButtons;
-use hipanel\widgets\LinkSorter;
 use hipanel\widgets\Pjax;
-use yii\bootstrap\ButtonDropdown;
-use yii\helpers\Html;
+
 $this->title    = Yii::t('app', 'Domains');
 $this->subtitle = Yii::t('app', array_filter(Yii::$app->request->get($model->formName(), [])) ? 'filtered list' : 'full list');
 $this->breadcrumbs->setItems([
-    $this->title
+    $this->title,
 ]);
 $this->registerCss(<<<CSS
 .editable-unsaved {
@@ -51,7 +48,7 @@ CSS
                         'buttons' => [
                             $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-whois-protect'),
                             $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-whois-protect'),
-                        ]
+                        ],
                     ]); ?>
                 </div>
             </div>
@@ -65,7 +62,7 @@ CSS
                         'buttons' => [
                             $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-lock'),
                             $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-lock'),
-                        ]
+                        ],
                     ]); ?>
                 </div>
             </div>
@@ -79,7 +76,7 @@ CSS
                         'buttons' => [
                             $box->renderBulkButton(Yii::t('app', 'Enable'), 'enable-autorenewal'),
                             $box->renderBulkButton(Yii::t('app', 'Disable'), 'disable-autorenewal'),
-                        ]
+                        ],
                     ]); ?>
                 </div>
             </div>

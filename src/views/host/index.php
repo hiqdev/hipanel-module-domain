@@ -2,8 +2,6 @@
 
 use hipanel\modules\domain\grid\HostGridView;
 use hipanel\widgets\ActionBox;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 $this->title    = Yii::t('app', 'Name Servers');
 $this->subtitle = Yii::t('app', array_filter(Yii::$app->request->get($model->formName(), [])) ? 'filtered list' : 'full list');
@@ -21,7 +19,7 @@ $this->breadcrumbs[] = $this->title;
                 'domain',
                 'ip',
                 'client',
-                'seller'
+                'seller',
             ],
         ]) ?>
         <?= $box->renderPerPage() ?>

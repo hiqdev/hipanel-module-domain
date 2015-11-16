@@ -25,7 +25,7 @@ Modal::begin([
                         jQuery('#modal-save-contacts-button').show();
                     }
                 );
-        }")
+        }"),
     ],
     'footer' => Html::button(Yii::t('app', 'Save'), ['id' => 'modal-save-contacts-button', 'class' => 'btn btn-default', 'style' => 'display: none;']),
 ]); ?>

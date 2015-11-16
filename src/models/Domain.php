@@ -1,10 +1,20 @@
 <?php
+
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 /**
  * @link    http://hiqdev.com/hipanel-module-domain
+ *
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
-
 namespace hipanel\modules\domain\models;
 
 use Exception;
@@ -29,8 +39,9 @@ class Domain extends \hipanel\base\Model
 
     use \hipanel\base\ModelTrait;
 
-    /** @inheritdoc */
-    public function rules () {
+    /** {@inheritdoc} */
+    public function rules()
+    {
         return [
             [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'],                      'integer'],
             [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'],                                  'safe'],
@@ -63,13 +74,13 @@ class Domain extends \hipanel\base\Model
             [['resource'], 'safe', 'on' => ['check-domain']], /// Array inside. Should be a relation hasOne
 
             // Domain transfer
-            [['domain', 'password'], 'required', 'when' => function($model) {
+            [['domain', 'password'], 'required', 'when' => function ($model) {
                 return empty($model->domains);
             }, 'on' => ['transfer']],
             [['password'], 'required', 'when' => function ($model) {
                 return empty($model->domains) && $model->domain;
             }, 'on' => ['transfer']],
-            [['domains'], 'required', 'when' => function($model) {
+            [['domains'], 'required', 'when' => function ($model) {
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::className(), 'on' => ['transfer']],
@@ -84,18 +95,18 @@ class Domain extends \hipanel\base\Model
             }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
-
             [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
-            [['nameservers'], 'filter', 'filter' => function($value) {
-                return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : [];
+            [['nameservers'], 'filter', 'filter' => function ($value) {
+                return (mb_strlen($value) > 0) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'OLD-set-ns'],
             [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-nss'],
-            [['dumb'], 'safe', 'on' => ['get-zones']]
+            [['dumb'], 'safe', 'on' => ['get-zones']],
         ];
     }
 
-    /** @inheritdoc */
-    public function attributeLabels () {
+    /** {@inheritdoc} */
+    public function attributeLabels()
+    {
         return $this->mergeAttributeLabels([
             'epp_client_id'         => Yii::t('app', 'EPP client ID'),
             'remoteid'              => Yii::t('app', 'Remote ID'),
@@ -134,7 +145,7 @@ class Domain extends \hipanel\base\Model
 
     public static function getZone($domain)
     {
-        return substr($domain, strpos($domain,'.')+1);
+        return substr($domain, strpos($domain, '.') + 1);
     }
 
     public function scenarioCommands()
@@ -144,28 +155,32 @@ class Domain extends \hipanel\base\Model
         ];
     }
 
-    public static function isDomainOwner ($model) {
-         return Yii::$app->user->is($model->client_id)
-             || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id == $model->client_id);
+    public static function isDomainOwner($model)
+    {
+        return Yii::$app->user->is($model->client_id)
+             || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
     }
 
-    public static function notDomainOwner ($model) {
-        return Yii::$app->user->not($model->client_id) && (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id != $model->client_id);
+    public static function notDomainOwner($model)
+    {
+        return Yii::$app->user->not($model->client_id) && (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id !== $model->client_id);
     }
 
-    public function getDnsRecords() {
+    public function getDnsRecords()
+    {
         return $this->hasMany(Record::className(), ['hdomain_id' => 'id']);
     }
 
-    public function getTransferDataProvider() {
+    public function getTransferDataProvider()
+    {
         $result = [
             'success' => null,
             'error' => null,
         ];
 
         $this->domains = trim($this->domains);
-        $list = ArrayHelper::csplit($this->domains,"\n");
-        foreach ($list as $key=> $value) {
+        $list = ArrayHelper::csplit($this->domains, "\n");
+        foreach ($list as $key => $value) {
             $strCheck .= "\n$value";
             $strCheck = trim($strCheck);
             preg_match("/^([a-z0-9][0-9a-z.-]+)( +|\t+|,|;)(.*)/i", $value, $matches);
@@ -173,11 +188,16 @@ class Domain extends \hipanel\base\Model
                 $domain = check::domain(trim(strtolower($matches[1])));
                 if ($domain) {
                     $password = check::password(trim($matches[3]));
-                    if ($password) $doms[$domain] = compact('domain','password');
-                    else $dom2err[$domain] = "wrong input password";
-                } else $dom2err[$value] = 'unknown error';
+                    if ($password) {
+                        $doms[$domain] = compact('domain', 'password');
+                    } else {
+                        $dom2err[$domain] = 'wrong input password';
+                    }
+                } else {
+                    $dom2err[$value] = 'unknown error';
+                }
             } else {
-                $dom2err[$value] = "empty code";
+                $dom2err[$value] = 'empty code';
             }
         }
 
@@ -191,6 +211,7 @@ class Domain extends \hipanel\base\Model
         } catch (\yii\base\Exception $e) {
             $response = $e->errorInfo['response'];
         }
+
         return $response;
     }
 
@@ -220,19 +241,20 @@ class Domain extends \hipanel\base\Model
                         'status' => !$isError,
                         'errorMessage' => $isError ? $v['_error'] : '',
                     ];
-                    $i++;
+                    ++$i;
                 }
             }
         } else {
             $response = reset($this->checkDomainTransfer([$this->domain => ['domain' => $this->domain, 'password' => $this->password]]));
             $isError = isset($response['_error']);
             $result[] = [
-                'domain' => $this->domain . ((!$isError) ? Html::hiddenInput("DomainTransferProduct[0][name]", $this->domain) : ''),
-                'password' => $this->password . (!$isError ? Html::hiddenInput("DomainTransferProduct[0][password]", $this->password) : ''),
+                'domain' => $this->domain . ((!$isError) ? Html::hiddenInput('DomainTransferProduct[0][name]', $this->domain) : ''),
+                'password' => $this->password . (!$isError ? Html::hiddenInput('DomainTransferProduct[0][password]', $this->password) : ''),
                 'status' => !isset($response['_error']),
                 'errorMessage' => $isError ? $response['_error'] : '',
             ];
         }
+
         return $result;
     }
 }

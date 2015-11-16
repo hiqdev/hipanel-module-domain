@@ -1,8 +1,8 @@
 <?php
 
-use yii\grid\GridView;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
+use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = Yii::t('app', 'Domain transfer');

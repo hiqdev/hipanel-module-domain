@@ -1,11 +1,10 @@
 <?php
 
 use hipanel\modules\client\widgets\combo\ClientCombo;
-use hipanel\widgets\AdvancedSearch;
 use hiqdev\combo\StaticCombo;
 use kartik\widgets\DatePicker;
-use yii\helpers\Url;
 use yii\helpers\Html;
+
 ?>
 
     <div class="col-md-4">
@@ -25,7 +24,7 @@ use yii\helpers\Html;
             'pluginOptions' => [
                 'select2Options' => [
                     'multiple' => false,
-                ]
+                ],
             ],
         ]) ?>
         <div class="form-group">
@@ -37,8 +36,8 @@ use yii\helpers\Html;
                 'attribute2'    => 'created_till',
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format'    => 'dd-mm-yyyy'
-                ]
+                    'format'    => 'dd-mm-yyyy',
+                ],
             ]) ?>
         </div>
     </div>

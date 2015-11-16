@@ -4,8 +4,8 @@ use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\widgets\Box;
-use hipanel\widgets\Pjax;
 use hipanel\widgets\ClientSellerLink;
+use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\ActiveForm;
@@ -34,7 +34,7 @@ CSS
 
     <div class="col-md-3">
 
-        <?= Html::a('Domain renew', ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-block margin-bottom btn-warning', 'data-pjax' => 0]); ?>
+        <?= Html::a(Yii::t('app', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-block margin-bottom btn-warning', 'data-pjax' => 0]); ?>
 
         <?php Box::begin([
             'options' => [
@@ -164,7 +164,7 @@ CSS
                                 'value' => function ($model) {
                                     $enablePremiumLink = Html::a(Yii::t('app', 'Enable premium'), Url::toRoute(''), ['class' => 'btn btn-success btn-xs pull-right']);
 
-                                    return $model->is_premium == 't' ? Yii::t('app', 'Activated to ') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('app', 'Not enabled'), $enablePremiumLink);
+                                    return $model->is_premium === 't' ? Yii::t('app', 'Activated to ') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('app', 'Not enabled'), $enablePremiumLink);
                                 },
                                 'format' => 'raw',
                             ],
@@ -175,7 +175,7 @@ CSS
                                 'filter' => false,
                                 'url' => Url::toRoute(['@hdomain/set-paid-feature-autorenewal']),
                                 'popover' => 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',
-                                'visible' => $model->is_premium == 't' ? true : false,
+                                'visible' => $model->is_premium === 't' ? true : false,
                                 'pluginOptions' => [
                                     'onColor' => 'info',
                                 ],
@@ -198,7 +198,7 @@ CSS
                         ],
                     ]); ?>
                     <?php if (Yii::$app->hasModule('dns')) {
-                        echo DnsZoneEditWidget::widget([
+    echo DnsZoneEditWidget::widget([
                             'domainId' => $model->id,
                             'clientScriptWrap' => function ($js) {
                                 return new \yii\web\JsExpression("
@@ -208,9 +208,9 @@ CSS
                                         $js
                                     });
                                 ");
-                            }
+                            },
                         ]);
-                    } ?>
+} ?>
                 </div>
 
                 <!-- URL forwarding -->

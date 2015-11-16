@@ -63,7 +63,7 @@ foreach ($models as $id => $model) : ?>
                 'value' => $model['nameservers'],
                 'class' => 'form-control input',
                 'data-family' => $id,
-                'placeholder' => 'Type NS servers here...'
+                'placeholder' => 'Type NS servers here...',
             ])->label(false); ?>
         </div>
         <div class="col-sm-2">
@@ -78,8 +78,8 @@ foreach ($models as $id => $model) : ?>
                 'pluginOptions' => [
                     'size' => 'normal',
                     'radioAllOff' => true,
-                    'onText' => Yii::t('app', 'For all')
-                ]
+                    'onText' => Yii::t('app', 'For all'),
+                ],
 
             ]) ?>
         </div>

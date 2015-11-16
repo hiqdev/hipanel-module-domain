@@ -1,8 +1,16 @@
 <?php
 
-use yii\helpers\Html;
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 use hipanel\widgets\Pjax;
-use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\web\JsExpression;
 
 Pjax::begin(array_merge(Yii::$app->params['pjax'], [

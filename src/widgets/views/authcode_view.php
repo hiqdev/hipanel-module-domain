@@ -116,8 +116,8 @@ JS
 , View::POS_READY); ?>
 <?= Html::beginForm([
     'options' => [
-        'class' => 'form-horizontal'
-    ]
+        'class' => 'form-horizontal',
+    ],
 ]); ?>
 <?= Html::hiddenInput('id', $domainId); ?>
 <div class="row">

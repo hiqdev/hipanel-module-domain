@@ -1,9 +1,10 @@
 <?php
 
+use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use wbraganca\dynamicform\DynamicFormWidget;
 use yii\helpers\Url;
+
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'dynamic-form',
@@ -24,7 +25,7 @@ use yii\helpers\Url;
     'model' => reset($models),
     'formId' => 'dynamic-form',
     'formFields' => [
-        'host'
+        'host',
     ],
 ]) ?>
 

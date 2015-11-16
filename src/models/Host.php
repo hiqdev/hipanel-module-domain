@@ -1,10 +1,20 @@
 <?php
+
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 /**
  * @link    http://hiqdev.com/hipanel-module-domain
+ *
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
-
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
@@ -16,8 +26,9 @@ class Host extends \hipanel\base\Model
 {
     use \hipanel\base\ModelTrait;
 
-    /** @inheritdoc */
-    public function rules () {
+    /** {@inheritdoc} */
+    public function rules()
+    {
         return [
             [['host'],                                  'safe'],
             [['id'],                                    'safe'],
@@ -30,9 +41,9 @@ class Host extends \hipanel\base\Model
             [['host', 'ips'], 'required', 'on' => 'create'],
             [['host'], DomainValidator::className()],
 
-            [['ips'], 'filter', 'filter' => function($value) {
+            [['ips'], 'filter', 'filter' => function ($value) {
                 if (!is_array($value)) {
-                    return (mb_strlen($value) > 0 ) ? StringHelper::mexplode($value) : true;
+                    return (mb_strlen($value) > 0) ? StringHelper::mexplode($value) : true;
                 } else {
                     return $value;
                 }
@@ -42,8 +53,9 @@ class Host extends \hipanel\base\Model
         ];
     }
 
-    /** @inheritdoc */
-    public function attributeLabels () {
+    /** {@inheritdoc} */
+    public function attributeLabels()
+    {
         return $this->mergeAttributeLabels([
             'remoteid'              => Yii::t('app', 'Remote ID'),
             'seller'                => Yii::t('app', 'Reseller'),

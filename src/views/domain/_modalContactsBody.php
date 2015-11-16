@@ -1,7 +1,9 @@
 <?php
+
 use hipanel\modules\domain\models\Domain;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 $errorMsg = Yii::t('app', 'An error occurred while sending request. Try to repeat this action later.');
 $success = Yii::t('app', 'Success');
 $contactTablesLink = Url::toRoute(['get-contacts-by-ajax', 'id' => reset($domainContacts)['id']]);
@@ -80,9 +82,11 @@ JS
 <?= Html::beginForm(Url::toRoute('set-contacts'), 'POST', ['id' => 'set-contacts-form', 'class' => 'form-horizontal']) ?>
 
 <?php foreach ($domainContacts as $k => $v) : ?>
-    <?php if (Domain::getZone($v['domain']) == 'ru' || Domain::getZone($v['domain']) == 'su') continue; ?>
+    <?php if (Domain::getZone($v['domain']) === 'ru' || Domain::getZone($v['domain']) === 'su') : ?>
+        <?php continue ?>
+    <?php endif ?>
     <?= Html::hiddenInput('id[]', $k); ?>
-<?php endforeach; ?>
+<?php endforeach ?>
 
 <?php foreach (Domain::$contactOptions as $item) : ?>
 <div class="form-group">

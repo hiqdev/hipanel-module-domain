@@ -69,7 +69,7 @@ JS
                     }
                 );
             }
-        ")
+        "),
     ],
     'footer' => Html::submitButton(Yii::t('app', 'Save'), [
         'id' => 'modal-save-ns-button',

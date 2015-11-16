@@ -1,7 +1,6 @@
 <?php
 
 use hipanel\modules\domain\models\Domain;
-use hipanel\widgets\Box;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -28,7 +27,7 @@ use yii\widgets\DetailView;
                 'organization:raw:' . Yii::t('app', 'Organization'),
                 'voice_phone:raw:' . Yii::t('app', 'Phone'),
                 'fax_phone:raw:' . Yii::t('app', 'Fax'),
-            ]
+            ],
         ]) ?>
     </div>
 <?php endforeach; ?>

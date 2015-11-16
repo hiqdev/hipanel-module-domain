@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hipanel\modules\domain\cart;
 
-use Yii;
 use hipanel\modules\domain\models\Domain;
+use Yii;
 
 class DomainRenewalProduct extends AbstractDomainProduct
 {
@@ -17,6 +26,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
             $this->name = $this->_model->domain;
             $this->description = Yii::t('app', 'Renewal');
         }
+
         return $result;
     }
 

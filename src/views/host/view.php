@@ -1,18 +1,18 @@
 <?php
 /**
  * @link    http://hiqdev.com/hipanel-module-domain
+ *
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
-
 use hipanel\modules\domain\grid\HostGridView;
-use hipanel\widgets\Pjax;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
+use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
-$this->subtitle = Yii::t('app','Name server detailed information') . ' #'.$model->id;
+$this->subtitle = Yii::t('app', 'Name server detailed information') . ' #' . $model->id;
 $this->breadcrumbs->setItems([
     ['label' => Yii::t('app', 'Name servers'), 'url' => ['index']],
     $this->title,
@@ -20,7 +20,7 @@ $this->breadcrumbs->setItems([
 
 ?>
 
-<? Pjax::begin() ?>
+<?php Pjax::begin() ?>
     <div class="row" xmlns="http://www.w3.org/1999/html">
         <div class="col-md-3">
             <?php Box::begin([
@@ -28,8 +28,8 @@ $this->breadcrumbs->setItems([
                     'class' => 'box-solid',
                 ],
                 'bodyOptions' => [
-                    'class' => 'no-padding'
-                ]
+                    'class' => 'no-padding',
+                ],
             ]) ?>
             <div class="profile-user-img text-center">
                 <i class="fa fa-globe" style="font-size:7em"></i>
@@ -54,10 +54,10 @@ $this->breadcrumbs->setItems([
             <?= HostGridView::detailView([
                 'model'   => $model,
                 'columns' => [
-                    'seller_id','client_id',
+                    'seller_id', 'client_id',
                     'domain', 'bold_host', 'ips',
                 ],
             ]) ?>
         </div>
     </div>
-<? Pjax::end() ?>
+<?php Pjax::end() ?>

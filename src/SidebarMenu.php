@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hipanel\modules\domain;
 
 use Yii;
 
 class SidebarMenu extends \hiqdev\menumanager\Menu
 {
-
     protected $_addTo = 'sidebar';
 
     protected $_where = [
@@ -50,5 +58,4 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
             ],
         ];
     }
-
 }

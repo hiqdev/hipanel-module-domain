@@ -169,7 +169,7 @@ JS
                 return ['class' => 'check-item', 'data-domain' => $model->domain];
             },
             'options' => [
-                'class' => 'domainsCheck'
+                'class' => 'domainsCheck',
             ],
             'columns' => [
                 'domain',
@@ -187,7 +187,7 @@ JS
                     'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
                     'buttons' => [
                         'buy' => function ($url, $model, $key) {
-                            if ($model->is_available == false) {
+                            if ($model->is_available === false) {
                                 return Html::tag('sapn', Yii::t('app', 'Is not free!'));
                             } else {
                                 return Html::a(Yii::t('app', 'Buy domain'), ['add-to-cart-registration', 'name' => $model->domain], ['data-pjax' => 0]);

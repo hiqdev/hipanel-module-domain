@@ -1,15 +1,23 @@
 <?php
 
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hipanel\modules\domain\grid;
 
 use hipanel\grid\BoxedGridView;
 use hipanel\modules\domain\controllers\DomainController;
-use Yii;
 use yii\helpers\Html;
 
 class HostGridView extends BoxedGridView
 {
-    static public function defaultColumns()
+    public static function defaultColumns()
     {
         return [
             'host' => [
@@ -21,25 +29,25 @@ class HostGridView extends BoxedGridView
                 'attribute' => 'host',
                 'value'     => function ($model) {
                     return Html::tag('b', $model->host);
-                }
+                },
             ],
             'domain' => [
                 'format' => 'html',
                 'filterAttribute' => 'domain_like',
                 'value' => function ($model) {
-                    $domain = explode('.', $model->host,2)[1];
+                    $domain = explode('.', $model->host, 2)[1];
+
                     return $model->domain_id
-                        ? Html::a($domain, DomainController::getActionUrl('view',$model->domain_id))
-                        : Html::tag('b', $domain)
-                    ;
-                }
+                        ? Html::a($domain, DomainController::getActionUrl('view', $model->domain_id))
+                        : Html::tag('b', $domain);
+                },
             ],
             'ips' => [
                 'class' => 'hiqdev\xeditable\grid\XEditableColumn',
                 'pluginOptions' => [
                     'url' => 'update',
                 ],
-            ]
+            ],
 
         ];
     }
