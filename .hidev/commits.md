@@ -4,6 +4,7 @@ hiqdev/hipanel-module-domain commits history
 ## Under development
 
 - Added yii2-cart integration
+    - bd30ac0 2015-11-16 php-cs-fixed (sol@hiqdev.com)
     - ac92281 2015-11-16 redone cart (sol@hiqdev.com)
     - 3b3b6fa 2015-11-12 improved package description (sol@hiqdev.com)
     - 2049fc9 2015-11-12 redone hipanel-module-cart -> yii2-cart (sol@hiqdev.com)
