@@ -1,11 +1,11 @@
 <?php
 
-namespace hipanel\modules\domain\models;
+namespace hipanel\modules\domain\cart;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class DomainTransferProduct extends DomainProduct
+class DomainTransferProduct extends AbstractDomainProduct
 {
     protected $_operation = 'transfer';
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace hipanel\modules\domain\models;
+namespace hipanel\modules\domain\cart;
 
 use Yii;
+use hipanel\modules\domain\models\Domain;
 
-class DomainRenewalProduct extends DomainProduct
+class DomainRenewalProduct extends AbstractDomainProduct
 {
     protected $_operation = 'renewal';
 
@@ -13,7 +14,7 @@ class DomainRenewalProduct extends DomainProduct
         $result = parent::load($data, '');
         if ($result) {
             $this->_model = Domain::findOne($this->model_id);
-            $this->name = $this->_model->name;
+            $this->name = $this->_model->domain;
             $this->description = Yii::t('app', 'Renewal');
         }
         return $result;

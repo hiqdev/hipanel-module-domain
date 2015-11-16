@@ -1,10 +1,10 @@
 <?php
 
-namespace hipanel\modules\domain\models;
+namespace hipanel\modules\domain\cart;
 
 use Yii;
 
-class DomainRegistrationProduct extends DomainProduct
+class DomainRegistrationProduct extends AbstractDomainProduct
 {
     protected $_operation = 'registration';
 

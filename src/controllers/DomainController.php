@@ -26,15 +26,15 @@ class DomainController extends \hipanel\base\CrudController
         return [
             'add-to-cart-renewal' => [
                 'class'        => 'hiqdev\yii2\cart\actions\AddToCartAction',
-                'productClass' => 'hipanel\modules\domain\models\DomainRenewalProduct',
+                'productClass' => 'hipanel\modules\domain\cart\DomainRenewalProduct',
             ],
             'add-to-cart-registration' => [
                 'class'        => 'hiqdev\yii2\cart\actions\AddToCartAction',
-                'productClass' => 'hipanel\modules\domain\models\DomainRegistrationProduct',
+                'productClass' => 'hipanel\modules\domain\cart\DomainRegistrationProduct',
             ],
             'add-to-cart-transfer' => [
                 'class'        => 'hiqdev\yii2\cart\actions\AddToCartAction',
-                'productClass' => 'hipanel\modules\domain\models\DomainTransferProduct',
+                'productClass' => 'hipanel\modules\domain\cart\DomainTransferProduct',
                 'bulkLoad'     => true,
             ],
             'index' => [
