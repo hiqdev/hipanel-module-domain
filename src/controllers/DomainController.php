@@ -69,6 +69,9 @@ class DomainController extends \hipanel\base\CrudController
             'validate-form' => [
                 'class' => 'hipanel\actions\ValidateFormAction',
             ],
+            'validate-nss' => [
+                'class'     => 'hipanel\actions\ValidateFormAction',
+            ],
             'set-note' => [
                 'class' => 'hipanel\actions\SmartUpdateAction',
                 'success' => Yii::t('app', 'Note changed'),

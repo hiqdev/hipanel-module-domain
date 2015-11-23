@@ -3,6 +3,7 @@
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\widgets\AuthCode;
+use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
@@ -137,6 +138,7 @@ CSS
 
                 <!-- NS records -->
                 <div class=" tab-pane" id="ns-records">
+                    <?php /*
                     <?= Html::tag('b', $model->getAttributeLabel('nameservers') . ': '); ?>
                     <?= XEditable::widget([
                         'model' => $model,
@@ -148,6 +150,15 @@ CSS
                             'url' => Url::to('set-nss'),
                         ],
                     ]); ?>
+
+
+                    */
+                    ?>
+                    <?= NsWidget::widget([
+                        'model' => $model,
+                        'attribute' => 'nameservers',
+                    ]); ?>
+
                 </div>
 
                 <!-- Authorization code -->
