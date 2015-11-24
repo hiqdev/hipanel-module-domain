@@ -1,6 +1,7 @@
 <?php
 
 use hipanel\modules\domain\assets\NSyncPluginAsset;
+use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
 use hiqdev\assets\icheck\iCheckAsset;
 use wbraganca\dynamicform\DynamicFormWidget;
@@ -10,14 +11,12 @@ use yii\helpers\Url;
 
 Yii::$app->assetManager->forceCopy = true;
 
-iCheckAsset::register($this);
 NSyncPluginAsset::register($this);
-
-$this->registerJs("$('#nss-form-pjax').NSync();");
 
 ?>
 
-<?php Pjax::begin(['id' => 'nss-form-pjax', 'enableReplaceState' => false, 'scrollTo' => true]) ?>
+<?php Pjax::begin(['id' => 'nss-form-pjax', 'enablePushState' => false, 'enableReplaceState' => false]) ?>
+<?php $this->registerJs("$('#nss-form-pjax').NSync();"); ?>
 <?php $form = ActiveForm::begin([
     'id' => 'dynamic-form',
     'action' => 'set-nss',
@@ -29,25 +28,20 @@ $this->registerJs("$('#nss-form-pjax').NSync();");
 <?= Html::activeHiddenInput($model, "id") ?>
 <?= Html::activeHiddenInput($model, "domain") ?>
 
-    <div class="row">
-        <div class="col-md-12 text-right ">
+    <?php Box::begin(); ?>
+    <div class="row" style="margin-top: 15pt;">
+        <div class="col-md-10 inline-form-selector">
+            <?= Html::activeTextInput($model, 'nameservers', ['class' => 'form-control']) ?>
+        </div>
+        <div class="col-md-2 text-right">
             <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default']) ?>
         </div>
     </div>
-
-    <div class="row" style="margin-top: 15pt;">
-        <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-body inline-form-selector">
-                    <?= $form->field($model, 'nameservers') ?>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php Box::end(); ?>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-info">
+            <div class="panel panel-default">
                 <div class="panel-body">
                     <?php DynamicFormWidget::begin([
                         'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]

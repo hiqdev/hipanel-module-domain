@@ -3,6 +3,7 @@
 namespace hipanel\modules\domain\models;
 
 use hipanel\base\Model;
+use hipanel\modules\dns\validators\DomainPartValidator;
 use Yii;
 
 class Ns extends Model
@@ -13,6 +14,7 @@ class Ns extends Model
     {
         return [
             [['name', 'ip'], 'filter', 'filter' => 'trim'],
+            [['name'],  DomainPartValidator::className()],
         ];
     }
 

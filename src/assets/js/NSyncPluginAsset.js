@@ -87,7 +87,7 @@
         addDynamicFormListener: function (event) {
             var that = this;
             $(this.element).find(this.options.dynamicFormWidgetContainer).on('afterDelete afterInsert', function (event) {
-                if (!that.element.find(that.options.inlineFieldSelector).data('touched')) {
+                if (!$(that.element).find(that.options.inlineFieldSelector).data('touched')) {
                     that.updateInlineForm(event);
                 }
             });
