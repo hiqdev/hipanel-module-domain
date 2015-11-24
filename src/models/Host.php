@@ -19,7 +19,6 @@ namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
 use hipanel\validators\DomainValidator;
-use hipanel\validators\IpValidator;
 use Yii;
 
 class Host extends \hipanel\base\Model
@@ -49,7 +48,7 @@ class Host extends \hipanel\base\Model
                 }
             }, 'on' => ['create', 'update']],
 
-            [['ips'], 'each', 'rule' => [IpValidator::className()], 'on' => ['create', 'update']],
+            [['ips'], 'each', 'rule' => ['ip'], 'on' => ['create', 'update']],
         ];
     }
 
