@@ -1,7 +1,6 @@
 <?php
 
 use hipanel\modules\domain\assets\NSyncPluginAsset;
-use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
@@ -31,6 +30,7 @@ $(document).on('pjax:complete', function(event) {
 <?php $form = ActiveForm::begin([
     'id' => 'nss-form-pjax',
     'action' => 'set-nss',
+    'enableAjaxValidation' => true,
     'validationUrl' => Url::toRoute(['validate-nss', 'scenario' => 'default']),
     'options' => [
         'data-pjax' => true,
@@ -40,21 +40,28 @@ $(document).on('pjax:complete', function(event) {
 <?= Html::activeHiddenInput($model, "id") ?>
 <?= Html::activeHiddenInput($model, "domain") ?>
 
-    <?php Box::begin(); ?>
     <div class="row" style="margin-top: 15pt;">
         <div class="col-md-10 inline-form-selector">
-            <?= Html::activeTextInput($model, 'nameservers', ['class' => 'form-control']) ?>
+            <?= Html::activeTextInput($model, 'nameservers', [
+                'class' => 'form-control',
+                'placeholder' => $model->getAttributeLabel('nameservers'),
+                'autocomplete' => 'off',
+            ]) ?>
         </div>
         <div class="col-md-2 text-right">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default', 'id' => 'nss-save-button', 'data-loading-text' => Yii::t('app', 'Saving') . '...']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Save'), [
+                'class' => 'btn btn-default',
+                'id' => 'nss-save-button',
+                'data-loading-text' => Yii::t('app', 'Saving') . '...',
+            ]) ?>
         </div>
     </div>
-    <?php Box::end(); ?>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <hr>
+            <div class="">
+                <div class="">
                     <?php DynamicFormWidget::begin([
                         'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                         'widgetBody' => '.container-items', // required: css class selector
@@ -72,16 +79,14 @@ $(document).on('pjax:complete', function(event) {
                     ]) ?>
                     <div class="container-items">
                         <?php foreach ($nsModels as $i => $nsModel): ?>
+                            <?= Html::activeHiddenInput($nsModel, "[$i]domain_name") ?>
                             <div class="item">
                                 <div class="row" style="margin-bottom: 5pt">
                                     <div class="col-md-5">
-                                        <?= Html::activeTextInput($nsModel, "[$i]name", ['placeholder' => $nsModel->getAttributeLabel('name'), 'class' => 'form-control']) ?>
+                                        <?= $form->field($nsModel, "[$i]name")->textInput(['placeholder' => $nsModel->getAttributeLabel('name')])->label(false) ?>
                                     </div>
                                     <div class="col-md-5">
-                                        <?= Html::activeTextInput($nsModel, "[$i]ip", [
-                                            'placeholder' => $nsModel->getAttributeLabel('ip'),
-                                            'class' => 'form-control',
-                                        ]) ?>
+                                        <?= $form->field($nsModel, "[$i]ip")->textInput(['placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
                                     </div>
                                     <div class="col-md-2 text-right">
                                         <div class="btn-group" role="group">

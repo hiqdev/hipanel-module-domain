@@ -71,6 +71,10 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'validate-nss' => [
                 'class'     => 'hipanel\actions\ValidateFormAction',
+                'model'     => 'hipanel\modules\domain\models\Ns',
+                'scenario'  => 'default',
+
+                'allowDynamicScenario' => false,
             ],
             'set-note' => [
                 'class' => 'hipanel\actions\SmartUpdateAction',
