@@ -3,7 +3,6 @@
 use hipanel\modules\domain\assets\NSyncPluginAsset;
 use hipanel\widgets\Box;
 use hipanel\widgets\Pjax;
-use hiqdev\assets\icheck\iCheckAsset;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
@@ -15,14 +14,27 @@ NSyncPluginAsset::register($this);
 
 ?>
 
-<?php Pjax::begin(['id' => 'nss-form-pjax', 'enablePushState' => false, 'enableReplaceState' => false]) ?>
-<?php $this->registerJs("$('#nss-form-pjax').NSync();"); ?>
+<?php Pjax::begin(['id' => 'nss-pjax-container', 'enablePushState' => false, 'enableReplaceState' => true]) ?>
+<?php $this->registerJs("
+$('#nss-form-pjax').NSync();
+
+$(document).on('pjax:send', function(event) {
+    event.preventDefault()
+    $('#nss-save-button').button('loading');
+
+});
+$(document).on('pjax:complete', function(event) {
+  event.preventDefault()
+  $('#nss-save-button').button('reset')
+});
+"); ?>
 <?php $form = ActiveForm::begin([
-    'id' => 'dynamic-form',
+    'id' => 'nss-form-pjax',
     'action' => 'set-nss',
     'validationUrl' => Url::toRoute(['validate-nss', 'scenario' => 'default']),
     'options' => [
-        'data-pjax' => '#nss-form-pjax',
+        'data-pjax' => true,
+        'data-pjaxPush' => false,
     ],
 ]); ?>
 <?= Html::activeHiddenInput($model, "id") ?>
@@ -34,7 +46,7 @@ NSyncPluginAsset::register($this);
             <?= Html::activeTextInput($model, 'nameservers', ['class' => 'form-control']) ?>
         </div>
         <div class="col-md-2 text-right">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default', 'id' => 'nss-save-button', 'data-loading-text' => Yii::t('app', 'Saving') . '...']) ?>
         </div>
     </div>
     <?php Box::end(); ?>
@@ -52,7 +64,7 @@ NSyncPluginAsset::register($this);
                         'insertButton' => '.add-item', // css class
                         'deleteButton' => '.remove-item', // css class
                         'model' => reset($nsModels),
-                        'formId' => 'dynamic-form',
+                        'formId' => 'nss-form-pjax',
                         'formFields' => [
                             'name',
                             'ip',
