@@ -9,13 +9,13 @@ class NSyncPluginAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@hipanel/modules/domain/assets';
+    public $sourcePath = '@hipanel/modules/domain/assets/NSyncPluginAssets';
 
     /**
      * @var array
      */
     public $js = [
-        'js/NSyncPluginAsset.js',
+        'js/NSyncPlugin.js',
     ];
 
     /**
