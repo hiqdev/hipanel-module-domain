@@ -1,20 +1,12 @@
 /**
  * Created by tofid on 23.11.15.
  */
-if (!String.prototype.endsWith) {
-    Object.defineProperty(String.prototype, 'endsWith', {
-        value: function(searchString, position) {
-            var subjectString = this.toString();
-            if (position === undefined || position > subjectString.length) {
-                position = subjectString.length;
-            }
-            position -= searchString.length;
-            var lastIndex = subjectString.indexOf(searchString, position);
-            return lastIndex !== -1 && lastIndex === position;
-        }
-    });
-}
 ;
+if (typeof String.prototype.endsWith !== 'function') {
+    String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };
+}
 (function ($, window, document, undefined) {
     var pluginName = "NSync";
 
@@ -50,18 +42,21 @@ if (!String.prototype.endsWith) {
         },
         fieldslistener: function (event) {
             var that = this;
-            var domain_name = $(this.element).find('.domain_name').eq(0).val();
             $(this.element).on('change keyup input click', function (event) {
                 var DWContainer = $(that.element).find(that.options.dynamicFormWidgetContainer);
                 DWContainer.find(that.options.dynamicFormWidgetItem).each(function (i, elem) {
                     var containerFields = $(elem).find('input');
-                    if (containerFields.eq(0).val().endsWith(domain_name)) {
+                    if (that.isChildDomain(containerFields.eq(0).val())) {
                         containerFields.eq(1).attr('disabled', false);
                     } else {
                         containerFields.eq(1).attr('disabled', true);
                     }
                 });
             });
+        },
+        isChildDomain: function (nsName) {
+            var mainDomain = $(this.element).find('.domain_name').eq(0).val();
+            return nsName.endsWith(mainDomain);
         },
 
         // Inline Processing
@@ -148,7 +143,9 @@ if (!String.prototype.endsWith) {
                 var stateItem = state.shift();
                 var containerFields = $(element).find('input');
                 containerFields.eq(0).val(stateItem.name);
-                containerFields.eq(1).val(stateItem.ip);
+                if (that.isChildDomain(stateItem.name)) {
+                    containerFields.eq(1).val(stateItem.ip);
+                }
             });
         },
         getDynamicElementsCount: function () {

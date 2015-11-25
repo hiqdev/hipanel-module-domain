@@ -7,7 +7,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
-
+Yii::$app->assetManager->forceCopy = true;
 NSyncPluginAsset::register($this);
 ?>
 
