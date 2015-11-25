@@ -18,7 +18,7 @@ class Ns extends Model
             [['name'],  FqdnValueValidator::className()],
             [['ip'],  'ip'],
             [['ip'],  function ($attribute, $params) {
-                if (StringHelper::endsWith($this->name, $this->domain_name)) {
+                if (!StringHelper::endsWith($this->name, $this->domain_name)) {
                     $this->addError($attribute, Yii::t('app', Yii::t('app', 'To assign the IP, NS must be a child from main domain')));
                 }
             }],

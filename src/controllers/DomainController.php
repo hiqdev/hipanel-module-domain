@@ -58,7 +58,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'view' => [
                 'class' => 'hipanel\actions\ViewAction',
-                'findOptions' => ['with_dns' => 1],
+                'findOptions' => ['with_nsips' => 1],
                 'data' => function ($action) {
                     return [
                         'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $action->getId()]),

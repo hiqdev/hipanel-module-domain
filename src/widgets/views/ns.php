@@ -1,5 +1,6 @@
 <?php
 
+use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\assets\NSyncPluginAsset;
 use hipanel\widgets\Pjax;
 use wbraganca\dynamicform\DynamicFormWidget;
@@ -8,9 +9,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 
 Yii::$app->assetManager->forceCopy = true;
-
 NSyncPluginAsset::register($this);
-
 ?>
 
 <?php Pjax::begin(['id' => 'nss-pjax-container', 'enablePushState' => false, 'enableReplaceState' => true]) ?>
@@ -42,7 +41,7 @@ $(document).on('pjax:complete', function(event) {
 
     <div class="row" style="margin-top: 15pt;">
         <div class="col-md-10 inline-form-selector">
-            <?= Html::activeTextInput($model, 'nameservers', [
+            <?= Html::activeTextInput($model, 'nsips', [
                 'class' => 'form-control',
                 'placeholder' => $model->getAttributeLabel('nameservers'),
                 'autocomplete' => 'off',
@@ -75,18 +74,20 @@ $(document).on('pjax:complete', function(event) {
                         'formFields' => [
                             'name',
                             'ip',
+                            'domain_name',
                         ],
                     ]) ?>
+
                     <div class="container-items">
                         <?php foreach ($nsModels as $i => $nsModel): ?>
-                            <?= Html::activeHiddenInput($nsModel, "[$i]domain_name") ?>
+                            <?= Html::activeHiddenInput($nsModel, "[$i]domain_name", ['value' => $model->domain, 'class' => 'domain_name']) ?>
                             <div class="item">
                                 <div class="row" style="margin-bottom: 5pt">
                                     <div class="col-md-5">
                                         <?= $form->field($nsModel, "[$i]name")->textInput(['placeholder' => $nsModel->getAttributeLabel('name')])->label(false) ?>
                                     </div>
                                     <div class="col-md-5">
-                                        <?= $form->field($nsModel, "[$i]ip")->textInput(['placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
+                                        <?= $form->field($nsModel, "[$i]ip")->textInput(['disabled' => !StringHelper::endsWith($nsModel->name, $model->domain), 'placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
                                     </div>
                                     <div class="col-md-2 text-right">
                                         <div class="btn-group" role="group">
@@ -97,7 +98,9 @@ $(document).on('pjax:complete', function(event) {
                                         </div>
                                     </div>
                                 </div>
+                                <?= Html::activeHiddenInput($nsModel, "[$i]domain_name", ['value' => $model->domain]) ?>
                             </div>
+
                         <?php endforeach; ?>
                     </div>
                     <?php DynamicFormWidget::end(); ?>

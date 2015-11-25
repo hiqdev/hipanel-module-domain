@@ -44,9 +44,10 @@ class NsWidget extends Widget
         $models = [];
         foreach (explode(',', $string) as $item) {
             if (strpos($item, '/')) {
-                $data = [
-                    'name' => '',
-                    'ip' => '',
+                $ns_ip  = explode('/', $item);
+                $data['Ns'] = [
+                    'name' => $ns_ip[0],
+                    'ip' => $ns_ip[1],
                 ];
             } else {
                 $data['Ns']['name'] = $item;

@@ -53,7 +53,7 @@ class Domain extends \hipanel\base\Model
             [['foa_sent_to'],                                                                                           'email'],
             [['url_fwval' ,'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
-            [['block', 'epp_client_id', 'nameservers'],                                                                 'safe'],
+            [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
             [['note'],                                          'safe',     'on' => ['set-note','default']],
 
             [['registrant','admin','tech','billing'],           'safe',     'on' => ['set-contacts']],

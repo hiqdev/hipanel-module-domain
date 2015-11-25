@@ -1,7 +1,19 @@
 /**
  * Created by tofid on 23.11.15.
  */
-
+if (!String.prototype.endsWith) {
+    Object.defineProperty(String.prototype, 'endsWith', {
+        value: function(searchString, position) {
+            var subjectString = this.toString();
+            if (position === undefined || position > subjectString.length) {
+                position = subjectString.length;
+            }
+            position -= searchString.length;
+            var lastIndex = subjectString.indexOf(searchString, position);
+            return lastIndex !== -1 && lastIndex === position;
+        }
+    });
+}
 ;
 (function ($, window, document, undefined) {
     var pluginName = "NSync";
@@ -31,9 +43,25 @@
         init: function (event) {
             this.addInlineFormListener(event);
             this.addDynamicFormListener(event);
+            this.fieldslistener(event);
         },
         isStateChanged: function () {
             return this.getDynamicElementsCount() !== this.getInlineElementsCount();
+        },
+        fieldslistener: function (event) {
+            var that = this;
+            var domain_name = $(this.element).find('.domain_name').eq(0).val();
+            $(this.element).on('change keyup input click', function (event) {
+                var DWContainer = $(that.element).find(that.options.dynamicFormWidgetContainer);
+                DWContainer.find(that.options.dynamicFormWidgetItem).each(function (i, elem) {
+                    var containerFields = $(elem).find('input');
+                    if (containerFields.eq(0).val().endsWith(domain_name)) {
+                        containerFields.eq(1).attr('disabled', false);
+                    } else {
+                        containerFields.eq(1).attr('disabled', true);
+                    }
+                });
+            });
         },
 
         // Inline Processing
@@ -56,7 +84,7 @@
                 if (elem.ip !== '') {
                     nsInlineField +=  '/' + elem.ip;
                 }
-                nsInlineField += ', ';
+                nsInlineField += ',';
             });
 
             $(this.element).find(this.options.inlineFieldSelector).val(nsInlineField.replace(/,\s*$/g, ''));

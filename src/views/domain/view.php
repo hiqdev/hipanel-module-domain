@@ -156,7 +156,7 @@ CSS
                     ?>
                     <?= NsWidget::widget([
                         'model' => $model,
-                        'attribute' => 'nameservers',
+                        'attribute' => 'nsips',
                     ]); ?>
 
                 </div>
