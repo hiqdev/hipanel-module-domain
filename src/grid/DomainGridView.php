@@ -164,7 +164,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'delete'        => function ($url, $model, $key) {
-                        return in_array($model->state, ['ok', 'expired', 'outgoing'], true) ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('yii', 'Delete'), $url, [
+                        return in_array($model->state, ['ok', 'expired', 'outgoing'], true) && Yii::$app->user->can('support') ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('yii', 'Delete'), $url, [
                                 'title'        => Yii::t('yii', 'Delete'),
                                 'aria-label'   => Yii::t('yii', 'Delete'),
                                 'data' => [
