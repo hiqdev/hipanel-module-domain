@@ -61,7 +61,7 @@ use yii\helpers\Url;
     <?php endforeach; ?>
 </div>
 <?php DynamicFormWidget::end() ?>
-<?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-default']) ?>
+<?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
 &nbsp;
 <?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
 <?php ActiveForm::end() ?>
