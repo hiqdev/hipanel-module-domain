@@ -37,6 +37,10 @@ $(document).on('pjax:complete', function(event) {
 ]); ?>
 <?= Html::activeHiddenInput($model, "id") ?>
 <?= Html::activeHiddenInput($model, "domain") ?>
+    <div class="alert alert-info alert-dismissible fade in" role="alert">
+        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;Some important info!</h4>
+        <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+    </div>
 
     <div class="row" style="margin-top: 15pt;">
         <div class="col-md-10 inline-form-selector">
