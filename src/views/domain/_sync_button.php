@@ -13,19 +13,23 @@ use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
-Pjax::begin(array_merge(Yii::$app->params['pjax'], [
-    'id' => 'domain-view-sync-button',
-    'enablePushState' => false,
-    'clientOptions'   => [
-        'type' => 'POST',
-        'data' => ["{$model->formName()}[id]" => $model->id],
-    ],
-]));
+Pjax::begin(array_merge(Yii::$app->params['pjax'], ['id' => 'domain-view-sync-button']));
 
 echo Html::a(
     '<i class="ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'),
     ['sync', 'id' => $model->id],
-    ['onClick' => new JsExpression("$(this).html('<i class=\"ion-ios-loop-strong\">" . Yii::t('app', 'Loading...') . "');")]
+    [
+        'id' => 'test123',
+        'data' => [
+            'pjax' => true,
+            'method' => 'post',
+            'params' => ["{$model->formName()}[id]" => $model->id],
+            'pjax-push-state' => false,
+            'pjax-container' => '#domain-view-sync-button',
+            'pjax-skip-outer-containers' => true
+        ],
+        'onClick' => new JsExpression("$(this).html('<i class=\"ion-ios-loop-strong\">" . Yii::t('app', 'Loading...') . "');")
+    ]
 );
 
 Pjax::end();
