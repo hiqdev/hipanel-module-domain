@@ -8,7 +8,9 @@
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ActionBox;
+use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Pjax;
+use hipanel\widgets\SettingsModal;
 use yii\bootstrap\Dropdown;
 use yii\helpers\Html;
 
@@ -82,6 +84,13 @@ CSS
                     ],
                 ]); ?>
             </div>
+            <?= AjaxModal::widget([
+                'bulkPage' => true,
+                'header'=> Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
+                'scenario' => 'bulk-set-note',
+                'actionUrl' => ['bulk-set-note'],
+                'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default',],
+            ]) ?>
             <?= $this->render('_modalNs') ?>
             <?= $this->render('_modalContacts', ['model' => null]) ?>
             &nbsp;

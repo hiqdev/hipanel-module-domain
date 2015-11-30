@@ -290,6 +290,27 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+    public function actionBulkSetNote()
+    {
+        $collection = (new Collection())->load();
+        \yii\helpers\VarDumper::dump($collection, 10, true);
+//        $model = $this->findModel($id);
+//        $model->scenario = 'mailing-settings';
+//        $request = Yii::$app->request;
+//
+//        if ($request->isAjax && $model->load(Yii::$app->request->post())) {
+//            $model->perform('SetClassValues', [
+//                'id' => $id,
+//                'class' => 'client,mailing',
+//                'values' => $model->dirtyAttributes
+//            ]);
+//            Yii::$app->end();
+//        }
+//        $model->setAttributes($model->perform('GetClassValues', ['id' => $id, 'class' => 'client,mailing']));
+
+        return $this->renderAjax('_bulkSetNote');
+    }
+
     public function actionCheck()
     {
         $domain = Yii::$app->request->post('domain');
