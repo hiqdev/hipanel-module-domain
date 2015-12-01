@@ -54,7 +54,7 @@ class Domain extends \hipanel\base\Model
             [['url_fwval' ,'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
             [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
-            [['note'],                                          'safe',     'on' => ['set-note','default']],
+            [['note', 'ids'],                                          'safe',     'on' => ['set-note','default']],
 
             [['registrant','admin','tech','billing'],           'safe',     'on' => ['set-contacts']],
             [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],

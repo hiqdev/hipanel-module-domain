@@ -12,6 +12,7 @@ use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Pjax;
 use hipanel\widgets\SettingsModal;
 use yii\bootstrap\Dropdown;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
 $this->title    = Yii::t('app', 'Domains');
@@ -89,6 +90,7 @@ CSS
                 'header'=> Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
                 'scenario' => 'bulk-set-note',
                 'actionUrl' => ['bulk-set-note'],
+                'size' => Modal::SIZE_LARGE,
                 'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default',],
             ]) ?>
             <?= $this->render('_modalNs') ?>

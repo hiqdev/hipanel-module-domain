@@ -21,6 +21,7 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\models\DomainSearch;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
@@ -80,6 +81,24 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => 'hipanel\actions\SmartUpdateAction',
                 'success' => Yii::t('app', 'Note changed'),
                 'error' => Yii::t('app', 'Failed change note'),
+                'beforeSave' => function ($action) {
+                    \yii\helpers\VarDumper::dump($action, 10, true);die();
+//                    foreach ($action->collection->models as $model) {
+//                        $model->enable = 0;
+//                    }
+//
+//                    $templateModel = null;
+//                    $template = Yii::$app->request->post('check');
+//                    foreach ($action->collection->models as $model) {
+//                        if ($model->id === $template) {
+//                            $templateModel = $model;
+//                        }
+//                    }
+//
+//                    foreach ($action->collection->models as $model) {
+//                        $model->nameservers = $templateModel->nameservers;
+//                    }
+                },
             ],
             'set-nss' => [
                 'class' => 'hipanel\actions\SmartUpdateAction',
@@ -292,23 +311,19 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionBulkSetNote()
     {
-        $collection = (new Collection())->load();
-        \yii\helpers\VarDumper::dump($collection, 10, true);
-//        $model = $this->findModel($id);
-//        $model->scenario = 'mailing-settings';
-//        $request = Yii::$app->request;
-//
-//        if ($request->isAjax && $model->load(Yii::$app->request->post())) {
-//            $model->perform('SetClassValues', [
-//                'id' => $id,
-//                'class' => 'client,mailing',
-//                'values' => $model->dirtyAttributes
-//            ]);
-//            Yii::$app->end();
-//        }
-//        $model->setAttributes($model->perform('GetClassValues', ['id' => $id, 'class' => 'client,mailing']));
+        $model = new Domain();
+        $model->scenario = 'set-note';
+        $collection = new Collection();
+        $collection->setModel($model);
+        $collection->load();
+        $searchModel = new DomainSearch();
+        $models = $searchModel
+            ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
+            ->getModels();
 
-        return $this->renderAjax('_bulkSetNote');
+//        $findModels = $this->findModels(['id' => Yii::$app->request->post('selection')]);
+
+        return $this->renderAjax('_bulkSetNote', ['models' => $models]);
     }
 
     public function actionCheck()
