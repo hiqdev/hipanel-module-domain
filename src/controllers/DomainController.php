@@ -17,6 +17,7 @@
  */
 namespace hipanel\modules\domain\controllers;
 
+use hipanel\actions\Action;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Contact;
@@ -166,7 +167,9 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'OLD-set-ns' => [
                 'class'     => 'hipanel\actions\SwitchAction',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     $templateModel = null;
                     $template = Yii::$app->request->post('check');
                     foreach ($action->collection->models as $model) {
@@ -184,14 +187,14 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => 'hipanel\actions\RenderJsonAction',
                         'return' => function ($action) {
-                            /* @var \hipanel\actions\Action $action */
+                            /* @var Action $action */
                             return $action->collection->models;
                         },
                     ],
                     'error' => [
                         'class' => 'hipanel\actions\RenderJsonAction',
                         'return' => function ($action) {
-                            /* @var \hipanel\actions\Action $action */
+                            /* @var Action $action */
                             return $action->collection->getFirstError();
                         },
                     ],
@@ -202,7 +205,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'scenario'  => 'set-autorenewal',
                 'success'   => Yii::t('app', 'Premium autorenewal has been changed'),
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 1;
                     }
@@ -217,7 +222,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'Autorenewal has been enabled'),
                 'scenario'  => 'set-autorenewal',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 1;
                     }
@@ -227,7 +234,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'Autorenewal has been disabled'),
                 'scenario'  => 'set-autorenewal',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->autorenewal = 0;
                     }
@@ -242,7 +251,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'whois protect is enabled'),
                 'scenario'  => 'set-whois-protect',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->enable = 1;
                     }
@@ -252,7 +263,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'whois protect is disabled'),
                 'scenario'  => 'set-whois-protect',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->enable = 0;
                     }
@@ -267,7 +280,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'Lock was enabled'),
                 'scenario'  => 'set-lock',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->enable = 1;
                     }
@@ -277,7 +292,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => 'hipanel\actions\SmartPerformAction',
                 'success'   => Yii::t('app', 'Lock was disabled'),
                 'scenario'  => 'set-lock',
-                'beforeSave' => function ($action) {
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
                     foreach ($action->collection->models as $model) {
                         $model->enable = 0;
                     }

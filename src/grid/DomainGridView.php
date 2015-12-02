@@ -218,11 +218,12 @@ class DomainGridView extends BoxedGridView
                         if ($model->is_holded) {
                             return '';
                         }
+
                         if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
                             return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('app', 'Enable Hold'), $url);
-
-                            return '';
                         }
+
+                        return '';
                     },
                     'disable-hold'  => function ($url, $model, $key) {
                         return ($model->is_holded && in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
