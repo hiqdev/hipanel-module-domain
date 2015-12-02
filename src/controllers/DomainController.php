@@ -29,6 +29,7 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Yii;
 use yii\base\DynamicModel;
+use yii\base\Event;
 use yii\data\ArrayDataProvider;
 
 class DomainController extends \hipanel\base\CrudController
@@ -81,23 +82,24 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => 'hipanel\actions\SmartUpdateAction',
                 'success' => Yii::t('app', 'Note changed'),
                 'error' => Yii::t('app', 'Failed change note'),
-                'beforeSave' => function ($action) {
-                    \yii\helpers\VarDumper::dump($action, 10, true);die();
-//                    foreach ($action->collection->models as $model) {
-//                        $model->enable = 0;
-//                    }
-//
-//                    $templateModel = null;
-//                    $template = Yii::$app->request->post('check');
-//                    foreach ($action->collection->models as $model) {
-//                        if ($model->id === $template) {
-//                            $templateModel = $model;
-//                        }
-//                    }
-//
-//                    foreach ($action->collection->models as $model) {
-//                        $model->nameservers = $templateModel->nameservers;
-//                    }
+                'POST html' => [
+                    'save'    => true,
+                    'success' => [
+                        'class' => 'hipanel\actions\RedirectAction',
+                        'url'   => function ($action) {
+                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
+                        }
+                    ],
+                ],
+                'on beforeSave' => function (Event $event) {
+                    /** @var \hipanel\actions\Action $action */
+                    $action = $event->sender;
+                    $bulkNote = Yii::$app->request->post('bulk_note');
+                    if (!empty($bulkNote)) {
+                        foreach ($action->collection->models as $model) {
+                            $model->note = $bulkNote;
+                        }
+                    }
                 },
             ],
             'set-nss' => [
