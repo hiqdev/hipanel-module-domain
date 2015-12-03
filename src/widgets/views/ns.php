@@ -16,13 +16,14 @@ NSyncPluginAsset::register($this);
 $('#nss-form-pjax').NSync();
 
 $(document).on('pjax:send', function(event) {
-    event.preventDefault()
+    event.preventDefault();
     $('#nss-save-button').button('loading');
 
 });
 $(document).on('pjax:complete', function(event) {
-  event.preventDefault()
-  $('#nss-save-button').button('reset')
+  event.preventDefault();
+  $('#nss-save-button').button('reset');
+//  $('.modal').modal('hide');
 });
 "); ?>
 <?php $form = ActiveForm::begin([
@@ -35,8 +36,15 @@ $(document).on('pjax:complete', function(event) {
         'data-pjaxPush' => false,
     ],
 ]); ?>
-<?= Html::activeHiddenInput($model, "id") ?>
-<?= Html::activeHiddenInput($model, "domain") ?>
+    <?php if (!is_array($model)) : ?>
+        <?= Html::activeHiddenInput($model, "id") ?>
+        <?= Html::activeHiddenInput($model, "domain") ?>
+    <?php else : ?>
+        <?php foreach ($model as $item) : ?>
+            <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
+            <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
     <div class="alert alert-info alert-dismissible fade in" role="alert">
         <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;Some important info!</h4>
         <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
@@ -44,11 +52,19 @@ $(document).on('pjax:complete', function(event) {
 
     <div class="row" style="margin-top: 15pt;">
         <div class="col-md-10 inline-form-selector">
-            <?= Html::activeTextInput($model, 'nsips', [
-                'class' => 'form-control',
-                'placeholder' => $model->getAttributeLabel('nameservers'),
-                'autocomplete' => 'off',
-            ]) ?>
+            <?php if (!is_array($model)) : ?>
+                <?= Html::activeTextInput($model, 'nsips', [
+                    'class' => 'form-control',
+                    'placeholder' => $model->getAttributeLabel('nameservers'),
+                    'autocomplete' => 'off',
+                ]) ?>
+            <?php else : ?>
+                <?= Html::textInput('nsips', '', [
+                    'class' => 'form-control',
+                    'placeholder' => reset($model)->getAttributeLabel('nameservers'),
+                    'autocomplete' => 'off',
+                ]) ?>
+            <?php endif; ?>
         </div>
         <div class="col-md-2 text-right">
             <?= Html::submitButton(Yii::t('app', 'Save'), [

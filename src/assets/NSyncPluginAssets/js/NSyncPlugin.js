@@ -55,7 +55,7 @@ if (typeof String.prototype.endsWith !== 'function') {
             });
         },
         isChildDomain: function (nsName) {
-            var mainDomain = $(this.element).find('.domain_name').eq(0).val();
+            var mainDomain = '.' + $(this.element).find('.domain_name').eq(0).val();
             return nsName.endsWith(mainDomain);
         },
 

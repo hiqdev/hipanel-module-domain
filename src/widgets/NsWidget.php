@@ -39,23 +39,27 @@ class NsWidget extends Widget
     }
 
 
-    private function createNsModels($string)
+    private function createNsModels($nss)
     {
         $models = [];
-        foreach (explode(',', $string) as $item) {
-            if (strpos($item, '/')) {
-                $ns_ip  = explode('/', $item);
-                $data['Ns'] = [
-                    'name' => $ns_ip[0],
-                    'ip' => $ns_ip[1],
-                ];
-            } else {
-                $data['Ns']['name'] = $item;
+        if (!empty($nss)) {
+            foreach (explode(',', $nss) as $item) {
+                if (strpos($item, '/') !== false) {
+                    $ns_ip  = explode('/', $item);
+                    $data['Ns'] = [
+                        'name' => $ns_ip[0],
+                        'ip' => $ns_ip[1],
+                    ];
+                } else {
+                    $data['Ns']['name'] = $item;
+                }
+                $model = new Ns;
+                $model->load($data, 'Ns');
+                $model->validate();
+                $models[] = $model;
             }
-            $model = new Ns;
-            $model->load($data, 'Ns');
-            $model->validate();
-            $models[] = $model;
+        } else {
+            $models[] = new Ns;
         }
 
         return $models;

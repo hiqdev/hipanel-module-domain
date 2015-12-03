@@ -93,8 +93,15 @@ CSS
                 'size' => Modal::SIZE_LARGE,
                 'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default',],
             ]) ?>
-            <?= $this->render('_modalNs') ?>
-            <?= $this->render('_modalContacts', ['model' => null]) ?>
+
+            <?= AjaxModal::widget([
+                'bulkPage' => true,
+                'header'=> Html::tag('h4', Yii::t('app', 'Set NS'), ['class' => 'modal-title']),
+                'scenario' => 'bulk-set-ns',
+                'actionUrl' => ['bulk-set-ns'],
+                'size' => Modal::SIZE_LARGE,
+                'toggleButton' => ['label' => Yii::t('app', 'Set NS'), 'class' => 'btn btn-default',],
+            ]) ?>
             &nbsp;
         <?php $box->endBulkActions() ?>
         <?= $box->renderSearchForm(['stateData' => $stateData]) ?>

@@ -54,7 +54,7 @@ class Domain extends \hipanel\base\Model
             [['url_fwval' ,'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
             [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
-            [['id', 'note'],                       'safe',     'on' => ['set-note', 'default']],
+            [['id', 'note'],                                    'safe',     'on' => ['set-note', 'default']],
 
             [['registrant','admin','tech','billing'],           'safe',     'on' => ['set-contacts']],
             [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
@@ -95,7 +95,7 @@ class Domain extends \hipanel\base\Model
             }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
-            [['id', 'domain', 'nameservers'],                   'safe',     'on' => 'set-nss'],
+            [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
             [['nameservers'], 'filter', 'filter' => function ($value) {
                 return (mb_strlen($value) > 0) ? StringHelper::mexplode($value) : [];
             }, 'on' => 'OLD-set-ns'],

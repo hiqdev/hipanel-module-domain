@@ -29,7 +29,7 @@ class DomainSearch extends Domain
     public function searchAttributes()
     {
         return ArrayHelper::merge($this->defaultSearchAttributes(), [
-            'created_from', 'created_till',
+            'created_from', 'created_till', 'with_nsips'
         ]);
     }
 }

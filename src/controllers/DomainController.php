@@ -106,6 +106,26 @@ class DomainController extends \hipanel\base\CrudController
             'set-nss' => [
                 'class' => 'hipanel\actions\SmartUpdateAction',
                 'success' => Yii::t('app', 'Nameservers changed'),
+                'POST html' => [
+                    'save'    => true,
+                    'success' => [
+                        'class' => 'hipanel\actions\RedirectAction',
+                        'url'   => function ($action) {
+                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
+                        }
+                    ],
+                ],
+                'on beforeSave' => function (Event $event) {
+                    /** @var \hipanel\actions\Action $action */
+                    $action = $event->sender;
+
+                    $bulkNsIps = Yii::$app->request->post('nsips');
+                    if ($bulkNsIps !== null) {
+                        foreach ($action->collection->models as $model) {
+                            $model->nsips = $bulkNsIps;
+                        }
+                    }
+                },
             ],
             'delete' => [
                 'class'     => 'hipanel\actions\SmartDeleteAction',
@@ -326,6 +346,23 @@ class DomainController extends \hipanel\base\CrudController
 //                ],
 //            ],
         ];
+    }
+
+    public function actionBulkSetNs()
+    {
+        $model = new Domain();
+        $model->scenario = 'set-nss';
+        $collection = new Collection();
+        $collection->setModel($model);
+        $collection->load();
+        $searchModel = new DomainSearch();
+        $models = $searchModel
+            ->search([$searchModel->formName() => [
+                'id_in' => ArrayHelper::map($collection->models, 'id', 'id'),
+                'with_nsips' => true,
+            ]])->getModels();
+
+        return $this->renderAjax('_bulkSetNs', ['models' => $models]);
     }
 
     public function actionBulkSetNote()
