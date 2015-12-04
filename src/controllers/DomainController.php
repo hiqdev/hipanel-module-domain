@@ -395,33 +395,6 @@ class DomainController extends \hipanel\base\CrudController
         return $this->renderAjax('_bulkSetNote', ['models' => $models]);
     }
 
-    public function actionCheck()
-    {
-        $domain = Yii::$app->request->post('domain');
-        $result = Domain::perform('Check', ['domains' => $domain], true);
-
-        return '<td>' . $domain . '</td><td>com</td><td>123</td><td>asdf</td>';
-    }
-
-    public function actionTestSleep()
-    {
-        sleep(5);
-
-        return 'wake';
-    }
-
-    public function actionTestPerform()
-    {
-        $result = Domain::perform('Check', ['domains' => 'test' . microtime() . '.com'], true);
-
-        return 'wake';
-    }
-
-    public function actionTestFastAnswer()
-    {
-        return 'fast ok';
-    }
-
     public function actionTransfer()
     {
         $model = new Domain();
