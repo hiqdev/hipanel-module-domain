@@ -24,14 +24,23 @@ use yii\helpers\Html;
                         'attribute' => 'nsips',
                     ]); ?>
                     <br>
-                    <?php foreach ($models as $model) : ?>
-                        <span><?= $model->domain ?></span>,&nbsp;&nbsp;
-                    <?php endforeach; ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <?= \hipanel\widgets\ArraySpoiler::widget([
+                                'data' => $models,
+                                'visibleCount' => count($models),
+                                'formatter' => function ($model) {
+                                    return $model->domain;
+                                },
+                                'delimiter' => ',&nbsp; '
+                            ]); ?>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="by-one">
-
             <?php $form = ActiveForm::begin([
                 'id' => 'bulk-set-nss',
                 'action' => Url::toRoute('set-nss'),
