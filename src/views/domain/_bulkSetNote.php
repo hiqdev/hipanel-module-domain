@@ -1,6 +1,7 @@
 <?php
 
 use hipanel\helpers\Url;
+use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
@@ -28,9 +29,14 @@ use yii\helpers\Html;
                 <div class="col-md-12">
                     <?= Html::textInput("bulk_note", null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Type your note here')]); ?>
                     <br>
-                    <?php foreach ($models as $model) : ?>
-                        <span><?= $model->domain ?></span>,&nbsp;&nbsp;
-                    <?php endforeach; ?>
+                    <?= ArraySpoiler::widget([
+                        'data' => $models,
+                        'visibleCount' => count($models),
+                        'formatter' => function ($model) {
+                            return $model->domain;
+                        },
+                        'delimiter' => ',&nbsp; '
+                    ]); ?>
                 </div>
             </div>
         </div>
