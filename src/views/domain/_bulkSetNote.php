@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#bulk" aria-controls="home" role="tab" data-toggle="tab"><?= Yii::t('app', 'Set for all') ?></a></li>
-        <li role="presentation"><a href="#by-one" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('app', 'Edit by one') ?></a></li>
+        <li role="presentation"><a href="#by-one" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('app', 'Set by one') ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -29,21 +29,25 @@ use yii\helpers\Html;
                 <div class="col-md-12">
                     <?= Html::textInput("bulk_note", null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Type your note here')]); ?>
                     <br>
-                    <?= ArraySpoiler::widget([
-                        'data' => $models,
-                        'visibleCount' => count($models),
-                        'formatter' => function ($model) {
-                            return $model->domain;
-                        },
-                        'delimiter' => ',&nbsp; '
-                    ]); ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <?= ArraySpoiler::widget([
+                                'data' => $models,
+                                'visibleCount' => count($models),
+                                'formatter' => function ($model) {
+                                    return $model->domain;
+                                },
+                                'delimiter' => ',&nbsp; '
+                            ]); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="by-one">
             <div class="row" style="margin-top: 15pt;">
                 <?php foreach ($models as $model) : ?>
-                    <div class="col-md-4 text-right">
+                    <div class="col-md-4 text-right" style="line-height: 34px;">
                         <?= Html::activeHiddenInput($model, "[$model->id]id") ?>
                         <?= $model->domain ?>
                     </div>

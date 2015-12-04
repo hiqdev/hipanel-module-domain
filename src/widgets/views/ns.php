@@ -46,8 +46,13 @@ $(document).on('pjax:complete', function(event) {
         <?php endforeach; ?>
     <?php endif; ?>
     <div class="alert alert-info alert-dismissible fade in" role="alert">
-        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;Some important info!</h4>
-        <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+
+        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Some important info') ?></h4>
+
+        <p>
+            <?= Yii::t('app', '...'); ?>
+        </p>
     </div>
 
     <div class="row" style="margin-top: 15pt;">
@@ -68,7 +73,7 @@ $(document).on('pjax:complete', function(event) {
         </div>
         <div class="col-md-2 text-right">
             <?= Html::submitButton(Yii::t('app', 'Save'), [
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-success',
                 'id' => 'nss-save-button',
                 'data-loading-text' => Yii::t('app', 'Saving') . '...',
             ]) ?>

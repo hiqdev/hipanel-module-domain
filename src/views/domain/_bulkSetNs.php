@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#bulk" aria-controls="home" role="tab" data-toggle="tab"><?= Yii::t('app', 'Set for all') ?></a></li>
-        <li role="presentation"><a href="#by-one" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('app', 'Edit by one') ?></a></li>
+        <li role="presentation"><a href="#by-one" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('app', 'Set by one') ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -41,6 +41,11 @@ use yii\helpers\Html;
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="by-one">
+            <div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin-top: 15pt;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+
+                <strong>Only domains without IPs!</strong> Best check yo self, you're not looking too good.
+            </div>
             <?php $form = ActiveForm::begin([
                 'id' => 'bulk-set-nss',
                 'action' => Url::toRoute('set-nss'),
