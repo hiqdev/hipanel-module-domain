@@ -17,6 +17,12 @@
  */
 namespace hipanel\modules\domain\controllers;
 
+use hipanel\actions\IndexAction;
+use hipanel\actions\SmartCreateAction;
+use hipanel\actions\SmartPerformAction;
+use hipanel\actions\SmartUpdateAction;
+use hipanel\actions\ValidateFormAction;
+use hipanel\actions\ViewAction;
 use Yii;
 
 class HostController extends \hipanel\base\CrudController
@@ -25,24 +31,24 @@ class HostController extends \hipanel\base\CrudController
     {
         return [
             'index' => [
-                'class'     => 'hipanel\actions\IndexAction',
+                'class'     => IndexAction::class,
             ],
             'view' => [
-                'class'     => 'hipanel\actions\ViewAction',
+                'class'     => ViewAction::class,
             ],
             'validate-form' => [
-                'class'     => 'hipanel\actions\ValidateFormAction',
+                'class'     => ValidateFormAction::class,
             ],
             'create' => [
-                'class'     => 'hipanel\actions\SmartCreateAction',
+                'class'     => SmartCreateAction::class,
                 'success'   => Yii::t('app', 'Name server created'),
             ],
             'update' => [
-                'class'     => 'hipanel\actions\SmartUpdateAction',
+                'class'     => SmartUpdateAction::class,
                 'success'   => Yii::t('app', 'Name server updated'),
             ],
             'delete' => [
-                'class'     => 'hipanel\actions\SmartPerformAction',
+                'class'     => SmartPerformAction::class,
                 'success'   => Yii::t('app', 'Name server deleted'),
             ],
         ];
