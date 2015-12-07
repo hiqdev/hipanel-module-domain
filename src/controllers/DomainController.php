@@ -128,6 +128,13 @@ class DomainController extends \hipanel\base\CrudController
                         }
                     ],
                 ],
+                'POST pjax' => [
+                    'save'    => true,
+                    'success' => [
+                        'class' => 'hipanel\actions\RedirectAction',
+                        'url'   => 'index'
+                    ],
+                ],
                 'on beforeSave' => function (Event $event) {
                     /** @var \hipanel\actions\Action $action */
                     $action = $event->sender;
