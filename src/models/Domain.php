@@ -96,10 +96,10 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
-            [['nameservers'], 'filter', 'filter' => function ($value) {
-                return (mb_strlen($value) > 0) ? StringHelper::mexplode($value) : [];
+            [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
+                return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
-            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-nss'],
+            [['nameservers', 'nsips'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-ns'],
             [['dumb'], 'safe', 'on' => ['get-zones']],
         ];
     }

@@ -49,8 +49,9 @@ use yii\helpers\Html;
             <?php $form = ActiveForm::begin([
                 'id' => 'bulk-set-nss',
                 'action' => Url::toRoute('set-nss'),
+                'enableAjaxValidation' => true,
                 'validateOnBlur' => true,
-                'validationUrl' => Url::toRoute(['validate-form', 'scenario' => 'set-nss']),
+                'validationUrl' => Url::toRoute(['validate-form', 'scenario' => 'OLD-set-ns']),
             ]) ?>
             <div class="row" style="margin-top: 15pt;">
                 <?php foreach ($models as $model) : ?>
