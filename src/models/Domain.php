@@ -20,11 +20,13 @@ namespace hipanel\modules\domain\models;
 use Exception;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
+use hipanel\modules\client\validators\NsValidator;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
 use Yii;
 use yii\helpers\Html;
+use yii\validators\IpValidator;
 
 class Domain extends \hipanel\base\Model
 {
@@ -99,7 +101,8 @@ class Domain extends \hipanel\base\Model
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
-            [['nameservers', 'nsips'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-ns'],
+            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-ns'],
+            [['nsips'], 'each', 'rule' => [NsValidator::class], 'on' => 'OLD-set-ns'],
             [['dumb'], 'safe', 'on' => ['get-zones']],
         ];
     }

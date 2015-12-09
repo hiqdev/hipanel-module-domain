@@ -111,7 +111,9 @@ $(document).on('pjax:complete', function(event) {
                                         <?= $form->field($nsModel, "[$i]name")->textInput(['placeholder' => $nsModel->getAttributeLabel('name')])->label(false) ?>
                                     </div>
                                     <div class="col-md-5">
-                                        <?= $form->field($nsModel, "[$i]ip")->textInput(['disabled' => !StringHelper::endsWith($nsModel->name, $model->domain), 'placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
+                                        <?php if (!is_array($model)) : ?>
+                                            <?= $form->field($nsModel, "[$i]ip")->textInput(['disabled' => !StringHelper::endsWith($nsModel->name, $model->domain), 'placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="col-md-2 text-right">
                                         <div class="btn-group" role="group">
