@@ -41,11 +41,6 @@ use yii\helpers\Html;
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="by-one">
-            <div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin-top: 15pt;">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-
-                <strong>Only domains without IPs!</strong> Best check yo self, you're not looking too good.
-            </div>
             <?php $form = ActiveForm::begin([
                 'id' => 'bulk-set-nss',
                 'action' => Url::toRoute('set-nss'),

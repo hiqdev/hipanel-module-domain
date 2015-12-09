@@ -48,10 +48,11 @@ $(document).on('pjax:complete', function(event) {
     <div class="alert alert-info alert-dismissible fade in" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 
-        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Some important info') ?></h4>
+        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('app', '...'); ?>
+            <?= Yii::t('app', 'With this form you can assign the authoritative name server for your domain.
+            IP addresses can be assigned only child name servers, and they are created or changed automatically in accordance with specified data.'); ?>
         </p>
     </div>
 
