@@ -38,7 +38,7 @@ JS
 
 ?>
 
-<?//= $form = \yii\bootstrap\ActiveForm::beginForm(Url::toRoute('set-ns'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal form-ajax']) ?>
+<?php//= $form = \yii\bootstrap\ActiveForm::beginForm(Url::toRoute('set-ns'), 'POST', ['id' => 'set-ns-form', 'class' => 'form-horizontal form-ajax']) ?>
 
 <?php $form = ActiveForm::begin([
     'id' => 'set-ns-form',
