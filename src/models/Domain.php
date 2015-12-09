@@ -20,7 +20,7 @@ namespace hipanel\modules\domain\models;
 use Exception;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
-use hipanel\modules\client\validators\NsValidator;
+use hipanel\modules\domain\validators\NsValidator;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
