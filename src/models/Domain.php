@@ -20,6 +20,7 @@ namespace hipanel\modules\domain\models;
 use Exception;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
+use hipanel\modules\client\models\Client;
 use hipanel\modules\domain\validators\NsValidator;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
@@ -97,13 +98,31 @@ class Domain extends \hipanel\base\Model
             }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
+            // NSs
+            [['nsips'], 'required', 'on' => 'set-nss'],
             [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
             [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-ns'],
             [['nsips'], 'each', 'rule' => [NsValidator::class], 'on' => 'OLD-set-ns'],
+
+            // Get zones
             [['dumb'], 'safe', 'on' => ['get-zones']],
+
+            // Domain push
+            [['receiver'], 'required', 'on' => ['push', 'push-with-pincode']],
+            [['pincode'], 'required', 'on' => ['push-with-pincode']],
+            [['pincode'], function ($attribute, $params) {
+                try {
+                    $response = Client::perform('CheckPincode', [$attribute => $this->$attribute, 'id' => Yii::$app->user->id]);
+                } catch (Exception $e) {
+                    $this->addError($attribute, Yii::t('app', 'Wrong pincode'));
+                }
+            }, 'on' => ['push-with-pincode']],
+            [['id', 'domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
+
+
         ];
     }
 

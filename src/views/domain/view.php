@@ -4,6 +4,7 @@ use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
+use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
@@ -61,23 +62,20 @@ CSS
                     <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('app', 'Go to site ') . $url, $url, ['target' => '_blank']); ?>
                 </li>
                 <li>
-                    <?php Modal::begin([
-                        'header' => '<h4 class="modal-title">' . Yii::t('app', 'Push ' . Html::tag('b', $this->title)) . '</h4>',
-                        'footer' => Html::submitButton(Yii::t('app', 'Push'), ['class' => 'btn btn-default push']),
-                        'toggleButton' => ['label' => '<i class="ion-ios-paperplane-outline"></i>' . Yii::t('app', 'Push domain'), 'tag' => 'a', 'class' => 'clickable'],
-                    ]); ?>
-
-
-                    <?php
-                    $form = ActiveForm::begin([
-                        'id' => 'push-domain-form',
+                    <?= AjaxModal::widget([
+                        'id' => 'push-modal-link',
+                        'header'=> Html::tag('h4', Yii::t('app', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
+                        'scenario' => 'push',
+                        'actionUrl' => ['domain-push-modal', 'id' => $model->id],
+                        'size' => Modal::SIZE_DEFAULT,
+                        'toggleButton' => [
+                            'label' => '<i class="ion-ios-paperplane-outline"></i> ' . Yii::t('app', 'Push domain'),
+                            'class' => 'clickable',
+                            'data-pjax' => 0,
+                            'tag' => 'a'
+                        ],
                     ]) ?>
 
-                    <?= $form->field($model, 'client_id')->widget(\hipanel\modules\client\widgets\combo\ClientCombo::className())->hint(Yii::t('app', 'Client, you push your domain to')) ?>
-
-                    <?php $form->end() ?>
-
-                    <?php Modal::end() ?>
                 </li>
                 <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_sync_button', compact('model')) ?></li>

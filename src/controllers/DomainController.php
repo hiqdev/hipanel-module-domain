@@ -29,6 +29,7 @@ use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
+use hipanel\modules\client\models\Client;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
@@ -63,6 +64,19 @@ class DomainController extends \hipanel\base\CrudController
                 'class'        => AddToCartAction::class,
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad'     => true,
+            ],
+            'push' => [
+                'class' => SmartPerformAction::class,
+                'POST'      => [
+                    'save'    => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => 'index',
+                    ],
+                    'error' => [
+                        'class' => RedirectAction::class,
+                    ],
+                ],
             ],
             'index' => [
                 'class' => IndexAction::class,
@@ -366,6 +380,20 @@ class DomainController extends \hipanel\base\CrudController
 //                ],
 //            ],
         ];
+    }
+
+    public function actionDomainPushModal($id)
+    {
+        $model = $this->findModel($id);
+        $hasPincode = Client::perform('HasPincode', ['id' => Yii::$app->user->id]);
+        $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
+
+
+
+        return $this->renderAjax('_modalPush', [
+            'model' => $model,
+            'hasPincode' => $hasPincode,
+        ]);
     }
 
     public function actionBulkSetNs()

@@ -14,6 +14,7 @@ class Ns extends Model
     public function rules()
     {
         return [
+            [['nsips'], 'required'],
             [['name', 'ip', 'domain_name'], 'filter', 'filter' => 'trim'],
             [['name'],  FqdnValueValidator::className()],
             [['ip'],  'ip'],
