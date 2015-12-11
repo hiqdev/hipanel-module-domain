@@ -22,6 +22,7 @@ use yii\helpers\Html;
                     <?= NsWidget::widget([
                         'model' => $models,
                         'attribute' => 'nsips',
+                        'actionUrl' => 'bulk-set-nss',
                     ]); ?>
                     <br>
                     <div class="panel panel-default">

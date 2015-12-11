@@ -19,6 +19,7 @@ namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
 use hipanel\actions\IndexAction;
+use hipanel\actions\ProxyAction;
 use hipanel\actions\RedirectAction;
 use hipanel\actions\RenderAction;
 use hipanel\actions\RenderJsonAction;
@@ -138,17 +139,31 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => RedirectAction::class,
                         'url'   => function ($action) {
-                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
+                            return $action->controller->redirect(Yii::$app->request->referrer);
                         }
                     ],
                 ],
+            ],
+            'bulk-set-nss' => [
+                'class' => SmartUpdateAction::class,
+                'scenario' => 'set-nss',
+                'view' => '_bulkSetNs',
+                'success' => Yii::t('app', 'Nameservers changed'),
                 'POST pjax' => [
                     'save'    => true,
                     'success' => [
-                        'class' => 'hipanel\actions\RedirectAction',
-                        'url'   => 'index'
+                        'class' => ProxyAction::class,
+                        'return'   => function ($action) {
+                            return ['fuck' => 'yeah'];
+                        }
                     ],
                 ],
+                'on beforeFetch' => function (Event $event) {
+                    /** @var \hipanel\actions\SearchAction $action */
+                    $action = $event->sender;
+                    $dataProvider = $action->getDataProvider();
+                    $dataProvider->query->andWhere(['with_nsips' => 1]);
+                },
                 'on beforeSave' => function (Event $event) {
                     /** @var \hipanel\actions\Action $action */
                     $action = $event->sender;
@@ -395,23 +410,23 @@ class DomainController extends \hipanel\base\CrudController
             'hasPincode' => $hasPincode,
         ]);
     }
-
-    public function actionBulkSetNs()
-    {
-        $model = new Domain();
-        $model->scenario = 'set-nss';
-        $collection = new Collection();
-        $collection->setModel($model);
-        $collection->load();
-        $searchModel = new DomainSearch();
-        $models = $searchModel
-            ->search([$searchModel->formName() => [
-                'id_in' => ArrayHelper::map($collection->models, 'id', 'id'),
-                'with_nsips' => true,
-            ]])->getModels();
-
-        return $this->renderAjax('_bulkSetNs', ['models' => $models]);
-    }
+//
+//    public function actionBulkSetNs()
+//    {
+//        $model = new Domain();
+//        $model->scenario = 'set-nss';
+//        $collection = new Collection();
+//        $collection->setModel($model);
+//        $collection->load();
+//        $searchModel = new DomainSearch();
+//        $models = $searchModel
+//            ->search([$searchModel->formName() => [
+//                'id_in' => ArrayHelper::map($collection->models, 'id', 'id'),
+//                'with_nsips' => true,
+//            ]])->getModels();
+//
+//        return $this->renderAjax('_bulkSetNs', ['models' => $models]);
+//    }
 
     public function actionBulkSetNote()
     {
