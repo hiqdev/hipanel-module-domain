@@ -25,6 +25,11 @@ class NsWidget extends Widget
     public $progressOptions = [];
 
     /**
+     * @var array|string url to send the form
+     */
+    public $actionUrl = 'set-nss';
+
+    /**
      * {@inheritdoc}
      */
     public function run()
@@ -35,6 +40,7 @@ class NsWidget extends Widget
             'model' => $this->model,
             'attribute' => $this->attribute,
             'nsModels' => $nsModels,
+            'actionUrl' => $this->actionUrl,
         ]);
     }
 

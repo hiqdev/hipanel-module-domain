@@ -7,11 +7,17 @@ use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
+
+// TODO: To delete this
 Yii::$app->assetManager->forceCopy = true;
 NSyncPluginAsset::register($this);
+
+/**
+ * @var array|string $actionUrl url to send the form
+ */
 ?>
 
-<?php Pjax::begin(['id' => 'nss-pjax-container', 'enablePushState' => false, 'enableReplaceState' => true]) ?>
+<?php Pjax::begin(['id' => 'nss-pjax-container', 'enablePushState' => false, 'enableReplaceState' => false]) ?>
 <?php $this->registerJs("
 $('#nss-form-pjax').NSync();
 
@@ -23,12 +29,12 @@ $(document).on('pjax:send', function(event) {
 $(document).on('pjax:complete', function(event) {
   event.preventDefault();
   $('#nss-save-button').button('reset');
-//  $('.modal').modal('hide');
+  $('.modal').modal('hide');
 });
 "); ?>
 <?php $form = ActiveForm::begin([
     'id' => 'nss-form-pjax',
-    'action' => 'set-nss',
+    'action' => $actionUrl,
     'enableAjaxValidation' => true,
     'validationUrl' => Url::toRoute(['validate-nss', 'scenario' => 'default']),
     'options' => [
@@ -51,8 +57,10 @@ $(document).on('pjax:complete', function(event) {
         <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('app', 'With this form you can assign the authoritative name server for your domain.
-            IP addresses can be assigned only child name servers, and they are created or changed automatically in accordance with specified data.'); ?>
+            <?= Yii::t('app', 'With this form you can assign the authoritative name server for your domain. '
+                            . 'IP addresses can be assigned only child name servers, and they are created or '
+                            . 'changed automatically in accordance with specified data.'
+            ); ?>
         </p>
     </div>
 
