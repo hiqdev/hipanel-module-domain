@@ -513,6 +513,7 @@ class DomainController extends \hipanel\base\CrudController
                     'resource' => $tariff,
                 ];
             }
+            array_shift($results);
             $domainCheckDataProvider->setModels($results);
         }
 

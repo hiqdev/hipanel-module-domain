@@ -146,7 +146,7 @@ JS
                     </div>
                     <!-- /.col-md-3 -->
                     <div
-                        class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-lg btn-block']); ?></div>
+                        class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-flat btn-lg btn-block']); ?></div>
                     <!-- /.col-md-1 -->
                 </div>
                 <!-- /.row -->
@@ -161,66 +161,45 @@ JS
     <div class="col-md-8 col-md-offset-2">
         <div class="box box-solid">
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body no-padding">
                 <div class="domain-list">
                     <?php foreach ($results as $line) : ?>
-                        <div class="domain-line row">
+                        <div class="domain-line">
                             <div class="col-md-6">
-                                <?= Html::img('http://placehold.it/48x48?text=.' . $line['zone']) ?>
-                                <span class="domain-name"><?= $line['domain'] ?></span><span
-                                    class="domain-zone">.<?= $line['zone'] ?></span>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <span class="domain-price">
-                                    34.00€
-                                    <span class="domain-price-year">/year</span>
+                                <span class="domain-img">
+                                    <i class="fa fa-globe fa-2x"></i>
                                 </span>
                                 <?php if ($model->is_available === false) : ?>
-                                    <?= Html::a('<i class="fa fa-eye"></i>', ['#'], ['class' => 'btn btn-app']) ?>
+                                <span class="domain-name muted"><?= $line['domain'] ?></span><span
+                                    class="domain-zone muted">.<?= $line['zone'] ?></span>
                                 <?php else : ?>
-                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['domain']], ['data-pjax' => 0, 'class' => 'btn btn-app']) ?>
+                                    <span class="domain-name"><?= $line['domain'] ?></span><span
+                                        class="domain-zone">.<?= $line['zone'] ?></span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-md-4 text-center">
+                            <span class="domain-price">
+                                <?php if ($model->is_available === false) : ?>
+                                    <span class="domain-taken">
+                                        <?= Yii::t('app', 'Domain is not available') ?>
+                                    </span>
+                                <?php else : ?>
+                                    <del>36.00€</del>
+                                    34.00€
+                                    <span class="domain-price-year">/year</span>
+                                <?php endif; ?>
+                            </span>
+                            </div>
+                            <div class="col-md-2">
+                                <?php if ($model->is_available === false) : ?>
+                                    <?= Html::a(Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['domain'] . '.' . $line['zone'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+                                <?php else : ?>
+                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['domain']], ['data-pjax' => 0, 'class' => 'btn btn-flat bg-olive']) ?>
                                 <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <?php
-//                print GridView::widget([
-//                    'dataProvider' => $domainCheckDataProvider,
-//                    'layout' => "{items}\n{pager}",
-//                    'rowOptions' => function ($model, $key, $index, $grid) {
-//                        return ['class' => 'check-item', 'data-domain' => $model->domain];
-//                    },
-//                    'options' => [
-//                        'class' => 'domainsCheck',
-//                    ],
-//                    'columns' => [
-//                        'domain',
-//                        'zone',
-//                        [
-//                            'attribute' => 'is_available',
-//                            'value' => function ($model) {
-//                                return $model->is_available ? 'REG NOW!' : 'sorry bro :(';
-//                            },
-//                        ],
-//                        'actions' => [
-//                            'class' => 'yii\grid\ActionColumn',
-//                            'template' => '{buy}',
-//                            'header' => Yii::t('app', 'Action'),
-//                            'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-//                            'buttons' => [
-//                                'buy' => function ($url, $model, $key) {
-//                                    if ($model->is_available === false) {
-//                                        return Html::tag('sapn', Yii::t('app', 'Is not free!'));
-//                                    } else {
-//                                        return Html::a(Yii::t('app', 'Buy domain'), ['add-to-cart-registration', 'name' => $model->domain], ['data-pjax' => 0]);
-//                                    }
-//                                },
-//                            ],
-//                        ],
-//                    ],
-//                ]);
-                ?>
             </div>
             <!-- /.box-body -->
         </div>
@@ -235,7 +214,25 @@ JS
         line-height: 59px;
         height: 60px;
         font-size: 18px;
+        -webkit-transition: border 0.25s;
+        -moz-transition: border 0.25s;
+        -o-transition: border 0.25s;
+        transition: border 0.25s;
+    }
 
+    .domain-line:hover {
+        border-color: #CCC;
+        -webkit-transition: border 0.25s;
+        -moz-transition: border 0.25s;
+        -o-transition: border 0.25s;
+        transition: border 0.25s;
+    }
+
+    .domain-line .domain-img {
+        width: 48px;
+        margin-left: 15px;
+        line-height: 15px;
+        color: grey;
     }
 
     .domain-line span {
@@ -253,8 +250,22 @@ JS
         color: gray;
     }
 
-    .domain-line .domain-price .domain-price-year {
+    .domain-line .domain-price .domain-price-year
+    ,del {
         color: #ccc;
         font-size: 16px;
+    }
+
+    .domain-line .domain-taken {
+        color: #ccc;
+    }
+    .domain-line .domain-whois {
+        color: gray;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .domain-line .domain-name.muted,
+    .domain-line .domain-zone.muted {
+        color: #ccc;
     }
 </style>
