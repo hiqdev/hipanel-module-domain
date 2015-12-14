@@ -115,88 +115,146 @@ $this->registerJs(<<<'JS'
 JS
 );
 ?>
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title"><?= Yii::t('app', 'Domain check'); ?></h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <?php $form = ActiveForm::begin([
-            'id' => 'check-domain',
-            'method' => 'get',
-            'options' => [
-                'data-pjax' => false,
-            ],
-            'fieldConfig' => [
-                'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
-            ],
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <?php $form = ActiveForm::begin([
+                    'id' => 'check-domain',
+                    'method' => 'get',
+                    'options' => [
+                        'data-pjax' => false,
+                    ],
+                    'fieldConfig' => [
+                        'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+                    ],
 //            'enableAjaxValidation' => true,
 //            'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
-        ]) ?>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
+                ]) ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
+                        </div>
+                    </div>
+                    <!-- /.col-md-8 -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
+                        </div>
+                    </div>
+                    <!-- /.col-md-3 -->
+                    <div
+                        class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-lg btn-block']); ?></div>
+                    <!-- /.col-md-1 -->
                 </div>
+                <!-- /.row -->
+                <?php ActiveForm::end() ?>
             </div>
-            <!-- /.col-md-8 -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
-                </div>
-            </div>
-            <!-- /.col-md-3 -->
-            <div
-                class="col-md-1"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-lg btn-block']); ?></div>
-            <!-- /.col-md-1 -->
+            <!-- /.box-body -->
         </div>
-        <!-- /.row -->
-        <?php ActiveForm::end() ?>
+        <!-- /.box -->
     </div>
-    <!-- /.box-body -->
-</div><!-- /.box -->
+</div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="domain-list">
+                    <?php foreach ($results as $line) : ?>
+                        <div class="domain-line row">
+                            <div class="col-md-6">
+                                <?= Html::img('http://placehold.it/48x48?text=.' . $line['zone']) ?>
+                                <span class="domain-name"><?= $line['domain'] ?></span><span
+                                    class="domain-zone">.<?= $line['zone'] ?></span>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <span class="domain-price">
+                                    34.00€
+                                    <span class="domain-price-year">/year</span>
+                                </span>
+                                <?php if ($model->is_available === false) : ?>
+                                    <?= Html::a('<i class="fa fa-eye"></i>', ['#'], ['class' => 'btn btn-app']) ?>
+                                <?php else : ?>
+                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['domain']], ['data-pjax' => 0, 'class' => 'btn btn-app']) ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php
+//                print GridView::widget([
+//                    'dataProvider' => $domainCheckDataProvider,
+//                    'layout' => "{items}\n{pager}",
+//                    'rowOptions' => function ($model, $key, $index, $grid) {
+//                        return ['class' => 'check-item', 'data-domain' => $model->domain];
+//                    },
+//                    'options' => [
+//                        'class' => 'domainsCheck',
+//                    ],
+//                    'columns' => [
+//                        'domain',
+//                        'zone',
+//                        [
+//                            'attribute' => 'is_available',
+//                            'value' => function ($model) {
+//                                return $model->is_available ? 'REG NOW!' : 'sorry bro :(';
+//                            },
+//                        ],
+//                        'actions' => [
+//                            'class' => 'yii\grid\ActionColumn',
+//                            'template' => '{buy}',
+//                            'header' => Yii::t('app', 'Action'),
+//                            'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
+//                            'buttons' => [
+//                                'buy' => function ($url, $model, $key) {
+//                                    if ($model->is_available === false) {
+//                                        return Html::tag('sapn', Yii::t('app', 'Is not free!'));
+//                                    } else {
+//                                        return Html::a(Yii::t('app', 'Buy domain'), ['add-to-cart-registration', 'name' => $model->domain], ['data-pjax' => 0]);
+//                                    }
+//                                },
+//                            ],
+//                        ],
+//                    ],
+//                ]);
+                ?>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
 
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title"><?= Yii::t('app', 'Check results'); ?></h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <?= GridView::widget([
-            'dataProvider' => $domainCheckDataProvider,
-            'layout' => "{items}\n{pager}",
-            'rowOptions' => function ($model, $key, $index, $grid) {
-                return ['class' => 'check-item', 'data-domain' => $model->domain];
-            },
-            'options' => [
-                'class' => 'domainsCheck',
-            ],
-            'columns' => [
-                'domain',
-                'zone',
-                [
-                    'attribute' => 'is_available',
-                    'value' => function ($model) {
-                        return $model->is_available ? 'REG NOW!' : 'sorry bro :(';
-                    },
-                ],
-                'actions' => [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{buy}',
-                    'header' => Yii::t('app', 'Action'),
-                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-                    'buttons' => [
-                        'buy' => function ($url, $model, $key) {
-                            if ($model->is_available === false) {
-                                return Html::tag('sapn', Yii::t('app', 'Is not free!'));
-                            } else {
-                                return Html::a(Yii::t('app', 'Buy domain'), ['add-to-cart-registration', 'name' => $model->domain], ['data-pjax' => 0]);
-                            }
-                        },
-                    ],
-                ],
-            ],
-        ]); ?>
-    </div>
-    <!-- /.box-body -->
-</div><!-- /.box -->
+<style>
+    .domain-line {
+        border-bottom: 1px solid #f2f2f2;
+        margin-bottom: 10px;
+        line-height: 59px;
+        height: 60px;
+        font-size: 18px;
+
+    }
+
+    .domain-line span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 59px;
+    }
+
+    .domain-line .domain-zone {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .domain-line .domain-price {
+        color: gray;
+    }
+
+    .domain-line .domain-price .domain-price-year {
+        color: #ccc;
+        font-size: 16px;
+    }
+</style>

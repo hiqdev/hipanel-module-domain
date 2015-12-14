@@ -500,12 +500,18 @@ class DomainController extends \hipanel\base\CrudController
                         break;
                     }
                 }
-                $results[] = new Domain([
-                    'domain' => $domain,
+//                $results[] = new Domain([
+//                    'domain' => $domain,
+//                    'is_available' => (bool) 1,
+//                    'zone' => substr($domain, strpos($domain, '.') + 1),
+//                    'resource' => $tariff,
+//                ]);
+                $results[] = [
+                    'domain' => $model->domain,
                     'is_available' => (bool) 1,
-                    'zone' => substr($domain, strpos($domain, '.') + 1),
+                    'zone' => substr($domain, strrpos($domain, '.') + 1),
                     'resource' => $tariff,
-                ]);
+                ];
             }
             $domainCheckDataProvider->setModels($results);
         }
@@ -514,6 +520,7 @@ class DomainController extends \hipanel\base\CrudController
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
             'domainCheckDataProvider' => $domainCheckDataProvider,
+            'results' => $results,
         ]);
     }
 
