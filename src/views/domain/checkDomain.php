@@ -193,9 +193,9 @@ JS
                             </div>
                             <div class="col-md-2">
                                 <?php if ($model->is_available === false) : ?>
-                                    <?= Html::a(Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['domain'] . '.' . $line['zone'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+                                    <?= Html::a(Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['full_domain_name'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
                                 <?php else : ?>
-                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['domain']], ['data-pjax' => 0, 'class' => 'btn btn-flat bg-olive']) ?>
+                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['full_domain_name']], ['data-pjax' => 0, 'class' => 'btn btn-flat bg-olive']) ?>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -508,6 +508,7 @@ class DomainController extends \hipanel\base\CrudController
 //                ]);
                 $results[] = [
                     'domain' => $model->domain,
+                    'full_domain_name' => $domain,
                     'is_available' => (bool) 1,
                     'zone' => substr($domain, strrpos($domain, '.') + 1),
                     'resource' => $tariff,
