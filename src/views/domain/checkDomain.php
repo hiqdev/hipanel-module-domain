@@ -157,6 +157,7 @@ JS
         <!-- /.box -->
     </div>
 </div>
+<?php if (!empty($results)) : ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="box box-solid">
@@ -206,7 +207,7 @@ JS
         <!-- /.box -->
     </div>
 </div>
-
+<?php endif; ?>
 <style>
     .domain-line {
         border-bottom: 1px solid #f2f2f2;
