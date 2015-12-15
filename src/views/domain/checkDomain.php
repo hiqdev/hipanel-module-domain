@@ -146,7 +146,7 @@ JS
                     </div>
                     <!-- /.col-md-3 -->
                     <div
-                        class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-default btn-flat btn-lg btn-block']); ?></div>
+                        class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
                     <!-- /.col-md-1 -->
                 </div>
                 <!-- /.row -->
