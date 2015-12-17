@@ -47,6 +47,7 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\data\ArrayDataProvider;
+use yii\helpers\Html;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -397,6 +398,8 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+
+
     public function actionDomainPushModal($id)
     {
         $model = $this->findModel($id);
@@ -410,23 +413,6 @@ class DomainController extends \hipanel\base\CrudController
             'hasPincode' => $hasPincode,
         ]);
     }
-//
-//    public function actionBulkSetNs()
-//    {
-//        $model = new Domain();
-//        $model->scenario = 'set-nss';
-//        $collection = new Collection();
-//        $collection->setModel($model);
-//        $collection->load();
-//        $searchModel = new DomainSearch();
-//        $models = $searchModel
-//            ->search([$searchModel->formName() => [
-//                'id_in' => ArrayHelper::map($collection->models, 'id', 'id'),
-//                'with_nsips' => true,
-//            ]])->getModels();
-//
-//        return $this->renderAjax('_bulkSetNs', ['models' => $models]);
-//    }
 
     public function actionBulkSetNote()
     {
@@ -439,8 +425,6 @@ class DomainController extends \hipanel\base\CrudController
         $models = $searchModel
             ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
             ->getModels();
-
-//        $findModels = $this->findModels(['id' => Yii::$app->request->post('selection')]);
 
         return $this->renderAjax('_bulkSetNote', ['models' => $models]);
     }
@@ -463,6 +447,52 @@ class DomainController extends \hipanel\base\CrudController
         ]);
     }
 
+    public function actionCheck()
+    {
+        session_write_close();
+        Yii::$app->hiresource->auth = function () {
+            return [];
+        };
+        $domain = Yii::$app->request->post('domain');
+        $line['full_domain_name'] = $domain;
+        $line['domain'] = substr($domain, 0, strpos($domain, '.'));
+        $line['zone'] = substr($domain, strpos($domain, '.') + 1);
+        if ($domain) {
+            $domain = Html::encode($domain);
+            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+            if ($check[$domain] === 0) {
+                return $this->renderAjax('_checkDomainLine', [
+                    'line' => $line,
+                    'state' => 'unavailable',
+                ]);
+            } else {
+                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
+                    ->joinWith('resources')
+                    ->andFilterWhere(['type' => 'domain'])
+                    ->andFilterWhere(['seller' => 'ahnames'])
+                    ->one();
+                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
+                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
+                });
+                foreach ($zones as $resource) {
+                    if ($resource->zone === $line['zone']) {
+                        $line['tariff'] = $resource;
+                        break;
+                    }
+                }
+
+                return $this->renderAjax('_checkDomainLine', [
+                    'line' => $line,
+                    'state' => 'available',
+                ]);
+            }
+
+
+        } else {
+            Yii::$app->end();
+        }
+    }
+
     /**
      * @return string
      */
@@ -483,7 +513,6 @@ class DomainController extends \hipanel\base\CrudController
         foreach ($zones_z as $zone) {
             $dropDownZones[$zone] = '.' . $zone;
         }
-        $domainCheckDataProvider = new ArrayDataProvider();
         if ($model->load(Yii::$app->request->get())) {
             $domains = [$model->domain . '.' . $model->zone];
             foreach ($dropDownZones as $zone => $label) {
@@ -514,14 +543,13 @@ class DomainController extends \hipanel\base\CrudController
                     'resource' => $tariff,
                 ];
             }
-            array_shift($results);
-            $domainCheckDataProvider->setModels($results);
+
+            $results = [reset($results)];
         }
 
         return $this->render('checkDomain', [
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
-            'domainCheckDataProvider' => $domainCheckDataProvider,
             'results' => $results,
         ]);
     }

@@ -11,24 +11,23 @@ $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
-
+if (!empty($results)) {
 $this->registerJs(<<<'JS'
-jQuery(document).on('pjax:complete', function() {
-    $('.domainsCheck').domainsCheck({
-        domainRowClass: '.check-item',
+    $('.domain-list').domainsCheck({
+        domainRowClass: '.domain-line',
         success: function(data, domain, element) {
-            console.log('123');
-            var $elem = $(element).find("tr[data-domain='" + domain + "']");
-            $elem.html(data);
+            var $elem = $(element).find("div[data-domain='" + domain + "']");
+            $elem.replaceWith(data);
             return this;
         },
         finally: function() {
             console.log('finally');
         }
     });
-});
 JS
 );
+}
+
 ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -80,40 +79,7 @@ JS
             <div class="box-body no-padding">
                 <div class="domain-list">
                     <?php foreach ($results as $line) : ?>
-                        <div class="domain-line">
-                            <div class="col-md-6">
-                                <span class="domain-img">
-                                    <i class="fa fa-globe fa-2x"></i>
-                                </span>
-                                <?php if ($model->is_available === false) : ?>
-                                <span class="domain-name muted"><?= $line['domain'] ?></span><span
-                                    class="domain-zone muted">.<?= $line['zone'] ?></span>
-                                <?php else : ?>
-                                    <span class="domain-name"><?= $line['domain'] ?></span><span
-                                        class="domain-zone">.<?= $line['zone'] ?></span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="col-md-4 text-center">
-                            <span class="domain-price">
-                                <?php if ($model->is_available === false) : ?>
-                                    <span class="domain-taken">
-                                        <?= Yii::t('app', 'Domain is not available') ?>
-                                    </span>
-                                <?php else : ?>
-                                    <del>36.00€</del>
-                                    34.00€
-                                    <span class="domain-price-year">/year</span>
-                                <?php endif; ?>
-                            </span>
-                            </div>
-                            <div class="col-md-2">
-                                <?php if ($model->is_available === false) : ?>
-                                    <?= Html::a(Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['full_domain_name'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
-                                <?php else : ?>
-                                    <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['full_domain_name']], ['data-pjax' => 0, 'class' => 'btn btn-flat bg-olive']) ?>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <?= $this->render('_checkDomainLine', ['line' => $line]) ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -134,6 +100,11 @@ JS
         -moz-transition: border 0.25s;
         -o-transition: border 0.25s;
         transition: border 0.25s;
+    }
+
+    .domain-line:last-child {
+        border-bottom: 0;
+        margin-bottom: 0;
     }
 
     .domain-line:hover {

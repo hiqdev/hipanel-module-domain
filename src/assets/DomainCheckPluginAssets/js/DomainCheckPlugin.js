@@ -57,15 +57,15 @@
             if(!domain) return false;
 
             $.ajax({
-                url: "/domain/domain/check",
-                dataType: 'json',
+                url: "check",
+                dataType: 'html',
                 type: 'POST',
                 beforeSend: function() {
                     this.registerRequest(domain);
                 }.bind(this),
                 data: {domain: domain},
                 success: function(data) {
-                    this.registerFinish(domain);
+                    //this.registerFinish(domain);
                     return this.settings.success(data, domain, this.element);
                 }.bind(this)
             });
