@@ -420,7 +420,12 @@ class DomainController extends \hipanel\base\CrudController
         $model->scenario = 'set-note';
         $collection = new Collection();
         $collection->setModel($model);
-        $collection->load();
+        $selection = Yii::$app->request->get('selection');
+        $res = [];
+        foreach ($selection as $id) {
+            $res[$id] = [reset($model->primaryKey()) => $id];
+        }
+        $collection->load($res);
         $searchModel = new DomainSearch();
         $models = $searchModel
             ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
