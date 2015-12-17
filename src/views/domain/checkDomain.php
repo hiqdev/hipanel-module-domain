@@ -4,7 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
-Yii::$app->assetManager->forceCopy = true;
+Yii::$app->assetManager->forceCopy = true; // todo: remove this string
 DomainCheckPluginAsset::register($this);
 
 $this->title = Yii::t('app', 'Domain check');
