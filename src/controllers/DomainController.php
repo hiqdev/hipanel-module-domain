@@ -454,11 +454,12 @@ class DomainController extends \hipanel\base\CrudController
             return [];
         };
         $domain = Yii::$app->request->post('domain');
+        $domain = Html::encode($domain);
+        list ($domainName, $zone) = explode('.', $domain, 2);
         $line['full_domain_name'] = $domain;
-        $line['domain'] = substr($domain, 0, strpos($domain, '.'));
-        $line['zone'] = substr($domain, strpos($domain, '.') + 1);
+        $line['domain'] = $domainName;
+        $line['zone'] = $zone;
         if ($domain) {
-            $domain = Html::encode($domain);
             $check = Domain::perform('Check', ['domains' => [$domain]], true);
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
@@ -500,7 +501,6 @@ class DomainController extends \hipanel\base\CrudController
     {
         $model = new Domain();
         $model->scenario = 'check-domain';
-        $zones_z = Domain::perform('GetZones');
         $tariffs = Tariff::find(['scenario' => 'get-available-info'])
             ->joinWith('resources')
             ->andFilterWhere(['type' => 'domain'])
@@ -510,41 +510,23 @@ class DomainController extends \hipanel\base\CrudController
             return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
         });
         $dropDownZones = [];
-        foreach ($zones_z as $zone) {
-            $dropDownZones[$zone] = '.' . $zone;
+        foreach ($zones as $resource) {
+            $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
         if ($model->load(Yii::$app->request->get())) {
             $domains = [$model->domain . '.' . $model->zone];
             foreach ($dropDownZones as $zone => $label) {
                 $domains[] = $model->domain . '.' . $zone;
             }
-//            $data = Yii::$app->get('cache')->getTimeCached(120, [$domains], function ($domains) use ($model) {
-//                return $model->perform('Check', ['domains' => implode(',', array_unique($domains))], true);
-//            });
             $results = [];
             foreach ($domains as $domain) {
-                foreach ($zones as $resource) {
-                    if ($resource->zone === substr($domain, strpos($domain, '.') + 1)) {
-                        $tariff = $resource;
-                        break;
-                    }
-                }
-//                $results[] = new Domain([
-//                    'domain' => $domain,
-//                    'is_available' => (bool) 1,
-//                    'zone' => substr($domain, strpos($domain, '.') + 1),
-//                    'resource' => $tariff,
-//                ]);
                 $results[] = [
                     'domain' => $model->domain,
                     'full_domain_name' => $domain,
-                    'is_available' => (bool) 1,
-                    'zone' => substr($domain, strrpos($domain, '.') + 1),
-                    'resource' => $tariff,
+                    'zone' => substr($domain, strpos($domain, '.') + 1),
                 ];
             }
-
-            $results = [reset($results)];
+            $results = [reset($results)];// todo: Delete this string
         }
 
         return $this->render('checkDomain', [

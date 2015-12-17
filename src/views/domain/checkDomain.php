@@ -27,10 +27,16 @@ $this->registerJs(<<<'JS'
 JS
 );
 }
-
 ?>
+
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
+        <?php if (empty($dropDownZonesOptions)) : ?>
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong><?= Yii::t('app', 'Domain zones is empty')?>!</strong>
+            </div>
+        <?php endif; ?>
         <div class="box box-solid">
             <!-- /.box-header -->
             <div class="box-body">
@@ -71,6 +77,7 @@ JS
         <!-- /.box -->
     </div>
 </div>
+
 <?php if (!empty($results)) : ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
