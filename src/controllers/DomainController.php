@@ -372,7 +372,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'sync' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Domain contacts synced'),
+                'success'   => Yii::t('app', 'Contacts synced'),
             ],
 
             'buy' => [

@@ -44,6 +44,7 @@ CSS
             <?= $box->renderPerPage() ?>
         <?php $box->endActions() ?>
         <?php $box->beginBulkActions() ?>
+            <?php if (Yii::$app->user->can('support')) print $box->renderBulkButton(Yii::t('app', 'Sync'), 'sync') ?>
             <div class="dropdown" style="display: inline-block">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= Yii::t('app', 'WHOIS protect') ?>
@@ -85,6 +86,21 @@ CSS
                     ],
                 ]); ?>
             </div>
+            <?php if (Yii::$app->user->can('support')) : ?>
+            <div class="dropdown" style="display: inline-block">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= Yii::t('app', 'Hold') ?>
+                    <span class="caret"></span>
+                </button>
+                <?= Dropdown::widget([
+                    'encodeLabels' => false,
+                    'items' => [
+                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-hold']],
+                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-hold']],
+                    ],
+                ]); ?>
+            </div>
+            <?php endif; ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
                 'header'=> Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
