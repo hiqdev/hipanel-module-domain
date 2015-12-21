@@ -30,6 +30,7 @@ use yii\helpers\Html;
                     <?= Html::textInput("bulk_note", null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Type your note here')]); ?>
                     <br>
                     <div class="panel panel-default">
+                        <div class="panel-heading"><?= Yii::t('app', 'Affected domains') ?></div>
                         <div class="panel-body">
                             <?= ArraySpoiler::widget([
                                 'data' => $models,

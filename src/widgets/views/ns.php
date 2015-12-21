@@ -9,7 +9,6 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 
 // TODO: To delete this
-Yii::$app->assetManager->forceCopy = true;
 NSyncPluginAsset::register($this);
 
 /**

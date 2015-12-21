@@ -58,6 +58,11 @@ class DomainController extends \hipanel\base\CrudController
                 'class'        => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
             ],
+            'bulk-renewal' => [
+                'class'        => AddToCartAction::class,
+                'productClass' => DomainRenewalProduct::class,
+                'bulkLoad' => true,
+            ],
             'add-to-cart-registration' => [
                 'class'        => AddToCartAction::class,
                 'productClass' => DomainRegistrationProduct::class,
@@ -69,11 +74,34 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'push' => [
                 'class' => SmartPerformAction::class,
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $request = Yii::$app->request;
+
+                    $pincode = $request->post('pincode');
+                    $receiver = $request->post('receiver');
+                    $data = $request->post($action->collection->getModel()->formName());
+                    foreach ($data as &$item) {
+                        $item['pincode'] = $pincode;
+                        $item['receiver'] = $receiver;
+                    }
+                    $action->collection->load($data);
+                },
+//                'on beforeSave' => function (Event $event) {
+//                    /** @var \hipanel\actions\Action $action */
+//                    \yii\helpers\VarDumper::dump($_REQUEST, 10, true);die();
+//                    $action = $event->sender;
+//                    foreach ($action->collection->models as $model) {
+//
+//                    }
+//                    \yii\helpers\VarDumper::dump($action->collection->models, 10, true);
+//                    die();
+//                },
                 'POST'      => [
                     'save'    => true,
                     'success' => [
                         'class' => RedirectAction::class,
-                        'url' => 'index',
+//                        'url'   => 'index',
                     ],
                     'error' => [
                         'class' => RedirectAction::class,
@@ -105,8 +133,21 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => ValidateFormAction::class,
                 'model'     => 'hipanel\modules\domain\models\Ns',
                 'scenario'  => 'default',
-
                 'allowDynamicScenario' => false,
+            ],
+            'validate-push-form' => [
+                'class' => ValidateFormAction::class,
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $request = Yii::$app->request;
+                    $action->collection->load([[
+                        'pincode' => $request->post('pincode'),
+                        'receiver' => $request->post('receiver')
+                    ]]);
+                },
+                'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
+                    return 'push-' . $attribute;
+                }
             ],
             'set-note' => [
                 'class' => SmartUpdateAction::class,
@@ -116,9 +157,9 @@ class DomainController extends \hipanel\base\CrudController
                     'save'    => true,
                     'success' => [
                         'class' => RedirectAction::class,
-                        'url'   => function ($action) {
-                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
-                        }
+//                        'url'   => function ($action) {
+//                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
+//                        }
                     ],
                 ],
                 'on beforeSave' => function (Event $event) {
@@ -398,20 +439,69 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
-
-
-    public function actionDomainPushModal($id)
+    public function actionRenew()
     {
-        $model = $this->findModel($id);
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDomainPushModal(array $id = array())
+    {
+        $res = [];
+
+        $model = new Domain();
         $hasPincode = Client::perform('HasPincode', ['id' => Yii::$app->user->id]);
         $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
 
+        $collection = new Collection();
+        $collection->setModel($model);
+        $selection = $id ?: Yii::$app->request->get('selection');
 
+        foreach ($selection as $id) {
+            $res[$id] = [reset($model->primaryKey()) => $id];
+        }
+
+        $collection->load($res);
+        $searchModel = new DomainSearch();
+        $models = $searchModel
+            ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
+            ->getModels();
 
         return $this->renderAjax('_modalPush', [
-            'model' => $model,
+            'models' => $models,
             'hasPincode' => $hasPincode,
+            'pincodeModel' => new Domain(['scenario' => $model->scenario])
         ]);
+
+//        if ($id) {
+//            $model = $this->findModel($id);
+//            $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
+//
+//            return $this->renderAjax('_modalPush', [
+//                'model' => $model,
+//                'hasPincode' => $hasPincode,
+//            ]);
+//        } else {
+//            $model = new Domain();
+//            $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
+//            $collection = new Collection();
+//            $collection->setModel($model);
+//            $selection = Yii::$app->request->get('selection');
+//            $res = [];
+//            foreach ($selection as $id) {
+//                $res[$id] = [reset($model->primaryKey()) => $id];
+//            }
+//            $collection->load($res);
+//            $searchModel = new DomainSearch();
+//            $models = $searchModel
+//                ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
+//                ->getModels();
+//
+//            return $this->renderAjax('_modalPush', [
+//                'model' => $model,
+//                'models' => $models,
+//                'hasPincode' => $hasPincode
+//            ]);
+//        }
     }
 
     public function actionBulkSetNote()

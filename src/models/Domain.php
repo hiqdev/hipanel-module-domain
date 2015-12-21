@@ -121,8 +121,6 @@ class Domain extends \hipanel\base\Model
                 }
             }, 'on' => ['push-with-pincode']],
             [['id', 'domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
-
-
         ];
     }
 

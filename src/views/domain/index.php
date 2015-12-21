@@ -45,6 +45,7 @@ CSS
         <?php $box->endActions() ?>
         <?php $box->beginBulkActions() ?>
             <?php if (Yii::$app->user->can('support')) print $box->renderBulkButton(Yii::t('app', 'Sync'), 'sync') ?>
+            <?= $box->renderBulkButton(Yii::t('app', 'Renew'), 'bulk-renewal') ?>
             <div class="dropdown" style="display: inline-block">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= Yii::t('app', 'WHOIS protect') ?>
@@ -103,13 +104,20 @@ CSS
             <?php endif; ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
+                'header'=> Html::tag('h4', Yii::t('app', 'Push'), ['class' => 'modal-title']),
+                'scenario' => 'domain-push-modal',
+                'actionUrl' => ['domain-push-modal'],
+                'size' => Modal::SIZE_LARGE,
+                'toggleButton' => ['label' => Yii::t('app', 'Push'), 'class' => 'btn btn-default',],
+            ]) ?>
+            <?= AjaxModal::widget([
+                'bulkPage' => true,
                 'header'=> Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
                 'scenario' => 'bulk-set-note',
                 'actionUrl' => ['bulk-set-note'],
                 'size' => Modal::SIZE_LARGE,
                 'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default',],
             ]) ?>
-
             <?= AjaxModal::widget([
                 'bulkPage' => true,
                 'header'=> Html::tag('h4', Yii::t('app', 'Set NS'), ['class' => 'modal-title']),

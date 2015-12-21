@@ -2,15 +2,17 @@
 
 use hipanel\helpers\Url;
 use hipanel\modules\client\widgets\combo\ClientCombo;
+use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+
 ?>
 
 <?php $form = ActiveForm::begin([
     'id' => 'push-domain-form',
     'action' => Url::toRoute('push'),
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push']),
+    'validationUrl' => Url::toRoute(['validate-push-form', 'scenario' => $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push']),
 ]) ?>
 
     <div class="alert alert-info alert-dismissible fade in" role="alert">
@@ -21,21 +23,43 @@ use yii\helpers\Html;
 
         <p>
             <?= Yii::t('app', 'The operation to transfer the domain to another user irrevocably. You can not bring it back.'); ?>
-            <?= Yii::t('app', 'To confirm this, you need to enter a PIN code.'); ?>
+            <?php if ($hasPincode['pincode_enabled']) : ?>
+                <?= Yii::t('app', 'To confirm this, you need to enter a PIN code.'); ?>
+            <?php endif; ?>
         </p>
     </div>
 
-<?= Html::activeHiddenInput($model, "[$model->id]id") ?>
-<?= Html::activeHiddenInput($model, "[$model->id]domain") ?>
-<?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
+    <div class="panel panel-default">
+        <div class="panel-heading"><?= Yii::t('app', 'Affected domains') ?></div>
+        <div class="panel-body">
+            <?= ArraySpoiler::widget([
+                'data' => $models,
+                'visibleCount' => count($models),
+                'formatter' => function ($model) {
+                    return $model->domain;
+                },
+                'delimiter' => ',&nbsp; '
+            ]); ?>
+        </div>
+    </div>
 
-<?= $form->field($model, "[$model->id]receiver")->widget(ClientCombo::className()) ?>
+    <?php foreach ($models as $model) : ?>
+        <?= Html::activeHiddenInput($model, "[$model->id]id") ?>
+        <?= Html::activeHiddenInput($model, "[$model->id]domain") ?>
+        <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
+    <?php endforeach; ?>
 
-<?php if ($hasPincode['pincode_enabled']) : ?>
-    <?= $form->field($model, "[$model->id]pincode") ?>
-<?php endif; ?>
+    <?= $form->field($pincodeModel, "receiver")->widget(ClientCombo::className(), [
+        'inputOptions' => [
+            'id' => 'push-receiver',
+            'name' => 'receiver'
+        ]
+    ]) ?>
 
-<hr>
-<?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+    <?php if ($hasPincode['pincode_enabled']) : ?>
+        <?= $form->field($pincodeModel, "pincode")->textInput(['id' => 'push-pincode', 'name' => 'pincode']) ?>
+    <?php endif; ?>
+    <hr>
+    <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>
