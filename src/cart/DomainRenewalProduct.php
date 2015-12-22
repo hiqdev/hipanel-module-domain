@@ -18,6 +18,11 @@ class DomainRenewalProduct extends AbstractDomainProduct
 {
     protected $_operation = 'renewal';
 
+    public static function primaryKey()
+    {
+        return ['model_id'];
+    }
+
     public function load($data, $formName = null)
     {
         $result = parent::load($data, '');
