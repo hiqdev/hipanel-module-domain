@@ -126,6 +126,14 @@ CSS
                 'size' => Modal::SIZE_LARGE,
                 'toggleButton' => ['label' => Yii::t('app', 'Set NS'), 'class' => 'btn btn-default',],
             ]) ?>
+            <?= AjaxModal::widget([
+                'bulkPage' => true,
+                'header'=> Html::tag('h4', Yii::t('app', 'Change contacts'), ['class' => 'modal-title']),
+                'scenario' => 'bulk-set-contacts',
+                'actionUrl' => ['bulk-set-contacts-modal'],
+                'size' => Modal::SIZE_LARGE,
+                'toggleButton' => ['label' => Yii::t('app', 'Change contacts'), 'class' => 'btn btn-default',],
+            ]) ?>
             &nbsp;
         <?php $box->endBulkActions() ?>
         <?= $box->renderSearchForm(['stateData' => $stateData]) ?>

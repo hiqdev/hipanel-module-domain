@@ -59,7 +59,6 @@ class Domain extends \hipanel\base\Model
             [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
             [['id', 'note'],                                    'safe',     'on' => ['set-note', 'default']],
 
-            [['registrant','admin','tech','billing'],           'safe',     'on' => ['set-contacts']],
             [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
 
             [['enable'],                                        'safe',     'on' => ['set-lock','set-whois-protect']],
@@ -121,6 +120,10 @@ class Domain extends \hipanel\base\Model
                 }
             }, 'on' => ['push-with-pincode']],
             [['id', 'domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
+
+            // Bulk set contacts
+            [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],
+            [['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['bulk-set-contacts']],
         ];
     }
 

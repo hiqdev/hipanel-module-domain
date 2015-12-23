@@ -72,6 +72,39 @@ class DomainController extends \hipanel\base\CrudController
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad'     => true,
             ],
+            'validate-set-contacts-form' => [
+                'class' => ValidateFormAction::class,
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $request = Yii::$app->request;
+                    $action->collection->load([[
+                        'registrant' => $request->post('registrant'),
+                        'admin' => $request->post('admin'),
+                        'tech' => $request->post('tech'),
+                        'billing' => $request->post('billing'),
+                    ]]);
+                },
+                'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
+                    return 'domain-' . $attribute;
+                }
+            ],
+            'bulk-set-contacts' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'set-contacts',
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $request = Yii::$app->request;
+                    $contactOptions = Domain::$contactOptions;
+
+                    $data = $request->post($action->collection->getModel()->formName());
+                    foreach ($data as $k => &$item) {
+                        foreach ($contactOptions as $contact) {
+                            $item[$contact] = $request->post($contact);
+                        }
+                    }
+                    $action->collection->load($data);
+                },
+            ],
             'push' => [
                 'class' => SmartPerformAction::class,
                 'collectionLoader' => function ($action) {
@@ -85,18 +118,9 @@ class DomainController extends \hipanel\base\CrudController
                         $item['pincode'] = $pincode;
                         $item['receiver'] = $receiver;
                     }
+                    \yii\helpers\VarDumper::dump($data, 10, true);die();
                     $action->collection->load($data);
                 },
-//                'on beforeSave' => function (Event $event) {
-//                    /** @var \hipanel\actions\Action $action */
-//                    \yii\helpers\VarDumper::dump($_REQUEST, 10, true);die();
-//                    $action = $event->sender;
-//                    foreach ($action->collection->models as $model) {
-//
-//                    }
-//                    \yii\helpers\VarDumper::dump($action->collection->models, 10, true);
-//                    die();
-//                },
                 'POST'      => [
                     'save'    => true,
                     'success' => [
@@ -444,6 +468,33 @@ class DomainController extends \hipanel\base\CrudController
         return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionBulkSetContactsModal()
+    {
+        if (Yii::$app->request->isAjax) {
+            $res = [];
+            $model = new Domain();
+            $collection = new Collection();
+            $collection->setModel($model);
+            $selection = Yii::$app->request->get('selection');
+
+            foreach ($selection as $id) {
+                $res[$id] = [reset($model->primaryKey()) => $id];
+            }
+
+            $collection->load($res);
+            $searchModel = new DomainSearch();
+            $models = $searchModel
+                ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
+                ->getModels();
+
+            return $this->renderAjax('_bulkSetContacts', [
+                'models' => $models,
+                'model' => new Domain(['scenario' => 'bulk-set-contacts']),
+            ]);
+        }
+        Yii::$app->end();
+    }
+    
     public function actionDomainPushModal(array $id = array())
     {
         $res = [];
@@ -471,37 +522,6 @@ class DomainController extends \hipanel\base\CrudController
             'hasPincode' => $hasPincode,
             'pincodeModel' => new Domain(['scenario' => $model->scenario])
         ]);
-
-//        if ($id) {
-//            $model = $this->findModel($id);
-//            $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
-//
-//            return $this->renderAjax('_modalPush', [
-//                'model' => $model,
-//                'hasPincode' => $hasPincode,
-//            ]);
-//        } else {
-//            $model = new Domain();
-//            $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
-//            $collection = new Collection();
-//            $collection->setModel($model);
-//            $selection = Yii::$app->request->get('selection');
-//            $res = [];
-//            foreach ($selection as $id) {
-//                $res[$id] = [reset($model->primaryKey()) => $id];
-//            }
-//            $collection->load($res);
-//            $searchModel = new DomainSearch();
-//            $models = $searchModel
-//                ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
-//                ->getModels();
-//
-//            return $this->renderAjax('_modalPush', [
-//                'model' => $model,
-//                'models' => $models,
-//                'hasPincode' => $hasPincode
-//            ]);
-//        }
     }
 
     public function actionBulkSetNote()
