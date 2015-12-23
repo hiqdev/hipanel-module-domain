@@ -27,10 +27,14 @@ use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
 use Yii;
 use yii\helpers\Html;
-use yii\validators\IpValidator;
 
 class Domain extends \hipanel\base\Model
 {
+    const STATE_OK = 'ok';
+    const STATE_INCOMING = 'incoming';
+    const STATE_OUTGOING = 'outgoing';
+    const STATE_EXPIRED = 'expired';
+
     public $authCode;
 
     public static $contactOptions = [
@@ -39,6 +43,16 @@ class Domain extends \hipanel\base\Model
         'tech',
         'billing',
     ];
+
+    public static function stateOptions()
+    {
+        return [
+            self::STATE_OK => Yii::t('hipanel/domain', 'Domains in «ok» state'),
+            self::STATE_INCOMING => Yii::t('hipanel/domain', 'Incoming transfer domains'),
+            self::STATE_OUTGOING => Yii::t('hipanel/domain', 'Outgoing transfer domains'),
+            self::STATE_EXPIRED => Yii::t('hipanel/domain', 'Expired domains'),
+        ];
+    }
 
     use \hipanel\base\ModelTrait;
 

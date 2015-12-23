@@ -42,9 +42,12 @@ class DomainGridView extends BoxedGridView
                 'filterAttribute' => 'domain_like',
             ],
             'state' => [
-                'class'         => RefColumn::className(),
+//                'class'         => RefColumn::className(),
+//                'gtype'         => 'state,domain',
                 'format'        => 'raw',
-                'gtype'         => 'state,domain',
+                'filter' => function ($grid, $model, $attribute) {
+                    return Html::activeDropDownList($model, $attribute, Domain::stateOptions(), ['prompt' => '--', 'class' => 'form-control']);
+                },
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'value'         => function ($model) {
                     return State::widget(compact('model'));

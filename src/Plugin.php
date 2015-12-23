@@ -32,5 +32,18 @@ class Plugin extends \hiqdev\pluginmanager\Plugin
                 'class' => 'hipanel\modules\domain\Module',
             ],
         ],
+        'components' => [
+            'i18n' => [
+                'translations' => [
+                    'hipanel/domain' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'basePath' => '@hipanel/modules/domain/messages',
+                        'fileMap' => [
+                            'hipanel/domain' => 'domain.php',
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ];
 }

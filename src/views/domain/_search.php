@@ -1,6 +1,7 @@
 <?php
 
 use hipanel\modules\client\widgets\combo\ClientCombo;
+use hipanel\modules\domain\models\Domain;
 use hiqdev\combo\StaticCombo;
 use kartik\widgets\DatePicker;
 use yii\helpers\Html;
@@ -18,15 +19,7 @@ use yii\helpers\Html;
     </div>
 
     <div class="col-md-4">
-        <?= $search->field('state')->widget(StaticCombo::classname(), [
-            'data' => $stateData,
-            'hasId' => true,
-            'pluginOptions' => [
-                'select2Options' => [
-                    'multiple' => false,
-                ],
-            ],
-        ]) ?>
+        <?= $search->field('state')->dropDownList(Domain::stateOptions(), ['prompt' => '--']) ?>
         <div class="form-group">
             <?= Html::tag('label', 'Registered range', ['class' => 'control-label']); ?>
             <?= DatePicker::widget([
