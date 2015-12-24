@@ -11,6 +11,7 @@ $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
+$model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 if (!empty($results)) {
 $this->registerJs(<<<'JS'
     $('.domain-list').domainsCheck({
