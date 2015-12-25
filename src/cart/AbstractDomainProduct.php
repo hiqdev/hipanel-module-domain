@@ -16,15 +16,42 @@ use Yii;
 
 abstract class AbstractDomainProduct extends AbstractCartPosition
 {
+    /**
+     * @var string the operation name
+     */
+    protected $_operation;
+
+    /** @inheritdoc */
+    protected $_calculationModel = 'hipanel\modules\domain\cart\Calculation';
+
+    /**
+     * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years
+     */
+    protected $quantityLimits = [
+        'ru' => 1,
+        'su' => 1,
+        '*' => 10,
+    ];
+
+    /** @inheritdoc */
     public function getIcon()
     {
         return '<i class="fa fa-globe"></i>';
     }
 
+    /** @inheritdoc */
+    public function getZone()
+    {
+        list (, $zone) = explode('.', $this->name, 2);
+        return $zone;
+    }
+
+    /** @inheritdoc */
     public function getQuantityOptions()
     {
         $result = [];
-        for ($n = 1;$n < 11;++$n) {
+        $limit = isset($this->quantityLimits[$this->getZone()]) ? $this->quantityLimits[$this->getZone()] : $this->quantityLimits['*'];
+        for ($n = 1; $n <= $limit; $n++) {
             $result[$n] = Yii::t('app', '{0, plural, one{# year} other{# years}}', $n);
         }
 

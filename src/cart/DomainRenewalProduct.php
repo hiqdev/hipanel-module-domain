@@ -16,13 +16,16 @@ use Yii;
 
 class DomainRenewalProduct extends AbstractDomainProduct
 {
+    /** @inheritdoc */
     protected $_operation = 'renewal';
 
+    /** @inheritdoc */
     public static function primaryKey()
     {
         return ['model_id'];
     }
 
+    /** @inheritdoc */
     public function load($data, $formName = null)
     {
         $result = parent::load($data, '');
@@ -35,8 +38,9 @@ class DomainRenewalProduct extends AbstractDomainProduct
         return $result;
     }
 
+    /** @inheritdoc */
     public function getId()
     {
-        return implode('_', ['domain', 'renewal', $this->_model->id]);
+        return hash('crc32b', implode('_', ['domain', 'renewal', $this->_model->id]));
     }
 }

@@ -15,13 +15,16 @@ use Yii;
 
 class DomainRegistrationProduct extends AbstractDomainProduct
 {
+    /** @inheritdoc */
     protected $_operation = 'registration';
 
+    /** @inheritdoc */
     public function getId()
     {
-        return implode('_', ['domain', 'registration', $this->name]);
+        return hash('crc32b', implode('_', ['domain', 'registration', $this->name]));
     }
 
+    /** @inheritdoc */
     public function load($data, $formName = null)
     {
         $result = parent::load($data, '');
@@ -30,5 +33,15 @@ class DomainRegistrationProduct extends AbstractDomainProduct
         }
 
         return $result;
+    }
+
+    /** @inheritdoc */
+    public function getCalculationModel($options = [])
+    {
+        return parent::getCalculationModel(array_merge([
+            'type' => $this->_operation,
+            'item' => $this->name,
+            'zone' => $this->getZone()
+        ], $options));
     }
 }
