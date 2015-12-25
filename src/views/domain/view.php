@@ -238,7 +238,7 @@ CSS
                             <?= $this->render('_modalContacts', ['model' => $model]) ?>
                         </div>
                         <div id="contacts-tables">
-                            <?= $this->render('_contactsTables', ['domainContactInfo' => $domainContactInfo]) ?>
+                            <?= $this->render('_contactsTables', ['domainContactInfo' => $domainContactInfo, 'domainId' => $model->id, 'domainName' => $model->domain]) ?>
                         </div>
                     </div>
                 </div>

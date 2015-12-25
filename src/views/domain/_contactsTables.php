@@ -4,18 +4,28 @@ use hipanel\modules\domain\models\Domain;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+/**
+ * @var $domainContactInfo array
+ * @var $domainId integer
+ * @var $domainName string
+ */
 ?>
 
-<br/><br/>
-<?php foreach (Domain::$contactOptions as $item) : ?>
-    <?php $contact = $domainContactInfo[$item] ?>
+<?php foreach (Domain::$contactOptions as $contactType) : ?>
+    <?php $contact = $domainContactInfo[$contactType] ?>
     <div class="col-md-6">
         <div class="row">
-            <div class="col-md-6"><?= Html::tag('h4', Yii::t('app', ucfirst($item) . ' contact')) ?></div>
+            <div class="col-md-6"><?= Html::tag('h4', Yii::t('app', ucfirst($contactType) . ' contact')) ?></div>
             <div class="col-md-6">
                 <div class="pull-right btn-group" style="padding-top:10px">
-                    <?= Html::a(Yii::t('app', 'Details'),   ['@contact/view',   'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
-                    <?= Html::a(Yii::t('app', 'Edit'),      ['@contact/update', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
+                    <?= Html::a(Yii::t('app', 'Details'), ['@contact/view', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
+                    <?= Html::a(Yii::t('app', 'Change'), [
+                        '@contact/change-contact',
+                        'contactId' => $contact['id'],
+                        'contactType' => $contactType,
+                        'domainId' => $domainId,
+                        'domainName' => $domainName
+                    ], ['class' => 'btn btn-default btn-xs']) ?>
                 </div>
             </div>
         </div>
