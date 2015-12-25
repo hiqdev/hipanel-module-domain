@@ -35,7 +35,7 @@ JS
         <?php if (empty($dropDownZonesOptions)) : ?>
             <div class="alert alert-warning alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong><?= Yii::t('app', 'Domain zones is empty')?>!</strong>
+                <strong><?= Yii::t('app', 'There are no available domain zones')?>!</strong>
             </div>
         <?php endif; ?>
         <div class="box box-solid">
