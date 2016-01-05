@@ -294,4 +294,30 @@ class Domain extends \hipanel\base\Model
 
         return $result;
     }
+
+    public static function setIsotopeFilterValue($zone)
+    {
+        $getClass = function (array $arr) use ($zone) {
+            $result = '';
+            foreach ($arr as $cssClass => $items) {
+                if (in_array($zone, $items)) {
+                    $result = '.' . $cssClass;
+                    break;
+                }
+            }
+            return $result;
+        };
+        $categories = [
+            'adult' => ['sex', 'porn', 'xxx', 'adult'],
+            'generic' => ['com', 'net', 'org', 'biz', 'co', 'name'],
+            'european' => ['su', 'ru'],
+        ];
+        $special = [
+            'popular' => ['info', 'com', 'net', 'org', 'biz', 'co', 'name'],
+            'promotion' => ['su', 'ru'],
+        ];
+        $result = sprintf('%s %s', $getClass($categories), $getClass($special));
+
+        return $result;
+    }
 }

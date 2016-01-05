@@ -4,10 +4,11 @@
  * @var $state
  */
 use yii\helpers\Html;
+use hipanel\modules\domain\models\Domain;
 
 ?>
 
-<div class="domain-line" data-domain="<?= $line['full_domain_name'] ?>">
+<div class="domain-line" data-domain="<?= $line['full_domain_name'] ?>" data-filter="<?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= ($state === 'available') ? '.available' : '.unavailable' ?>">
     <div class="col-md-6">
         <?php if ($state) : ?>
             <span class="domain-img"><i class="fa fa-globe fa-lg"></i></span>
