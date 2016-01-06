@@ -1,14 +1,17 @@
 <?php
 /**
  * @var $line array
- * @var $state
+ * @var $state string
  */
 use yii\helpers\Html;
 use hipanel\modules\domain\models\Domain;
 
 ?>
 
-<div class="domain-line" data-domain="<?= $line['full_domain_name'] ?>" data-filter="<?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= ($state === 'available') ? '.available' : '.unavailable' ?>">
+<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?>">
+<div
+    class="domain-line"
+    data-domain="<?= $line['full_domain_name'] ?>">
     <div class="col-md-6">
         <?php if ($state) : ?>
             <span class="domain-img"><i class="fa fa-globe fa-lg"></i></span>
@@ -17,11 +20,14 @@ use hipanel\modules\domain\models\Domain;
         <?php endif; ?>
 
         <?php if ($state === 'available') : ?>
-            <span class="domain-name"><?= $line['domain'] ?></span><span class="domain-zone">.<?= $line['zone'] ?></span>
+            <span class="domain-name"><?= $line['domain'] ?></span><span
+                class="domain-zone">.<?= $line['zone'] ?></span>
         <?php elseif ($state === 'unavailable') : ?>
-            <span class="domain-name muted"><?= $line['domain'] ?></span><span class="domain-zone muted">.<?= $line['zone'] ?></span>
+            <span class="domain-name muted"><?= $line['domain'] ?></span><span
+                class="domain-zone muted">.<?= $line['zone'] ?></span>
         <?php else : ?>
-            <span class="domain-name muted"><?= $line['domain'] ?></span><span class="domain-zone muted">.<?= $line['zone'] ?></span>
+            <span class="domain-name muted"><?= $line['domain'] ?></span><span
+                class="domain-zone muted">.<?= $line['zone'] ?></span>
         <?php endif; ?>
     </div>
     <div class="col-md-4 text-center">
@@ -49,4 +55,5 @@ use hipanel\modules\domain\models\Domain;
 
         <?php endif; ?>
     </div>
+</div>
 </div>

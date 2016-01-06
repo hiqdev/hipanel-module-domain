@@ -295,29 +295,51 @@ class Domain extends \hipanel\base\Model
         return $result;
     }
 
+    public static function getCategories() {
+        return [
+            'adult' => ['sex', 'porn', 'xxx', 'adult'],
+            'generic' => ['com', 'net', 'org', 'biz', 'co', 'name'],
+            'european' => ['su', 'ru'],
+        ];
+    }
+
+    public static function getSpecial() {
+        return [
+            'popular' => ['info', 'com', 'net', 'org', 'biz', 'co', 'name'],
+            'promotion' => ['su', 'ru'],
+        ];
+    }
+
     public static function setIsotopeFilterValue($zone)
     {
         $getClass = function (array $arr) use ($zone) {
             $result = '';
             foreach ($arr as $cssClass => $items) {
                 if (in_array($zone, $items)) {
-                    $result = '.' . $cssClass;
+                    $result = $cssClass;
                     break;
                 }
             }
             return $result;
         };
-        $categories = [
-            'adult' => ['sex', 'porn', 'xxx', 'adult'],
-            'generic' => ['com', 'net', 'org', 'biz', 'co', 'name'],
-            'european' => ['su', 'ru'],
-        ];
-        $special = [
-            'popular' => ['info', 'com', 'net', 'org', 'biz', 'co', 'name'],
-            'promotion' => ['su', 'ru'],
-        ];
-        $result = sprintf('%s %s', $getClass($categories), $getClass($special));
+
+        $result = sprintf('%s %s', $getClass(self::getCategories()), $getClass(self::getSpecial()));
 
         return $result;
+    }
+
+    public static function getCategoriesCount($zone, $data)
+    {
+        $i = 0;
+        $categories = self::getCategories();
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                if (in_array($item['zone'], $categories[$zone])) {
+                    $i++;
+                }
+            }
+        }
+
+        return $i;
     }
 }
