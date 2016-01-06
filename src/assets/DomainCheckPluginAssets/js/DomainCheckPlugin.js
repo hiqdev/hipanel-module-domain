@@ -11,31 +11,29 @@
                 // store filter for each group
                 var filters = {};
 
-                $('.filters').on( 'click', 'a', function() {
-                    var _this = $(this);
+                $('.filters').on('click', 'a', function() {
                     // get group key
-                    var buttonGroup = _this.parents('.nav');
-                    var filterGroup = buttonGroup.attr('data-filter-group');
+                    var $buttonGroup = $(this).parents('.nav');
+                    var $filterGroup = $buttonGroup.attr('data-filter-group');
                     // set filter for group
-                    filters[ filterGroup ] = _this.attr('data-filter');
+                    filters[$filterGroup] = $(this).attr('data-filter');
                     // combine filters
-                    var filterValue = concatValues( filters );
+                    var filterValue = concatValues(filters);
                     // set filter for Isotope
-                    grid.isotope({ filter: filterValue });
+                    grid.isotope({filter: filterValue});
                 });
                 // change is-checked class on buttons
-                $('.nav').each( function( i, buttonGroup ) {
-                    var buttonGroup = $( buttonGroup );
-                    buttonGroup.on( 'click', 'a', function(event) {
-                        buttonGroup.find('.active').removeClass('active');
-                        $( this).parents('li').addClass('active');
+                $('.nav').each(function(i, buttonGroup) {
+                    $(buttonGroup).on( 'click', 'a', function(event) {
+                        $(buttonGroup).find('.active').removeClass('active');
+                        $(this).parents('li').addClass('active');
                     });
                 });
                 // flatten object by concatting values
-                function concatValues( obj ) {
+                function concatValues(obj) {
                     var value = '';
-                    for ( var prop in obj ) {
-                        value += obj[ prop ];
+                    for (var prop in obj) {
+                        value += obj[prop];
                     }
 
                     return value;
