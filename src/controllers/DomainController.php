@@ -575,28 +575,28 @@ class DomainController extends \hipanel\base\CrudController
         $line['domain'] = $domainName;
         $line['zone'] = $zone;
         if ($domain) {
-//            $check = Domain::perform('Check', ['domains' => [$domain]], true);
-            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
+            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+//            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
                     'state' => 'unavailable',
                 ]);
             } else {
-//                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-//                    ->joinWith('resources')
-//                    ->andFilterWhere(['type' => 'domain'])
-//                    ->andFilterWhere(['seller' => 'ahnames'])
-//                    ->one();
-//                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-//                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-//                });
-//                foreach ($zones as $resource) {
-//                    if ($resource->zone === $line['zone']) {
-//                        $line['tariff'] = $resource;
-//                        break;
-//                    }
-//                }
+                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
+                    ->joinWith('resources')
+                    ->andFilterWhere(['type' => 'domain'])
+                    ->andFilterWhere(['seller' => 'ahnames'])
+                    ->one();
+                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
+                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
+                });
+                foreach ($zones as $resource) {
+                    if ($resource->zone === $line['zone']) {
+                        $line['tariff'] = $resource;
+                        break;
+                    }
+                }
 
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
@@ -630,11 +630,14 @@ class DomainController extends \hipanel\base\CrudController
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
         if ($model->load(Yii::$app->request->get())) {
-            $domains = [$model->domain . '.' . $model->zone];
+            $requestedDomain = $model->domain . '.' . $model->zone;
             foreach ($dropDownZones as $zone => $label) {
                 $domains[] = $model->domain . '.' . $zone;
             }
             $results = [];
+            // Make the requestedDomain the first element of array
+            $domains = array_diff($domains, [$requestedDomain]);
+            array_unshift($domains, $requestedDomain);
             foreach ($domains as $domain) {
                 $results[] = [
                     'domain' => $model->domain,
@@ -642,6 +645,8 @@ class DomainController extends \hipanel\base\CrudController
                     'zone' => substr($domain, strpos($domain, '.') + 1),
                 ];
             }
+
+//            $domains = [$model->domain . '.' . $model->zone];
 //            $results = array_slice($results, 1, 4);// todo: Delete this string
         }
 

@@ -7,7 +7,6 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
-//Yii::$app->assetManager->forceCopy = true; // todo: remove this string
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
@@ -77,13 +76,13 @@ JS
     <div class="col-md-3 filters">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">Status</h3>
+                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Status') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="status">
-                    <li class="active"><a href="#" data-filter="">All</a></li>
-                    <li><a href="#" data-filter=".available">Available</a></li>
-                    <li><a href="#" data-filter=".unavailable">Unavailable</a>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
+                    <li><a href="#" data-filter=".available"><?= Yii::t('hipanel/domain', 'Available') ?></a></li>
+                    <li><a href="#" data-filter=".unavailable"><?= Yii::t('hipanel/domain', 'Unavailable') ?></a>
                     </li>
                 </ul>
             </div>
@@ -92,13 +91,13 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">Special</h3>
+                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Special') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="special">
-                    <li class="active"><a href="#" data-filter="">All</a></li>
-                    <li><a href="#" data-filter=".popular">Popular Domains</a></li>
-                    <li><a href="#" data-filter=".promotion">Promotion</a></li>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
+                    <li><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
+                    <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel/domain', 'Promotion') ?></a></li>
                 </ul>
             </div>
             <!-- /.box-body -->
@@ -106,16 +105,16 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">Categories</h3>
+                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Categories') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="categories">
-                    <li class="active"><a href="#" data-filter="">All<span class="label label-default pull-right"><?= count($results) ?></span></a></li>
-                    <li><a href="#" data-filter=".adult">Adult<span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span></a>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?><span class="label label-default pull-right"><?= count($results) ?></span></a></li>
+                    <li><a href="#" data-filter=".adult"><?= Yii::t('hipanel/domain', 'Adult') ?><span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span></a>
                     </li>
-                    <li><a href="#" data-filter=".generic">Generic<span class="label label-default pull-right"><?= Domain::getCategoriesCount('generic', $results) ?></span></a>
+                    <li><a href="#" data-filter=".generic"><?= Yii::t('hipanel/domain', 'Generic') ?><span class="label label-default pull-right"><?= Domain::getCategoriesCount('generic', $results) ?></span></a>
                     </li>
-                    <li><a href="#" data-filter=".european">European<span
+                    <li><a href="#" data-filter=".european"><?= Yii::t('hipanel/domain', 'European') ?><span
                                 class="label label-default pull-right"><?= Domain::getCategoriesCount('european', $results) ?></span></a></li>
                 </ul>
             </div>
