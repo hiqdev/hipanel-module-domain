@@ -629,7 +629,7 @@ class DomainController extends \hipanel\base\CrudController
         foreach ($zones as $resource) {
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
-        if ($model->load(Yii::$app->request->get())) {
+        if ($model->load(Yii::$app->request->get()) && $model->validate()) {
             $requestedDomain = $model->domain . '.' . $model->zone;
             foreach ($dropDownZones as $zone => $label) {
                 $domains[] = $model->domain . '.' . $zone;
@@ -645,9 +645,6 @@ class DomainController extends \hipanel\base\CrudController
                     'zone' => substr($domain, strpos($domain, '.') + 1),
                 ];
             }
-
-//            $domains = [$model->domain . '.' . $model->zone];
-//            $results = array_slice($results, 1, 4);// todo: Delete this string
         }
 
         return $this->render('checkDomain', [

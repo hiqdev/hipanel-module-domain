@@ -83,6 +83,11 @@ class Domain extends \hipanel\base\Model
 
             // Check domain
             [['domain'], DomainPartValidator::className(), 'on' => ['check-domain']],
+            [['domain'], 'filter', 'filter' => function ($value) {
+                if (strpos($value, '.') !== false) {
+                    return substr($value, 0, strpos($value, '.'));
+                } else return $value;
+            }, 'on' => 'check-domain'],
             [['domain', 'zone'], 'required', 'on' => ['check-domain']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
@@ -295,7 +300,8 @@ class Domain extends \hipanel\base\Model
         return $result;
     }
 
-    public static function getCategories() {
+    public static function getCategories()
+    {
         return [
             'adult' => ['sex', 'porn', 'xxx', 'adult'],
             'generic' => ['com', 'net', 'org', 'biz', 'co', 'name'],
@@ -303,10 +309,11 @@ class Domain extends \hipanel\base\Model
         ];
     }
 
-    public static function getSpecial() {
+    public static function getSpecial()
+    {
         return [
-            'popular' => ['info', 'com', 'net', 'org', 'biz', 'co', 'name'],
-            'promotion' => ['su', 'ru'],
+            'popular' => ['com', 'net', 'org', 'info', 'biz', 'ru', 'me'],
+            'promotion' => ['ru', 'xxx', 'com', 'net', 'org'],
         ];
     }
 
