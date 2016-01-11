@@ -7,7 +7,7 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
-Yii::$app->assetManager->forceCopy = true; // todo: remove this string
+//Yii::$app->assetManager->forceCopy = true; // todo: remove this string
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
@@ -25,8 +25,47 @@ if (!empty($results)) {
         domainRowClass: '.domain-line',
         success: function(data, domain, element) {
             var $elem = $(element).find("div[data-domain='" + domain + "']");
-            $elem.replaceWith($(data).find('.domain-line'));
+            var $parentElem = $(element).find("div[data-domain='" + domain + "']").parents('div.domain-iso-line').eq(0);
+            $elem.html($(data).find('.domain-line'));
+            $parentElem.attr('class', $(data).attr('class'));
             return this;
+        },
+        finally: function() {
+            // init Isotope
+            var grid = $('.domain-list').isotope({
+                itemSelector: '.domain-iso-line',
+                layout: 'vertical'
+            });
+            // store filter for each group
+            var filters = {};
+
+            $('.filters').on('click', 'a', function() {
+                // get group key
+                var $buttonGroup = $(this).parents('.nav');
+                var $filterGroup = $buttonGroup.attr('data-filter-group');
+                // set filter for group
+                filters[$filterGroup] = $(this).attr('data-filter');
+                // combine filters
+                var filterValue = concatValues(filters);
+                // set filter for Isotope
+                grid.isotope({filter: filterValue});
+            });
+            // change is-checked class on buttons
+            $('.nav').each(function(i, buttonGroup) {
+                $(buttonGroup).on( 'click', 'a', function(event) {
+                    $(buttonGroup).find('.active').removeClass('active');
+                    $(this).parents('li').addClass('active');
+                });
+            });
+            // flatten object by concatting values
+            function concatValues(obj) {
+                var value = '';
+                for (var prop in obj) {
+                    value += obj[prop];
+                }
+
+                return value;
+            }
         }
     });
 JS
@@ -157,7 +196,7 @@ JS
     html { overflow-y: scroll; }
     .domain-line {
         border-bottom: 1px solid #f2f2f2;
-        margin-bottom: 10px;
+        /*margin-bottom: 10px;*/
         line-height: 59px;
         height: 60px;
         font-size: 18px;
@@ -179,10 +218,10 @@ JS
         clear: both;
     }
 
-    .domain-line:last-child {
-        border-bottom: 0;
-        margin-bottom: 0;
-    }
+    /*.domain-line:last-child {*/
+        /*border-bottom: 0;*/
+        /*margin-bottom: 0;*/
+    /*}*/
 
     .domain-line:hover {
         border-color: #CCC;
