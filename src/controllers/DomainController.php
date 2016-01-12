@@ -577,6 +577,7 @@ class DomainController extends \hipanel\base\CrudController
         if ($domain) {
             $check = Domain::perform('Check', ['domains' => [$domain]], true);
 //            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
+//            sleep(mt_rand(0,2));
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
