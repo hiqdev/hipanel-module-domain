@@ -7,10 +7,13 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
+Yii::$app->assetManager->forceCopy = true;
+
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
+$requestedDomain = implode('.', Yii::$app->request->get('Domain'));
 $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 $this->registerCss("
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
@@ -20,25 +23,88 @@ $this->registerCss("
 ");
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
+
+    $.fn.isOnScreen = function(x, y){
+
+        if(x == null || typeof x == 'undefined') x = 1;
+        if(y == null || typeof y == 'undefined') y = 1;
+
+        var win = $(window);
+
+        var viewport = {
+            top : win.scrollTop(),
+            left : win.scrollLeft()
+        };
+        viewport.right = viewport.left + win.width();
+        viewport.bottom = viewport.top + win.height();
+
+        var height = this.outerHeight();
+        var width = this.outerWidth();
+
+        if(!width || !height){
+            return false;
+        }
+
+        var bounds = this.offset();
+        bounds.right = bounds.left + width;
+        bounds.bottom = bounds.top + height;
+
+        var visible = (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+
+        if(!visible){
+            return false;
+        }
+
+        var deltas = {
+            top : Math.min( 1, ( bounds.bottom - viewport.top ) / height),
+            bottom : Math.min(1, ( viewport.bottom - bounds.top ) / height),
+            left : Math.min(1, ( bounds.right - viewport.left ) / width),
+            right : Math.min(1, ( viewport.right - bounds.left ) / width)
+        };
+
+        return (deltas.left * deltas.right) >= x && (deltas.top * deltas.bottom) >= y;
+
+    };
+
+    // init Isotope
+    var grid = $('.domain-list').isotope({
+        itemSelector: '.domain-iso-line',
+        layout: 'fitRows',
+        // disable initial layout
+        isInitLayout: false
+    });
+    grid.isotope({ filter: '.popular' });
+
     $('.domain-list').domainsCheck({
         domainRowClass: '.domain-line',
         success: function(data, domain, element) {
             var $elem = $(element).find("div[data-domain='" + domain + "']");
             var $parentElem = $(element).find("div[data-domain='" + domain + "']").parents('div.domain-iso-line').eq(0);
-            $elem.html($(data).find('.domain-line'));
+            $elem.replaceWith($(data).find('.domain-line'));
             $parentElem.attr('class', $(data).attr('class'));
+
             return this;
         },
-        finally: function() {
-            // init Isotope
-            var grid = $('.domain-list').isotope({
-                itemSelector: '.domain-iso-line',
-                layout: 'vertical'
+        beforeQueryStart: function (item) {
+            var $item = $(item);
+            if ($item.isOnScreen() && !$item.hasClass('checked') && $item.is(':visible')) {
+                $item.addClass('checked');
+                return true;
+            }
+
+            return false;
+        },
+        finally: function () {
+
+            // bind event
+            grid.isotope('on', 'arrangeComplete', function () {
+                $('.domain-list').domainsCheck().startQuerier();
             });
+            // manually trigger initial layout
+            grid.isotope();
             // store filter for each group
             var filters = {};
-
-            $('.filters').on('click', 'a', function() {
+            $('.filters').on('click', 'a', function(event) {
                 // get group key
                 var $buttonGroup = $(this).parents('.nav');
                 var $filterGroup = $buttonGroup.attr('data-filter-group');
@@ -67,6 +133,10 @@ if (!empty($results)) {
             }
         }
     });
+
+    $( document ).on( "scroll", function() {
+        $('.domain-list').domainsCheck().startQuerier();
+    });
 JS
     );
 }
@@ -74,6 +144,7 @@ JS
 
 <div class="row">
     <div class="col-md-3 filters">
+
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Status') ?></h3>
@@ -95,8 +166,8 @@ JS
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="special">
-                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
-                    <li><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
+                    <li><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
+                    <li class="active"><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
                     <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel/domain', 'Promotion') ?></a></li>
                 </ul>
             </div>
@@ -120,6 +191,7 @@ JS
             </div>
             <!-- /.box-body -->
         </div>
+
     </div>
 
     <div class="col-md-9">
@@ -145,8 +217,6 @@ JS
                             'fieldConfig' => [
                                 'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
                             ],
-//            'enableAjaxValidation' => true,
-//            'validationUrl' => Url::toRoute(['validate-form', 'scenario' => $model->scenario]),
                         ]) ?>
                         <div class="row">
                             <div class="col-md-6">
@@ -180,7 +250,7 @@ JS
                 <div class="box-body no-padding">
                     <div class="domain-list">
                         <?php foreach ($results as $line) : ?>
-                            <?= $this->render('_checkDomainLine', ['line' => $line]) ?>
+                            <?= $this->render('_checkDomainLine', ['line' => $line, 'requestedDomain' => $requestedDomain]) ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -192,7 +262,6 @@ JS
 </div>
 
 <style>
-    html { overflow-y: scroll; }
     .domain-line {
         border-bottom: 1px solid #f2f2f2;
         /*margin-bottom: 10px;*/
@@ -216,11 +285,6 @@ JS
         display: block;
         clear: both;
     }
-
-    /*.domain-line:last-child {*/
-        /*border-bottom: 0;*/
-        /*margin-bottom: 0;*/
-    /*}*/
 
     .domain-line:hover {
         border-color: #CCC;

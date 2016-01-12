@@ -1,13 +1,17 @@
 ;(function ($, window, document, undefined) {
-    var pluginName = "domainsCheck",
-        defaults = {
-            domainRowClass: ".check-item",
-            finally: function() {
-                console.log('Done!');
-            }
-        };
+    var pluginName = "domainsCheck";
+    var defaults = {
+        domainRowClass: ".check-item",
+        finally: function () {
+            console.log('Done!');
+        },
+        beforeQueryStart: function (item) {
+            return true;
+        }
+    };
 
     function Plugin(element, options) {
+        var _this = this;
         this.element = $(element);
         this.items = {};
         this.settings = $.extend({}, defaults, options);
@@ -15,24 +19,35 @@
         this._defaults = defaults;
         this._name = pluginName;
         this.init();
+
+        return {
+            startQuerier: function () {
+                return _this.startQuerier();
+            }
+        };
     }
 
     Plugin.prototype = {
         init: function () {
             this.items = this.element.find(this.settings.domainRowClass);
-            setTimeout(function () {this.startQuerier();}.bind(this), 500);
+            setTimeout(function () {
+                this.startQuerier();
+            }.bind(this), 500);
         },
         startQuerier: function () {
+            var _this = this;
             if (this.items) {
-                $.each(this.items, function(k, item) {
-                    this.query(item);
+                $.each(this.items, function (k, item) {
+                    if (_this.settings.beforeQueryStart(item)) {
+                        this.query(item);
+                    }
                 }.bind(this));
             }
         },
-        registerRequest: function(domain) {
-            this.requests[domain] = {domain: domain, state: 'progress'};
+        registerRequest: function (domain, item) {
+            this.requests[domain] = {domain: domain, state: 'progress', item: item};
         },
-        registerFinish: function(domain) {
+        registerFinish: function (domain) {
             this.requests[domain]['state'] = 'finished';
 
             if (this.registerCheckAll()) {
@@ -41,11 +56,11 @@
                 return false;
             }
         },
-        registerCheckAll: function() {
+        registerCheckAll: function () {
             if (this.requests.length == 0) return false;
 
             var all_closed = true;
-            $.each(this.requests, function(domain, v) {
+            $.each(this.requests, function (domain, v) {
                 if (v.state == 'progress') all_closed = false;
             });
 
@@ -54,17 +69,17 @@
         query: function (item) {
             var domain = $(item).data('domain');
 
-            if(!domain) return false;
+            if (!domain) return false;
 
             $.ajax({
                 url: "check",
                 dataType: 'html',
                 type: 'POST',
-                beforeSend: function() {
+                beforeSend: function () {
                     this.registerRequest(domain);
                 }.bind(this),
                 data: {domain: domain},
-                success: function(data) {
+                success: function (data) {
                     this.registerFinish(domain);
                     return this.settings.success(data, domain, this.element);
                 }.bind(this)
@@ -74,12 +89,11 @@
         }
     };
 
-    $.fn[ pluginName ] = function (options) {
-        this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
-            }
-        });
-        return this;
+    $.fn[pluginName] = function (options) {
+        if (!$(this).data("plugin_" + pluginName)) {
+            $(this).data("plugin_" + pluginName, new Plugin(this, options));
+        }
+
+        return $(this).data("plugin_" + pluginName);
     };
 })(jQuery, window, document);

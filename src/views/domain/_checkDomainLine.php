@@ -8,9 +8,9 @@ use hipanel\modules\domain\models\Domain;
 
 ?>
 
-<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?>">
+<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?> <?= $requestedDomain === $line['full_domain_name'] ? 'popular requested-domain' : '' ?>">
 <div
-    class="domain-line"
+    class="domain-line <?= ($state) ? 'checked' : '' ?>"
     data-domain="<?= $line['full_domain_name'] ?>">
     <div class="col-md-6">
         <?php if ($state) : ?>
