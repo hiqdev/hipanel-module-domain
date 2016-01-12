@@ -580,7 +580,7 @@ class DomainController extends \hipanel\base\CrudController
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
-                    'state' => 'unavailable',
+                    'state' => 'unavailable'
                 ]);
             } else {
                 $tariffs = Tariff::find(['scenario' => 'get-available-info'])
@@ -629,6 +629,7 @@ class DomainController extends \hipanel\base\CrudController
         foreach ($zones as $resource) {
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
+        uasort($dropDownZones, function($a, $b) { return $a === '.com' ? 0 : 1; });
         if ($model->load(Yii::$app->request->get()) && $model->validate()) {
             $requestedDomain = $model->domain . '.' . $model->zone;
             foreach ($dropDownZones as $zone => $label) {
@@ -650,8 +651,7 @@ class DomainController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
-            'results' => $results,
-            'requestedDomain' => $requestedDomain,
+            'results' => $results
         ]);
     }
 

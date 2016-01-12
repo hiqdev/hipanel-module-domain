@@ -69,7 +69,7 @@ if (!empty($results)) {
     // init Isotope
     var grid = $('.domain-list').isotope({
         itemSelector: '.domain-iso-line',
-        layout: 'fitRows',
+        layout: 'vertical',
         // disable initial layout
         isInitLayout: false
     });
@@ -95,7 +95,6 @@ if (!empty($results)) {
             return false;
         },
         finally: function () {
-
             // bind event
             grid.isotope('on', 'arrangeComplete', function () {
                 $('.domain-list').domainsCheck().startQuerier();
@@ -262,6 +261,10 @@ JS
 </div>
 
 <style>
+    .domain-list .btn {
+        width: 100%;
+    }
+
     .domain-line {
         border-bottom: 1px solid #f2f2f2;
         /*margin-bottom: 10px;*/

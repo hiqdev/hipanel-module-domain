@@ -8,11 +8,11 @@ use hipanel\modules\domain\models\Domain;
 
 ?>
 
-<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?> <?= $requestedDomain === $line['full_domain_name'] ? 'popular requested-domain' : '' ?>">
+<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?> <?= $requestedDomain == $line['full_domain_name'] ? 'popular' : $requestedDomain ?>">
 <div
     class="domain-line <?= ($state) ? 'checked' : '' ?>"
     data-domain="<?= $line['full_domain_name'] ?>">
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12 col-xs-12">
         <?php if ($state) : ?>
             <span class="domain-img"><i class="fa fa-globe fa-lg"></i></span>
         <?php else : ?>
@@ -30,7 +30,7 @@ use hipanel\modules\domain\models\Domain;
                 class="domain-zone muted">.<?= $line['zone'] ?></span>
         <?php endif; ?>
     </div>
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 col-sm-12 col-xs-12 text-center">
         <span class="domain-price">
             <?php if ($state === 'available') : ?>
                 <!--del>0.00 €</del-->
@@ -46,11 +46,11 @@ use hipanel\modules\domain\models\Domain;
             <?php endif; ?>
         </span>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm-12 col-xs-12">
         <?php if ($state === 'available') : ?>
             <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['full_domain_name']], ['data-pjax' => 0, 'class' => 'btn btn-flat bg-olive']) ?>
         <?php elseif ($state === 'unavailable') : ?>
-            <?= Html::a(Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['full_domain_name'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+            <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['full_domain_name'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
         <?php else : ?>
 
         <?php endif; ?>
