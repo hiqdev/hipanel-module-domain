@@ -13,7 +13,7 @@ $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
-$requestedDomain = implode('.', Yii::$app->request->get('Domain'));
+$requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
 $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 $this->registerCss("
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
