@@ -74,7 +74,11 @@ if (!empty($results)) {
         isInitLayout: false
     });
     grid.isotope({ filter: '.popular' });
-
+    // bind event
+    grid.isotope('on', 'arrangeComplete', function () {
+        $('.domain-iso-line').css({'visibility': 'visible'});
+        $('.domain-list').domainsCheck().startQuerier();
+    });
     $('.domain-list').domainsCheck({
         domainRowClass: '.domain-line',
         success: function(data, domain, element) {
@@ -95,10 +99,7 @@ if (!empty($results)) {
             return false;
         },
         finally: function () {
-            // bind event
-            grid.isotope('on', 'arrangeComplete', function () {
-                $('.domain-list').domainsCheck().startQuerier();
-            });
+
             // manually trigger initial layout
             grid.isotope();
             // store filter for each group
@@ -281,6 +282,7 @@ JS
     .domain-iso-line {
         width: 100%;
         clear: both;
+        visibility: hidden;
     }
 
     .domain-list:after {
