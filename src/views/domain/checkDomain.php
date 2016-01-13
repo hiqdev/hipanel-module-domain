@@ -7,7 +7,8 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
-//Yii::$app->assetManager->forceCopy = true;
+
+Yii::$app->assetManager->forceCopy = true;
 
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
@@ -63,22 +64,8 @@ if (!empty($results)) {
         };
 
         return (deltas.left * deltas.right) >= x && (deltas.top * deltas.bottom) >= y;
-
     };
 
-    // init Isotope
-    var grid = $('.domain-list').isotope({
-        itemSelector: '.domain-iso-line',
-        layout: 'vertical',
-        // disable initial layout
-        isInitLayout: false
-    });
-    grid.isotope({ filter: '.popular' });
-    // bind event
-    grid.isotope('on', 'arrangeComplete', function () {
-        $('.domain-iso-line').css({'visibility': 'visible'});
-        $('.domain-list').domainsCheck().startQuerier();
-    });
     $('.domain-list').domainsCheck({
         domainRowClass: '.domain-line',
         success: function(data, domain, element) {
@@ -99,7 +86,19 @@ if (!empty($results)) {
             return false;
         },
         finally: function () {
-
+            // init Isotope
+            var grid = $('.domain-list').isotope({
+                itemSelector: '.domain-iso-line',
+                layout: 'vertical',
+                // disable initial layout
+                isInitLayout: false
+            });
+            //grid.isotope({ filter: '.popular' });
+            // bind event
+            grid.isotope('on', 'arrangeComplete', function () {
+                $('.domain-iso-line').css({'visibility': 'visible'});
+                $('.domain-list').domainsCheck().startQuerier();
+            });
             // manually trigger initial layout
             grid.isotope();
             // store filter for each group
@@ -166,8 +165,8 @@ JS
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="special">
-                    <li><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
-                    <li class="active"><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
+                    <li><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
                     <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel/domain', 'Promotion') ?></a></li>
                 </ul>
             </div>
