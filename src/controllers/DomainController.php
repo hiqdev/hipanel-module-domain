@@ -575,29 +575,29 @@ class DomainController extends \hipanel\base\CrudController
         $line['domain'] = $domainName;
         $line['zone'] = $zone;
         if ($domain) {
-//            $check = Domain::perform('Check', ['domains' => [$domain]], true);
-            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
-            sleep(mt_rand(0,2));
+            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+//            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
+//            sleep(mt_rand(0,2));
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
                     'state' => 'unavailable'
                 ]);
             } else {
-//                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-//                    ->joinWith('resources')
-//                    ->andFilterWhere(['type' => 'domain'])
-//                    ->andFilterWhere(['seller' => 'ahnames'])
-//                    ->one();
-//                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-//                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-//                });
-//                foreach ($zones as $resource) {
-//                    if ($resource->zone === $line['zone']) {
-//                        $line['tariff'] = $resource;
-//                        break;
-//                    }
-//                }
+                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
+                    ->joinWith('resources')
+                    ->andFilterWhere(['type' => 'domain'])
+                    ->andFilterWhere(['seller' => 'ahnames'])
+                    ->one();
+                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
+                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
+                });
+                foreach ($zones as $resource) {
+                    if ($resource->zone === $line['zone']) {
+                        $line['tariff'] = $resource;
+                        break;
+                    }
+                }
 
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
