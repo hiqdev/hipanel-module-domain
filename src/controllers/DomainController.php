@@ -640,24 +640,25 @@ class DomainController extends \hipanel\base\CrudController
                 }
                 $model->zone = $zone;
             }
-            $model->validate();
-            if (empty($model->zone)) {
-                $model->zone = 'com';
-            }
-            $requestedDomain = $model->domain . '.' . $model->zone;
-            foreach ($dropDownZones as $zone => $label) {
-                $domains[] = $model->domain . '.' . $zone;
-            }
-            $results = [];
-            // Make the requestedDomain the first element of array
-            $domains = array_diff($domains, [$requestedDomain]);
-            array_unshift($domains, $requestedDomain);
-            foreach ($domains as $domain) {
-                $results[] = [
-                    'domain' => $model->domain,
-                    'full_domain_name' => $domain,
-                    'zone' => substr($domain, strpos($domain, '.') + 1),
-                ];
+            if ($model->validate()) {
+                if (empty($model->zone)) {
+                    $model->zone = 'com';
+                }
+                $requestedDomain = $model->domain . '.' . $model->zone;
+                foreach ($dropDownZones as $zone => $label) {
+                    $domains[] = $model->domain . '.' . $zone;
+                }
+                $results = [];
+                // Make the requestedDomain the first element of array
+                $domains = array_diff($domains, [$requestedDomain]);
+                array_unshift($domains, $requestedDomain);
+                foreach ($domains as $domain) {
+                    $results[] = [
+                        'domain' => $model->domain,
+                        'full_domain_name' => $domain,
+                        'zone' => substr($domain, strpos($domain, '.') + 1),
+                    ];
+                }
             }
         }
 
