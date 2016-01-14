@@ -24,6 +24,9 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
     /** @inheritdoc */
     protected $_calculationModel = 'hipanel\modules\domain\cart\Calculation';
 
+    /** @inheritdoc */
+    protected $_purchaseModel = 'hipanel\modules\domain\cart\Purchase';
+
     /**
      * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years
      */

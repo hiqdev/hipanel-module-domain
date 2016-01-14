@@ -16,6 +16,9 @@ use Yii;
 class DomainRegistrationProduct extends AbstractDomainProduct
 {
     /** @inheritdoc */
+    protected $_purchaseModel = 'hipanel\modules\domain\cart\DomainRegistrationPurchase';
+
+    /** @inheritdoc */
     protected $_operation = 'registration';
 
     /** @inheritdoc */
@@ -40,7 +43,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct
     {
         return parent::getCalculationModel(array_merge([
             'type' => $this->_operation,
-            'item' => $this->name,
+            'domain' => $this->name,
             'zone' => $this->getZone()
         ], $options));
     }
