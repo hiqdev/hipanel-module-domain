@@ -88,7 +88,7 @@ class Domain extends \hipanel\base\Model
                     return substr($value, 0, strpos($value, '.'));
                 } else return $value;
             }, 'on' => 'check-domain'],
-            [['domain', 'zone'], 'required', 'on' => ['check-domain']],
+            [['domain'], 'required', 'on' => ['check-domain']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
             [['is_available'], 'boolean', 'on' => ['check-domain']],

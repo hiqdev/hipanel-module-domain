@@ -8,7 +8,7 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 
-Yii::$app->assetManager->forceCopy = true;
+//Yii::$app->assetManager->forceCopy = true;
 
 $this->title = Yii::t('app', 'Domain check');
 $this->breadcrumbs->setItems([
