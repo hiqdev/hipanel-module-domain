@@ -11,6 +11,8 @@ class DomainRegistrationPurchase extends AbstractPurchase
      */
     public function execute()
     {
-        return static::perform('Register', $this->getAttributes());
+        static::perform('Register', $this->getAttributes());
+
+        return true;
     }
 }
