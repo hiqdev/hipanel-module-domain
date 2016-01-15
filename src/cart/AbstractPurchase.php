@@ -10,10 +10,15 @@ abstract class AbstractPurchase extends \hipanel\modules\finance\models\Abstract
 {
     use \hipanel\base\ModelTrait;
 
+    /**
+     * @var AbstractDomainProduct|DomainRegistrationProduct
+     */
+    public $position;
+
     /** @inheritdoc */
     public static function index()
     {
-        return 'domains';
+        return static::type() . 's';
     }
 
     /** @inheritdoc */
@@ -27,12 +32,9 @@ abstract class AbstractPurchase extends \hipanel\modules\finance\models\Abstract
     {
         parent::init();
 
-        $this->domain = $this->item;
-    }
-
-    public function synchronize()
-    {
+        $this->domain = $this->position->name;
         $this->period = $this->position->getQuantity();
+        $this->zone = $this->position->getZone();
     }
 
     /** @inheritdoc */
