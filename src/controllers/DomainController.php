@@ -631,7 +631,7 @@ class DomainController extends \hipanel\base\CrudController
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
         uasort($dropDownZones, function($a, $b) { return $a === '.com' ? 0 : 1; });
-        if ($model->load(Yii::$app->request->get())) {
+        if ($model->load(Yii::$app->request->get()) && !empty($dropDownZones)) {
             // Check if domain already have zone
             if (strpos($model->domain, '.') !== false) {
                 list($domain, $zone) = explode('.', $model->domain, 2);
