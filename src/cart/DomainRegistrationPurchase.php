@@ -2,17 +2,20 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hiqdev\hiart\ErrorResponseException;
+
 class DomainRegistrationPurchase extends AbstractPurchase
 {
     /**
-     * Executes the purchase.
-     * Calls proper API commands to purchase the product.
-     * @return boolean whether the item was purchased
+     * @inheritdoc
      */
     public function execute()
     {
-        static::perform('Register', $this->getAttributes());
+        if ($this->validate()) {
+            static::perform('Register', $this->getAttributes());
+            return true;
+        }
 
-        return true;
+        return false;
     }
 }

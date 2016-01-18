@@ -32,19 +32,9 @@ class DomainRegistrationProduct extends AbstractDomainProduct
     {
         $result = parent::load($data, '');
         if ($result) {
-            $this->description = Yii::t('app', 'Registration');
+            $this->description = Yii::t('hipanel/domain', 'Registration');
         }
 
         return $result;
-    }
-
-    /** @inheritdoc */
-    public function getCalculationModel($options = [])
-    {
-        return parent::getCalculationModel(array_merge([
-            'type' => $this->_operation,
-            'domain' => $this->name,
-            'zone' => $this->getZone()
-        ], $options));
     }
 }

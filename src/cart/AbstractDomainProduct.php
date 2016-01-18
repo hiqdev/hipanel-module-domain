@@ -11,11 +11,17 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
 use Yii;
 
 abstract class AbstractDomainProduct extends AbstractCartPosition
 {
+    /**
+     * @var Domain
+     */
+    protected $_model;
+
     /**
      * @var string the operation name
      */
@@ -23,9 +29,6 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
 
     /** @inheritdoc */
     protected $_calculationModel = 'hipanel\modules\domain\cart\Calculation';
-
-    /** @inheritdoc */
-    protected $_purchaseModel = 'hipanel\modules\domain\cart\Purchase';
 
     /**
      * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years
@@ -42,7 +45,10 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         return '<i class="fa fa-globe"></i>';
     }
 
-    /** @inheritdoc */
+    /**
+     * Extracts domain zone from
+     * @return string
+     */
     public function getZone()
     {
         list (, $zone) = explode('.', $this->name, 2);
@@ -59,5 +65,15 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         }
 
         return $result;
+    }
+
+    /** @inheritdoc */
+    public function getCalculationModel($options = [])
+    {
+        return parent::getCalculationModel(array_merge([
+            'type' => $this->_operation,
+            'domain' => $this->name,
+            'zone' => $this->getZone()
+        ], $options));
     }
 }

@@ -17,7 +17,8 @@ class Calculation extends \hipanel\modules\finance\models\Calculation
     /** @inheritdoc */
     public function rules() {
         return array_merge(parent::rules(), [
-            [['domain', 'zone'], 'safe']
+            [['domain', 'zone'], 'safe'],
+            [['id'], 'integer']
         ]);
     }
 }
