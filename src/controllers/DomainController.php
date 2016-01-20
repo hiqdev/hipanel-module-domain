@@ -29,6 +29,7 @@ use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
+use hipanel\helpers\StringHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
 use hipanel\modules\client\models\Contact;
@@ -40,6 +41,7 @@ use hipanel\modules\domain\models\DomainSearch;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
+use hiqdev\hiart\ErrorResponseException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -550,10 +552,33 @@ class DomainController extends \hipanel\base\CrudController
         $model->scenario = 'transfer';
         $transferDataProvider = null;
         if (Yii::$app->request->isPost) {
-            $model = (new Collection(['model' => $model]))->load()->first;
+            $post = Yii::$app->request->post($model->formName(), []);
+            if (!empty($post[0]['domains'])) {
+                $domains = [];
+                foreach (StringHelper::explode($post['domains'], "\n") as $line) {
+                    preg_match("/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i", $line, $matches);
+                    if ($matches) {
+                        $domain = strtolower($matches[1]);
+                        $password = $matches[2];
+                        $domains[] = compact('domain', 'password');
+                    }
+                }
+                $post = $domains;
+            }
+
+            $collection = (new Collection(['model' => $model]))->load($post);
+            $models = $collection->getModels();
+
+            foreach ($models as $model) {
+                try {
+                    Domain::perform('CheckTransfer', $model->getAttributes(['domain', 'password']));
+                } catch (ErrorResponseException $e) {
+                    $model->addError(['password' => $e->getMessage()]);
+                }
+            }
+
             Yii::$app->session->setFlash('transferGrid', 1);
-            $transferDataProvider = new ArrayDataProvider();
-            $transferDataProvider->setModels($model->getTransferDataProviderOptions());
+            $transferDataProvider = new ArrayDataProvider(['models' => $models]);
         }
 
         return $this->render('transfer', [

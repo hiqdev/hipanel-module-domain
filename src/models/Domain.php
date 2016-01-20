@@ -25,6 +25,7 @@ use hipanel\modules\domain\validators\NsValidator;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\validators\DomainValidator;
+use hiqdev\hiart\ErrorResponseException;
 use Yii;
 use yii\helpers\Html;
 
@@ -250,8 +251,8 @@ class Domain extends \hipanel\base\Model
     {
         try {
             $response = $this->perform('CheckTransfer', $data, true);
-        } catch (\yii\base\Exception $e) {
-            $response = $e->errorInfo['response'];
+        } catch (ErrorResponseException $e) {
+            $response = $e->getMessage();
         }
 
         return $response;
@@ -259,18 +260,6 @@ class Domain extends \hipanel\base\Model
 
     public function getTransferDataProviderOptions()
     {
-        $result = $domains = [];
-        if ($this->domains) {
-            $listOfDomains = ArrayHelper::csplit($this->domains, "\n");
-            foreach ($listOfDomains as $k => $v) {
-                preg_match("/^([a-z0-9][0-9a-z.-]+)( +|\t+|,|;)(.*)/i", $v, $matches);
-                if ($matches) {
-                    $domain = trim(strtolower($matches[1]));
-                    $password = trim($matches[3]);
-                    $domains[$domain] = compact('domain', 'password');
-                }
-            }
-            $i = 0;
             $response = $this->checkDomainTransfer($domains);
             foreach ($response as $k => $v) {
                 if (is_array($v)) {
@@ -286,16 +275,6 @@ class Domain extends \hipanel\base\Model
                     ++$i;
                 }
             }
-        } else {
-            $response = reset($this->checkDomainTransfer([$this->domain => ['domain' => $this->domain, 'password' => $this->password]]));
-            $isError = isset($response['_error']);
-            $result[] = [
-                'domain' => $this->domain . ((!$isError) ? Html::hiddenInput('DomainTransferProduct[0][name]', $this->domain) : ''),
-                'password' => $this->password . (!$isError ? Html::hiddenInput('DomainTransferProduct[0][password]', $this->password) : ''),
-                'status' => !isset($response['_error']),
-                'errorMessage' => $isError ? $response['_error'] : '',
-            ];
-        }
 
         return $result;
     }
