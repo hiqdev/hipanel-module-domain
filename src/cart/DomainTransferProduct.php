@@ -20,6 +20,9 @@ class DomainTransferProduct extends AbstractDomainProduct
     protected $_operation = 'transfer';
 
     /** @inheritdoc */
+    protected $_purchaseModel = 'hipanel\modules\domain\cart\DomainTransferPurchase';
+
+    /** @inheritdoc */
     public function init()
     {
         $this->description = Yii::t('app', 'Transfer');
@@ -32,10 +35,16 @@ class DomainTransferProduct extends AbstractDomainProduct
     }
 
     /** @inheritdoc */
+    public function getQuantityOptions()
+    {
+       return [1 => Yii::t('hipanel/domains', '{0, plural, one{# year} other{# years}}', 1)];
+    }
+
+    /** @inheritdoc */
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['name', 'password'], 'required'],
+            [['password'], 'required'],
         ]);
     }
 
@@ -45,5 +54,11 @@ class DomainTransferProduct extends AbstractDomainProduct
         return ArrayHelper::merge(parent::attributes(), [
             'password',
         ]);
+    }
+
+    /** @inheritdoc */
+    public function getPurchaseModel($options = [])
+    {
+        return parent::getPurchaseModel(array_merge(['password' => $this->password], $options));
     }
 }
