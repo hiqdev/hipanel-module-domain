@@ -2,19 +2,17 @@
 
 namespace hipanel\modules\domain\cart;
 
-use yii\base\InvalidConfigException;
-
-class DomainRenewalPurchase extends AbstractPurchase
+class DomainTransferPurchase extends AbstractPurchase
 {
     /**
-     * @var string domain expiration datetime
+     * @var string the EPP password for the domain transfer
      */
-    public $expires;
+    public $password;
 
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['expires'], 'safe']
+            [['password'], 'required']
         ]);
     }
 
@@ -24,7 +22,7 @@ class DomainRenewalPurchase extends AbstractPurchase
     public function execute()
     {
         if ($this->validate()) {
-            static::perform('Renew', $this->getAttributes());
+            static::perform('Transfer', $this->getAttributes());
             return true;
         }
 
