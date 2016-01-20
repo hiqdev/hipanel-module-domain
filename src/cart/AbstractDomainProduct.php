@@ -45,6 +45,13 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         return '<i class="fa fa-globe"></i>';
     }
 
+    public function rules()
+    {
+        return [
+            [['name'], 'required']
+        ];
+    }
+
     /**
      * Extracts domain zone from
      * @return string
@@ -61,7 +68,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         $result = [];
         $limit = isset($this->quantityLimits[$this->getZone()]) ? $this->quantityLimits[$this->getZone()] : $this->quantityLimits['*'];
         for ($n = 1; $n <= $limit; $n++) {
-            $result[$n] = Yii::t('app', '{0, plural, one{# year} other{# years}}', $n);
+            $result[$n] = Yii::t('hipanel/domains', '{0, plural, one{# year} other{# years}}', $n);
         }
 
         return $result;
