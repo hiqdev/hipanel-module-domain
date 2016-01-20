@@ -1,5 +1,7 @@
 <?php
 
+use hipanel\modules\domain\cart\DomainTransferProduct;
+use hipanel\modules\domain\models\Domain;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\grid\GridView;
@@ -106,34 +108,54 @@ $id = $model->id ?: 0;
     <?= Html::beginForm(['add-to-cart-transfer']) ?>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"><?= Yii::t('app', 'Cannot transfer following domains'); ?></h3>
+            <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Starting the transfer procedure for the following domains'); ?></h3>
         </div>
         <div class="box-body">
             <?= GridView::widget([
                 'dataProvider' => $transferDataProvider,
                 'layout' => "{items}\n{pager}",
-                'rowOptions' => function ($model, $key, $index, $grid) {
-                    return ['class' => $model->status ? '' : 'danger'];
+                'rowOptions' => function ($model) {
+                    return ['class' => $model->hasErrors('password') ? 'danger' : ''];
                 },
                 'columns' => [
                     [
                         'attribute' => 'domain',
                         'format' => 'raw',
+                        'value' => function ($model, $key, $i) {
+                            $html = $model->domain;
+                            /** @var Domain $model */
+                            if (!$model->hasErrors('password')) {
+                                 $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
+                            }
+                            return $html;
+                        }
                     ],
                     [
                         'attribute' => 'password',
                         'format' => 'raw',
+                        'value' => function ($model, $key, $i) {
+                            $html = $model->password;
+                            /** @var Domain $model */
+                            if (!$model->hasErrors('password')) {
+                                $html .= Html::hiddenInput("DomainTransferProduct[$i][password]", $model->password);
+                            }
+
+                            return $html;
+                        }
                     ],
                     [
                         'label' => Yii::t('app', 'Additional message'),
-                        'attribute' => 'errorMessage',
+                        'value' => function ($model) {
+                            /** @var Domain $model */
+                            return $model->hasErrors('password') ? $model->getFirstError('password') : '';
+                        }
                     ],
                 ],
             ]); ?>
         </div>
         <div class="box-footer">
-            <?= Html::submitButton(Yii::t('app', 'Add to cart'), ['class' => 'btn btn-default']) ?> or
-            <?= Html::a(Yii::t('app', 'Return transfer form'), ['transfer'], ['class' => '']) ?>
+            <?= Html::submitButton(Yii::t('hipanel/domain', 'Add to cart'), ['class' => 'btn btn-default']) ?> or
+            <?= Html::a(Yii::t('hipanel/domain', 'Return transfer form'), ['transfer'], ['class' => '']) ?>
         </div>
         <!-- /.box-footer -->
     </div>
