@@ -2,8 +2,6 @@
 
 namespace hipanel\modules\domain\cart;
 
-use yii\base\InvalidConfigException;
-
 class DomainRenewalPurchase extends AbstractPurchase
 {
     /**
@@ -14,7 +12,7 @@ class DomainRenewalPurchase extends AbstractPurchase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['expires'], 'safe']
+            [['expires'], 'required']
         ]);
     }
 
