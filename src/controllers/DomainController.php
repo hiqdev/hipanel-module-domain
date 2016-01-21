@@ -573,7 +573,7 @@ class DomainController extends \hipanel\base\CrudController
                 try {
                     Domain::perform('CheckTransfer', $model->getAttributes(['domain', 'password']));
                 } catch (ErrorResponseException $e) {
-                    $model->addError(['password' => $e->getMessage()]);
+                    $model->addError('password', $e->getMessage());
                 }
             }
 
