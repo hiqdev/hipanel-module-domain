@@ -28,6 +28,7 @@ use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
+use hipanel\base\FilterStorage;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\models\Ref;
@@ -141,6 +142,16 @@ class DomainController extends \hipanel\base\CrudController
                         'stateData' => $action->controller->getStateData(),
                     ];
                 },
+                'filterStorageMap' => [
+                    'domain_like' => [
+                        'domain.domain.domain_like | hosting.hdomain.domain_like',
+                        'domain.domain.domain_like'
+                    ],
+                    'ips' => 'hosting.ip.ip_in',
+                    'state' => 'domain.domain.state',
+                    'client_id' => 'client.client.id',
+                    'seller_id' => 'client.client.seller_id',
+                ]
             ],
             'view' => [
                 'class' => ViewAction::class,
