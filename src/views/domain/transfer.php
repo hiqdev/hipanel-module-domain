@@ -119,6 +119,9 @@ $id = $model->id ?: 0;
         <div class="box-body">
             <?= GridView::widget([
                 'dataProvider' => $transferDataProvider,
+                'tableOptions' => [
+                    'class' => 'table table-hover',
+                ],
                 'layout' => "{items}\n{pager}",
                 'rowOptions' => function ($model) {
                     return ['class' => $model->hasErrors('password') ? 'danger' : ''];
@@ -128,7 +131,7 @@ $id = $model->id ?: 0;
                         'attribute' => 'domain',
                         'format' => 'raw',
                         'value' => function ($model, $key, $i) {
-                            $html = $model->domain;
+                            $html = Html::tag('span', $model->domain, ['class' => 'text-bold']);
                             /** @var Domain $model */
                             if (!$model->hasErrors('password')) {
                                  $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
