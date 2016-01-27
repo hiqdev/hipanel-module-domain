@@ -183,7 +183,7 @@ CSS
                                 'label' => Yii::t('app', 'Premium package autorenewal'),
                                 'filter' => false,
                                 'url' => Url::toRoute(['@hdomain/set-paid-feature-autorenewal']),
-                                'popover' => 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',
+                                'popover' => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
                                 'visible' => $model->is_premium === 't' ? true : false,
                                 'pluginOptions' => [
                                     'onColor' => 'info',

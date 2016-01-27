@@ -56,10 +56,9 @@ $(document).on('pjax:complete', function(event) {
         <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('app', 'With this form you can assign the authoritative name server for your domain. '
-                            . 'IP addresses can be assigned only child name servers, and they are created or '
-                            . 'changed automatically in accordance with specified data.'
-            ); ?>
+            <?= Yii::t('app', 'With this form you can assign the authoritative name servers for your domain.') ?></p><p>
+            <?= Yii::t('app', 'IP addresses can be assigned to child name servers only.') ?>
+            <?= Yii::t('app', 'Child name servers are created or changed automatically according to specified data.') ?>
         </p>
     </div>
 

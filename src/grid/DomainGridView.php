@@ -59,16 +59,15 @@ class DomainGridView extends BoxedGridView
                 'url'           => Url::toRoute('set-whois-protect'),
                 'popover'       => 'WHOIS protection',
                 'pluginOptions' => [
-                    'onColor'  => 'success',
                     'offColor' => 'warning',
                 ],
             ],
             'is_secured'      => [
-                'class'     => BootstrapSwitchColumn::className(),
-                'filter'    => false,
-                'url'       => Url::toRoute('set-lock'),
-                'attribute' => 'is_secured',
-                'popover'   => Yii::t('app', 'Protection from transfer'),
+                'class'         => BootstrapSwitchColumn::className(),
+                'filter'        => false,
+                'url'           => Url::toRoute('set-lock'),
+                'attribute'     => 'is_secured',
+                'popover'       => Yii::t('app', 'Protection from transfer'),
             ],
             'note'            => [
                 'class'         => 'hiqdev\xeditable\grid\XEditableColumn',
@@ -98,10 +97,7 @@ class DomainGridView extends BoxedGridView
                 'label'         => Yii::t('app', 'Autorenew'),
                 'filter'        => false,
                 'url'           => Url::toRoute('set-autorenewal'),
-                'popover'       => 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',
-                'pluginOptions' => [
-                    'onColor' => 'info',
-                ],
+                'popover'       => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
             ],
             'nameservers'     => [
                 'format' => 'raw',

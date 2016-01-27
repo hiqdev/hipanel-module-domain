@@ -22,7 +22,7 @@ use yii\helpers\Html;
         <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('app', 'The operation to transfer the domain to another user irrevocably. You can not bring it back.'); ?>
+            <?= Yii::t('hipanel/domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
             <?php if ($hasPincode['pincode_enabled']) : ?>
                 <?= Yii::t('app', 'To confirm this, you need to enter a PIN code.'); ?>
             <?php endif; ?>

@@ -182,7 +182,7 @@ class Domain extends \hipanel\base\Model
             'expires_soon'          => Yii::t('app', ' label'),
 
             // Domain transfer
-            'password' => Yii::t('app', ' Code'),
+            'password' => Yii::t('app', 'Auth/EPP Code'),
         ]);
     }
 
