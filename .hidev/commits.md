@@ -3,7 +3,7 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
-    - 9811ee7 2016-01-27 added translations (sol@hiqdev.com)
+- Added domain check, register, renewal and transfer
     - e43697f 2016-01-25 Add some designe fixes to bulk transfer page (andreyklochok@gmail.com)
     - e5ee2ec 2016-01-22 DomainController::indexAction - added filterStorageMap (d.naumenko.a@gmail.com)
     - 56d5cf5 2016-01-21 DomainController - domain transfer fixed bulk transfer error saving (d.naumenko.a@gmail.com)
@@ -125,6 +125,8 @@ hiqdev/hipanel-module-domain commits history
 - Added Hold, Freeze, Delete actions
     - 81e0c14 2015-09-18 + new action: Hold, Freeze, Delete (bladeroot@gmail.com)
 - Fixed translation and minor issues
+    - c22b2d8 2016-01-27 rehideved (sol@hiqdev.com)
+    - 9811ee7 2016-01-27 added translations (sol@hiqdev.com)
     - d8b65a4 2015-09-23 used none Label type for State and Expires columns (sol@hiqdev.com)
     - f97108a 2015-09-23 improved index page look (sol@hiqdev.com)
     - e6340c9 2015-09-23 DomainGridView - enable-hold removed extra argument in callback function (d.naumenko.a@gmail.com)
