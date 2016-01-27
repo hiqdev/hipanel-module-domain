@@ -3,8 +3,11 @@ HiPanel Domain Module
 
 **Domain plugin for HiPanel**
 
-[![Latest Stable Version](https://poser.pugx.org/hiqdev/hipanel-module-domain/v/stable)](//packagist.org/packages/hiqdev/hipanel-module-domain)
-[![Total Downloads](https://poser.pugx.org/hiqdev/hipanel-module-domain/downloads)](//packagist.org/packages/hiqdev/hipanel-module-domain)
+[![Latest Stable Version](https://poser.pugx.org/hiqdev/hipanel-module-domain/v/stable)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
+[![Total Downloads](https://poser.pugx.org/hiqdev/hipanel-module-domain/downloads)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
+[![Build Status](https://img.shields.io/travis/hiqdev/hipanel-module-domain.svg)](https://travis-ci.org/hiqdev/hipanel-module-domain)
+[![Code Coverage](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/?branch=master)
 [![Dependency Status](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master)
 
 [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)
@@ -18,7 +21,7 @@ The preferred way to install this yii2-extension is through [composer](http://ge
 
 Either run
 
-```
+```sh
 php composer.phar require "hiqdev/hipanel-module-domain"
 ```
 
@@ -35,4 +38,4 @@ to the require section of your composer.json.
 This project is released under the terms of the BSD-3-Clause [license](LICENSE).
 Read more [here](http://choosealicense.com/licenses/bsd-3-clause).
 
-Copyright © 2014-2015, HiQDev (http://hiqdev.com/)
+Copyright © 2015-2016, HiQDev (http://hiqdev.com/)

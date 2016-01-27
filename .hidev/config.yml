@@ -5,7 +5,6 @@ package:
     title:          Domain plugin for HiPanel
     type:           yii2-extension
     keywords:       domain, hipanel, plugin
-    year:           2014
     description:    |
         [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)
 
@@ -13,5 +12,5 @@ package:
         This package provides domain management for HiPanel.
 
 require:
-    hiqdev/hidev-config:        "*"
-    hiqdev/hidev-config-php:    "*"
+    hiqdev/hidev-php:    "*"
+    hiqdev/hidev-vendor: "*"
