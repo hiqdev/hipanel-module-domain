@@ -258,33 +258,155 @@ class Domain extends \hipanel\base\Model
         return $response;
     }
 
-    public function getTransferDataProviderOptions()
-    {
-            $response = $this->checkDomainTransfer($domains);
-            foreach ($response as $k => $v) {
-                if (is_array($v)) {
-                    $domain = $v['domain'];
-                    $password = $domains[$v['domain']]['password'];
-                    $isError = isset($v['_error']);
-                    $result[] = [
-                        'domain' => $domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][name]", $domain) : ''),
-                        'password' => $password . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][password]", $password) : ''),
-                        'status' => !$isError,
-                        'errorMessage' => $isError ? $v['_error'] : '',
-                    ];
-                    ++$i;
-                }
-            }
-
-        return $result;
-    }
+//    public function getTransferDataProviderOptions()
+//    {
+//            $response = $this->checkDomainTransfer($domains);
+//            foreach ($response as $k => $v) {
+//                if (is_array($v)) {
+//                    $domain = $v['domain'];
+//                    $password = $domains[$v['domain']]['password'];
+//                    $isError = isset($v['_error']);
+//                    $result[] = [
+//                        'domain' => $domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][name]", $domain) : ''),
+//                        'password' => $password . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][password]", $password) : ''),
+//                        'status' => !$isError,
+//                        'errorMessage' => $isError ? $v['_error'] : '',
+//                    ];
+//                    ++$i;
+//                }
+//            }
+//
+//        return $result;
+//    }
 
     public static function getCategories()
     {
         return [
-            'adult' => ['sex', 'porn', 'xxx', 'adult'],
-            'generic' => ['com', 'net', 'org', 'biz', 'co', 'name'],
-            'european' => ['su', 'ru'],
+            'adult' => [
+                'sexy',
+                'xxx',
+                'porn',
+                'adult',
+                'sex',
+            ],
+            'business' => [
+                'bar',
+                'auto',
+                'car',
+                'cars',
+                'rent',
+                'security',
+                'tickets',
+            ],
+            'geo' => [
+                'miami',
+                'london',
+                'bayern',
+                'budapest',
+                'ae.org',
+                'africa.com',
+                'ar.com',
+                'br.com',
+                'cn.com',
+                'com.se',
+                'de.com',
+                'eu.com',
+                'gb.com',
+                'gb.net',
+                'gr.com',
+                'hu.com',
+                'hu.net',
+                'jp.net',
+                'jpn.com',
+                'kr.com',
+                'la',
+                'mex.com',
+                'no.com',
+                'qc.com',
+                'ru.com',
+                'sa.com',
+                'se.com',
+                'se.net',
+                'uk.com',
+                'uk.net',
+                'us.com',
+                'us.org',
+                'uy.com',
+                'za.com',
+                'kiev.ua',
+                'com.ua',
+                'su',
+                'cc',
+                'tv',
+                'me',
+                'co.com',
+                'com.de',
+                'in.net',
+                'pw',
+            ],
+            'general' => [
+                'com',
+                'net',
+                'name',
+                'biz',
+                'org',
+                'info',
+                'pro',
+                'mobi',
+            ],
+            'nature' => [
+                'flowers',
+                'fishing',
+                'space',
+                'garden',
+            ],
+            'internet' => [
+                'lol',
+                'pics',
+                'hosting',
+                'click',
+                'link',
+                'wiki',
+                'website',
+                'host',
+                'xyz',
+                'feedback',
+                'online',
+                'site',
+            ],
+            'sport' => [
+                'yoga',
+                'diet',
+                'fit',
+                'rodeo',
+            ],
+            'society' => [
+                'property',
+                'college',
+                'luxe',
+                'vip',
+                'abogado',
+                'press',
+                'blackfriday',
+                'law',
+                'work',
+                'help',
+                'theatre',
+            ],
+            'audio_music' => [
+                'guitars',
+                'hiphop',
+                'audio',
+            ],
+            'home_gifts' => [
+                'mom',
+                'christmas',
+                'cooking',
+                'wedding',
+                'gift',
+                'casa',
+                'design',
+            ],
         ];
     }
 

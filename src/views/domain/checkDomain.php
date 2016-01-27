@@ -179,13 +179,56 @@ JS
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="categories">
-                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?><span class="label label-default pull-right"><?= count($results) ?></span></a></li>
-                    <li><a href="#" data-filter=".adult"><?= Yii::t('hipanel/domain', 'Adult') ?><span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span></a>
+                    <li class="active">
+                        <a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?>
+                            <span class="label label-default pull-right"><?= count($results) ?></span>
+                        </a>
                     </li>
-                    <li><a href="#" data-filter=".generic"><?= Yii::t('hipanel/domain', 'Generic') ?><span class="label label-default pull-right"><?= Domain::getCategoriesCount('generic', $results) ?></span></a>
+                    <li>
+                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel/domain', 'Adult') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span>
+                        </a>
                     </li>
-                    <li><a href="#" data-filter=".european"><?= Yii::t('hipanel/domain', 'European') ?><span
-                                class="label label-default pull-right"><?= Domain::getCategoriesCount('european', $results) ?></span></a></li>
+                    <li>
+                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel/domain', 'GEO') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('geo', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".general"><?= Yii::t('hipanel/domain', 'General') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('general', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel/domain', 'Nature') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('nature', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".internet"><?= Yii::t('hipanel/domain', 'Internet') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('internet', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".sport"><?= Yii::t('hipanel/domain', 'Sport') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('sport', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".society"><?= Yii::t('hipanel/domain', 'Society') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('society', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".audio_music"><?= Yii::t('hipanel/domain', 'Audio&Music') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('audio_music', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".home_gifts"><?= Yii::t('hipanel/domain', 'Home&Gifts') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('home_gifts', $results) ?></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /.box-body -->
