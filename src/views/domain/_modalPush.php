@@ -49,12 +49,7 @@ use yii\helpers\Html;
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
     <?php endforeach; ?>
 
-    <?= $form->field($pincodeModel, "receiver")->widget(ClientCombo::className(), [
-        'inputOptions' => [
-            'id' => 'push-receiver',
-            'name' => 'receiver'
-        ]
-    ]) ?>
+    <?= $form->field($pincodeModel, "receiver")->textInput() ?>
 
     <?php if ($hasPincode['pincode_enabled']) : ?>
         <?= $form->field($pincodeModel, "pincode")->textInput(['id' => 'push-pincode', 'name' => 'pincode']) ?>

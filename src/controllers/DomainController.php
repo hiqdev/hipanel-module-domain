@@ -112,28 +112,27 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartPerformAction::class,
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
-                    $request = Yii::$app->request;
-
-                    $pincode = $request->post('pincode');
-                    $receiver = $request->post('receiver');
-                    $data = $request->post($action->collection->getModel()->formName());
+                    $data = Yii::$app->request->post($action->collection->getModel()->formName());
+                    $pincode = $data['pincode'];
+                    $receiver = $data['receiver'];
+                    unset($data['pincode'], $data['receiver']);
                     foreach ($data as &$item) {
                         $item['pincode'] = $pincode;
                         $item['receiver'] = $receiver;
                     }
-                    \yii\helpers\VarDumper::dump($data, 10, true);die();
                     $action->collection->load($data);
                 },
                 'POST'      => [
                     'save'    => true,
                     'success' => [
                         'class' => RedirectAction::class,
-//                        'url'   => 'index',
                     ],
                     'error' => [
                         'class' => RedirectAction::class,
                     ],
                 ],
+                'success'   => Yii::t('app', 'Domain was successfully pushed'),
+                'error'     => Yii::t('app', 'Failed to push the domain'),
             ],
             'index' => [
                 'class' => IndexAction::class,
