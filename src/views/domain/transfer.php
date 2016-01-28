@@ -163,8 +163,8 @@ $id = $model->id ?: 0;
             ]); ?>
         </div>
         <div class="box-footer">
-            <?= Html::submitButton(Yii::t('hipanel/domain', 'Add to cart'), ['class' => 'btn btn-default']) ?> or
-            <?= Html::a(Yii::t('hipanel/domain', 'Return transfer form'), ['transfer'], ['class' => '']) ?>
+            <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> ' . Yii::t('app', 'Add to cart'), ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('hipanel/domain', 'Return to transfer form'), ['transfer'], ['class' => 'btn btn-default']) ?>
         </div>
         <!-- /.box-footer -->
     </div>

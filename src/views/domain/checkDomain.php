@@ -10,7 +10,7 @@ hipanel\frontend\assets\IsotopeAsset::register($this);
 
 //Yii::$app->assetManager->forceCopy = true;
 
-$this->title = Yii::t('app', 'Domain check');
+$this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
 ]);
