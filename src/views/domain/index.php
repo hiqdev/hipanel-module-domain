@@ -44,64 +44,35 @@ CSS
             <?= $box->renderPerPage() ?>
         <?php $box->endActions() ?>
         <?php $box->beginBulkActions() ?>
-            <?php if (Yii::$app->user->can('support')) print $box->renderBulkButton(Yii::t('app', 'Sync'), 'sync') ?>
-            <?= $box->renderBulkButton(Yii::t('app', 'Renew'), 'bulk-renewal') ?>
             <div class="dropdown" style="display: inline-block">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= Yii::t('app', 'WHOIS protect') ?>
+                    <?= Yii::t('app', 'Basic actions') ?>
                     <span class="caret"></span>
                 </button>
                 <?= Dropdown::widget([
                     'encodeLabels' => false,
                     'items' => [
-                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-whois-protect']],
-                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-whois-protect']],
+                        ['label' => Yii::t('app', 'Sync'), 'url' => '#', 'linkOptions' => ['data-action' => 'sync'], 'visible' => Yii::$app->user->can('support')],
+                        ['label' => Yii::t('app', 'Renew'), 'url' => '#', 'linkOptions' => ['data-action' => 'bulk-renewal']],
+                        // Hold
+                        '<li role="presentation" class="divider"></li>',
+                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Hold Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-hold'], 'visible' => Yii::$app->user->can('support')],
+                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Hold Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-hold'], 'visible' => Yii::$app->user->can('support')],
+                        // WHOIS protect
+                        '<li role="presentation" class="divider"></li>',
+                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'WHOIS protect Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-whois-protect']],
+                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'WHOIS protect Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-whois-protect']],
+                        // Lock
+                        '<li role="presentation" class="divider"></li>',
+                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Lock Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-lock']],
+                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Lock Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-lock']],
+                        // Autorenew
+                        '<li role="presentation" class="divider"></li>',
+                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Autorenew Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-autorenewal']],
+                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Autorenew Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-autorenewal']],
                     ],
                 ]); ?>
             </div>
-
-            <div class="dropdown" style="display: inline-block">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= Yii::t('app', 'Lock') ?>
-                    <span class="caret"></span>
-                </button>
-                <?= Dropdown::widget([
-                    'encodeLabels' => false,
-                    'items' => [
-                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-lock']],
-                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-lock']],
-                    ],
-                ]); ?>
-            </div>
-
-            <div class="dropdown" style="display: inline-block">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= Yii::t('app', 'Autorenew') ?>
-                    <span class="caret"></span>
-                </button>
-                <?= Dropdown::widget([
-                    'encodeLabels' => false,
-                    'items' => [
-                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-autorenewal']],
-                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-autorenewal']],
-                    ],
-                ]); ?>
-            </div>
-            <?php if (Yii::$app->user->can('support')) : ?>
-            <div class="dropdown" style="display: inline-block">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= Yii::t('app', 'Hold') ?>
-                    <span class="caret"></span>
-                </button>
-                <?= Dropdown::widget([
-                    'encodeLabels' => false,
-                    'items' => [
-                        ['label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('app', 'Enable'), 'url' => '#', 'linkOptions' => ['data-action' => 'enable-hold']],
-                        ['label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('app', 'Disable'), 'url' => '#', 'linkOptions' => ['data-action' => 'disable-hold']],
-                    ],
-                ]); ?>
-            </div>
-            <?php endif; ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
                 'header'=> Html::tag('h4', Yii::t('app', 'Push'), ['class' => 'modal-title']),
@@ -134,7 +105,7 @@ CSS
                 'size' => Modal::SIZE_LARGE,
                 'toggleButton' => ['label' => Yii::t('app', 'Change contacts'), 'class' => 'btn btn-default',],
             ]) ?>
-            &nbsp;
+
         <?php $box->endBulkActions() ?>
         <?= $box->renderSearchForm(['stateData' => $stateData]) ?>
     <?php $box->end() ?>
