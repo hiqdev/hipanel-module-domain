@@ -12,7 +12,7 @@ use yii\helpers\Html;
     'id' => 'push-domain-form',
     'action' => Url::toRoute('push'),
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['validate-push-form', 'scenario' => $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push']),
+    'validationUrl' => Url::toRoute(['validate-push-form', 'scenario' => $hasPincode ? 'push-with-pincode' : 'push']),
 ]) ?>
 
     <div class="alert alert-info alert-dismissible fade in" role="alert">
@@ -23,7 +23,7 @@ use yii\helpers\Html;
 
         <p>
             <?= Yii::t('hipanel/domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
-            <?php if ($hasPincode['pincode_enabled']) : ?>
+            <?php if ($hasPincode) : ?>
                 <?= Yii::t('app', 'To confirm this, you need to enter a PIN code.'); ?>
             <?php endif; ?>
         </p>
@@ -49,10 +49,10 @@ use yii\helpers\Html;
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
     <?php endforeach; ?>
 
-    <?= $form->field($pincodeModel, "receiver")->textInput() ?>
+    <?= $form->field($model, "receiver") ?>
 
-    <?php if ($hasPincode['pincode_enabled']) : ?>
-        <?= $form->field($pincodeModel, "pincode")->textInput(['id' => 'push-pincode', 'name' => 'pincode']) ?>
+    <?php if ($hasPincode) : ?>
+        <?= $form->field($model, "pincode") ?>
     <?php endif; ?>
     <hr>
     <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
