@@ -19,6 +19,7 @@ namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
 use hipanel\actions\IndexAction;
+use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\ProxyAction;
 use hipanel\actions\RedirectAction;
 use hipanel\actions\RenderAction;
@@ -74,6 +75,23 @@ class DomainController extends \hipanel\base\CrudController
                 'class'        => AddToCartAction::class,
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad'     => true,
+            ],
+            'bulk-set-contacts-modal' => [
+                'class' => PrepareBulkAction::class,
+                'scenario' => 'bulk-set-contacts',
+                'view' => '_bulkSetContacts',
+            ],
+            'domain-push-modal' => [
+                'class' => PrepareBulkAction::class,
+                'view' => '_modalPush',
+                'on beforePerform' => function ($event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
+                    $pincodeData = Client::perform('HasPincode', ['id' => Yii::$app->user->id]);
+                    $hasPincode = $pincodeData['pincode_enabled'];
+                    $action->data['hasPincode'] = $hasPincode;
+                    $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
+                },
             ],
             'validate-set-contacts-form' => [
                 'class' => ValidateFormAction::class,
@@ -208,6 +226,11 @@ class DomainController extends \hipanel\base\CrudController
                         }
                     }
                 },
+            ],
+            'bulk-set-note' => [
+                'class' => PrepareBulkAction::class,
+                'scenario' => 'set-note',
+                'view' => '_bulkSetNote'
             ],
             'set-nss' => [
                 'class' => SmartUpdateAction::class,
@@ -478,82 +501,6 @@ class DomainController extends \hipanel\base\CrudController
     public function actionRenew()
     {
         return $this->redirect(Yii::$app->request->referrer);
-    }
-
-    public function actionBulkSetContactsModal()
-    {
-        if (Yii::$app->request->isAjax) {
-            $res = [];
-            $model = new Domain();
-            $collection = new Collection();
-            $collection->setModel($model);
-            $selection = Yii::$app->request->get('selection');
-
-            foreach ($selection as $id) {
-                $res[$id] = [reset($model->primaryKey()) => $id];
-            }
-
-            $collection->load($res);
-            $searchModel = new DomainSearch();
-            $models = $searchModel
-                ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
-                ->getModels();
-
-            return $this->renderAjax('_bulkSetContacts', [
-                'models' => $models,
-                'model' => new Domain(['scenario' => 'bulk-set-contacts']),
-            ]);
-        }
-        Yii::$app->end();
-    }
-    
-    public function actionDomainPushModal(array $id = array())
-    {
-        $res = [];
-
-        $model = new Domain();
-        $hasPincode = Client::perform('HasPincode', ['id' => Yii::$app->user->id]);
-        $model->scenario = $hasPincode['pincode_enabled'] ? 'push-with-pincode' : 'push';
-
-        $collection = new Collection();
-        $collection->setModel($model);
-        $selection = $id ?: Yii::$app->request->get('selection');
-
-        foreach ($selection as $id) {
-            $res[$id] = [reset($model->primaryKey()) => $id];
-        }
-
-        $collection->load($res);
-        $searchModel = new DomainSearch();
-        $models = $searchModel
-            ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
-            ->getModels();
-
-        return $this->renderAjax('_modalPush', [
-            'models' => $models,
-            'hasPincode' => $hasPincode,
-            'pincodeModel' => new Domain(['scenario' => $model->scenario])
-        ]);
-    }
-
-    public function actionBulkSetNote()
-    {
-        $model = new Domain();
-        $model->scenario = 'set-note';
-        $collection = new Collection();
-        $collection->setModel($model);
-        $selection = Yii::$app->request->get('selection');
-        $res = [];
-        foreach ($selection as $id) {
-            $res[$id] = [reset($model->primaryKey()) => $id];
-        }
-        $collection->load($res);
-        $searchModel = new DomainSearch();
-        $models = $searchModel
-            ->search([$searchModel->formName() => ['id_in' => ArrayHelper::map($collection->models, 'id', 'id')]])
-            ->getModels();
-
-        return $this->renderAjax('_bulkSetNote', ['models' => $models]);
     }
 
     public function actionTransfer()
