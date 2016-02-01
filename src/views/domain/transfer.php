@@ -93,15 +93,23 @@ $id = $model->id ?: 0;
                     </div>
 
                     <div class="tab-pane" id="bulk">
-                        <?= $form->field($model, "[$id]domains")->textarea(); ?>
-                        <p class="help-block">
-                            <?= Yii::t('app', 'For separation of the domain and code use a space, a comma or a semicolon.') ?>
-                            <br>
-                            <?= Yii::t('app', 'Example') ?>:<br>
-                            <b>yourdomain.com uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com,
-                                uGt6shlad, <?= Yii::t('app', 'or') ?> yourdomain.com; uGt6shlad</b></b><br>
-                            <?= Yii::t('app', 'each pair (domain + code) should be written with a new line') ?>
-                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $form->field($model, "[$id]domains")->textarea(['rows' => 7]); ?>
+                            </div>
+                            <div class="col-md-6 lg-mt-20 md-mt-20 sm-mt-20">
+                                <p class="help-block">
+                                    <?= Yii::t('app', 'For separation of the domain and code use a space, a comma or a semicolon.') ?>
+                                    <?= Yii::t('app', 'Example') ?>:<br>
+                                    <b>yourdomain.com uGt6shlad</b><br>
+                                    <?= Yii::t('app', 'or') ?><br>
+                                    <b>yourdomain.com, uGt6shlad</b><br>
+                                    <?= Yii::t('app', 'or') ?><br>
+                                    <b>yourdomain.com; uGt6shlad</b><br>
+                                    <?= Yii::t('app', 'each pair (domain + code) should be written with a new line') ?>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
