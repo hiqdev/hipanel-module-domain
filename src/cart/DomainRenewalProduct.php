@@ -39,8 +39,10 @@ class DomainRenewalProduct extends AbstractDomainProduct
         return $result;
     }
 
-    private function loadRelatedData() {
-        $this->_model = Domain::findOne($this->model_id);
+    /** @inheritdoc */
+    private function loadRelatedData()
+    {
+        $this->_model = Domain::findOne(['id' => $this->model_id]);
         $this->name = $this->_model->domain;
         $this->description = Yii::t('hipanel/domain', 'Renewal');
     }
@@ -59,9 +61,18 @@ class DomainRenewalProduct extends AbstractDomainProduct
         ], $options));
     }
 
+    /** @inheritdoc */
     public function getPurchaseModel($options = [])
     {
         $this->loadRelatedData(); // To get fresh domain expiration date
         return parent::getPurchaseModel(array_merge(['expires' => $this->_model->expires], $options));
+    }
+
+    /** @inheritdoc */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['model_id'], 'integer']
+        ]);
     }
 }
