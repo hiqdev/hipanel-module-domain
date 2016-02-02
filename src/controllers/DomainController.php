@@ -59,22 +59,22 @@ class DomainController extends \hipanel\base\CrudController
     {
         return [
             'add-to-cart-renewal' => [
-                'class'        => AddToCartAction::class,
+                'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
             ],
             'bulk-renewal' => [
-                'class'        => AddToCartAction::class,
+                'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
                 'bulkLoad' => true,
             ],
             'add-to-cart-registration' => [
-                'class'        => AddToCartAction::class,
+                'class' => AddToCartAction::class,
                 'productClass' => DomainRegistrationProduct::class,
             ],
             'add-to-cart-transfer' => [
-                'class'        => AddToCartAction::class,
+                'class' => AddToCartAction::class,
                 'productClass' => DomainTransferProduct::class,
-                'bulkLoad'     => true,
+                'bulkLoad' => true,
             ],
             'bulk-set-contacts-modal' => [
                 'class' => PrepareBulkAction::class,
