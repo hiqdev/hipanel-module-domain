@@ -210,10 +210,7 @@ class DomainController extends \hipanel\base\CrudController
                 'POST html' => [
                     'save'    => true,
                     'success' => [
-                        'class' => RedirectAction::class,
-//                        'url'   => function ($action) {
-//                            return $action->redirect($this->redirect(Yii::$app->request->referrer));
-//                        }
+                        'class' => RedirectAction::class
                     ],
                 ],
                 'on beforeSave' => function (Event $event) {
@@ -479,22 +476,6 @@ class DomainController extends \hipanel\base\CrudController
                 'class'     => RedirectAction::class,
                 'url'       => Yii::$app->params['orgUrl'],
             ],
-
-//            'change-password' => [
-//                'class' => RenderAction::class,
-//                'success' => Yii::t('app', 'Record was changed'),
-//                'error'   => Yii::t('app', 'Error occurred!'),
-//                'POST'    => [
-//                    'save'    => true,
-//                    'success' => [
-//                        'class'  => 'hipanel\actions\RefreshAction',
-//                        'return' => function ($action) {
-//                            /** @var \hipanel\actions\Action $action */
-//                            return $action->collection->models;
-//                        }
-//                    ]
-//                ],
-//            ],
         ];
     }
 
@@ -557,29 +538,29 @@ class DomainController extends \hipanel\base\CrudController
         $line['domain'] = $domainName;
         $line['zone'] = $zone;
         if ($domain) {
-            $check = Domain::perform('Check', ['domains' => [$domain]], true);
-//            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
-//            sleep(mt_rand(0,2));
+//            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
+            sleep(mt_rand(0,2));
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
                     'state' => 'unavailable'
                 ]);
             } else {
-                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-                    ->joinWith('resources')
-                    ->andFilterWhere(['type' => 'domain'])
-                    ->andFilterWhere(['seller' => 'ahnames'])
-                    ->one();
-                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-                });
-                foreach ($zones as $resource) {
-                    if ($resource->zone === $line['zone']) {
-                        $line['tariff'] = $resource;
-                        break;
-                    }
-                }
+//                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
+//                    ->joinWith('resources')
+//                    ->andFilterWhere(['type' => 'domain'])
+//                    ->andFilterWhere(['seller' => 'ahnames'])
+//                    ->one();
+//                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
+//                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
+//                });
+//                foreach ($zones as $resource) {
+//                    if ($resource->zone === $line['zone']) {
+//                        $line['tariff'] = $resource;
+//                        break;
+//                    }
+//                }
 
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,

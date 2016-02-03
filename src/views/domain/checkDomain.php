@@ -8,7 +8,7 @@ use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 
-//Yii::$app->assetManager->forceCopy = true;
+Yii::$app->assetManager->forceCopy = true;
 
 $this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->breadcrumbs->setItems([
@@ -24,6 +24,24 @@ $this->registerCss("
 ");
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
+
+    $(document).on('click', 'a.add-to-cart-button', function(event) {
+        event.preventDefault();
+        var addToCartElem = $(this);
+        addToCartElem.button('loading');
+        $.post(addToCartElem.data('domain-url'), function() {
+            $('.dropdown.notifications-menu a.dropdown-toggle').html('<i class="fa fa-refresh fa-spin fa-lg"></i>');
+        }).done(function() {
+            addToCartElem.button('complete');
+            $.get("/cart/cart/topcart", function(data) {
+                $("li.dropdown.notifications-menu").replaceWith( data );
+            }).done(function() {
+                addToCartElem.addClass('disabled');
+            });
+        });
+
+        return false;
+    });
 
     $.fn.isOnScreen = function(x, y){
 
