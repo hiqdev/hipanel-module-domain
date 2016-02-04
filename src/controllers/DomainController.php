@@ -152,10 +152,7 @@ class DomainController extends \hipanel\base\CrudController
                     ];
                 },
                 'filterStorageMap' => [
-                    'domain_like' => [
-                        'domain.domain.domain_like | hosting.hdomain.domain_like',
-                        'domain.domain.domain_like',
-                    ],
+                    'domain_like' => 'domain.domain.domain_like',
                     'ips' => 'hosting.ip.ip_in',
                     'state' => 'domain.domain.state',
                     'client_id' => 'client.client.id',
@@ -563,7 +560,7 @@ class DomainController extends \hipanel\base\CrudController
             ->one();
         $resources = [];
         $dropDownZones = [];
-        foreach ($tariffs->resources as $resource) {
+        foreach ((array) $tariffs->resources as $resource) {
             if ($resource->zone && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION) {
                 $dropDownZones[$resource->zone] = '.' . $resource->zone;
                 $resources[$resource->zone] = $resource;
