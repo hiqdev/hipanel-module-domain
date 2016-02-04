@@ -4,6 +4,7 @@ hiqdev/hipanel-module-domain commits history
 ## Under development
 
 - Fixed minor issues
+    - 4657f2e 2016-02-04 phpcsfixed (sol@hiqdev.com)
     - 9710ecd 2016-01-29 View modal push enhanced (d.naumenko.a@gmail.com)
     - 305e87c 2016-01-29 DomainController - bulkSetContactsModal, domainPushModal, bulkSetNote - redone with PrepareBulkAction (d.naumenko.a@gmail.com)
     - 97acace 2016-01-28 fixing domain push (sol@hiqdev.com)
