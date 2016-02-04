@@ -3,6 +3,7 @@ hiqdev/hipanel-module-domain changelog
 
 ## Under development
 
+- Fixed minor issues
 - Added domain check, register, renewal and transfer
 - Added yii2-cart integration
 - Added DNS management

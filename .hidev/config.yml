@@ -1,9 +1,9 @@
 package:
+    type:           yii2-extension
     name:           hipanel-module-domain
     namespace:      hipanel\modules\domain
     headline:       HiPanel Domain Module
     title:          Domain plugin for HiPanel
-    type:           yii2-extension
     keywords:       domain, hipanel, plugin
     description:    |
         [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)

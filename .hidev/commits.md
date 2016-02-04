@@ -3,8 +3,21 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Fixed minor issues
+    - 9710ecd 2016-01-29 View modal push enhanced (d.naumenko.a@gmail.com)
+    - 305e87c 2016-01-29 DomainController - bulkSetContactsModal, domainPushModal, bulkSetNote - redone with PrepareBulkAction (d.naumenko.a@gmail.com)
+    - 97acace 2016-01-28 fixing domain push (sol@hiqdev.com)
+    - 64ed654 2016-01-28 + added translations (sol@hiqdev.com)
+    - 1eb9911 2016-01-28 Host create - fixed ips value after a failed save (d.naumenko.a@gmail.com)
 - Added domain check, register, renewal and transfer
-    - e43697f 2016-01-25 Add some designe fixes to bulk transfer page (andreyklochok@gmail.com)
+    - f7d6466 2016-02-04 fixing showing domain price, not finished (sol@hiqdev.com)
+    - a815bbd 2016-02-03 Add ajax add to cart functionality (andreyklochok@gmail.com)
+    - 7166a78 2016-02-03 Fixed domainProduct message category (d.naumenko.a@gmail.com)
+    - e0a2c9e 2016-02-02 DomainRenewalProduct - fixed loadRelatedData (d.naumenko.a@gmail.com)
+    - 44915ed 2016-02-01 Relocate html elemets on the page (andreyklochok@gmail.com)
+    - bdbc84f 2016-01-29 Group Domain actions to one Dropdown (andreyklochok@gmail.com)
+    - 281d63e 2016-01-27 Add new categories of zones (andreyklochok@gmail.com)
+    - e43697f 2016-01-25 Add some design fixes to bulk transfer page (andreyklochok@gmail.com)
     - e5ee2ec 2016-01-22 DomainController::indexAction - added filterStorageMap (d.naumenko.a@gmail.com)
     - 56d5cf5 2016-01-21 DomainController - domain transfer fixed bulk transfer error saving (d.naumenko.a@gmail.com)
     - f7bae23 2016-01-21 Redisigne transfer (andreyklochok@gmail.com)
@@ -40,7 +53,7 @@ hiqdev/hipanel-module-domain commits history
     - 144a366 2015-12-25 DomainCart - implemented domain actions calculation (d.naumenko.a@gmail.com)
     - b3c1617 2015-12-25 Spelling (d.naumenko.a@gmail.com)
     - 408240f 2015-12-25 Change links on change contacts (andreyklochok@gmail.com)
-    - db842ec 2015-12-25 Add indent in _sync_button (andreyklochok@gmail.com)
+    - db842ec 2015-12-25 Add indent in `_sync_button` (andreyklochok@gmail.com)
     - f9b13ac 2015-12-24 Domain check form sidebar search form (andreyklochok@gmail.com)
     - acdc017 2015-12-23 Add message folder, add local states for domains (andreyklochok@gmail.com)
     - 6101948 2015-12-23 Add bulk contacts change (andreyklochok@gmail.com)
