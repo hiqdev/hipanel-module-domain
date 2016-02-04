@@ -9,12 +9,6 @@
  * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
@@ -547,28 +541,11 @@ class DomainController extends \hipanel\base\CrudController
                     'state' => 'unavailable'
                 ]);
             } else {
-//                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-//                    ->joinWith('resources')
-//                    ->andFilterWhere(['type' => 'domain'])
-//                    ->andFilterWhere(['seller' => 'ahnames'])
-//                    ->one();
-//                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-//                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-//                });
-//                foreach ($zones as $resource) {
-//                    if ($resource->zone === $line['zone']) {
-//                        $line['tariff'] = $resource;
-//                        break;
-//                    }
-//                }
-
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
                     'state' => 'available'
                 ]);
             }
-
-
         } else {
             Yii::$app->end();
         }
@@ -586,12 +563,13 @@ class DomainController extends \hipanel\base\CrudController
             ->andFilterWhere(['type' => 'domain'])
             ->andFilterWhere(['seller' => 'ahnames'])
             ->one();
-        $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-            return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-        });
+        $resources = [];
         $dropDownZones = [];
-        foreach ($zones as $resource) {
-            $dropDownZones[$resource->zone] = '.' . $resource->zone;
+        foreach ($tariffs->resources as $resource) {
+            if ($resource->zone && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION) {
+                $dropDownZones[$resource->zone] = '.' . $resource->zone;
+                $resources[$resource->zone] = $resource;
+            }
         }
         uasort($dropDownZones, function($a, $b) { return $a === '.com' ? 0 : 1; });
         if ($model->load(Yii::$app->request->get()) && !empty($dropDownZones)) {
@@ -616,10 +594,12 @@ class DomainController extends \hipanel\base\CrudController
                 $domains = array_diff($domains, [$requestedDomain]);
                 array_unshift($domains, $requestedDomain);
                 foreach ($domains as $domain) {
+                    $zone = substr($domain, strpos($domain, '.') + 1);
                     $results[] = [
                         'domain' => $model->domain,
                         'full_domain_name' => $domain,
-                        'zone' => substr($domain, strpos($domain, '.') + 1),
+                        'zone' => $zone,
+                        'resource' => $resources[$zone],
                     ];
                 }
             }
