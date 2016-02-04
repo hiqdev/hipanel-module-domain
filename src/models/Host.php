@@ -6,15 +6,9 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
@@ -32,9 +26,9 @@ class Host extends \hipanel\base\Model
             [['host'],                                  'safe'],
             [['id'],                                    'safe'],
             [['id'],                                    'integer', 'on' => 'delete'],
-            [['seller_id','client_id','domain_id'],     'safe'],
-            [['seller','client'],                       'safe'],
-            [['domain','host'],                         'safe'],
+            [['seller_id', 'client_id', 'domain_id'],   'safe'],
+            [['seller', 'client'],                      'safe'],
+            [['domain', 'host'],                        'safe'],
             [['ip'],                                    'safe'],
             [['ips'],                                   'safe'],
             [['host', 'ips'], 'required', 'on' => 'create'],

@@ -11,7 +11,7 @@ use yii\helpers\Url;
 // TODO: To delete this
 NSyncPluginAsset::register($this);
 
-/**
+/*
  * @var array|string $actionUrl url to send the form
  */
 ?>
@@ -42,8 +42,8 @@ $(document).on('pjax:complete', function(event) {
     ],
 ]); ?>
     <?php if (!is_array($model)) : ?>
-        <?= Html::activeHiddenInput($model, "id") ?>
-        <?= Html::activeHiddenInput($model, "domain") ?>
+        <?= Html::activeHiddenInput($model, 'id') ?>
+        <?= Html::activeHiddenInput($model, 'domain') ?>
     <?php else : ?>
         <?php foreach ($model as $item) : ?>
             <?= Html::activeHiddenInput($item, "[$item->id]id") ?>

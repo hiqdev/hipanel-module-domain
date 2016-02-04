@@ -1,13 +1,20 @@
 <?php
 
-namespace hipanel\modules\domain\cart;
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ */
 
-use hiqdev\hiart\ErrorResponseException;
+namespace hipanel\modules\domain\cart;
 
 class DomainRegistrationPurchase extends AbstractPurchase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function execute()
     {

@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hipanel\modules\domain\cart;
 
 /**
- * Abstract class AbstractPurchase
- * @package hipanel\modules\domain\cart
+ * Abstract class AbstractPurchase.
  */
 abstract class AbstractPurchase extends \hipanel\modules\finance\models\AbstractPurchase
 {
@@ -15,19 +23,19 @@ abstract class AbstractPurchase extends \hipanel\modules\finance\models\Abstract
      */
     public $position;
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public static function index()
     {
         return static::type() . 's';
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public static function type()
     {
         return 'domain';
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function init()
     {
         parent::init();
@@ -37,8 +45,9 @@ abstract class AbstractPurchase extends \hipanel\modules\finance\models\Abstract
         $this->zone = $this->position->getZone();
     }
 
-    /** @inheritdoc */
-    public function rules() {
+    /** {@inheritdoc} */
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             [['domain', 'zone'], 'safe'],
             [['period'], 'number'],

@@ -6,15 +6,9 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 namespace hipanel\modules\domain\widgets;
 
 class State extends \hipanel\widgets\Type
@@ -24,7 +18,7 @@ class State extends \hipanel\widgets\Type
     public $values = [];
     public $defaultValues = [
         'none'   => ['ok'],
-        'danger'    => ['blocked','expired'],
+        'danger'    => ['blocked', 'expired'],
         'warning'   => [],
     ];
     public $field = 'state';

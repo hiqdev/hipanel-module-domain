@@ -4,6 +4,7 @@ use hipanel\helpers\Url;
 use hipanel\modules\domain\widgets\NsWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+
 ?>
 
 <div>
@@ -34,7 +35,7 @@ use yii\helpers\Html;
                                 'formatter' => function ($model) {
                                     return $model->domain;
                                 },
-                                'delimiter' => ',&nbsp; '
+                                'delimiter' => ',&nbsp; ',
                             ]); ?>
                         </div>
                     </div>

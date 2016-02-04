@@ -1,15 +1,15 @@
 <?php
 /**
- * @var $line array
+ * @var array
  * @var $state string
  */
-use yii\helpers\Html;
 use hipanel\modules\domain\models\Domain;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
 
-<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?> <?= $requestedDomain == $line['full_domain_name'] ? 'popular' : $requestedDomain ?>">
+<div class="domain-iso-line <?= Domain::setIsotopeFilterValue($line['zone']) ?> <?= $state ?> <?= $requestedDomain === $line['full_domain_name'] ? 'popular' : $requestedDomain ?>">
 <div
     class="domain-line <?= ($state) ? 'checked' : '' ?>"
     data-domain="<?= $line['full_domain_name'] ?>">

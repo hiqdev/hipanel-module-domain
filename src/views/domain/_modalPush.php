@@ -1,7 +1,6 @@
 <?php
 
 use hipanel\helpers\Url;
-use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -38,7 +37,7 @@ use yii\helpers\Html;
                 'formatter' => function ($model) {
                     return $model->domain;
                 },
-                'delimiter' => ',&nbsp; '
+                'delimiter' => ',&nbsp; ',
             ]); ?>
         </div>
     </div>
@@ -49,10 +48,10 @@ use yii\helpers\Html;
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
     <?php endforeach; ?>
 
-    <?= $form->field($model, "receiver") ?>
+    <?= $form->field($model, 'receiver') ?>
 
     <?php if ($hasPincode) : ?>
-        <?= $form->field($model, "pincode") ?>
+        <?= $form->field($model, 'pincode') ?>
     <?php endif; ?>
     <hr>
     <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>

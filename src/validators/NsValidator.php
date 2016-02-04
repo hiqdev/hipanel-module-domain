@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Client Plugin for HiPanel
+ * Domain plugin for HiPanel
  *
- * @link      https://github.com/hiqdev/hipanel-module-client
- * @package   hipanel-module-client
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (https://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\validators;
@@ -20,11 +20,12 @@ use yii\validators\IpValidator;
 class NsValidator extends \yii\validators\Validator
 {
     /**
-     * Splits $value by `/`, checks each part with the proper validator
+     * Splits $value by `/`, checks each part with the proper validator.
      *
      * {@inheritdoc}
      */
-    public function validateValue($value) {
+    public function validateValue($value)
+    {
         list($domain, $ip) = explode('/', $value, 2);
         if (($error = (new DomainValidator())->validateValue($domain)) !== null) {
             return $error;

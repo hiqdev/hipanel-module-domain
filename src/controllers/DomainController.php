@@ -6,7 +6,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\controllers;
@@ -23,7 +23,6 @@ use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
-use hipanel\base\FilterStorage;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\models\Ref;
@@ -33,7 +32,6 @@ use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
-use hipanel\modules\domain\models\DomainSearch;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
@@ -90,7 +88,7 @@ class DomainController extends \hipanel\base\CrudController
             'validate-set-contacts-form' => [
                 'class' => ValidateFormAction::class,
                 'collectionLoader' => function ($action) {
-                    /** @var SmartPerformAction $action */
+                    /* @var SmartPerformAction $action */
                     $request = Yii::$app->request;
                     $action->collection->load([[
                         'registrant' => $request->post('registrant'),
@@ -101,13 +99,13 @@ class DomainController extends \hipanel\base\CrudController
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'domain-' . $attribute;
-                }
+                },
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'set-contacts',
                 'collectionLoader' => function ($action) {
-                    /** @var SmartPerformAction $action */
+                    /* @var SmartPerformAction $action */
                     $request = Yii::$app->request;
                     $contactOptions = Domain::$contactOptions;
 
@@ -123,7 +121,7 @@ class DomainController extends \hipanel\base\CrudController
             'push' => [
                 'class' => SmartPerformAction::class,
                 'collectionLoader' => function ($action) {
-                    /** @var SmartPerformAction $action */
+                    /* @var SmartPerformAction $action */
                     $data = Yii::$app->request->post($action->collection->getModel()->formName());
                     $pincode = $data['pincode'];
                     $receiver = $data['receiver'];
@@ -156,13 +154,13 @@ class DomainController extends \hipanel\base\CrudController
                 'filterStorageMap' => [
                     'domain_like' => [
                         'domain.domain.domain_like | hosting.hdomain.domain_like',
-                        'domain.domain.domain_like'
+                        'domain.domain.domain_like',
                     ],
                     'ips' => 'hosting.ip.ip_in',
                     'state' => 'domain.domain.state',
                     'client_id' => 'client.client.id',
                     'seller_id' => 'client.client.seller_id',
-                ]
+                ],
             ],
             'view' => [
                 'class' => ViewAction::class,
@@ -186,16 +184,16 @@ class DomainController extends \hipanel\base\CrudController
             'validate-push-form' => [
                 'class' => ValidateFormAction::class,
                 'collectionLoader' => function ($action) {
-                    /** @var SmartPerformAction $action */
+                    /* @var SmartPerformAction $action */
                     $request = Yii::$app->request;
                     $action->collection->load([[
                         'pincode' => $request->post('pincode'),
-                        'receiver' => $request->post('receiver')
+                        'receiver' => $request->post('receiver'),
                     ]]);
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'push-' . $attribute;
-                }
+                },
             ],
             'set-note' => [
                 'class' => SmartUpdateAction::class,
@@ -204,7 +202,7 @@ class DomainController extends \hipanel\base\CrudController
                 'POST html' => [
                     'save'    => true,
                     'success' => [
-                        'class' => RedirectAction::class
+                        'class' => RedirectAction::class,
                     ],
                 ],
                 'on beforeSave' => function (Event $event) {
@@ -221,7 +219,7 @@ class DomainController extends \hipanel\base\CrudController
             'bulk-set-note' => [
                 'class' => PrepareBulkAction::class,
                 'scenario' => 'set-note',
-                'view' => '_bulkSetNote'
+                'view' => '_bulkSetNote',
             ],
             'set-nss' => [
                 'class' => SmartUpdateAction::class,
@@ -232,7 +230,7 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => RedirectAction::class,
                         'url'   => function ($action) {
                             return $action->controller->redirect(Yii::$app->request->referrer);
-                        }
+                        },
                     ],
                 ],
             ],
@@ -247,7 +245,7 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => ProxyAction::class,
                         'return'   => function ($action) {
                             return ['fuck' => 'yeah'];
-                        }
+                        },
                     ],
                 ],
                 'on beforeFetch' => function (Event $event) {
@@ -527,23 +525,23 @@ class DomainController extends \hipanel\base\CrudController
         };
         $domain = Yii::$app->request->post('domain');
         $domain = Html::encode($domain);
-        list ($domainName, $zone) = explode('.', $domain, 2);
+        list($domainName, $zone) = explode('.', $domain, 2);
         $line['full_domain_name'] = $domain;
         $line['domain'] = $domainName;
         $line['zone'] = $zone;
         if ($domain) {
-//            $check = Domain::perform('Check', ['domains' => [$domain]], true);
-            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
-            sleep(mt_rand(0,2));
+            //            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+            $check = [$domain => mt_rand(0, 1)]; // todo: remove this line
+            sleep(mt_rand(0, 2));
             if ($check[$domain] === 0) {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
-                    'state' => 'unavailable'
+                    'state' => 'unavailable',
                 ]);
             } else {
                 return $this->renderAjax('_checkDomainLine', [
                     'line' => $line,
-                    'state' => 'available'
+                    'state' => 'available',
                 ]);
             }
         } else {
@@ -571,12 +569,12 @@ class DomainController extends \hipanel\base\CrudController
                 $resources[$resource->zone] = $resource;
             }
         }
-        uasort($dropDownZones, function($a, $b) { return $a === '.com' ? 0 : 1; });
+        uasort($dropDownZones, function ($a, $b) { return $a === '.com' ? 0 : 1; });
         if ($model->load(Yii::$app->request->get()) && !empty($dropDownZones)) {
             // Check if domain already have zone
             if (strpos($model->domain, '.') !== false) {
                 list($domain, $zone) = explode('.', $model->domain, 2);
-                if (!in_array('.' . $zone, $dropDownZones)) {
+                if (!in_array('.' . $zone, $dropDownZones, true)) {
                     $zone = 'com';
                 }
                 $model->zone = $zone;
@@ -608,7 +606,7 @@ class DomainController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
-            'results' => $results
+            'results' => $results,
         ]);
     }
 

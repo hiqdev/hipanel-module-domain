@@ -6,15 +6,9 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 namespace hipanel\modules\domain\widgets;
 
 use dosamigos\google\maps\LatLng;
@@ -71,12 +65,12 @@ class GeoIP extends Widget
 
     private function renderHeader()
     {
-        print Html::tag($this->header['tag'], $this->header['title'], ['class' => 'label label-' . $this->header['class']]);
+        echo Html::tag($this->header['tag'], $this->header['title'], ['class' => 'label label-' . $this->header['class']]);
     }
 
     private function renderMap()
     {
-        print(new Map([
+        echo(new Map([
             'center'    => new LatLng([
                 'lat'       => $this->iprecord['latitude'],
                 'lng'       => $this->iprecord['longitude'],
@@ -89,8 +83,8 @@ class GeoIP extends Widget
 
     private function renderInfo()
     {
-        print Html::tag('p', 'IP: ' . Html::tag('span', $this->ip, ['class' => 'whois-ip']));
-        print Html::tag('p', Yii::t('app', 'Country') . ': ' . Html::tag('span', $this->iprecord['country_name'], ['class' => 'whois-ip']));
-        print Html::tag('p', Yii::t('app', 'City') . ': ' . Html::tag('span', $this->iprecord['city'], ['class' => 'whois-ip']));
+        echo Html::tag('p', 'IP: ' . Html::tag('span', $this->ip, ['class' => 'whois-ip']));
+        echo Html::tag('p', Yii::t('app', 'Country') . ': ' . Html::tag('span', $this->iprecord['country_name'], ['class' => 'whois-ip']));
+        echo Html::tag('p', Yii::t('app', 'City') . ': ' . Html::tag('span', $this->iprecord['city'], ['class' => 'whois-ip']));
     }
 }

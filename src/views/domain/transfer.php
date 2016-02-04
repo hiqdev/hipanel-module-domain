@@ -142,10 +142,10 @@ $id = $model->id ?: 0;
                             $html = Html::tag('span', $model->domain, ['class' => 'text-bold']);
                             /** @var Domain $model */
                             if (!$model->hasErrors('password')) {
-                                 $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
+                                $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
                             }
                             return $html;
-                        }
+                        },
                     ],
                     [
                         'attribute' => 'password',
@@ -158,14 +158,14 @@ $id = $model->id ?: 0;
                             }
 
                             return $html;
-                        }
+                        },
                     ],
                     [
                         'label' => Yii::t('app', 'Additional message'),
                         'value' => function ($model) {
-                            /** @var Domain $model */
+                            /* @var Domain $model */
                             return $model->hasErrors('password') ? $model->getFirstError('password') : '';
-                        }
+                        },
                     ],
                 ],
             ]); ?>

@@ -27,7 +27,7 @@ use yii\helpers\Html;
         <div role="tabpanel" class="tab-pane active" id="bulk">
             <div class="row" style="margin-top: 15pt;">
                 <div class="col-md-12">
-                    <?= Html::textInput("bulk_note", null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Type your note here')]); ?>
+                    <?= Html::textInput('bulk_note', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Type your note here')]); ?>
                     <br>
                     <div class="panel panel-default">
                         <div class="panel-heading"><?= Yii::t('app', 'Affected domains') ?></div>
@@ -38,7 +38,7 @@ use yii\helpers\Html;
                                 'formatter' => function ($model) {
                                     return $model->domain;
                                 },
-                                'delimiter' => ',&nbsp; '
+                                'delimiter' => ',&nbsp; ',
                             ]); ?>
                         </div>
                     </div>

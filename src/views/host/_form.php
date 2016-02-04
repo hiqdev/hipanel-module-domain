@@ -50,7 +50,7 @@ use yii\helpers\Url;
                 <div class="col-sm-5">
                     <?= $form->field($model, "[$i]ips")->textInput([
                         'placeholder' => Yii::t('app', 'IP addresses'),
-                        'value' => implode(', ', (array)$model->ips)
+                        'value' => implode(', ', (array) $model->ips),
                     ])->label(false)->hint('Up to 13 items, IPv4 or IPv6, comma or space delimited') ?>
                 </div>
                 <div class="col-sm-2">

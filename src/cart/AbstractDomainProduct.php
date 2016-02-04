@@ -6,7 +6,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -27,7 +27,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
      */
     protected $_operation;
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     protected $_calculationModel = 'hipanel\modules\domain\cart\Calculation';
 
     /**
@@ -39,7 +39,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         '*' => 10,
     ];
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function getIcon()
     {
         return '<i class="fa fa-globe"></i>';
@@ -48,39 +48,39 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
     public function rules()
     {
         return [
-            [['name'], 'required']
+            [['name'], 'required'],
         ];
     }
 
     /**
-     * Extracts domain zone from
+     * Extracts domain zone from.
      * @return string
      */
     public function getZone()
     {
-        list (, $zone) = explode('.', $this->name, 2);
+        list(, $zone) = explode('.', $this->name, 2);
         return $zone;
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function getQuantityOptions()
     {
         $result = [];
         $limit = isset($this->quantityLimits[$this->getZone()]) ? $this->quantityLimits[$this->getZone()] : $this->quantityLimits['*'];
-        for ($n = 1; $n <= $limit; $n++) {
+        for ($n = 1; $n <= $limit; ++$n) {
             $result[$n] = Yii::t('hipanel/domain', '{0, plural, one{# year} other{# years}}', $n);
         }
 
         return $result;
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function getCalculationModel($options = [])
     {
         return parent::getCalculationModel(array_merge([
             'type' => $this->_operation,
             'domain' => $this->name,
-            'zone' => $this->getZone()
+            'zone' => $this->getZone(),
         ], $options));
     }
 }

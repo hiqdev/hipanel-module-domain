@@ -23,7 +23,7 @@ use yii\helpers\Html;
             'formatter' => function ($model) {
                 return $model->domain;
             },
-            'delimiter' => ',&nbsp; '
+            'delimiter' => ',&nbsp; ',
         ]); ?>
     </div>
 </div>
@@ -40,8 +40,8 @@ use yii\helpers\Html;
                 'hasId' => true,
                 'inputOptions' => [
                     'id' => 'domain-' . $contact,
-                    'name' => $contact
-                ]
+                    'name' => $contact,
+                ],
             ]); ?>
         </div>
     <?php endforeach; ?>

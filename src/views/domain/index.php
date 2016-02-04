@@ -1,16 +1,10 @@
 <?php
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
+
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ActionBox;
 use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Pjax;
-use hipanel\widgets\SettingsModal;
 use yii\bootstrap\Dropdown;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -75,35 +69,35 @@ CSS
             </div>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
-                'header'=> Html::tag('h4', Yii::t('app', 'Push'), ['class' => 'modal-title']),
+                'header' => Html::tag('h4', Yii::t('app', 'Push'), ['class' => 'modal-title']),
                 'scenario' => 'domain-push-modal',
                 'actionUrl' => ['domain-push-modal'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('app', 'Push'), 'class' => 'btn btn-default',],
+                'toggleButton' => ['label' => Yii::t('app', 'Push'), 'class' => 'btn btn-default'],
             ]) ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
-                'header'=> Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
+                'header' => Html::tag('h4', Yii::t('app', 'Set notes'), ['class' => 'modal-title']),
                 'scenario' => 'bulk-set-note',
                 'actionUrl' => ['bulk-set-note'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default',],
+                'toggleButton' => ['label' => Yii::t('app', 'Set notes'), 'class' => 'btn btn-default'],
             ]) ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
-                'header'=> Html::tag('h4', Yii::t('app', 'Set NS'), ['class' => 'modal-title']),
+                'header' => Html::tag('h4', Yii::t('app', 'Set NS'), ['class' => 'modal-title']),
                 'scenario' => 'bulk-set-nss',
                 'actionUrl' => ['bulk-set-nss'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('app', 'Set NS'), 'class' => 'btn btn-default',],
+                'toggleButton' => ['label' => Yii::t('app', 'Set NS'), 'class' => 'btn btn-default'],
             ]) ?>
             <?= AjaxModal::widget([
                 'bulkPage' => true,
-                'header'=> Html::tag('h4', Yii::t('app', 'Change contacts'), ['class' => 'modal-title']),
+                'header' => Html::tag('h4', Yii::t('app', 'Change contacts'), ['class' => 'modal-title']),
                 'scenario' => 'bulk-set-contacts',
                 'actionUrl' => ['bulk-set-contacts-modal'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('app', 'Change contacts'), 'class' => 'btn btn-default',],
+                'toggleButton' => ['label' => Yii::t('app', 'Change contacts'), 'class' => 'btn btn-default'],
             ]) ?>
 
         <?php $box->endBulkActions() ?>

@@ -2,7 +2,6 @@
 
 use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\domain\models\Domain;
-use hiqdev\combo\StaticCombo;
 use kartik\widgets\DatePicker;
 use yii\helpers\Html;
 

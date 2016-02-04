@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ */
+
 return [
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Incoming transfer domains' => 'Входящий трансфер',

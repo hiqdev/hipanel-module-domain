@@ -1,10 +1,5 @@
 <?php
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
+
 use hipanel\modules\domain\grid\HostGridView;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;

@@ -4,7 +4,7 @@ use hipanel\modules\domain\models\Domain;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/**
+/*
  * @var $domainContactInfo array
  * @var $domainId integer
  * @var $domainName string
@@ -24,7 +24,7 @@ use yii\widgets\DetailView;
                         'contactId' => $contact['id'],
                         'contactType' => $contactType,
                         'domainId' => $domainId,
-                        'domainName' => $domainName
+                        'domainName' => $domainName,
                     ], ['class' => 'btn btn-default btn-xs']) ?>
                 </div>
             </div>

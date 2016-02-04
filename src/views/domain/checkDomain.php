@@ -1,9 +1,9 @@
 <?php
 
+use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
@@ -16,12 +16,12 @@ $this->breadcrumbs->setItems([
 ]);
 $requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
 $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
-$this->registerCss("
+$this->registerCss('
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
     background: transparent!important;
     color: #444!important;
 }
-");
+');
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
 

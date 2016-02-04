@@ -10,7 +10,6 @@ use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
-use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -64,7 +63,7 @@ CSS
                 <li>
                     <?= AjaxModal::widget([
                         'id' => 'push-modal-link',
-                        'header'=> Html::tag('h4', Yii::t('app', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
+                        'header' => Html::tag('h4', Yii::t('app', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
                         'scenario' => 'push',
                         'actionUrl' => ['domain-push-modal', 'id' => $model->id],
                         'size' => Modal::SIZE_DEFAULT,
@@ -72,7 +71,7 @@ CSS
                             'label' => '<i class="ion-ios-paperplane-outline"></i> ' . Yii::t('app', 'Push domain'),
                             'class' => 'clickable',
                             'data-pjax' => 0,
-                            'tag' => 'a'
+                            'tag' => 'a',
                         ],
                     ]) ?>
 

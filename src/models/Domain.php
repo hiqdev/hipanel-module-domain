@@ -6,24 +6,18 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
 namespace hipanel\modules\domain\models;
 
 use Exception;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\client\models\Client;
-use hipanel\modules\domain\validators\NsValidator;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
+use hipanel\modules\domain\validators\NsValidator;
 use hipanel\validators\DomainValidator;
 use hiqdev\hiart\ErrorResponseException;
 use Yii;
@@ -66,17 +60,17 @@ class Domain extends \hipanel\base\Model
             [['seller', 'seller_name', 'client', 'client_name'],                                                        'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'],  'date'],
             [['registered', 'operated'],                                                                                'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_freezed', 'is_premium', 'is_secured','whois_protected'],      'boolean'],
+            [['is_expired', 'is_served', 'is_holded', 'is_freezed', 'is_premium', 'is_secured', 'whois_protected'],      'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal'],                                                    'boolean'],
             [['foa_sent_to'],                                                                                           'email'],
-            [['url_fwval' ,'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
+            [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
             [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
             [['id', 'note'],                                    'safe',     'on' => ['set-note', 'default']],
 
-            [['registrant','admin','tech','billing'],           'required', 'on' => ['set-contacts']],
+            [['registrant', 'admin', 'tech', 'billing'],           'required', 'on' => ['set-contacts']],
 
-            [['enable'],                                        'safe',     'on' => ['set-lock','set-whois-protect']],
+            [['enable'],                                        'safe',     'on' => ['set-lock', 'set-whois-protect']],
             [['id', 'domain', 'autorenewal'],                   'safe',     'on' => 'set-autorenewal'],
             [['id', 'domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
             [['id', 'domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
@@ -87,7 +81,9 @@ class Domain extends \hipanel\base\Model
             [['domain'], 'filter', 'filter' => function ($value) {
                 if (strpos($value, '.') !== false) {
                     return substr($value, 0, strpos($value, '.'));
-                } else return $value;
+                } else {
+                    return $value;
+                }
             }, 'on' => 'check-domain'],
             [['domain'], 'required', 'on' => ['check-domain']],
             [['zone'], 'safe', 'on' => ['check-domain']],
@@ -423,7 +419,7 @@ class Domain extends \hipanel\base\Model
         $getClass = function (array $arr) use ($zone) {
             $result = '';
             foreach ($arr as $cssClass => $items) {
-                if (in_array($zone, $items)) {
+                if (in_array($zone, $items, true)) {
                     $result = $cssClass;
                     break;
                 }
@@ -442,8 +438,8 @@ class Domain extends \hipanel\base\Model
         $categories = self::getCategories();
         if (!empty($data)) {
             foreach ($data as $item) {
-                if (in_array($item['zone'], $categories[$zone])) {
-                    $i++;
+                if (in_array($item['zone'], $categories[$zone], true)) {
+                    ++$i;
                 }
             }
         }
