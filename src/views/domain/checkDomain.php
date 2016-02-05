@@ -10,7 +10,7 @@ DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 \hipanel\frontend\assets\HipanelAsset::register($this);
 
-Yii::$app->assetManager->forceCopy = true; // todo: remove this line
+//Yii::$app->assetManager->forceCopy = true; // todo: remove this line
 
 $this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->breadcrumbs->setItems([
@@ -22,6 +22,93 @@ $this->registerCss('
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
     background: transparent!important;
     color: #444!important;
+}
+
+/* Fix Select2 border radius */
+.input-group-lg .select2-container .select2-choice, .select2-container.input-lg .select2-choice {
+    border-radius: 0;
+}
+
+select2-container .select2-choice, .select2-container .select2-choices, .select2-container .select2-choices .select2-search-field input, .select2-search input {
+    border-radius: 0px;
+}
+
+.domain-list .btn {
+    width: 100%;
+}
+
+.domain-line {
+    border-bottom: 1px solid #f2f2f2;
+    /*margin-bottom: 10px;*/
+    line-height: 59px;
+    height: 60px;
+    font-size: 18px;
+    -webkit-transition: border 0.25s;
+    -moz-transition: border 0.25s;
+    -o-transition: border 0.25s;
+    transition: border 0.25s;
+    width: 100%;
+}
+
+.domain-iso-line {
+    width: 100%;
+    clear: both;
+}
+
+.domain-list:after {
+    content: \'\';
+    display: block;
+    clear: both;
+}
+
+.domain-line:hover {
+    border-color: #CCC;
+    -webkit-transition: border 0.25s;
+    -moz-transition: border 0.25s;
+    -o-transition: border 0.25s;
+    transition: border 0.25s;
+}
+
+.domain-line .domain-img {
+    width: 48px;
+    margin-left: 15px;
+    line-height: 15px;
+    color: grey;
+}
+
+.domain-line span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 59px;
+}
+
+.domain-line .domain-zone {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.domain-line .domain-price {
+    color: gray;
+}
+
+.domain-line .domain-price .domain-price-year, del {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.domain-line .domain-taken {
+    color: #ccc;
+}
+
+.domain-line .domain-whois {
+    color: gray;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.domain-line .domain-name.muted,
+.domain-line .domain-zone.muted {
+    color: #ccc;
 }
 ');
 if (!empty($results)) {
@@ -286,7 +373,7 @@ JS
                                 <div class="form-group">
                                     <?= $form->field($model, 'zone')->widget(StaticCombo::classname(), [
                                         'data' => $dropDownZonesOptions,
-                                        'hasId' => false,
+                                        'hasId' => true,
                                         'inputOptions' => [
                                             'class' => 'form-control input-lg'
                                         ]
@@ -323,83 +410,3 @@ JS
         <?php endif; ?>
     </div>
 </div>
-
-<style>
-    .domain-list .btn {
-        width: 100%;
-    }
-
-    .domain-line {
-        border-bottom: 1px solid #f2f2f2;
-        /*margin-bottom: 10px;*/
-        line-height: 59px;
-        height: 60px;
-        font-size: 18px;
-        -webkit-transition: border 0.25s;
-        -moz-transition: border 0.25s;
-        -o-transition: border 0.25s;
-        transition: border 0.25s;
-        width: 100%;
-    }
-
-    .domain-iso-line {
-        width: 100%;
-        clear: both;
-    }
-
-    .domain-list:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-
-    .domain-line:hover {
-        border-color: #CCC;
-        -webkit-transition: border 0.25s;
-        -moz-transition: border 0.25s;
-        -o-transition: border 0.25s;
-        transition: border 0.25s;
-    }
-
-    .domain-line .domain-img {
-        width: 48px;
-        margin-left: 15px;
-        line-height: 15px;
-        color: grey;
-    }
-
-    .domain-line span {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 59px;
-    }
-
-    .domain-line .domain-zone {
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    .domain-line .domain-price {
-        color: gray;
-    }
-
-    .domain-line .domain-price .domain-price-year, del {
-        color: #ccc;
-        font-size: 16px;
-    }
-
-    .domain-line .domain-taken {
-        color: #ccc;
-    }
-
-    .domain-line .domain-whois {
-        color: gray;
-        font-size: 12px;
-        line-height: 16px;
-    }
-
-    .domain-line .domain-name.muted,
-    .domain-line .domain-zone.muted {
-        color: #ccc;
-    }
-</style>
