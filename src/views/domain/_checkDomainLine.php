@@ -52,8 +52,8 @@ use yii\helpers\Url;
             <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['full_domain_name']], [
                 'data-pjax' => 0,
                 'class' => 'btn btn-flat bg-olive add-to-cart-button',
-                'data-loading-text' => Yii::t('hipanel/domain', 'Loading') . '...',
-                'data-complete-text' => '<i class="fa fa-check"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'In cart'),
+                'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Loading') . '...',
+                'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'In cart'),
                 'data-domain-url' => Url::to(['add-to-cart-registration', 'name' => $line['full_domain_name']]),
             ]) ?>
         <?php elseif ($state === 'unavailable') : ?>
