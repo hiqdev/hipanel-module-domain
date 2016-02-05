@@ -30,6 +30,8 @@ class Domain extends \hipanel\base\Model
     const STATE_OUTGOING = 'outgoing';
     const STATE_EXPIRED = 'expired';
 
+    const DEFAULT_ZONE = 'com';
+
     public $authCode;
 
     public static $contactOptions = [
@@ -88,6 +90,7 @@ class Domain extends \hipanel\base\Model
             [['domain'], 'required', 'on' => ['check-domain']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
+            [['zone'], 'default', 'value' => static::DEFAULT_ZONE, 'on' => ['check-domain']],
             [['is_available'], 'boolean', 'on' => ['check-domain']],
             [['resource'], 'safe', 'on' => ['check-domain']], /// Array inside. Should be a relation hasOne
 

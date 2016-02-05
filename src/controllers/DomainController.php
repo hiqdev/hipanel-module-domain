@@ -29,7 +29,6 @@ use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
-use hipanel\base\FilterStorage;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\models\Ref;
@@ -39,7 +38,6 @@ use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
-use hipanel\modules\domain\models\DomainSearch;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
@@ -528,46 +526,79 @@ class DomainController extends \hipanel\base\CrudController
         Yii::$app->hiresource->auth = function () {
             return [];
         };
-        $domain = Yii::$app->request->post('domain');
-        $domain = Html::encode($domain);
-        list ($domainName, $zone) = explode('.', $domain, 2);
-        $line['full_domain_name'] = $domain;
-        $line['domain'] = $domainName;
-        $line['zone'] = $zone;
-        if ($domain) {
-            $check = Domain::perform('Check', ['domains' => [$domain]], true);
+        $fqdn = Yii::$app->request->post('domain');
+        list ($domain, $zone) = explode('.', $fqdn, 2);
+        $line = [
+            'fqdn' => $fqdn,
+            'domain' => $domain,
+            'zone' => $zone,
+            'resource' => null,
+        ];
+
+        if ($fqdn) {
+            $check = Domain::perform('Check', ['domains' => [$fqdn]], true);
 //            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
-            if ($check[$domain] === 0) {
-                return $this->renderAjax('_checkDomainLine', [
-                    'line' => $line,
-                    'state' => 'unavailable'
-                ]);
+            if ($check[$fqdn] === 0) {
+                $line['isAvailable'] = false;
             } else {
-                $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-                    ->joinWith('resources')
-                    ->andFilterWhere(['type' => 'domain'])
-                    ->andFilterWhere(['seller' => 'ahnames'])
-                    ->one();
-                $zones = array_filter($tariffs->resources ?: [], function ($resource) {
-                    return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-                });
+                $tariff = $this->getDomainTariff();
+                $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
+
                 foreach ($zones as $resource) {
-                    if ($resource->zone === $line['zone']) {
+                    if ($resource->zone === $zone) {
                         $line['resource'] = $resource;
                         break;
                     }
                 }
 
-                return $this->renderAjax('_checkDomainLine', [
-                    'line' => $line,
-                    'state' => 'available'
-                ]);
+                $line['isAvailable'] = true;
             }
 
-
+            return $this->renderAjax('_checkDomainLine', [
+                'line' => $line,
+            ]);
         } else {
             Yii::$app->end();
         }
+    }
+
+    /**
+     * Returns the tariff for the domain operations
+     * Caches the API request for 3600 seconds and depends on client id and seller login
+     *
+     * @return Tariff
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getDomainTariff()
+    {
+        $params = [
+            Yii::$app->user->isGuest ? Yii::$app->params['user.seller'] : Yii::$app->user->identity->seller,
+            Yii::$app->user->isGuest ? null : Yii::$app->user->id,
+        ];
+
+        return Yii::$app->get('cache')->getTimeCached(3600, $params, function ($seller, $client_id) {
+            return Tariff::find(['scenario' => 'get-available-info'])
+                ->joinWith('resources')
+                ->andFilterWhere(['type' => 'domain'])
+                ->andFilterWhere(['seller' => $seller])
+                ->one();
+        });
+    }
+
+    /**
+     * @param Tariff $tariff
+     * @param string $type
+     * @return array
+     */
+    protected function getDomainZones(Tariff $tariff, $type = Resource::TYPE_DOMAIN_REGISTRATION)
+    {
+        if ($tariff === null) {
+            return [];
+        }
+
+        return array_filter((array) $tariff->resources, function ($resource) use ($type) {
+            return $resource->zone !== null && $resource->type === $type;
+        });
     }
 
     /**
@@ -575,16 +606,13 @@ class DomainController extends \hipanel\base\CrudController
      */
     public function actionCheckDomain()
     {
+        $results = [];
         $model = new Domain();
         $model->scenario = 'check-domain';
-        $tariffs = Tariff::find(['scenario' => 'get-available-info'])
-            ->joinWith('resources')
-            ->andFilterWhere(['type' => 'domain'])
-            ->andFilterWhere(['seller' => 'ahnames'])
-            ->one();
-        $zones = array_filter((array)$tariffs->resources, function ($resource) {
-            return ($resource->zone !== null && $resource->type === Resource::TYPE_DOMAIN_REGISTRATION);
-        });
+
+        $tariff = $this->getDomainTariff();
+        $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
+
         $dropDownZones = [];
         foreach ($zones as $resource) {
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
@@ -599,22 +627,19 @@ class DomainController extends \hipanel\base\CrudController
                 }
                 $model->zone = $zone;
             }
+
             if ($model->validate()) {
-                if (empty($model->zone)) {
-                    $model->zone = 'com';
-                }
                 $requestedDomain = $model->domain . '.' . $model->zone;
                 foreach ($dropDownZones as $zone => $label) {
                     $domains[] = $model->domain . '.' . $zone;
                 }
-                $results = [];
                 // Make the requestedDomain the first element of array
                 $domains = array_diff($domains, [$requestedDomain]);
                 array_unshift($domains, $requestedDomain);
                 foreach ($domains as $domain) {
                     $results[] = [
+                        'fqdn' => $domain,
                         'domain' => $model->domain,
-                        'full_domain_name' => $domain,
                         'zone' => substr($domain, strpos($domain, '.') + 1),
                     ];
                 }
