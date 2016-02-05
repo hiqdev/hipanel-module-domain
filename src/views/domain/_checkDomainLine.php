@@ -35,8 +35,8 @@ use yii\helpers\Url;
         <span class="domain-price">
             <?php if ($state === 'available') : ?>
                 <!--del>0.00 €</del-->
-                <?= Yii::$app->formatter->format($line['resource']->price, ['currency', $line['resource']->currency]) ?>
-                <span class="domain-price-year">/<?= Yii::t('app', 'year') ?></span>
+                <b><?= Yii::$app->formatter->format($line['resource']->price, ['currency', $line['resource']->currency]) ?></b>
+                <span class="domain-price-year">/ <?= Yii::t('app', 'year') ?></span>
 
             <?php elseif ($state === 'unavailable') : ?>
                 <span class="domain-taken">

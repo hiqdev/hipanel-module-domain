@@ -375,7 +375,8 @@ JS
                                         'data' => $dropDownZonesOptions,
                                         'hasId' => true,
                                         'inputOptions' => [
-                                            'class' => 'form-control input-lg'
+                                            'value' => 'com',
+                                            'class' => 'form-control input-lg',
                                         ]
                                     ]); ?>
                                 </div>
