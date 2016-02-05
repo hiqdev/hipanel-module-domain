@@ -2,6 +2,7 @@
 
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
+use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
@@ -9,7 +10,7 @@ DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 \hipanel\frontend\assets\HipanelAsset::register($this);
 
-//Yii::$app->assetManager->forceCopy = true; // todo: remove this line
+Yii::$app->assetManager->forceCopy = true; // todo: remove this line
 
 $this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->breadcrumbs->setItems([
@@ -283,7 +284,13 @@ JS
                             <!-- /.col-md-8 -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'zone')->dropDownList($dropDownZonesOptions, ['class' => 'form-control input-lg']); ?>
+                                    <?= $form->field($model, 'zone')->widget(StaticCombo::classname(), [
+                                        'data' => $dropDownZonesOptions,
+                                        'hasId' => false,
+                                        'inputOptions' => [
+                                            'class' => 'form-control input-lg'
+                                        ]
+                                    ]); ?>
                                 </div>
                             </div>
                             <!-- /.col-md-3 -->
