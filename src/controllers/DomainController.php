@@ -553,7 +553,7 @@ class DomainController extends \hipanel\base\CrudController
                 });
                 foreach ($zones as $resource) {
                     if ($resource->zone === $line['zone']) {
-                        $line['tariff'] = $resource;
+                        $line['resource'] = $resource;
                         break;
                     }
                 }
