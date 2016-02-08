@@ -590,9 +590,9 @@ class DomainController extends \hipanel\base\CrudController
      * @param string $type
      * @return array
      */
-    protected function getDomainZones(Tariff $tariff, $type = Resource::TYPE_DOMAIN_REGISTRATION)
+    protected function getDomainZones($tariff, $type = Resource::TYPE_DOMAIN_REGISTRATION)
     {
-        if ($tariff === null) {
+        if ($tariff === null || !$tariff instanceof Tariff) {
             return [];
         }
 
