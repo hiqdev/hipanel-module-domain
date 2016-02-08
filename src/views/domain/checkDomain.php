@@ -375,7 +375,7 @@ JS
                                         'data' => $dropDownZonesOptions,
                                         'hasId' => true,
                                         'inputOptions' => [
-                                            'value' => 'com',
+                                            'value' => $model->zone !== null ? $model->zone : $model::DEFAULT_ZONE,
                                             'class' => 'form-control input-lg',
                                         ]
                                     ]); ?>
