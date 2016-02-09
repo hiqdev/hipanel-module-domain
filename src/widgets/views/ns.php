@@ -2,8 +2,9 @@
 
 use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\assets\NSyncPluginAsset;
+use hipanel\widgets\DynamicFormWidget;
 use hipanel\widgets\Pjax;
-use wbraganca\dynamicform\DynamicFormWidget;
+use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
@@ -35,6 +36,7 @@ $(document).on('pjax:complete', function(event) {
     'id' => 'nss-form-pjax',
     'action' => $actionUrl,
     'enableAjaxValidation' => true,
+    'enableClientValidation' => true,
     'validationUrl' => Url::toRoute(['validate-nss', 'scenario' => 'default']),
     'options' => [
         'data-pjax' => true,
@@ -115,11 +117,35 @@ $(document).on('pjax:complete', function(event) {
                             <div class="item">
                                 <div class="row" style="margin-bottom: 5pt">
                                     <div class="col-md-5">
-                                        <?= $form->field($nsModel, "[$i]name")->textInput(['placeholder' => $nsModel->getAttributeLabel('name')])->label(false) ?>
+                                        <?= $form->field($nsModel, "[$i]name")->textInput([
+                                            'placeholder' => $nsModel->getAttributeLabel('name'),
+                                            'data-attribute' => 'name'
+                                        ])->label(false) ?>
                                     </div>
                                     <div class="col-md-5">
                                         <?php if (!is_array($model)) : ?>
-                                            <?= $form->field($nsModel, "[$i]ip")->textInput(['disabled' => !StringHelper::endsWith($nsModel->name, $model->domain), 'placeholder' => $nsModel->getAttributeLabel('ip')])->label(false) ?>
+                                            <?= $form->field($nsModel, "[$i]ip")->widget(StaticCombo::class, [
+                                                'formElementSelector' => '.item',
+                                                'inputOptions' => [
+                                                    'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
+                                                    'placeholder' => $nsModel->getAttributeLabel('ip'),
+                                                    'data-attribute' => 'ip',
+                                                    'value' => implode(',', (array) $nsModel->ip)
+                                                ],
+                                                'pluginOptions' => [
+                                                    'select2Options' => [
+                                                        'tags' => [],
+                                                        'multiple' => true,
+                                                        'tokenSeparator' => [';', ',', ' '],
+                                                        'minimumResultsForSearch' => -1,
+                                                        'createSearchChoice' => new \yii\web\JsExpression("
+                                                            function(term, data) {
+                                                                return {id:term, text:term};
+                                                            }
+                                                        ")
+                                                    ]
+                                                ]
+                                            ])->label(false) ?>
                                         <?php endif; ?>
                                     </div>
                                     <div class="col-md-2 text-right">

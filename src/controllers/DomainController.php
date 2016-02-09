@@ -38,6 +38,7 @@ use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\models\Ns;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
@@ -179,8 +180,8 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => ValidateFormAction::class,
             ],
             'validate-nss' => [
-                'class'     => ValidateFormAction::class,
-                'model'     => 'hipanel\modules\domain\models\Ns',
+                'class' => ValidateFormAction::class,
+                'model' => Ns::class,
                 'scenario'  => 'default',
                 'allowDynamicScenario' => false,
             ],

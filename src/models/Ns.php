@@ -23,13 +23,15 @@ class Ns extends Model
     public function rules()
     {
         return [
-            [['nsips'], 'required'],
-            [['name', 'ip', 'domain_name'], 'filter', 'filter' => 'trim'],
+            [['name', 'domain_name'], 'filter', 'filter' => 'trim'],
             [['name'],  FqdnValueValidator::className()],
-            [['ip'],  'ip'],
+            [['ip'], 'filter', 'filter' => function ($value) {
+                return StringHelper::explode($value, ',', true, true);
+            }, 'skipOnArray' => true],
+            [['ip'], 'each', 'rule' => ['ip']],
             [['ip'],  function ($attribute, $params) {
                 if (!StringHelper::endsWith($this->name, $this->domain_name)) {
-                    $this->addError($attribute, Yii::t('app', Yii::t('app', 'To assign the IP, NS must be a child from main domain')));
+                    $this->addError($attribute, Yii::t('app', Yii::t('hipanel/domain', 'To assign the IP, NS must be a child from main domain')));
                 }
             }],
         ];
@@ -38,8 +40,8 @@ class Ns extends Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
-            'name' => Yii::t('app', 'Name server'),
-            'ip' => Yii::t('app', 'IP'),
+            'name' => Yii::t('hipanel/domain', 'Name server'),
+            'ip' => Yii::t('hipanel/domain', 'IP'),
         ]);
     }
 }

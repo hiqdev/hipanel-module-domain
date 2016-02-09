@@ -45,12 +45,8 @@ if (typeof String.prototype.endsWith !== 'function') {
             $(this.element).on('change keyup input click', function (event) {
                 var DWContainer = $(that.element).find(that.options.dynamicFormWidgetContainer);
                 DWContainer.find(that.options.dynamicFormWidgetItem).each(function (i, elem) {
-                    var containerFields = $(elem).find('input');
-                    if (that.isChildDomain(containerFields.eq(0).val())) {
-                        containerFields.eq(1).attr('disabled', false);
-                    } else {
-                        containerFields.eq(1).attr('disabled', true);
-                    }
+                    var isChildDomain = that.isChildDomain(that.getNameInput(elem).val());
+                    that.getIpInput(elem).attr('disabled', !isChildDomain);
                 });
             });
         },
@@ -95,6 +91,7 @@ if (typeof String.prototype.endsWith !== 'function') {
                 wholeStrSplitRe = /,\s*/,
                 ipStrSplitRe = /\/\s*/,
                 splits = $(this.element).find(this.options.inlineFieldSelector).val().split(wholeStrSplitRe);
+
             splits.forEach(function (elem, i) {
                 var split = elem.split(ipStrSplitRe);
                 items.push({
@@ -141,10 +138,13 @@ if (typeof String.prototype.endsWith !== 'function') {
             var DWContainer = $(this.element).find(that.options.dynamicFormWidgetContainer);
             DWContainer.find(that.options.dynamicFormWidgetItem).each(function (index, element) {
                 var stateItem = state.shift();
-                var containerFields = $(element).find('input');
-                containerFields.eq(0).val(stateItem.name);
+                that.getNameInput(element).val(stateItem.name);
                 if (that.isChildDomain(stateItem.name)) {
-                    containerFields.eq(1).val(stateItem.ip);
+                    that.getIpInput(element).select2('val', stateItem.ip.split(';').filter(
+                        function (val) {
+                            return val.length;
+                        }
+                    ));
                 }
             });
         },
@@ -158,12 +158,12 @@ if (typeof String.prototype.endsWith !== 'function') {
             var items = [];
             var DWContainer = $(this.element).find(this.options.dynamicFormWidgetContainer);
             DWContainer.find(this.options.dynamicFormWidgetItem).each(function (i, elem) {
-                var containerFields = $(elem).find('input');
+                var ipInput = this.getIpInput(elem);
                 items.push({
-                    name: containerFields.eq(0).val(),
-                    ip: containerFields.eq(1).val()
+                    name: this.getNameInput(elem).val(),
+                    ip: ipInput.data('select2') ? ipInput.select2('val').join(';') : ''
                 });
-            });
+            }.bind(this));
 
             return items;
         },
@@ -171,11 +171,23 @@ if (typeof String.prototype.endsWith !== 'function') {
             var df = $(this.element).find(this.options.dynamicFormWidgetContainer);
             var df_options = window[df.data('dynamicform')];
             df.yiiDynamicForm("addItem", df_options, event, $(df).find(this.options.dynamicFormWidgetInsertButton).eq(-1));
+            //var lastItem = df.find(this.options.dynamicFormWidgetItem).eq(-1);
+            //this.getIpInput(lastItem).select2({
+            //    'tags': true,
+            //    'tokenSeparator': [',', ' ', ';'],
+            //    'minimumResultsForSearch': -1
+            //});
         },
         deleteDynamicItem: function (event) {
             var df = $(this.element).find(this.options.dynamicFormWidgetContainer);
             var df_options = window[df.data('dynamicform')];
             df.yiiDynamicForm("deleteItem", df_options, event, $(df).find(this.options.dynamicFormWidgetDeleteButton).eq(-1));
+        },
+        getNameInput: function (row) {
+            return $(row).find('input[data-attribute="name"]');
+        },
+        getIpInput: function (row) {
+            return $(row).find('input[data-attribute="ip"]');
         }
     };
 
