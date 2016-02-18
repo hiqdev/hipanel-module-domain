@@ -139,7 +139,7 @@ if (typeof String.prototype.endsWith !== 'function') {
             DWContainer.find(that.options.dynamicFormWidgetItem).each(function (index, element) {
                 var stateItem = state.shift();
                 that.getNameInput(element).val(stateItem.name);
-                if (that.isChildDomain(stateItem.name)) {
+                if (that.isChildDomain(stateItem.name) && stateItem.ip) {
                     that.getIpInput(element).select2('val', stateItem.ip.split(';').filter(
                         function (val) {
                             return val.length;
