@@ -12,6 +12,7 @@
 namespace hipanel\modules\domain\grid;
 
 use hipanel\grid\BoxedGridView;
+use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\controllers\DomainController;
 use yii\helpers\Html;
 
@@ -43,7 +44,7 @@ class HostGridView extends BoxedGridView
                 },
             ],
             'ips' => [
-                'class' => 'hiqdev\xeditable\grid\XEditableColumn',
+                'class' => XEditableColumn::class,
                 'pluginOptions' => [
                     'url' => 'update',
                 ],

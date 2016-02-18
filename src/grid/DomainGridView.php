@@ -15,6 +15,7 @@ use hipanel\grid\ActionColumn;
 use hipanel\grid\BoxedGridView;
 use hipanel\grid\MainColumn;
 use hipanel\grid\RefColumn;
+use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
@@ -64,7 +65,7 @@ class DomainGridView extends BoxedGridView
                 'popover'       => Yii::t('app', 'Protection from transfer'),
             ],
             'note'            => [
-                'class'         => 'hiqdev\xeditable\grid\XEditableColumn',
+                'class'         => XEditableColumn::class,
                 'attribute'     => 'note',
                 'filter'        => true,
                 'popover'       => Yii::t('app', 'Make any notes for your convenience'),
