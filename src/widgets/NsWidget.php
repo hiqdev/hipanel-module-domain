@@ -61,7 +61,7 @@ class NsWidget extends Widget
                     $ns_ip  = explode('/', $item);
                     $data['Ns'] = [
                         'name' => $ns_ip[0],
-                        'ip' => explode(';', $ns_ip[1])
+                        'ip' => explode(';', $ns_ip[1]),
                     ];
                 } else {
                     $data['Ns']['name'] = $item;

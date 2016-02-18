@@ -119,7 +119,7 @@ $(document).on('pjax:complete', function(event) {
                                     <div class="col-md-5">
                                         <?= $form->field($nsModel, "[$i]name")->textInput([
                                             'placeholder' => $nsModel->getAttributeLabel('name'),
-                                            'data-attribute' => 'name'
+                                            'data-attribute' => 'name',
                                         ])->label(false) ?>
                                     </div>
                                     <div class="col-md-5">
@@ -130,7 +130,7 @@ $(document).on('pjax:complete', function(event) {
                                                     'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
                                                     'placeholder' => $nsModel->getAttributeLabel('ip'),
                                                     'data-attribute' => 'ip',
-                                                    'value' => implode(',', (array) $nsModel->ip)
+                                                    'value' => implode(',', (array) $nsModel->ip),
                                                 ],
                                                 'pluginOptions' => [
                                                     'select2Options' => [
@@ -138,13 +138,13 @@ $(document).on('pjax:complete', function(event) {
                                                         'multiple' => true,
                                                         'tokenSeparator' => [';', ',', ' '],
                                                         'minimumResultsForSearch' => -1,
-                                                        'createSearchChoice' => new \yii\web\JsExpression("
+                                                        'createSearchChoice' => new \yii\web\JsExpression('
                                                             function(term, data) {
                                                                 return {id:term, text:term};
                                                             }
-                                                        ")
-                                                    ]
-                                                ]
+                                                        '),
+                                                    ],
+                                                ],
                                             ])->label(false) ?>
                                         <?php endif; ?>
                                     </div>

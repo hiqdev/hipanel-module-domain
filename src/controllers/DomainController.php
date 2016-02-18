@@ -6,7 +6,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2015, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
 /**
@@ -15,6 +15,7 @@
  * @license http://hiqdev.com/hipanel-module-domain/license
  * @copyright Copyright (c) 2015 HiQDev
  */
+
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
@@ -106,7 +107,7 @@ class DomainController extends \hipanel\base\CrudController
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'domain-' . $attribute;
-                }
+                },
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
@@ -164,7 +165,7 @@ class DomainController extends \hipanel\base\CrudController
                     'state' => 'domain.domain.state',
                     'client_id' => 'client.client.id',
                     'seller_id' => 'client.client.seller_id',
-                ]
+                ],
             ],
             'view' => [
                 'class' => ViewAction::class,
@@ -192,12 +193,12 @@ class DomainController extends \hipanel\base\CrudController
                     $request = Yii::$app->request;
                     $action->collection->load([[
                         'pincode' => $request->post('pincode'),
-                        'receiver' => $request->post('receiver')
+                        'receiver' => $request->post('receiver'),
                     ]]);
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'push-' . $attribute;
-                }
+                },
             ],
             'set-note' => [
                 'class' => SmartUpdateAction::class,
@@ -206,7 +207,7 @@ class DomainController extends \hipanel\base\CrudController
                 'POST html' => [
                     'save'    => true,
                     'success' => [
-                        'class' => RedirectAction::class
+                        'class' => RedirectAction::class,
                     ],
                 ],
                 'on beforeSave' => function (Event $event) {
@@ -223,7 +224,7 @@ class DomainController extends \hipanel\base\CrudController
             'bulk-set-note' => [
                 'class' => PrepareBulkAction::class,
                 'scenario' => 'set-note',
-                'view' => '_bulkSetNote'
+                'view' => '_bulkSetNote',
             ],
             'set-nss' => [
                 'class' => SmartUpdateAction::class,
@@ -234,7 +235,7 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => RedirectAction::class,
                         'url'   => function ($action) {
                             return $action->controller->redirect(Yii::$app->request->referrer);
-                        }
+                        },
                     ],
                 ],
             ],
@@ -249,7 +250,7 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => ProxyAction::class,
                         'return'   => function ($action) {
                             return ['fuck' => 'yeah'];
-                        }
+                        },
                     ],
                 ],
                 'on beforeFetch' => function (Event $event) {
@@ -528,7 +529,7 @@ class DomainController extends \hipanel\base\CrudController
             return [];
         };
         $fqdn = Yii::$app->request->post('domain');
-        list ($domain, $zone) = explode('.', $fqdn, 2);
+        list($domain, $zone) = explode('.', $fqdn, 2);
         $line = [
             'fqdn' => $fqdn,
             'domain' => $domain,
@@ -565,10 +566,9 @@ class DomainController extends \hipanel\base\CrudController
 
     /**
      * Returns the tariff for the domain operations
-     * Caches the API request for 3600 seconds and depends on client id and seller login
-     *
-     * @return Tariff
+     * Caches the API request for 3600 seconds and depends on client id and seller login.
      * @throws \yii\base\InvalidConfigException
+     * @return Tariff
      */
     protected function getDomainTariff()
     {
@@ -618,12 +618,12 @@ class DomainController extends \hipanel\base\CrudController
         foreach ($zones as $resource) {
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
-        uasort($dropDownZones, function($a, $b) { return $a === '.com' ? 0 : 1; });
+        uasort($dropDownZones, function ($a, $b) { return $a === '.com' ? 0 : 1; });
         if ($model->load(Yii::$app->request->get()) && !empty($dropDownZones)) {
             // Check if domain already have zone
             if (strpos($model->domain, '.') !== false) {
                 list($domain, $zone) = explode('.', $model->domain, 2);
-                if (!in_array('.' . $zone, $dropDownZones)) {
+                if (!in_array('.' . $zone, $dropDownZones, true)) {
                     $zone = 'com';
                 }
                 $model->zone = $zone;
@@ -650,7 +650,7 @@ class DomainController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
-            'results' => $results
+            'results' => $results,
         ]);
     }
 

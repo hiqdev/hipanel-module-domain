@@ -377,7 +377,7 @@ JS
                                         'inputOptions' => [
                                             'value' => $model->zone !== null ? $model->zone : $model::DEFAULT_ZONE,
                                             'class' => 'form-control input-lg',
-                                        ]
+                                        ],
                                     ]); ?>
                                 </div>
                             </div>
