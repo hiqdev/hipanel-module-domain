@@ -4,6 +4,7 @@ hiqdev/hipanel-module-domain commits history
 ## Under development
 
 - Added domain check, register, renewal and transfer
+    - e9fe7e1 2016-02-18 translations (sol@hiqdev.com)
     - 3b565c7 2016-02-18 php-cs-fixed (sol@hiqdev.com)
     - fd7da57 2016-02-18 + no wrapping for expires column (sol@hiqdev.com)
     - 7f31b80 2016-02-09 Implemented support of multiple IPs per host (d.naumenko.a@gmail.com)
