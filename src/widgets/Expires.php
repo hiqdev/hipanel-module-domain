@@ -24,14 +24,14 @@ class Expires extends \hipanel\widgets\Label
     {
         $expires = $this->model->expires;
         if (strtotime('+30 days', time()) < strtotime($expires)) {
-            $class = 'none';
+            $this->color = 'none';
         } elseif (strtotime('+0 days', time()) < strtotime($expires)) {
-            $class = 'warning';
+            $this->color = 'warning';
         } else {
-            $class = 'danger';
+            $this->color = 'danger';
         }
 
-        $this->color = $class;
+        $this->addClass = 'text-nowrap';
         $this->label = \Yii::$app->formatter->asDate($expires);
         parent::init();
     }
