@@ -3,14 +3,25 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
-- Fixed minor issues
+- Added domain check, register, renewal and transfer
+    - 3b565c7 2016-02-18 php-cs-fixed (sol@hiqdev.com)
+    - fd7da57 2016-02-18 + no wrapping for expires column (sol@hiqdev.com)
+    - 7f31b80 2016-02-09 Implemented support of multiple IPs per host (d.naumenko.a@gmail.com)
+    - 48038fd 2016-02-08 Domain check - fixed doman zone dropdown default value (d.naumenko.a@gmail.com)
+    - 55fb325 2016-02-08 Domain::getDomainZones - fixed exception for client with no available tariffs (d.naumenko.a@gmail.com)
+    - 59cee3f 2016-02-05 Domain check refactoring: tariff resources caching, variables renaming, perfomance tuning (d.naumenko.a@gmail.com)
+    - 1f4dca1 2016-02-05 Minor issues (andreyklochok@gmail.com)
+    - 4dd44d4 2016-02-05 Add StaticCombo to checkDomain instead dropDown (andreyklochok@gmail.com)
+    - e0200f8 2016-02-05 domain/checkDomain - fixed resources passing to view (d.naumenko.a@gmail.com)
+    - 27172b8 2016-02-05 Add to cart by ajax (andreyklochok@gmail.com)
+    - 875d88f 2016-02-05 Add price to check domain (andreyklochok@gmail.com)
+    - 7d02e39 2016-02-04 DomainController::indexAction - removed defauls from the filterStorageMap (d.naumenko.a@gmail.com)
     - 4657f2e 2016-02-04 phpcsfixed (sol@hiqdev.com)
     - 9710ecd 2016-01-29 View modal push enhanced (d.naumenko.a@gmail.com)
     - 305e87c 2016-01-29 DomainController - bulkSetContactsModal, domainPushModal, bulkSetNote - redone with PrepareBulkAction (d.naumenko.a@gmail.com)
     - 97acace 2016-01-28 fixing domain push (sol@hiqdev.com)
     - 64ed654 2016-01-28 + added translations (sol@hiqdev.com)
     - 1eb9911 2016-01-28 Host create - fixed ips value after a failed save (d.naumenko.a@gmail.com)
-- Added domain check, register, renewal and transfer
     - f7d6466 2016-02-04 fixing showing domain price, not finished (sol@hiqdev.com)
     - a815bbd 2016-02-03 Add ajax add to cart functionality (andreyklochok@gmail.com)
     - 7166a78 2016-02-03 Fixed domainProduct message category (d.naumenko.a@gmail.com)
