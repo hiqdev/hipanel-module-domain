@@ -8,6 +8,7 @@ use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 
 // TODO: To delete this
 NSyncPluginAsset::register($this);
@@ -138,11 +139,16 @@ $(document).on('pjax:complete', function(event) {
                                                         'multiple' => true,
                                                         'tokenSeparator' => [';', ',', ' '],
                                                         'minimumResultsForSearch' => -1,
-                                                        'createSearchChoice' => new \yii\web\JsExpression('
+                                                        'createSearchChoice' => new JsExpression('
                                                             function(term, data) {
                                                                 return {id:term, text:term};
                                                             }
                                                         '),
+                                                        'formatNoMatches' => new JsExpression('
+                                                            function (term) {
+                                                                return "' . Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
+                                                            }
+                                                        ')
                                                     ],
                                                 ],
                                             ])->label(false) ?>

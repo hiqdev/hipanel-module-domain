@@ -33,4 +33,6 @@ return [
 
     'Domain was successfully pushed' => 'Домен был передан успешно',
     'Failed to push the domain' => 'Не удалось передать домен',
+
+    'Up to 13 IPv4 or IPv6 addresses separated with comma' => 'До 13 IPv4 или IPv6 адресов, разделенных запятыми',
 ];

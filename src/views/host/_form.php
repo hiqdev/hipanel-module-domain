@@ -51,7 +51,7 @@ use yii\helpers\Url;
                     <?= $form->field($model, "[$i]ips")->textInput([
                         'placeholder' => Yii::t('app', 'IP addresses'),
                         'value' => implode(', ', (array) $model->ips),
-                    ])->label(false)->hint('Up to 13 items, IPv4 or IPv6, comma or space delimited') ?>
+                    ])->label(false)->hint(Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>
                 </div>
                 <div class="col-sm-2">
                     <?php if ($model->isNewRecord) : ?>
