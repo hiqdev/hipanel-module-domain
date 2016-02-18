@@ -23,7 +23,7 @@ use yii\helpers\Html;
         <p>
             <?= Yii::t('hipanel/domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
             <?php if ($hasPincode) : ?>
-                <?= Yii::t('app', 'To confirm this, you need to enter a PIN code.'); ?>
+                <?= Yii::t('app', 'To confirm this operation please enter your PIN code') ?>
             <?php endif; ?>
         </p>
     </div>
@@ -54,6 +54,6 @@ use yii\helpers\Html;
         <?= $form->field($model, 'pincode') ?>
     <?php endif; ?>
     <hr>
-    <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton(Yii::t('app', 'Push'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>

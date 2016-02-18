@@ -149,8 +149,8 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => RedirectAction::class,
                     ],
                 ],
-                'success'   => Yii::t('app', 'Domain was successfully pushed'),
-                'error'     => Yii::t('app', 'Failed to push the domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain was successfully pushed'),
+                'error'     => Yii::t('hipanel/domain', 'Failed to push the domain'),
             ],
             'index' => [
                 'class' => IndexAction::class,
