@@ -30,4 +30,7 @@ return [
 
     'Starting the transfer procedure for the following domains' => 'Начинаем процедуру трансфера для следующих доменов',
     'Return to transfer form' => 'Вернуться к форме трансфера',
+
+    'Domain was successfully pushed' => 'Домен был передан успешно',
+    'Failed to push the domain' => 'Не удалось передать домен',
 ];
