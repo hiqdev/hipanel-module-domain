@@ -1,9 +1,12 @@
 <?php
 
+use hipanel\helpers\StringHelper;
+use hiqdev\combo\StaticCombo;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 
 ?>
 <?php $form = ActiveForm::begin([
@@ -48,9 +51,30 @@ use yii\helpers\Url;
                     <?php endif; ?>
                 </div>
                 <div class="col-sm-5">
-                    <?= $form->field($model, "[$i]ips")->textInput([
-                        'placeholder' => Yii::t('app', 'IP addresses'),
-                        'value' => implode(', ', (array) $model->ips),
+                    <?= $form->field($model, "[$i]ips")->widget(StaticCombo::class, [
+                        'formElementSelector' => '.item',
+                        'inputOptions' => [
+                            'placeholder' => Yii::t('app', 'IP addresses'),
+                            'value' => implode(',', (array) $nsModel->ip),
+                        ],
+                        'pluginOptions' => [
+                            'select2Options' => [
+                                'tags' => [],
+                                'multiple' => true,
+                                'tokenSeparator' => [';', ',', ' '],
+                                'minimumResultsForSearch' => -1,
+                                'createSearchChoice' => new JsExpression('
+                                    function(term, data) {
+                                        return {id:term, text:term};
+                                    }
+                                '),
+                                'formatNoMatches' => new JsExpression('
+                                    function (term) {
+                                        return "' . Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
+                                    }
+                                ')
+                            ],
+                        ],
                     ])->label(false)->hint(Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>
                 </div>
                 <div class="col-sm-2">
