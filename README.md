@@ -13,6 +13,7 @@ HiPanel Domain Module
 [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)
 
 [HiPanel](http://hipanel.com) is next generation control panel for hosting, domains and more.
+
 This package provides domain management for HiPanel.
 
 ## Installation

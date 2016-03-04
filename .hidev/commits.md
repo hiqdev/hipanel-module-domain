@@ -4,6 +4,12 @@ hiqdev/hipanel-module-domain commits history
 ## Under development
 
 - Added domain check, register, renewal and transfer
+    - db9a1a9 2016-03-04 added transfer notices (sol@hiqdev.com)
+    - cca24cd 2016-03-04 improving purchasing NOT FINISHED (sol@hiqdev.com)
+    - 3a0fbd7 2016-02-19 Host create page - added combo for IP addresses (d.naumenko.a@gmail.com)
+    - cba40ea 2016-02-18 Spelling (d.naumenko.a@gmail.com)
+    - b911eb0 2016-02-18 NSync - fixed inline-to-form sync (d.naumenko.a@gmail.com)
+    - 4af40f2 2016-02-18 Changed XEditableColumn import namespace (d.naumenko.a@gmail.com)
     - e9fe7e1 2016-02-18 translations (sol@hiqdev.com)
     - 3b565c7 2016-02-18 php-cs-fixed (sol@hiqdev.com)
     - fd7da57 2016-02-18 + no wrapping for expires column (sol@hiqdev.com)
