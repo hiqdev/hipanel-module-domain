@@ -11,18 +11,11 @@
 
 namespace hipanel\modules\domain\cart;
 
-class DomainRegistrationPurchase extends AbstractPurchase
+class DomainRegistrationPurchase extends AbstractDomainPurchase
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function execute()
+    /** {@inheritdoc} */
+    public static function operation()
     {
-        if ($this->validate()) {
-            static::perform('Register', $this->getAttributes());
-            return true;
-        }
-
-        return false;
+        return 'Register';
     }
 }

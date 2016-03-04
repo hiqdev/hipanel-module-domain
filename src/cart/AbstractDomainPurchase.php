@@ -12,22 +12,11 @@
 namespace hipanel\modules\domain\cart;
 
 /**
- * Abstract class AbstractPurchase.
+ * Abstract class AbstractDomainPurchase.
  */
-abstract class AbstractPurchase extends \hipanel\modules\finance\models\AbstractPurchase
+abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\AbstractPurchase
 {
     use \hipanel\base\ModelTrait;
-
-    /**
-     * @var AbstractDomainProduct|DomainRegistrationProduct
-     */
-    public $position;
-
-    /** {@inheritdoc} */
-    public static function index()
-    {
-        return static::type() . 's';
-    }
 
     /** {@inheritdoc} */
     public static function type()

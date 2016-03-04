@@ -11,8 +11,14 @@
 
 namespace hipanel\modules\domain\cart;
 
-class DomainTransferPurchase extends AbstractPurchase
+class DomainTransferPurchase extends AbstractDomainPurchase
 {
+    /** {@inheritdoc} */
+    public static function operation()
+    {
+        return 'Transfer';
+    }
+
     /**
      * @var string the EPP password for the domain transfer
      */
@@ -25,16 +31,4 @@ class DomainTransferPurchase extends AbstractPurchase
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function execute()
-    {
-        if ($this->validate()) {
-            static::perform('Transfer', $this->getAttributes());
-            return true;
-        }
-
-        return false;
-    }
 }

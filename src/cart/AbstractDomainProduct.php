@@ -11,6 +11,7 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\cart\Calculation;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
 use Yii;
@@ -28,7 +29,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
     protected $_operation;
 
     /** {@inheritdoc} */
-    protected $_calculationModel = 'hipanel\modules\domain\cart\Calculation';
+    protected $_calculationModel = Calculation::class;
 
     /**
      * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years

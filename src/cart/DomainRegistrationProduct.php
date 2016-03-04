@@ -11,12 +11,13 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\cart\DomainRegistrationPurchase;
 use Yii;
 
 class DomainRegistrationProduct extends AbstractDomainProduct
 {
     /** {@inheritdoc} */
-    protected $_purchaseModel = 'hipanel\modules\domain\cart\DomainRegistrationPurchase';
+    protected $_purchaseModel = DomainRegistrationPurchase::class;
 
     /** {@inheritdoc} */
     protected $_operation = 'registration';

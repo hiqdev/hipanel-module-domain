@@ -11,8 +11,14 @@
 
 namespace hipanel\modules\domain\cart;
 
-class DomainRenewalPurchase extends AbstractPurchase
+class DomainRenewalPurchase extends AbstractDomainPurchase
 {
+    /** {@inheritdoc} */
+    public static function operation()
+    {
+        return 'Renew';
+    }
+
     /**
      * @var string domain expiration datetime
      */
@@ -23,18 +29,5 @@ class DomainRenewalPurchase extends AbstractPurchase
         return array_merge(parent::rules(), [
             [['expires'], 'required'],
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function execute()
-    {
-        if ($this->validate()) {
-            static::perform('Renew', $this->getAttributes());
-            return true;
-        }
-
-        return false;
     }
 }
