@@ -43,7 +43,7 @@ class DomainTransferPurchase extends AbstractDomainPurchase
         $res = parent::execute();
         if ($res) {
             $view = Yii::$app->getView();
-            $view->params['remarks']['transfer_attention'] = $view->render('@hipanel/modules/domain/views/domain/_transferAttention');
+            $view->params['remarks']['transferAttention'] = $view->render('@hipanel/modules/domain/views/domain/_transferAttention');
         }
 
         return $res;
