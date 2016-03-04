@@ -31,6 +31,7 @@ class Plugin extends \hiqdev\pluginmanager\Plugin
                 'translations' => [
                     'hipanel/domain' => [
                         'class' => 'yii\i18n\PhpMessageSource',
+                        'forceTranslation' => true,
                         'basePath' => '@hipanel/modules/domain/messages',
                         'fileMap' => [
                             'hipanel/domain' => 'domain.php',

@@ -18,6 +18,13 @@ return [
     'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account' => 'Домен будет продлён на один год автоматически за неделю до окончания срока при наличии средств на счету',
     'This operation pushes the domain to another user irrevocably. You can not bring it back.' => 'Данная операция передаёт домен другому пользователю необратимо. Вы не сможете отменить эту операцию.',
 
+    'Transfer confirmation email was sent to:' => 'Письмо для подтверждения трансфера было отправлено по адресу:',
+    'transfer_attention_1' => 'В соответствии с требованиями ICANN трансфер домена требует обязательного подтверждения',
+    'transfer_attention_2' => 'Трансфер не начнется пока вы не подтвердите запрос',
+    'transfer_attention_3' => 'Для продолжения трансфера вы должны подтвердить трансфер перейдя по ссылке полученной в письме отправленном на e-mail Владельца или Административного контакта этого домена указанного в базе данных WHOIS',
+    'transfer_attention_4' => 'Если вы являетесь владельцем домена, но не получаете от нас письмо о трансфере, пожалуйста, проверьте WHOIS информацию соответствующего домена и при необходимости актуализируйте контактные данные либо снимите WHOIS-protect',
+    'transfer_attention_5' => 'Более подробную информацию о процессе трансфера доменов вы можете получить на <a href="http://www.icann.org/ru/resources/registrars/transfers">сайте ICANN</a> и особенно в соответствующем документе: "<a href="http://www.icann.org/ru/resources/registrars/transfers/policy">Политика передачи регистраций между регистраторами</a>"',
+
     'Domain check' => 'Проверка доступности доменов',
     'Status' => 'Статус',
     'Special' => 'Special',

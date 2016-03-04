@@ -11,6 +11,8 @@
 
 namespace hipanel\modules\domain\cart;
 
+use Yii;
+
 class DomainTransferPurchase extends AbstractDomainPurchase
 {
     /** {@inheritdoc} */
@@ -31,4 +33,19 @@ class DomainTransferPurchase extends AbstractDomainPurchase
         ]);
     }
 
+    public function renderNotes()
+    {
+        return Yii::t('hipanel/domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
+    }
+
+    public function execute()
+    {
+        $res = parent::execute();
+        if ($res) {
+            $view = Yii::$app->getView();
+            $view->params['remarks']['transfer_attention'] = $view->render('@hipanel/modules/domain/views/domain/_transferAttention');
+        }
+
+        return $res;
+    }
 }
