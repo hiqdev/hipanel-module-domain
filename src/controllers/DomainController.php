@@ -728,20 +728,9 @@ class DomainController extends \hipanel\base\CrudController
     {
         $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
         if ($ids) {
-            //            $models = static::newModel()->find()->where([
-//                'id' => $ids,
-//            ])->search(null, ['scenario' => 'GetNSs']);
-//
-//            /*
-//             * Domain[12323][id] = 12323
-//             * Domain[12322][id] = 12322
-//             * Domain[12324][id] = 12324
-//             * Domain[12325][id] = 12325
-//             */
             $model = $this->newModel(['scenario' => 'set-ns']);
             $collection = (new Collection(['model' => $model]))->load($model::perform('GetNSs', ArrayHelper::make_sub($ids, 'id'), true));
 
-//            $collection = (new Collection(['model' => $this->newModel()]))->load()->perform('GetNSs');
             return $this->renderAjax('_modalNsBody', [
                 'models' => $collection->models,
             ]);
