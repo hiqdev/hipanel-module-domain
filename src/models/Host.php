@@ -52,7 +52,7 @@ class Host extends \hipanel\base\Model
         return $this->mergeAttributeLabels([
             'remoteid'              => Yii::t('app', 'Remote ID'),
             'seller'                => Yii::t('app', 'Reseller'),
-            'host'                  => Yii::t('app', 'Name Server'),
+            'host'                  => Yii::t('hipanel/domain', 'Name server'),
             'ip'                    => Yii::t('app', 'IP'),
             'ips'                   => Yii::t('app', 'IPs'),
             'created_date'          => Yii::t('app', 'Create Time'),

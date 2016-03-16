@@ -11,7 +11,16 @@
 
 namespace hipanel\modules\domain\models;
 
+use Yii;
+
 class HostSearch extends Host
 {
     use \hipanel\base\SearchModelTrait;
+
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'host_like' => Yii::t('hipanel/domain', 'Name server')
+        ]);
+    }
 }

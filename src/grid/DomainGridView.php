@@ -103,7 +103,7 @@ class DomainGridView extends BoxedGridView
             'actions'         => [
                 'class'    => ActionColumn::className(),
                 'template' => '{view} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
-                'header'   => Yii::t('app', 'Actions'),
+                'header'   => Yii::t('hipanel', 'Actions'),
                 'buttons'  => [
                     'notify-transfer-in' => function ($url, $model, $key) {
                         return $model->state === 'preincoming'
