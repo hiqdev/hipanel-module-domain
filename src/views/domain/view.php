@@ -35,8 +35,6 @@ CSS
 
     <div class="col-md-3">
 
-        <?= Html::a(Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-block margin-bottom btn-warning', 'data-pjax' => 0]); ?>
-
         <?php Box::begin([
             'options' => [
                 'class' => 'box-solid',
@@ -75,6 +73,9 @@ CSS
                         ],
                     ]) ?>
 
+                </li>
+                <li>
+                    <?= Html::a('<i class="fa fa-forward"></i>' . Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]); ?>
                 </li>
                 <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_sync_button', compact('model')) ?></li>

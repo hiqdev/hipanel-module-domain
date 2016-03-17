@@ -10,7 +10,9 @@
  */
 
 return [
+<<<<<<< HEAD
     'Domains' => 'Домены',
+    'Renew domain' => 'Продлить домен',
 
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Incoming transfer domains' => 'Входящий трансфер',
