@@ -20,6 +20,8 @@ class Calculation extends \hipanel\modules\finance\models\Calculation
     {
         parent::init();
 
+        $this->client = $this->position->getModel()->client;
+        $this->seller = $this->position->getModel()->seller;
         $this->object = 'domain';
     }
 
