@@ -56,7 +56,7 @@ CSS
             <ul class="nav">
                 <li>
                     <?php $url = 'http://' . $model->domain . '/' ?>
-                    <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site ') . $url, $url, ['target' => '_blank']); ?>
+                    <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site ') . \yii\helpers\StringHelper::truncate($url, 15), $url, ['target' => '_blank']); ?>
                 </li>
                 <li>
                     <?= AjaxModal::widget([
