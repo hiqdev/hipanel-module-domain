@@ -10,7 +10,6 @@
  */
 
 return [
-<<<<<<< HEAD
     'Domains' => 'Домены',
     'Renew domain' => 'Продлить домен',
 
