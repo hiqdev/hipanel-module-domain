@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="col-md-4">
         <?= $search->field('state')->dropDownList(Domain::stateOptions(), ['prompt' => '--']) ?>
         <div class="form-group">
-            <?= Html::tag('label', 'Registered range', ['class' => 'control-label']); ?>
+            <?= Html::tag('label', Yii::t('hipanel/domain', 'Registered range'), ['class' => 'control-label']); ?>
             <?= DatePicker::widget([
                 'model'         => $search->model,
                 'type'          => DatePicker::TYPE_RANGE,

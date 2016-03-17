@@ -10,6 +10,8 @@
  */
 
 return [
+    'Domains' => 'Домены',
+
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Incoming transfer domains' => 'Входящий трансфер',
     'Outgoing transfer domains' => 'Исходящий трансфер',
@@ -45,4 +47,24 @@ return [
     'Up to 13 IPv4 or IPv6 addresses separated with comma' => 'До 13 IPv4 или IPv6 адресов, разделенных запятыми',
 
     'Name server' => 'Сервер имен',
+    'Sync contacts' => 'Синхронизировать контакты',
+    'Renew' => 'Продлить',
+
+    'Enable Hold' => 'Прекратить делегирование',
+    'Disable Hold' => 'Восстановить делегирование',
+    'Enable WHOIS protect' => 'Вкл. защиту WHOIS',
+    'Disable WHOIS protect' => 'Откл. защиту WHOIS',
+    'Enable Lock' => 'Вкл. защиту от трансфера',
+    'Disable Lock' => 'Откл. защиту от трансфера',
+    'Enable autorenew' => 'Вкл. автопродление',
+    'Disable autorenew' => 'Откл. автопродление',
+    'Push' => 'Передать',
+    'Push domain' => 'Передать домен',
+    'Set notes' => 'Установить заметки',
+    'Set NS' => 'Установить сервера имен',
+    'Change contacts' => 'Сменить контакты',
+    'Registered range' => 'Период регистрации',
+    'Go to site ' => 'Перейти на сайт ',
+    'Renew domain' => 'Продлить домен',
+    'Manage DNS' => 'Управлять DNS',
 ];

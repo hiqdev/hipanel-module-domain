@@ -102,7 +102,7 @@ class DomainGridView extends BoxedGridView
             ],
             'actions'         => [
                 'class'    => ActionColumn::className(),
-                'template' => '{view} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
+                'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
                 'header'   => Yii::t('hipanel', 'Actions'),
                 'buttons'  => [
                     'notify-transfer-in' => function ($url, $model, $key) {
@@ -214,19 +214,26 @@ class DomainGridView extends BoxedGridView
                         }
 
                         if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
-                            return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('app', 'Enable Hold'), $url);
+                            return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('hipanel/domain', 'Enable Hold'), $url);
                         }
 
                         return '';
                     },
                     'disable-hold'  => function ($url, $model, $key) {
                         return ($model->is_holded && in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
-                            ? Html::a('<i class="fa fa-link"></i>' . Yii::t('app', 'Disable Hold'), $url, [
+                            ? Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel/domain', 'Disable Hold'), $url, [
                                 'data' => [
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
+                    },
+                    'manage-dns'  => function ($url, $model, $key) {
+                        if (Yii::getAlias('@dns', false)) {
+                            return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel/domain', 'Manage DNS'), ['@dns/zone/view', 'id' => $model->id]);
+                        }
+
+                        return '';
                     },
                 ],
             ],

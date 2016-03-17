@@ -18,18 +18,18 @@ use yii\helpers\Html;
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
 
-        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
+        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
 
         <p>
             <?= Yii::t('hipanel/domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
             <?php if ($hasPincode) : ?>
-                <?= Yii::t('app', 'To confirm this operation please enter your PIN code') ?>
+                <?= Yii::t('hipanel', 'To confirm this operation please enter your PIN code') ?>
             <?php endif; ?>
         </p>
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><?= Yii::t('app', 'Affected domains') ?></div>
+        <div class="panel-heading"><?= Yii::t('hipanel/domain', 'Affected domains') ?></div>
         <div class="panel-body">
             <?= ArraySpoiler::widget([
                 'data' => $models,
@@ -54,6 +54,6 @@ use yii\helpers\Html;
         <?= $form->field($model, 'pincode') ?>
     <?php endif; ?>
     <hr>
-    <?= Html::submitButton(Yii::t('app', 'Push'), ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton(Yii::t('hipanel/domain', 'Push'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>

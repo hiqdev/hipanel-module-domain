@@ -6,15 +6,15 @@ use yii\web\JsExpression;
 
 Modal::begin([
     'id' => 'domain-contacts-modal',
-    'header' => '<h4 class="modal-title">' . Yii::t('app', 'Change contacts') . '</h4>',
+    'header' => '<h4 class="modal-title">' . Yii::t('hipanel/domain', 'Change contacts') . '</h4>',
     'toggleButton' => [
-        'label' => Yii::t('app', 'Change contacts'),
+        'label' => Yii::t('hipanel/domain', 'Change contacts'),
         'class' => 'btn btn-default',
     ],
     'clientEvents' => [
         'show.bs.modal' => new JsExpression("
             function() {
-                var ids = '{$model->id}';;
+                var ids = '{$model->id}';
                 if (!ids) {
                     ids = jQuery('div[role=\"grid\"]').yiiGridView('getSelectedRows');
                 }
@@ -27,7 +27,7 @@ Modal::begin([
                 );
         }"),
     ],
-    'footer' => Html::button(Yii::t('app', 'Save'), ['id' => 'modal-save-contacts-button', 'class' => 'btn btn-default', 'style' => 'display: none;']),
+    'footer' => Html::button(Yii::t('hipanel', 'Save'), ['id' => 'modal-save-contacts-button', 'class' => 'btn btn-default', 'style' => 'display: none;']),
 ]); ?>
 
 <div class="progress">

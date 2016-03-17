@@ -35,7 +35,7 @@ CSS
 
     <div class="col-md-3">
 
-        <?= Html::a(Yii::t('app', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-block margin-bottom btn-warning', 'data-pjax' => 0]); ?>
+        <?= Html::a(Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-block margin-bottom btn-warning', 'data-pjax' => 0]); ?>
 
         <?php Box::begin([
             'options' => [
@@ -58,17 +58,17 @@ CSS
             <ul class="nav">
                 <li>
                     <?php $url = 'http://' . $model->domain . '/' ?>
-                    <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('app', 'Go to site ') . $url, $url, ['target' => '_blank']); ?>
+                    <?= Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site ') . $url, $url, ['target' => '_blank']); ?>
                 </li>
                 <li>
                     <?= AjaxModal::widget([
                         'id' => 'push-modal-link',
-                        'header' => Html::tag('h4', Yii::t('app', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
+                        'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
                         'scenario' => 'push',
                         'actionUrl' => ['domain-push-modal', 'id' => $model->id],
                         'size' => Modal::SIZE_DEFAULT,
                         'toggleButton' => [
-                            'label' => '<i class="ion-ios-paperplane-outline"></i> ' . Yii::t('app', 'Push domain'),
+                            'label' => '<i class="ion-ios-paperplane-outline"></i> ' . Yii::t('hipanel/domain', 'Push domain'),
                             'class' => 'clickable',
                             'data-pjax' => 0,
                             'tag' => 'a',
