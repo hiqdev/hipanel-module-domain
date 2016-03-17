@@ -249,7 +249,6 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => ProxyAction::class,
                         'action' => 'index'
-                    ],
                 ],
                 'on beforeFetch' => function (Event $event) {
                     /** @var \hipanel\actions\SearchAction $action */
