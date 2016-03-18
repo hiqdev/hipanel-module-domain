@@ -74,7 +74,7 @@ JS
     'footer' => Html::submitButton(Yii::t('app', 'Save'), [
         'id' => 'modal-save-ns-button',
         'class' => 'btn btn-default btn-loading',
-        'data-loading-text' => Yii::t('app', 'Loading') . '...',
+        'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'loading'),
         'data-loading-icon' => 'glyphicon glyphicon-refresh',
     ]),
 ]); ?>

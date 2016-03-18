@@ -66,6 +66,6 @@ return [
     'Change contacts' => 'Сменить контакты',
     'Registered range' => 'Период регистрации',
     'Go to site ' => 'Перейти на сайт ',
-    'Renew domain' => 'Продлить домен',
     'Manage DNS' => 'Управлять DNS',
+    'Adding' => 'Добавляем'
 ];

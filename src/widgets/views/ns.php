@@ -85,7 +85,7 @@ $(document).on('pjax:complete', function(event) {
             <?= Html::submitButton(Yii::t('app', 'Save'), [
                 'class' => 'btn btn-success',
                 'id' => 'nss-save-button',
-                'data-loading-text' => Yii::t('app', 'Saving') . '...',
+                'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'saving'),
             ]) ?>
         </div>
     </div>
