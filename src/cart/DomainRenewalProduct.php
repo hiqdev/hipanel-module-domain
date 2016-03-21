@@ -11,6 +11,7 @@
 
 namespace hipanel\modules\domain\cart;
 
+use DateTime;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 
@@ -28,19 +29,27 @@ class DomainRenewalProduct extends AbstractDomainProduct
         return ['model_id'];
     }
 
+    /**
+     * @var integer[] The limit of days before expiration date for each domain zone, when domain can be renewed.
+     */
+    protected $daysBeforeExpire = [
+        'ru' => 56,
+        'su' => 56,
+        'рф' => 56,
+    ];
+
     /** {@inheritdoc} */
     public function load($data, $formName = null)
     {
-        $result = parent::load($data, '');
-        if ($result) {
-            $this->loadRelatedData();
+        if ($result = parent::load($data, '')) {
+            $this->ensureRelatedData();
         }
 
         return $result;
     }
 
     /** {@inheritdoc} */
-    private function loadRelatedData()
+    private function ensureRelatedData()
     {
         $this->_model = Domain::findOne(['id' => $this->model_id]);
         $this->name = $this->_model->domain;
@@ -64,8 +73,31 @@ class DomainRenewalProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function getPurchaseModel($options = [])
     {
-        $this->loadRelatedData(); // To get fresh domain expiration date
+        $this->ensureRelatedData(); // To get fresh domain expiration date
         return parent::getPurchaseModel(array_merge(['expires' => $this->_model->expires], $options));
+    }
+
+    /**
+     * Checks whether domain reached the limit of days before expiration date and can be renewed
+     *
+     * @param $attribute
+     * @return bool
+     */
+    public function daysBeforeExpireValidator($attribute)
+    {
+        if (isset($this->daysBeforeExpire[$this->getZone()])) {
+            $minDays = $this->daysBeforeExpire[$this->getZone()];
+            $interval = (new DateTime())->diff(new DateTime($this->_model->expires));
+            $diff = $interval->format('%a') - $minDays;
+            if ($diff > 0) {
+                $date = Yii::$app->formatter->asDate((new DateTime())->add(new \DateInterval("P{$diff}D")));
+                $this->addError('id', Yii::t('hipanel/domain', 'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})', ['zone' => $this->getZone(), 'min' => $minDays, 'date' => $date, 'days' => $diff, 'domain' => $this->name]));
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /** {@inheritdoc} */
@@ -73,6 +105,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
     {
         return array_merge(parent::rules(), [
             [['model_id'], 'integer'],
+            [['id'], 'daysBeforeExpireValidator'],
         ]);
     }
 }
