@@ -365,7 +365,7 @@ JS
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('app', 'Domain search...'), 'class' => 'form-control input-lg']); ?>
+                                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('hipanel/domain', 'Domain name'), 'class' => 'form-control input-lg']); ?>
                                 </div>
                             </div>
                             <!-- /.col-md-8 -->

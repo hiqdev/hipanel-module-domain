@@ -31,8 +31,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function load($data, $formName = null)
     {
-        $result = parent::load($data, '');
-        if ($result) {
+        if ($result = parent::load($data, '')) {
             $this->description = Yii::t('hipanel/domain', 'Registration');
         }
 
