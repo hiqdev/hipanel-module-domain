@@ -37,6 +37,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
     protected $quantityLimits = [
         'ru' => 1,
         'su' => 1,
+        'рф' => 1,
         '*' => 10,
     ];
 
@@ -68,6 +69,14 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
     {
         $result = [];
         $limit = isset($this->quantityLimits[$this->getZone()]) ? $this->quantityLimits[$this->getZone()] : $this->quantityLimits['*'];
+
+        if ($this->_model) {
+            $interval = (new \DateTime())->diff(new \DateTime($this->_model->expires));
+            if ($interval->y > 0 && !$interval->invert) {
+                $limit -= $interval->y;
+            }
+        }
+
         for ($n = 1; $n <= $limit; ++$n) {
             $result[$n] = Yii::t('hipanel/domain', '{0, plural, one{# year} other{# years}}', $n);
         }
