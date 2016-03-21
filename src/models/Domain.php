@@ -452,4 +452,9 @@ class Domain extends \hipanel\base\Model
 
         return $i;
     }
+
+    public function canRenew()
+    {
+        return in_array($this->state, [static::STATE_OK, static::STATE_EXPIRED]);
+    }
 }
