@@ -248,9 +248,7 @@ class DomainController extends \hipanel\base\CrudController
                     'save'    => true,
                     'success' => [
                         'class' => ProxyAction::class,
-                        'return'   => function ($action) {
-                            return ['fuck' => 'yeah'];
-                        },
+                        'action' => 'index'
                     ],
                 ],
                 'on beforeFetch' => function (Event $event) {

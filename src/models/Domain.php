@@ -117,7 +117,6 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
-            [['nsips'], 'required', 'on' => 'set-nss'],
             [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
