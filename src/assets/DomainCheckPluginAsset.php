@@ -3,7 +3,7 @@
 /*
  * Domain plugin for HiPanel
  *
- * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @link      https://github.com/hiqdev/hipanel-domain-checker
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
  * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
