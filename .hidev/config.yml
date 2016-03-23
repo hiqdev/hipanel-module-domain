@@ -1,0 +1,10 @@
+package:
+    type:           yii2-extension
+    name:           hipanel-domain-checker
+    title:          HiPanel Domain Checker module
+    keywords:       hipanel, domain-checker
+    namespace:      hipanel\domainchecker
+
+require:
+    hiqdev/hidev-php:       "*"
+    hiqdev/hidev-vendor:    "*"
