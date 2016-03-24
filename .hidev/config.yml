@@ -3,7 +3,7 @@ package:
     name:           hipanel-domain-checker
     title:          HiPanel Domain Checker module
     keywords:       hipanel, domain-checker
-    namespace:      hipanel\domainchecker
+    namespace:      hipanel\modules\domainchecker
 
 require:
     hiqdev/hidev-php:       "*"
