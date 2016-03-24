@@ -1,15 +1,15 @@
 <?php
 
 /*
- * Domain plugin for HiPanel
+ * Domain checker plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-domain-checker
- * @package   hipanel-module-domain
+ * @package   hipanel-domain-checker
  * @license   BSD-3-Clause
  * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hipanel\modules\domain\assets;
+namespace hipanel\modules\domainchecker\assets;
 
 use yii\web\AssetBundle;
 
@@ -18,7 +18,7 @@ class DomainCheckPluginAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@hipanel/modules/domain/assets/DomainCheckPluginAssets';
+    public $sourcePath = '@hipanel/modules/domainchecker/assets/DomainCheckPluginAssets';
 
     /**
      * @var array
