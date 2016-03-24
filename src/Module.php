@@ -7,5 +7,5 @@ namespace hipanel\modules\domainchecker;
  */
 class Module extends \hipanel\base\Module
 {
-    public $controllerNamespace = 'hipanel\modules\domainchecker\controllers';
+//    public $controllerNamespace = 'hipanel\modules\domainchecker\controllers';
 }
