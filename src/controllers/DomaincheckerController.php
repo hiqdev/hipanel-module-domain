@@ -25,20 +25,20 @@ class DomaincheckerController extends \hipanel\base\CrudController
         ];
 
         if ($fqdn) {
-//            $check = Domain::perform('Check', ['domains' => [$fqdn]], true);
-            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
+            $check = Domain::perform('Check', ['domains' => [$fqdn]], true);
+//            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
             if ($check[$fqdn] === 0) {
                 $line['isAvailable'] = false;
             } else {
-//                $tariff = $this->getDomainTariff();
-//                $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
-//
-//                foreach ($zones as $resource) {
-//                    if ($resource->zone === $zone) {
-//                        $line['resource'] = $resource;
-//                        break;
-//                    }
-//                }
+                $tariff = $this->getDomainTariff();
+                $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
+
+                foreach ($zones as $resource) {
+                    if ($resource->zone === $zone) {
+                        $line['resource'] = $resource;
+                        break;
+                    }
+                }
 
                 $line['isAvailable'] = true;
             }
