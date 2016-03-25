@@ -44,7 +44,7 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                     ],
                     'check-domain' => [
                         'label' => Yii::t('app', 'Check domain'),
-                        'url'   => ['/domain/domain/check-domain'],
+                        'url'   => ['/domainchecker/domainchecker/check-domain'],
                     ],
                     'transfer' => [
                         'label' => Yii::t('app', 'Domain transfer'),
