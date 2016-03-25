@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var array $line */
+$addToCartPath = '/domain/domain/add-to-cart-registration';
 ?>
 
 <div class="domain-iso-line
@@ -54,7 +55,7 @@ use yii\helpers\Url;
                     'class' => 'btn btn-flat bg-olive add-to-cart-button',
                     'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Adding'),
                     'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'In cart'),
-                    'data-domain-url' => Url::to(['add-to-cart-registration', 'name' => $line['fqdn']]),
+                    'data-domain-url' => Url::to([$addToCartPath, 'name' => $line['fqdn']]),
                 ]) ?>
             <?php elseif ($line['isAvailable'] === false) : ?>
                 <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>

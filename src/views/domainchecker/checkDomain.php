@@ -10,8 +10,6 @@ DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 \hipanel\frontend\assets\HipanelAsset::register($this);
 
-//Yii::$app->assetManager->forceCopy = true; // todo: remove this line
-
 $this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->breadcrumbs->setItems([
     $this->title,
