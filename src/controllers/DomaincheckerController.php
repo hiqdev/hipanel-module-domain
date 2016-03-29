@@ -2,6 +2,7 @@
 
 namespace hipanel\modules\domainchecker\controllers;
 
+use hipanel\base\Cache;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
@@ -56,6 +57,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
      */
     public function actionCheckDomain()
     {
+        $smp = $this->getViewPath();
         $results = [];
         $model = new Domain();
         $model->scenario = 'check-domain';
@@ -116,7 +118,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
             Yii::$app->user->isGuest ? null : Yii::$app->user->id,
         ];
 
-        return Yii::$app->get('cache')->getTimeCached(3600, $params, function ($seller, $client_id) {
+        return (new Cache())->getTimeCached(3600, $params, function ($seller, $client_id) {
             return Tariff::find(['scenario' => 'get-available-info'])
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
