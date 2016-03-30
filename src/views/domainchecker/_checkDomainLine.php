@@ -39,26 +39,26 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
             <?php if ($line['isAvailable']) : ?>
                 <!--del>0.00 €</del-->
                 <b><?= Yii::$app->formatter->format($line['resource']->price, ['currency', $line['resource']->currency]) ?></b>
-                <span class="domain-price-year">/ <?= Yii::t('app', 'year') ?></span>
+                <span class="domain-price-year">/ <?= Yii::t('hipanel/domainchecker', 'year') ?></span>
 
             <?php elseif ($line['isAvailable'] === false) : ?>
                 <span class="domain-taken">
-                    <?= Yii::t('app', 'Domain is not available') ?>
+                    <?= Yii::t('hipanel/domainchecker', 'Domain is not available') ?>
                 </span>
             <?php endif; ?>
         </span>
         </div>
         <div class="col-md-2 col-sm-12 col-xs-12">
             <?php if ($line['isAvailable'] === true) : ?>
-                <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('app', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['fqdn']], [
+                <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel/domainchecker', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['fqdn']], [
                     'data-pjax' => 0,
                     'class' => 'btn btn-flat bg-olive add-to-cart-button',
-                    'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Adding'),
-                    'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'In cart'),
+                    'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domainchecker', 'Adding'),
+                    'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domainchecker', 'In cart'),
                     'data-domain-url' => Url::to([$addToCartPath, 'name' => $line['fqdn']]),
                 ]) ?>
             <?php elseif ($line['isAvailable'] === false) : ?>
-                <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('app', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+                <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel/domainchecker', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
             <?php endif; ?>
         </div>
     </div>
