@@ -45,5 +45,8 @@
         "psr-4": {
             "hipanel\\modules\\domainchecker\\": "src"
         }
+    },
+    "extra": {
+        "bootstrap": "hipanel\\modules\\domainchecker\\Bootstrap"
     }
 }
