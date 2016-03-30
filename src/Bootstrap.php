@@ -15,5 +15,6 @@ class Bootstrap implements BootstrapInterface
                 'hipanel/domainchecker' => 'domainchecker.php',
             ],
         ];
+        \Yii::setAlias('@domainchecker', '/domainchecker/domainchecker');
     }
 }

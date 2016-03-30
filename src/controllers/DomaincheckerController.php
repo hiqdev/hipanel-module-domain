@@ -57,7 +57,6 @@ class DomaincheckerController extends \hipanel\base\CrudController
      */
     public function actionCheckDomain()
     {
-        $smp = $this->getViewPath();
         $results = [];
         $model = new Domain();
         $model->scenario = 'check-domain';
@@ -70,7 +69,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
         uasort($dropDownZones, function ($a, $b) { return $a === '.com' ? 0 : 1; });
-        if ($model->load(Yii::$app->request->get()) && !empty($dropDownZones)) {
+        if ($model->load(Yii::$app->request->get(), '') && !empty($dropDownZones)) {
             // Check if domain already have zone
             if (strpos($model->domain, '.') !== false) {
                 list($domain, $zone) = explode('.', $model->domain, 2);
@@ -114,7 +113,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
     protected function getDomainTariff()
     {
         $params = [
-            Yii::$app->user->isGuest ? Yii::$app->params['user.seller'] : Yii::$app->user->identity->seller,
+            Yii::$app->user->isGuest ? Yii::$app->params['seller'] : Yii::$app->user->identity->seller,
             Yii::$app->user->isGuest ? null : Yii::$app->user->id,
         ];
 
