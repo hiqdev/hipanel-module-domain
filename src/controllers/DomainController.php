@@ -40,8 +40,6 @@ use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Ns;
-use hipanel\modules\finance\models\Resource;
-use hipanel\modules\finance\models\Tariff;
 use hiqdev\hiart\Collection;
 use hiqdev\hiart\ErrorResponseException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
@@ -51,7 +49,6 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\data\ArrayDataProvider;
-use yii\helpers\Html;
 
 class DomainController extends \hipanel\base\CrudController
 {
