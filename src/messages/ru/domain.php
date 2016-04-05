@@ -24,6 +24,7 @@ return [
     'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account' => 'Домен будет продлён на один год автоматически за неделю до окончания срока при наличии средств на счету',
     'This operation pushes the domain to another user irrevocably. You can not bring it back.' => 'Данная операция передаёт домен другому пользователю необратимо. Вы не сможете отменить эту операцию.',
 
+    'Transfer domain' => 'Трансфер домена',
     'Transfer confirmation email was sent to:' => 'Письмо для подтверждения трансфера было отправлено по адресу:',
     'transfer_attention_1' => 'В соответствии с требованиями ICANN трансфер домена требует обязательного подтверждения',
     'transfer_attention_2' => 'Трансфер не начнется пока вы не подтвердите запрос',
