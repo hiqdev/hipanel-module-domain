@@ -117,7 +117,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
             Yii::$app->user->isGuest ? null : Yii::$app->user->id,
         ];
 
-        return (new Cache())->getTimeCached(3600, $params, function ($seller, $client_id) {
+        return Yii::$app->getCache()->getTimeCached(3600, $params, function ($seller, $client_id) {
             return Tariff::find(['scenario' => 'get-available-info'])
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
