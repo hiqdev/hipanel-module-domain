@@ -1,5 +1,6 @@
 <?php
 
+use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
 use hiqdev\combo\StaticCombo;
@@ -352,6 +353,7 @@ JS
                     <div class="box-body">
                         <?php $form = ActiveForm::begin([
                             'id' => 'check-domain',
+                            'action' => Url::to(['@domainchecker/check-domain']),
                             'method' => 'get',
                             'options' => [
                                 'data-pjax' => false,
@@ -363,7 +365,11 @@ JS
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'domain')->textInput(['placeholder' => Yii::t('hipanel/domainchecker', 'Domain name'), 'class' => 'form-control input-lg']); ?>
+                                    <?= $form->field($model, 'domain')->textInput([
+                                        'placeholder' => Yii::t('hipanel/domainchecker', 'Domain name'),
+                                        'class' => 'form-control input-lg',
+                                        'name' => 'domain',
+                                    ]); ?>
                                 </div>
                             </div>
                             <!-- /.col-md-8 -->
@@ -375,6 +381,7 @@ JS
                                         'inputOptions' => [
                                             'value' => $model->zone !== null ? $model->zone : $model::DEFAULT_ZONE,
                                             'class' => 'form-control input-lg',
+                                            'name' => 'zone',
                                         ],
                                     ]); ?>
                                 </div>
