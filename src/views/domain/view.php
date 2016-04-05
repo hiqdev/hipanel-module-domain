@@ -7,6 +7,7 @@ use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
+use hipanel\widgets\ModalButton;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
@@ -81,6 +82,54 @@ CSS
                 <?php } ?>
                 <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_sync_button', compact('model')) ?></li>
+                <?php endif ?>
+                <?php if ($model->isFreezed() && Yii::$app->user->can('unfreeze')) : ?>
+                    <li>
+                        <?= ModalButton::widget([
+                            'model' => $model,
+                            'scenario' => 'disable-freeze',
+                            'button' => [
+                                'label' => '<i class="fa fa-unlock"></i>' . Yii::t('hipanel/domain', 'Unfreeze'),
+                            ],
+                            'modal' => [
+                                'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Confirm domain unfreezing')),
+                                'headerOptions' => ['class' => 'label-info'],
+                                'footer' => [
+                                    'label' => Yii::t('hipanel/domain', 'Unfreeze domain'),
+                                    'data-loading-text' => Yii::t('hipanel/domain', 'Unfreezing domain...'),
+                                    'class' => 'btn btn-danger',
+                                ],
+                            ],
+                            'body' => Yii::t('hipanel/domain',
+                                'Are you sure, that you want to unfreeze domain <b>{domain}</b>?',
+                                ['domain' => $model->domain]
+                            )
+                        ]) ?>
+                    </li>
+                <?php endif ?>
+                <?php if (!$model->isFreezed() && Yii::$app->user->can('freeze')) : ?>
+                    <li>
+                        <?= ModalButton::widget([
+                            'model' => $model,
+                            'scenario' => 'enable-freeze',
+                            'button' => [
+                                'label' => '<i class="fa fa-lock"></i>' . Yii::t('hipanel/domain', 'Freeze'),
+                            ],
+                            'modal' => [
+                                'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Confirm domain freezing')),
+                                'headerOptions' => ['class' => 'label-info'],
+                                'footer' => [
+                                    'label' => Yii::t('hipanel/domain', 'Freeze domain'),
+                                    'data-loading-text' => Yii::t('hipanel/domain', 'Freezing domain...'),
+                                    'class' => 'btn btn-danger',
+                                ],
+                            ],
+                            'body' => Yii::t('hipanel/domain',
+                                'Are you sure, that you want to freeze domain <b>{domain}</b>?',
+                                ['domain' => $model->domain]
+                            )
+                        ]) ?>
+                    </li>
                 <?php endif ?>
             </ul>
         </div>

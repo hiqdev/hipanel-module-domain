@@ -316,12 +316,10 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'enable-freeze' => [
                 'class'     => SmartPerformAction::class,
-                'scenario'  => 'only-object',
                 'success'   => Yii::t('app', 'Freeze was enabled'),
             ],
             'disable-freeze' => [
                 'class'     => SmartPerformAction::class,
-                'scenario'  => 'only-object',
                 'success'   => Yii::t('app', 'Freeze was disabled'),
             ],
             'OLD-set-ns' => [

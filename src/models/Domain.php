@@ -62,8 +62,8 @@ class Domain extends \hipanel\base\Model
             [['seller', 'seller_name', 'client', 'client_name'],                                                        'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'],  'date'],
             [['registered', 'operated'],                                                                                'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_freezed', 'is_premium', 'is_secured', 'whois_protected'],      'boolean'],
-            [['premium_autorenewal', 'expires_soon', 'autorenewal'],                                                    'boolean'],
+            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'],          'boolean'],
+            [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'],                                 'boolean'],
             [['foa_sent_to'],                                                                                           'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
@@ -77,6 +77,7 @@ class Domain extends \hipanel\base\Model
             [['id', 'domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
             [['id', 'domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
             [['id', 'domain'],                                  'safe',     'on' => ['sync', 'only-object']],
+            [['id'],                                            'integer',  'on' => ['enable-freeze', 'disable-freeze']],
 
             // Check domain
             [['domain'], DomainPartValidator::className(), 'on' => ['check-domain']],
@@ -166,7 +167,8 @@ class Domain extends \hipanel\base\Model
             'whois_protected'       => Yii::t('app', 'WHOIS'),
             'is_secured'            => Yii::t('app', 'Lock'),
             'is_holded'             => Yii::t('app', ' label'),
-            'is_freezed'            => Yii::t('app', ' label'),
+            'is_freezed'            => Yii::t('hipanel/domain', 'Domain changes freezed'),
+            'wp_freezed'            => Yii::t('hipanel/domain', 'Domain WHOIS freezed'),
             'foa_sent_to'           => Yii::t('app', ' label'),
             'is_premium'            => Yii::t('app', ' label'),
             'prem_expires'          => Yii::t('app', ' label'),
@@ -190,6 +192,16 @@ class Domain extends \hipanel\base\Model
     public static function getZone($domain)
     {
         return substr($domain, strpos($domain, '.') + 1);
+    }
+
+    public function isFreezed()
+    {
+        return $this->is_freezed;
+    }
+
+    public function isWPFreezed()
+    {
+        return $this->wp_freezed;
     }
 
     public function scenarioCommands()
