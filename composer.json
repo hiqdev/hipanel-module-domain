@@ -51,5 +51,12 @@
         "psr-4": {
             "hipanel\\modules\\domain\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.hiqdev.com"
+        }
+    ]
 }
