@@ -6,8 +6,8 @@ HiPanel Domain Module
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hipanel-module-domain/v/stable)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hipanel-module-domain/downloads)](https://packagist.org/packages/hiqdev/hipanel-module-domain)
 [![Build Status](https://img.shields.io/travis/hiqdev/hipanel-module-domain.svg)](https://travis-ci.org/hiqdev/hipanel-module-domain)
-[![Code Coverage](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/?branch=master)
+[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/hiqdev/hipanel-module-domain.svg)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/hiqdev/hipanel-module-domain.svg)](https://scrutinizer-ci.com/g/hiqdev/hipanel-module-domain/)
 [![Dependency Status](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hipanel-module-domain/dev-master)
 
 [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)

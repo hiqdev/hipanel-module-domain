@@ -3,7 +3,30 @@ hiqdev/hipanel-module-domain commits history
 
 ## Under development
 
+- Fixed build with asset-packagist
+    - 0d83813 2016-04-05 fixed build with asset-packagist (sol@hiqdev.com)
+    - 9ef5ddd 2016-04-05 inited tests (sol@hiqdev.com)
+- Added Hold, Freeze, Delete actions
+    - 81e0c14 2015-09-18 + new action: Hold, Freeze, Delete (bladeroot@gmail.com)
+    - bcf474c 2016-04-05 + domain un/freeze actions (sol@hiqdev.com)
+    - e57f601 2016-04-05 translation (sol@hiqdev.com)
 - Added domain check, register, renewal and transfer
+    - 4e71211 2016-03-25 Add DomainChecker to sidebar menu of domain modules. Remove domainCheck functionality (andreyklochok@gmail.com)
+    - 4b0b600 2016-03-23 Add Domain Checker (andreyklochok@gmail.com)
+    - bc01666 2016-03-23 Syntax error fix (andreyklochok@gmail.com)
+    - 1e0edc4 2016-03-23 Fixed domain NS records removing (d.naumenko.a@gmail.com)
+    - 831bf78 2016-03-21 Updated translations, minor (d.naumenko.a@gmail.com)
+    - cf81a2d 2016-03-21 Added Domain::canRenew() (d.naumenko.a@gmail.com)
+    - ce025eb 2016-03-21 Added DomainRenewalProduct::daysBeforeExpireValidator() (d.naumenko.a@gmail.com)
+    - 1e3b081 2016-03-21 AbstractDomainProduct::getQuantityOptions - updated to respect global domain delegation limit (10 years) (d.naumenko.a@gmail.com)
+    - ad74546 2016-03-18 Updated translations (d.naumenko.a@gmail.com)
+    - 098bc1c 2016-03-17 Domain renewal calculation: client and seller for calculation are now extracted from the model (d.naumenko.a@gmail.com)
+    - 14bb2a0 2016-03-17 Relocate Renew domain button (andreyklochok@gmail.com)
+    - c3a7465 2016-03-17 Translations update, minor (d.naumenko.a@gmail.com)
+    - 7ee594c 2016-03-16 Translations update (d.naumenko.a@gmail.com)
+    - ae7059f 2016-03-16 Added missing translation (d.naumenko.a@gmail.com)
+    - 4a2a5e5 2016-03-16 Removed commented out code (d.naumenko.a@gmail.com)
+    - b10e9e4 2016-03-04 + domain registration purchase notes (sol@hiqdev.com)
     - db9a1a9 2016-03-04 added transfer notices (sol@hiqdev.com)
     - cca24cd 2016-03-04 improving purchasing NOT FINISHED (sol@hiqdev.com)
     - 3a0fbd7 2016-02-19 Host create page - added combo for IP addresses (d.naumenko.a@gmail.com)
@@ -154,8 +177,6 @@ hiqdev/hipanel-module-domain commits history
     - 2dd6135 2015-11-04  * Fixed domain/view incorrect layout on Pjax load (d.naumenko.a@gmail.com)
 - Deleted DomainValidator, moved to hipanel-core
     - b36ede5 2015-10-06 moved DomainValidator to hipanel-core (sol@hiqdev.com)
-- Added Hold, Freeze, Delete actions
-    - 81e0c14 2015-09-18 + new action: Hold, Freeze, Delete (bladeroot@gmail.com)
 - Fixed translation and minor issues
     - c22b2d8 2016-01-27 rehideved (sol@hiqdev.com)
     - 9811ee7 2016-01-27 added translations (sol@hiqdev.com)
