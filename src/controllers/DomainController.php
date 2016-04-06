@@ -316,11 +316,19 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'enable-freeze' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Freeze was enabled'),
+                'success'   => Yii::t('hipanel/domain', 'Freeze was enabled'),
             ],
             'disable-freeze' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Freeze was disabled'),
+                'success'   => Yii::t('hipanel/domain', 'Freeze was disabled'),
+            ],
+            'enable-freeze-w-p' => [
+                'class'     => SmartPerformAction::class,
+                'success'   => Yii::t('hipanel/domain', 'WP freeze was enabled'),
+            ],
+            'disable-freeze-w-p' => [
+                'class'     => SmartPerformAction::class,
+                'success'   => Yii::t('hipanel/domain', 'WP freeze was disabled'),
             ],
             'OLD-set-ns' => [
                 'class'     => RenderAction::class,
