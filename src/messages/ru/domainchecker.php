@@ -29,7 +29,7 @@ return [
     'Domain is not available' => 'Домен не доступен',
     'Domain name' => 'Имя домена',
     'GEO' => 'Географические',
-    'General' => 'Основніе',
+    'General' => 'Основные',
     'Home&Gifts' => 'Дом и подарки',
     'In cart' => 'В карзину',
     'Internet' => 'Интернет',
