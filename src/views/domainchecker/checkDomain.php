@@ -262,7 +262,7 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Special') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel/domainchecker', 'Special') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="special">

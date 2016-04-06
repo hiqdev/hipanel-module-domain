@@ -18,10 +18,11 @@
  */
 return [
     'Add to cart' => 'Добавить в корзину',
+    'Special' => 'Спациальные',
     'Adding' => 'Добавление',
     'Adult' => 'Для взрослых',
     'All' => 'Все',
-    'Audio&Music' => 'Аудио и Музыка',
+    'Audio&Music' => 'Музыка и Аудио',
     'Available' => 'Доступные',
     'Categories' => 'Категории',
     'Domain check' => 'Поиск домена',
@@ -34,7 +35,7 @@ return [
     'Internet' => 'Интернет',
     'Nature' => 'Природа',
     'Popular Domains' => 'Популярные домены',
-    'Promotion' => 'Реклама',
+    'Promotion' => 'Акционные',
     'Search' => 'Поиск',
     'Society' => 'Общество',
     'Sport' => 'Спорт',
