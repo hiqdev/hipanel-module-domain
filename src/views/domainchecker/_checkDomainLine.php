@@ -19,7 +19,7 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
     <div
         class="domain-line <?= $line['isAvailable'] === true ? 'checked' : '' ?>"
         data-domain="<?= $line['fqdn'] ?>">
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-md-5 col-sm-12 col-xs-12">
             <?php if (isset($line['isAvailable'])) : ?>
                 <span class="domain-img"><i class="fa fa-globe fa-lg"></i></span>
             <?php else : ?>
@@ -48,7 +48,7 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
             <?php endif; ?>
         </span>
         </div>
-        <div class="col-md-2 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-12 col-xs-12">
             <?php if ($line['isAvailable'] === true) : ?>
                 <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel/domainchecker', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['fqdn']], [
                     'data-pjax' => 0,
