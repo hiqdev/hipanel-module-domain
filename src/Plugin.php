@@ -27,7 +27,6 @@ class Plugin extends \hiqdev\pluginmanager\Plugin
                 'translations' => [
                     'hipanel/domainchecker' => [
                         'class' => 'yii\i18n\PhpMessageSource',
-                        'forceTranslation' => true,
                         'basePath' => '@hipanel/modules/domainchecker/messages',
                         'fileMap' => [
                             'hipanel/domainchecker' => 'domainchecker.php',
