@@ -2,7 +2,6 @@
 
 namespace hipanel\modules\domainchecker\controllers;
 
-use hipanel\base\Cache;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
@@ -140,5 +139,5 @@ class DomaincheckerController extends \hipanel\base\CrudController
         return array_filter((array) $tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
-    }
+    }    
 }
