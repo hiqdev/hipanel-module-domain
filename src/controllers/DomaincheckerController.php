@@ -12,9 +12,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
     public function actionCheck()
     {
         session_write_close();
-        Yii::$app->hiresource->auth = function () {
-            return [];
-        };
+        Yii::$app->get('hiart')->disableAuth();
         $fqdn = Yii::$app->request->post('domain');
         list($domain, $zone) = explode('.', $fqdn, 2);
         $line = [
