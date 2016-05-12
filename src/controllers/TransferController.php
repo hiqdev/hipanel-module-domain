@@ -19,6 +19,16 @@ class TransferController extends \hipanel\base\CrudController
     {
         return []; // todo: remove to enable CRUD
     }
+
+    /**
+     * @inheritdoc
+     */
+    public static function newModel($config = [], $submodel = '')
+    {
+        $config['class'] = Domain::class;
+        return Yii::createObject($config);
+    }
+
     /**
      * @inheritdoc
      */
