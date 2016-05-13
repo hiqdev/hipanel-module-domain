@@ -11,7 +11,6 @@
 
 namespace hipanel\modules\domain\cart;
 
-use hipanel\modules\domain\cart\DomainTransferPurchase;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -19,6 +18,9 @@ class DomainTransferProduct extends AbstractDomainProduct
 {
     /** {@inheritdoc} */
     protected $_operation = 'transfer';
+
+    /** {@inheritdoc} */
+    protected $_calculationModel = DomainTransferCalculation::class;
 
     /** {@inheritdoc} */
     protected $_purchaseModel = DomainTransferPurchase::class;
