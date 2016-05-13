@@ -7,7 +7,7 @@ use hipanel\actions\ValidateFormAction;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
-use hipanel\modules\finance\merchant\Collection;
+use hiqdev\hiart\Collection;
 use hiqdev\hiart\ErrorResponseException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
@@ -83,7 +83,7 @@ class TransferController extends \hipanel\base\CrudController
             if (!empty($post[0]['domains'])) {
                 $domains = [];
                 foreach (StringHelper::explode($post[0]['domains'], "\n") as $line) {
-                    preg_match("/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i", $line, $matches);
+                    preg_match('/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i', $line, $matches);
                     if ($matches) {
                         $domain = strtolower($matches[1]);
                         $password = $matches[2];
