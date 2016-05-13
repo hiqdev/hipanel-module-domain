@@ -492,7 +492,7 @@ class DomainController extends \hipanel\base\CrudController
             if (!empty($post[0]['domains'])) {
                 $domains = [];
                 foreach (StringHelper::explode($post[0]['domains'], "\n") as $line) {
-                    preg_match("/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i", $line, $matches);
+                    preg_match('/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i', $line, $matches);
                     if ($matches) {
                         $domain = strtolower($matches[1]);
                         $password = $matches[2];
