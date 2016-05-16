@@ -38,7 +38,7 @@ CSS
         <?php $box->endActions() ?>
         <?php $box->beginBulkActions() ?>
             <div class="dropdown" style="display: inline-block">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= Yii::t('hipanel', 'Basic actions') ?>
                     <span class="caret"></span>
                 </button>
@@ -83,7 +83,7 @@ CSS
                 'scenario' => 'bulk-set-note',
                 'actionUrl' => ['bulk-set-note'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set notes'), 'class' => 'btn btn-default'],
+                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set notes'), 'class' => 'btn btn-sm btn-default'],
             ]) ?>
             <?= AjaxModal::widget([
                 'id' => 'bulk-set-nss-modal',
@@ -92,7 +92,7 @@ CSS
                 'scenario' => 'bulk-set-nss',
                 'actionUrl' => ['bulk-set-nss'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set NS'), 'class' => 'btn btn-default'],
+                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set NS'), 'class' => 'btn btn-sm btn-default'],
             ]) ?>
             <?= AjaxModal::widget([
                 'id' => 'bulk-change-contacts-modal',
@@ -101,7 +101,7 @@ CSS
                 'scenario' => 'bulk-set-contacts',
                 'actionUrl' => ['bulk-set-contacts-modal'],
                 'size' => Modal::SIZE_LARGE,
-                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Change contacts'), 'class' => 'btn btn-default'],
+                'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
             ]) ?>
 
         <?php $box->endBulkActions() ?>
