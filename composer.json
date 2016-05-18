@@ -43,9 +43,9 @@
         }
     ],
     "require": {
-        "hiqdev/hipanel-core": "<2.0",
-        "hiqdev/hipanel-module-client": "<2.0",
-        "hiqdev/hipanel-domain-checker": "<2.0"
+        "hiqdev/hipanel-core": "<2.0@dev",
+        "hiqdev/hipanel-module-client": "<2.0@dev",
+        "hiqdev/hipanel-domain-checker": "<2.0@dev"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",
