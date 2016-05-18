@@ -43,13 +43,23 @@
         }
     ],
     "require": {
-        "hiqdev/hipanel-core": "*",
-        "hiqdev/hipanel-module-client": "*",
-        "hiqdev/hipanel-domain-checker": "*"
+        "hiqdev/hipanel-core": "<2.0",
+        "hiqdev/hipanel-module-client": "<2.0",
+        "hiqdev/hipanel-domain-checker": "<2.0"
+    },
+    "require-dev": {
+        "hiqdev/hidev-php": "<2.0",
+        "hiqdev/hidev-vendor": "<2.0"
     },
     "autoload": {
         "psr-4": {
             "hipanel\\modules\\domain\\": "src"
+        }
+    },
+    "extra": {
+        "config-plugin": {
+            "hisite": "src/config/hisite.php",
+            "hidev": "src/config/hidev.php"
         }
     },
     "minimum-stability": "dev",
