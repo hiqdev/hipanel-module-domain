@@ -41,12 +41,27 @@
             "homepage": "http://hiqdev.com/"
         }
     ],
+    "require-dev": {
+        "hiqdev/hidev-php": "<2.0",
+        "hiqdev/hidev-vendor": "<2.0"
+    },
     "autoload": {
         "psr-4": {
             "hipanel\\modules\\domainchecker\\": "src"
         }
     },
     "extra": {
-        "bootstrap": "hipanel\\modules\\domainchecker\\Bootstrap"
-    }
+        "bootstrap": "hipanel\\modules\\domainchecker\\Bootstrap",
+        "config-plugin": {
+            "hisite": "src/config/hisite.php",
+            "hidev": "src/config/hidev.php"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
