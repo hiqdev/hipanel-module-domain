@@ -11,6 +11,7 @@ use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\Modal;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -170,6 +171,7 @@ CSS
                     <?= DomainGridView::detailView([
                         'model' => $model,
                         'boxed' => false,
+                        'dataProvider' => new ArrayDataProvider(['allModels' => [$config['model'], 'pagination' => false]]),
                         'columns' => [
                             'is_premium' => [
                                 'label' => Yii::t('app', 'Premium package'),
