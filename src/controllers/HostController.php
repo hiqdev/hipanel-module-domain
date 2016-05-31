@@ -12,6 +12,7 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\IndexAction;
+use hipanel\actions\OrientationAction;
 use hipanel\actions\SmartCreateAction;
 use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
@@ -24,6 +25,12 @@ class HostController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'set-orientation' => [
+                'class' => OrientationAction::class,
+                'allowedRoutes' => [
+                    '@host/index'
+                ]
+            ],
             'index' => [
                 'class'     => IndexAction::class,
             ],

@@ -20,6 +20,7 @@ namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
 use hipanel\actions\IndexAction;
+use hipanel\actions\OrientationAction;
 use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\ProxyAction;
 use hipanel\actions\RedirectAction;
@@ -55,6 +56,12 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'set-orientation' => [
+                'class' => OrientationAction::class,
+                'allowedRoutes' => [
+                    '@domain/index'
+                ]
+            ],
             'add-to-cart-renewal' => [
                 'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
