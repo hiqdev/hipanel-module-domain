@@ -34,7 +34,6 @@ $this->breadcrumbs[] = $this->title;
         ],
     ]) ?>
     <?= $page->renderPerPage() ?>
-    <?= $page->renderRepresentation() ?>
     <?php $page->endContent() ?>
 
     <?php $page->beginContent('bulk-actions') ?>
