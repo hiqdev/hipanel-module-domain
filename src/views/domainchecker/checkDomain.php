@@ -1,5 +1,7 @@
 <?php
 
+use hipanel\assets\HipanelAsset;
+use hipanel\assets\IsotopeAsset;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
@@ -8,8 +10,8 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 DomainCheckPluginAsset::register($this);
-hipanel\frontend\assets\IsotopeAsset::register($this);
-\hipanel\frontend\assets\HipanelAsset::register($this);
+IsotopeAsset::register($this);
+HipanelAsset::register($this);
 
 $this->title = Yii::t('hipanel/domainchecker', 'Domain check');
 $this->breadcrumbs->setItems([
