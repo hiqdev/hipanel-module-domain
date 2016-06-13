@@ -7,9 +7,9 @@ use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
-$this->subtitle = Yii::t('app', 'Name server detailed information') . ' #' . $model->id;
+$this->subtitle = Yii::t('hipanel/domain', 'Name server detailed information') . ' #' . $model->id;
 $this->breadcrumbs->setItems([
-    ['label' => Yii::t('app', 'Name servers'), 'url' => ['index']],
+    ['label' => Yii::t('hipanel/domain', 'Name Servers'), 'url' => ['index']],
     $this->title,
 ]);
 
@@ -38,7 +38,7 @@ $this->breadcrumbs->setItems([
             <div class="profile-usermenu">
                 <ul class="nav">
                     <li>
-                        <?= Html::a('<i class="ion-close-circled"></i>' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id]) ?>
+                        <?= Html::a('<i class="ion-close-circled"></i>' . Yii::t('hipanel', 'Delete'), ['delete', 'id' => $model->id]) ?>
                     </li>
                 </ul>
             </div>

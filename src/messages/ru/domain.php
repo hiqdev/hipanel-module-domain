@@ -75,5 +75,10 @@ return [
     'Manage DNS' => 'Управлять DNS',
     'Adding' => 'Добавляем',
     '{0, plural, one{# year} other{# years}}' => '{0, plural, one{# год} few{# года} other{# лет}}',
-    'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})' => 'Домен в зоне {zone} возможно продлить только в {min, plural, one{последний день} few{последние # дня} other{последние # дней}} перед окончанием срока регистрации. Домен {domain} вы сможете продлить после {date} (через {days, plural, one{# день} few{# дня} other{# дней}})'
+    'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})' => 'Домен в зоне {zone} возможно продлить только в {min, plural, one{последний день} few{последние # дня} other{последние # дней}} перед окончанием срока регистрации. Домен {domain} вы сможете продлить после {date} (через {days, plural, one{# день} few{# дня} other{# дней}})',
+    'Create name server' => 'Создать сервер имён',
+    'Name Servers' => 'Серверы имён',
+    'Change IP' => 'Сменить IP',
+    'Name server detailed information' => 'Подробная информация о сервере имён',
+    'Transfer (EPP) password' => 'Код трансфера (EPP)'
 ];
