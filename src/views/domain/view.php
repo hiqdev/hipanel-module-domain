@@ -75,11 +75,11 @@ CSS
                     ]) ?>
 
                 </li>
-                <?php if ($model->canRenew()) { ?>
+                <?php if ($model->canRenew()) : ?>
                     <li>
-                        <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]); ?>
+                        <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]) ?>
                     </li>
-                <?php } ?>
+                <?php endif ?>
                 <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_syncButton', compact('model')) ?></li>
                 <?php endif ?>

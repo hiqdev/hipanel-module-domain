@@ -2,6 +2,7 @@
 
 use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\client\widgets\combo\SellerCombo;
+
 /**
  * @var \hipanel\widgets\AdvancedSearch $search
  */
