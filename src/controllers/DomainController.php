@@ -670,6 +670,6 @@ class DomainController extends \hipanel\base\CrudController
 
     public function getStateData()
     {
-        return Ref::getList('state,domain');
+        return $this->getRefs('state,domain', 'hipanel/domain');
     }
 }
