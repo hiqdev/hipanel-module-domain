@@ -9,7 +9,6 @@ use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
-use hiqdev\xeditable\widgets\XEditable;
 use yii\bootstrap\Modal;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
@@ -57,7 +56,9 @@ CSS
             <ul class="nav">
                 <li>
                     <?php $url = 'http://' . $model->domain . '/' ?>
-                    <?= Html::a('<i class="fa fa-fw fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site ') . \yii\helpers\StringHelper::truncate($url, 15), $url, ['target' => '_blank']); ?>
+                    <?= Html::a('<i class="fa fa-fw fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site {link}', [
+                        'link' => \yii\helpers\StringHelper::truncate($url, 15)
+                    ]), $url, ['target' => '_blank']); ?>
                 </li>
                 <li>
                     <?= AjaxModal::widget([

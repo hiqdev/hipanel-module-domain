@@ -71,7 +71,7 @@ return [
     'Set NS' => 'Установить сервера имен',
     'Change contacts' => 'Сменить контакты',
     'Registered range' => 'Период регистрации',
-    'Go to site ' => 'Перейти на сайт ',
+    'Go to site {link}' => 'Перейти на сайт {link}',
     'Manage DNS' => 'Управлять DNS',
     'Adding' => 'Добавляем',
     '{0, plural, one{# year} other{# years}}' => '{0, plural, one{# год} few{# года} other{# лет}}',
