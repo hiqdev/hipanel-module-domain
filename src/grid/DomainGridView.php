@@ -68,7 +68,7 @@ class DomainGridView extends BoxedGridView
                 'class'         => XEditableColumn::class,
                 'attribute'     => 'note',
                 'filter'        => true,
-                'popover'       => Yii::t('app', 'Make any notes for your convenience'),
+                'popover'       => Yii::t('hipanel/domain', 'Make any notes for your convenience'),
                 'pluginOptions' => [
                     'url' => 'set-note',
                 ],

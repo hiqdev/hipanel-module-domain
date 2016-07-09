@@ -80,5 +80,6 @@ return [
     'Name Servers' => 'Серверы имён',
     'Change IP' => 'Сменить IP',
     'Name server detailed information' => 'Подробная информация о сервере имён',
-    'Transfer (EPP) password' => 'Код трансфера (EPP)'
+    'Transfer (EPP) password' => 'Код трансфера (EPP)',
+    'Make any notes for your convenience' => 'Сделайте записи для удобства',
 ];
