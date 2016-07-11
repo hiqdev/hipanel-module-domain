@@ -271,27 +271,6 @@ class Domain extends \hipanel\base\Model
         return $response;
     }
 
-//    public function getTransferDataProviderOptions()
-//    {
-//            $response = $this->checkDomainTransfer($domains);
-//            foreach ($response as $k => $v) {
-//                if (is_array($v)) {
-//                    $domain = $v['domain'];
-//                    $password = $domains[$v['domain']]['password'];
-//                    $isError = isset($v['_error']);
-//                    $result[] = [
-//                        'domain' => $domain . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][name]", $domain) : ''),
-//                        'password' => $password . (!$isError ? Html::hiddenInput("DomainTransferProduct[$i][password]", $password) : ''),
-//                        'status' => !$isError,
-//                        'errorMessage' => $isError ? $v['_error'] : '',
-//                    ];
-//                    ++$i;
-//                }
-//            }
-//
-//        return $result;
-//    }
-
     public static function getCategories()
     {
         return [
