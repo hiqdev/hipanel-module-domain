@@ -16,10 +16,12 @@ use hipanel\modules\client\widgets\combo\SellerCombo;
     <?= $search->field('domain_like') ?>
 </div>
 
-<div class="col-md-4 col-sm-6 col-xs-12">
-    <?= $search->field('client_id')->widget(ClientCombo::classname()) ?>
-</div>
+<?php if (Yii::$app->user->can('support')) { ?>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?= $search->field('client_id')->widget(ClientCombo::class) ?>
+    </div>
 
-<div class="col-md-4 col-sm-6 col-xs-12">
-    <?= $search->field('seller_id')->widget(SellerCombo::classname()) ?>
-</div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?= $search->field('seller_id')->widget(SellerCombo::class) ?>
+    </div>
+<?php } ?>
