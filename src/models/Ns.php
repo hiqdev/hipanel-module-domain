@@ -31,7 +31,7 @@ class Ns extends Model
             [['ip'], 'each', 'rule' => ['ip']],
             [['ip'],  function ($attribute, $params) {
                 if (!StringHelper::endsWith($this->name, $this->domain_name)) {
-                    $this->addError($attribute, Yii::t('app', Yii::t('hipanel/domain', 'To assign the IP, NS must be a child from main domain')));
+                    $this->addError($attribute, Yii::t('hipanel/domain', 'To assign the IP, NS must be a child from main domain'));
                 }
             }],
         ];

@@ -17,9 +17,9 @@ use yii\helpers\Url;
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
 $this->title = Html::encode($model->domain);
-$this->subtitle = Yii::t('app', 'Domain detailed information') . ' #' . $model->id;
+$this->subtitle = Yii::t('hipanel/domain', 'Domain detailed information') . ' #' . $model->id;
 $this->breadcrumbs->setItems([
-    ['label' => Yii::t('app', 'Domains'), 'url' => ['index']],
+    ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']],
     $this->title,
 ]);
 $this->registerCss(<<<CSS
@@ -95,18 +95,18 @@ CSS
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#domain-details"
-                                      data-toggle="tab"><?= Yii::t('app', 'Domain details') ?></a></li>
-                <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('app', 'NS records') ?></a></li>
+                                      data-toggle="tab"><?= Yii::t('hipanel/domain', 'Domain details') ?></a></li>
+                <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('hipanel/domain', 'NS records') ?></a></li>
                 <!--                    <li><a href="#authorization-code" data-toggle="tab">-->
-                <?php//= Yii::t('app', 'Authorization code') ?><!--</a></li>-->
-                <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('app', 'DNS records') ?></a></li>
+                <?php//= Yii::t('hipanel/domain', 'Authorization code') ?><!--</a></li>-->
+                <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('hipanel/domain', 'DNS records') ?></a></li>
                 <!--                    <li><a href="#url-forwarding" data-toggle="tab">-->
-                <?php//= Yii::t('app', 'URL forwarding') ?><!--</a></li>-->
+                <?php//= Yii::t('hipanel/domain', 'URL forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#email-forwarding" data-toggle="tab">-->
-                <?php//= Yii::t('app', 'Email forwarding') ?><!--</a></li>-->
+                <?php//= Yii::t('hipanel/domain', 'Email forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#parking" data-toggle="tab">-->
-                <?php//= Yii::t('app', 'Parking') ?><!--</a></li>-->
-                <li><a href="#contacts" data-toggle="tab"><?= Yii::t('app', 'Contacts') ?></a></li>
+                <?php//= Yii::t('hipanel/domain', 'Parking') ?><!--</a></li>-->
+                <li><a href="#contacts" data-toggle="tab"><?= Yii::t('hipanel', 'Contacts') ?></a></li>
             </ul>
             <div class="tab-content">
 
@@ -128,7 +128,7 @@ CSS
                             'autorenewal',
                             [
                                 'attribute' => 'authCode',
-                                'label' => Yii::t('app', 'Auth code'),
+                                'label' => Yii::t('hipanel/domain', 'Authorization code'),
                                 'value' => function ($model) {
                                     return AuthCode::widget(['domainId' => $model->id]);
                                 },
@@ -149,7 +149,7 @@ CSS
                         'pluginOptions' => [
                             'placement' => 'bottom',
                             'type' => 'textarea',
-                            'emptytext' => Yii::t('app', 'There are no NS. Domain may not work properly'),
+                            'emptytext' => Yii::t('hipanel/domain', 'There are no NS. Domain may not work properly'),
                             'url' => Url::to('set-nss'),
                         ],
                     ]); ?>
@@ -175,18 +175,18 @@ CSS
                         'dataProvider' => new ArrayDataProvider(['allModels' => [$config['model'], 'pagination' => false]]),
                         'columns' => [
                             'is_premium' => [
-                                'label' => Yii::t('app', 'Premium package'),
+                                'label' => Yii::t('hipanel/domain', 'Premium package'),
                                 'value' => function ($model) {
-                                    $enablePremiumLink = Html::a(Yii::t('app', 'Enable premium'), Url::toRoute(''), ['class' => 'btn btn-success btn-xs pull-right']);
+                                    $enablePremiumLink = Html::a(Yii::t('hipanel/domain', 'Enable premium'), Url::toRoute(''), ['class' => 'btn btn-success btn-xs pull-right']);
 
-                                    return $model->is_premium === 't' ? Yii::t('app', 'Activated to ') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('app', 'Not enabled'), $enablePremiumLink);
+                                    return $model->is_premium === 't' ? Yii::t('hipanel', 'Activated to') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('hipanel', 'Not enabled'), $enablePremiumLink);
                                 },
                                 'format' => 'raw',
                             ],
                             'premium_autorenewal' => [
-                                'class' => BootstrapSwitchColumn::className(),
+                                'class' => BootstrapSwitchColumn::class,
                                 'attribute' => 'premium_autorenewal',
-                                'label' => Yii::t('app', 'Premium package autorenewal'),
+                                'label' => Yii::t('hipanel/domain', 'Premium package autorenewal'),
                                 'filter' => false,
                                 'url' => Url::toRoute(['@hdomain/set-paid-feature-autorenewal']),
                                 'popover' => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
@@ -196,7 +196,7 @@ CSS
                                 ],
                             ],
 //                                [
-//                                    'label' => Yii::t('app', 'Premium package autorenewal'),
+//                                    'label' => Yii::t('hipanel/domain', 'Premium package autorenewal'),
 //                                    'value' => BootstrapSwitch::widget([
 //                                        'model' => $model,
 //                                        'attribute' => 'premium_autorenewal',

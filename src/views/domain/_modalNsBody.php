@@ -1,4 +1,5 @@
 <?php
+
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -51,7 +52,7 @@ JS
 ]) ?>
 <div class="row">
     <div class="col-sm-offset-9 sol-sm-3 hidden-xs text-right margin-bottom">
-        <?= Html::tag('span', Yii::t('app', 'Use the same ns for all domains'), ['class' => 'label label-info']) ?>
+        <?= Html::tag('span', Yii::t('hipanel/domain', 'Use the same name servers for all domains'), ['class' => 'label label-info']) ?>
     </div>
 </div>
 <?php /** @var array $models */
@@ -78,7 +79,7 @@ foreach ($models as $id => $model) : ?>
                 'pluginOptions' => [
                     'size' => 'normal',
                     'radioAllOff' => true,
-                    'onText' => Yii::t('app', 'For all'),
+                    'onText' => Yii::t('hipanel', 'For all'),
                 ],
 
             ]) ?>

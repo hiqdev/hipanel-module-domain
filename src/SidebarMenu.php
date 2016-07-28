@@ -26,24 +26,24 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
     {
         return [
             'domains' => [
-                'label' => Yii::t('app', 'Domains'),
+                'label' => Yii::t('hipanel', 'Domains'),
                 'url'   => ['/domains/default/index'],
                 'icon'  => 'fa-globe',
                 'items' => [
                     'domains' => [
-                        'label' => Yii::t('app', 'Domains'),
+                        'label' => Yii::t('hipanel', 'Domains'),
                         'url'   => ['/domain/domain/index'],
                     ],
                     'nameservers' => [
-                        'label' => Yii::t('app', 'Name Servers'),
+                        'label' => Yii::t('hipanel', 'Name Servers'),
                         'url'   => ['/domain/host/index'],
                     ],
                     'contacts' => [
-                        'label' => Yii::t('app', 'Contacts'),
+                        'label' => Yii::t('hipanel', 'Contacts'),
                         'url'   => ['/client/contact/index'],
                     ],
                     'check-domain' => [
-                        'label' => Yii::t('app', 'Check domain'),
+                        'label' => Yii::t('hipanel/domain', 'Check domain'),
                         'url'   => ['/domainchecker/domainchecker/check-domain'],
                     ],
                     'transfer' => [
@@ -51,7 +51,7 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                         'url'   => ['/domain/domain/transfer'],
                     ],
 //                  'seo' => [
-//                      'label' => Yii::t('app', 'SEO'),
+//                      'label' => Yii::t('hipanel/domain', 'SEO'),
 //                      'url'   => ['/domain/domain/index'],
 //                  ],
                 ],

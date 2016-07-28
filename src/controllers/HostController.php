@@ -42,15 +42,15 @@ class HostController extends \hipanel\base\CrudController
             ],
             'create' => [
                 'class'     => SmartCreateAction::class,
-                'success'   => Yii::t('app', 'Name server created'),
+                'success'   => Yii::t('hipanel/domain', 'Name server created'),
             ],
             'update' => [
                 'class'     => SmartUpdateAction::class,
-                'success'   => Yii::t('app', 'Name server updated'),
+                'success'   => Yii::t('hipanel/domain', 'Name server updated'),
             ],
             'delete' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Name server deleted'),
+                'success'   => Yii::t('hipanel/domain', 'Name server deleted'),
             ],
         ];
     }

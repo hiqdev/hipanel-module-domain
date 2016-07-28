@@ -31,13 +31,13 @@ class DomainGridView extends BoxedGridView
     {
         return [
             'domain' => [
-                'class'           => MainColumn::className(),
+                'class'           => MainColumn::class,
                 'attribute'       => 'domain',
                 'note'            => true,
                 'filterAttribute' => 'domain_like',
             ],
             'state' => [
-//                'class'         => RefColumn::className(),
+//                'class'         => RefColumn::class,
 //                'gtype'         => 'state,domain',
                 'format'        => 'raw',
                 'filter' => function ($grid, $model, $attribute) {
@@ -49,7 +49,7 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'whois_protected' => [
-                'class'         => BootstrapSwitchColumn::className(),
+                'class'         => BootstrapSwitchColumn::class,
                 'filter'        => false,
                 'url'           => Url::toRoute('set-whois-protect'),
                 'popover'       => 'WHOIS protection',
@@ -58,11 +58,11 @@ class DomainGridView extends BoxedGridView
                 ],
             ],
             'is_secured'      => [
-                'class'         => BootstrapSwitchColumn::className(),
+                'class'         => BootstrapSwitchColumn::class,
                 'filter'        => false,
                 'url'           => Url::toRoute('set-lock'),
                 'attribute'     => 'is_secured',
-                'popover'       => Yii::t('app', 'Protection from transfer'),
+                'popover'       => Yii::t('hipanel/domain', 'Protection from transfer'),
             ],
             'note'            => [
                 'class'         => XEditableColumn::class,
@@ -88,8 +88,8 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'autorenewal'     => [
-                'class'         => BootstrapSwitchColumn::className(),
-                'label'         => Yii::t('app', 'Autorenew'),
+                'class'         => BootstrapSwitchColumn::class,
+                'label'         => Yii::t('hipanel', 'Autorenew'),
                 'filter'        => false,
                 'url'           => Url::toRoute('set-autorenewal'),
                 'popover'       => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
@@ -101,13 +101,13 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'actions'         => [
-                'class'    => ActionColumn::className(),
+                'class'    => ActionColumn::class,
                 'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
                 'header'   => Yii::t('hipanel', 'Actions'),
                 'buttons'  => [
                     'notify-transfer-in' => function ($url, $model, $key) {
                         return $model->state === 'preincoming'
-                            ? Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('app', 'Send FOA again'), $url, [
+                            ? Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('hipanel/domain', 'Send FOA again'), $url, [
                                 'data' => [
                                     'method'  => 'post',
                                     'data-pjax' => '0',
@@ -120,9 +120,9 @@ class DomainGridView extends BoxedGridView
                     },
                     'approve-transfer' => function ($url, $model, $key) {
                         return ($model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
-                            ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('app', 'Approve transfer'), $url, [
+                            ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('hipanel/domain', 'Approve transfer'), $url, [
                                 'data' => [
-                                    'confirm' => Yii::t('app', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
@@ -130,9 +130,9 @@ class DomainGridView extends BoxedGridView
                     },
                     'reject-transfer' => function ($url, $model, $key) {
                         return $model->state === 'outgoing'
-                            ? Html::a('<i class="fa fa-anchor"></i>' . Yii::t('app', 'Reject transfer'), $url, [
+                            ? Html::a('<i class="fa fa-anchor"></i>' . Yii::t('hipanel/domain', 'Reject transfer'), $url, [
                                 'data' => [
-                                    'confirm' => Yii::t('app', 'Are you sure you want to reject outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to reject outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
@@ -140,9 +140,9 @@ class DomainGridView extends BoxedGridView
                     },
                     'cancel-transfer' => function ($url, $model, $key) {
                         return $model->state === 'incoming'
-                            ? Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('app', 'Cancel transfer'), $url, [
+                            ? Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('hipanel/domain', 'Cancel transfer'), $url, [
                                 'data' => [
-                                    'confirm' => Yii::t('app', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $model->domain]),
+                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
@@ -150,7 +150,7 @@ class DomainGridView extends BoxedGridView
                     },
                     'sync'          => function ($url, $model, $key) {
                         return (in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
-                            ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('app', 'Synchronize contacts'), $url, [
+                            ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel/domain', 'Synchronize contacts'), $url, [
                                 'data' => [
                                     'method'  => 'post',
                                     'data-pjax' => '0',
@@ -158,11 +158,11 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'delete'        => function ($url, $model, $key) {
-                        return in_array($model->state, ['ok', 'expired', 'outgoing'], true) && Yii::$app->user->can('support') ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('yii', 'Delete'), $url, [
-                                'title'        => Yii::t('yii', 'Delete'),
-                                'aria-label'   => Yii::t('yii', 'Delete'),
+                        return in_array($model->state, ['ok', 'expired', 'outgoing'], true) && Yii::$app->user->can('support') ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
+                                'title'        => Yii::t('hipanel', 'Delete'),
+                                'aria-label'   => Yii::t('hipanel', 'Delete'),
                                 'data' => [
-                                    'confirm' => Yii::t('app', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
@@ -180,11 +180,11 @@ class DomainGridView extends BoxedGridView
                         }
 
                         return in_array(Domain::getZone($model->domain), ['com', 'net'], true)
-                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('app', 'Delete by AGP'), $url, [
-                                'title'        => Yii::t('app', 'Delete by AGP'),
-                                'aria-label'   => Yii::t('app', 'Delete by AGP'),
+                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel/domain', 'Delete by AGP'), $url, [
+                                'title'        => Yii::t('hipanel/domain', 'Delete by AGP'),
+                                'aria-label'   => Yii::t('hipanel/domain', 'Delete by AGP'),
                                 'data' => [
-                                    'confirm' => Yii::t('app', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
                                     'method'  => 'post',
                                     'data-pjax' => '0',
                                 ],
@@ -192,7 +192,7 @@ class DomainGridView extends BoxedGridView
                     },
                     'enable-freeze' => function ($url, $model, $key) {
                         return (!$model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
-                            ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('app', 'Freeze domain'), $url, [
+                            ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel/domain', 'Freeze domain'), $url, [
                                 'data' => [
                                     'method'  => 'post',
                                     'data-pjax' => '0',
@@ -201,7 +201,7 @@ class DomainGridView extends BoxedGridView
                     },
                     'disable-freeze' => function ($url, $model, $key) {
                         return ($model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
-                            ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('app', 'Unfreeze domain'), $url, [
+                            ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('hipanel/domain', 'Unfreeze domain'), $url, [
                                 'data' => [
                                     'method'  => 'post',
                                     'data-pjax' => '0',

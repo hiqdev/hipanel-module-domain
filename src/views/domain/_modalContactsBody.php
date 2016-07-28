@@ -4,8 +4,8 @@ use hipanel\modules\domain\models\Domain;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$errorMsg = Yii::t('app', 'An error occurred while sending request. Try to repeat this action later.');
-$success = Yii::t('app', 'Success');
+$errorMsg = Yii::t('hipanel', 'An error occurred while sending request. Try to repeat this action later.');
+$success = Yii::t('hipanel', 'Success');
 $contactTablesLink = Url::toRoute(['get-contacts-by-ajax', 'id' => reset($domainContacts)['id']]);
 $this->registerJs(<<<JS
 var ajaxRequestStatus = 0;

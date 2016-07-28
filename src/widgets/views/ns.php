@@ -56,12 +56,12 @@ $(document).on('pjax:complete', function(event) {
     <div class="alert alert-info alert-dismissible fade in" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 
-        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('app', 'Notice') ?></h4>
+        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('app', 'With this form you can assign the authoritative name servers for your domain.') ?></p><p>
-            <?= Yii::t('app', 'IP addresses can be assigned to child name servers only.') ?>
-            <?= Yii::t('app', 'Child name servers are created or changed automatically according to specified data.') ?>
+            <?= Yii::t('hipanel/domain', 'With this form you can assign the authoritative name servers for your domain.') ?></p><p>
+            <?= Yii::t('hipanel/domain', 'IP addresses can be assigned to child name servers only.') ?>
+            <?= Yii::t('hipanel/domain', 'Child name servers are created or changed automatically according to specified data.') ?>
         </p>
     </div>
 
@@ -82,7 +82,7 @@ $(document).on('pjax:complete', function(event) {
             <?php endif; ?>
         </div>
         <div class="col-md-2 text-right">
-            <?= Html::submitButton(Yii::t('app', 'Save'), [
+            <?= Html::submitButton(Yii::t('hipanel', 'Save'), [
                 'class' => 'btn btn-success',
                 'id' => 'nss-save-button',
                 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'saving'),

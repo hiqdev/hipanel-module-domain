@@ -110,7 +110,7 @@ class Domain extends \hipanel\base\Model
                 try {
                     $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
                 } catch (Exception $e) {
-                    $this->addError($attribute, Yii::t('app', 'Wrong code: {message}', ['message' => $e->getMessage()]));
+                    $this->addError($attribute, Yii::t('hipanel/domain', 'Wrong code: {message}', ['message' => $e->getMessage()]));
                 }
             }, 'when' => function ($model) {
                 return $model->domain;
@@ -122,7 +122,7 @@ class Domain extends \hipanel\base\Model
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
-            [['nameservers'], 'each', 'rule' => [DomainValidator::className()], 'on' => 'OLD-set-ns'],
+            [['nameservers'], 'each', 'rule' => [DomainValidator::class], 'on' => 'OLD-set-ns'],
             [['nsips'], 'each', 'rule' => [NsValidator::class], 'on' => 'OLD-set-ns'],
 
             // Get zones
@@ -135,7 +135,7 @@ class Domain extends \hipanel\base\Model
                 try {
                     $response = Client::perform('CheckPincode', [$attribute => $this->$attribute, 'id' => Yii::$app->user->id]);
                 } catch (Exception $e) {
-                    $this->addError($attribute, Yii::t('app', 'Wrong pincode'));
+                    $this->addError($attribute, Yii::t('hipanel/client', 'Wrong pincode'));
                 }
             }, 'on' => ['push-with-pincode']],
             [['id', 'domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
@@ -150,42 +150,40 @@ class Domain extends \hipanel\base\Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
-            'epp_client_id'         => Yii::t('app', 'EPP client ID'),
-            'remoteid'              => Yii::t('app', 'Remote ID'),
-            'domain'                => Yii::t('app', 'Domain Name'),
-            'domain_like'           => Yii::t('app', 'Domain Name'),
-            'note'                  => Yii::t('app', 'Notes'),
-            'nameservers'           => Yii::t('app', 'Name Servers'),
-            'created_date'          => Yii::t('app', 'Registered'),
-            'updated_date'          => Yii::t('app', 'Update Time'),
-            'transfer_date'         => Yii::t('app', 'Transfered'),
-            'expiration_date'       => Yii::t('app', 'System Expiration Time'),
-            'expires'               => Yii::t('app', 'Payed Till'),
-            'since'                 => Yii::t('app', 'Since Time'),
-            'lastop'                => Yii::t('app', 'Last Operation'),
-            'operated'              => Yii::t('app', 'Last Operation Time'),
-            'whois_protected'       => Yii::t('app', 'WHOIS'),
-            'is_secured'            => Yii::t('app', 'Lock'),
-            'is_holded'             => Yii::t('app', ' label'),
+            'epp_client_id'         => Yii::t('hipanel/domain', 'EPP client ID'),
+            'remoteid'              => Yii::t('hipanel', 'Remote ID'),
+            'domain'                => Yii::t('hipanel', 'Domain Name'),
+            'domain_like'           => Yii::t('hipanel', 'Domain Name'),
+            'note'                  => Yii::t('hipanel', 'Notes'),
+            'nameservers'           => Yii::t('hipanel', 'Name Servers'),
+            'transfer_date'         => Yii::t('hipanel/domain', 'Transfered'),
+            'expiration_date'       => Yii::t('hipanel/domain', 'System Expiration Time'),
+            'expires'               => Yii::t('hipanel/domain', 'Payed Till'),
+            'since'                 => Yii::t('hipanel/domain', 'Since Time'),
+            'lastop'                => Yii::t('hipanel/domain', 'Last Operation'),
+            'operated'              => Yii::t('hipanel/domain', 'Last Operation Time'),
+            'whois_protected'       => Yii::t('hipanel/domain', 'WHOIS'),
+            'is_secured'            => Yii::t('hipanel/domain', 'Lock'),
+            'is_holded'             => Yii::t('hipanel/domain', 'On hold'),
             'is_freezed'            => Yii::t('hipanel/domain', 'Domain changes freezed'),
             'wp_freezed'            => Yii::t('hipanel/domain', 'Domain WHOIS freezed'),
-            'foa_sent_to'           => Yii::t('app', ' label'),
-            'is_premium'            => Yii::t('app', ' label'),
-            'prem_expires'          => Yii::t('app', ' label'),
-            'prem_daysleft'         => Yii::t('app', ' label'),
-            'premium_autorenewal'   => Yii::t('app', ' label'),
-            'url_fwval'             => Yii::t('app', ' label'),
-            'mailval'               => Yii::t('app', ' label'),
-            'parkval'               => Yii::t('app', ' label'),
-            'daysleft'              => Yii::t('app', ' label'),
-            'is_expired'            => Yii::t('app', ' label'),
-            'expires_soon'          => Yii::t('app', ' label'),
+            'foa_sent_to'           => Yii::t('hipanel/domain', ' label'),
+            'is_premium'            => Yii::t('hipanel/domain', ' label'),
+            'prem_expires'          => Yii::t('hipanel/domain', ' label'),
+            'prem_daysleft'         => Yii::t('hipanel/domain', ' label'),
+            'premium_autorenewal'   => Yii::t('hipanel/domain', ' label'),
+            'url_fwval'             => Yii::t('hipanel/domain', ' label'),
+            'mailval'               => Yii::t('hipanel/domain', ' label'),
+            'parkval'               => Yii::t('hipanel/domain', ' label'),
+            'daysleft'              => Yii::t('hipanel/domain', ' label'),
+            'is_expired'            => Yii::t('hipanel/domain', ' label'),
+            'expires_soon'          => Yii::t('hipanel/domain', ' label'),
 
             // domain transfer
             'password'              => yii::t('hipanel/domain', 'Transfer (EPP) password'),
 
             // domain transfer
-            'receiver'              => yii::t('app', 'Receiver'),
+            'receiver'              => yii::t('hipanel/domain', 'Receiver'),
         ]);
     }
 

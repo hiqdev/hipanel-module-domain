@@ -84,7 +84,7 @@ class GeoIP extends Widget
     private function renderInfo()
     {
         echo Html::tag('p', 'IP: ' . Html::tag('span', $this->ip, ['class' => 'whois-ip']));
-        echo Html::tag('p', Yii::t('app', 'Country') . ': ' . Html::tag('span', $this->iprecord['country_name'], ['class' => 'whois-ip']));
-        echo Html::tag('p', Yii::t('app', 'City') . ': ' . Html::tag('span', $this->iprecord['city'], ['class' => 'whois-ip']));
+        echo Html::tag('p', Yii::t('hipanel/client', 'Country') . ': ' . Html::tag('span', $this->iprecord['country_name'], ['class' => 'whois-ip']));
+        echo Html::tag('p', Yii::t('hipanel/client', 'City') . ': ' . Html::tag('span', $this->iprecord['city'], ['class' => 'whois-ip']));
     }
 }

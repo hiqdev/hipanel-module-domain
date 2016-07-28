@@ -52,9 +52,9 @@ JS
 <?php Modal::begin([
     'id' => 'ns-modal',
     'size' => Modal::SIZE_LARGE,
-    'header' => '<h4 class="modal-title">' . Yii::t('app', 'Change NS') . '</h4>',
+    'header' => '<h4 class="modal-title">' . Yii::t('hipanel/domain', 'Change NS') . '</h4>',
     'toggleButton' => [
-        'label' => Yii::t('app', 'Set NS'),
+        'label' => Yii::t('hipanel/domain', 'Change NS'),
         'class' => 'btn btn-default',
     ],
     'clientEvents' => [
@@ -71,19 +71,19 @@ JS
             }
         "),
     ],
-    'footer' => Html::submitButton(Yii::t('app', 'Save'), [
+    'footer' => Html::submitButton(Yii::t('hipanel', 'Save'), [
         'id' => 'modal-save-ns-button',
         'class' => 'btn btn-default btn-loading',
-        'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'loading'),
+        'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'loading...'),
         'data-loading-icon' => 'glyphicon glyphicon-refresh',
     ]),
 ]); ?>
 
 <div class="progress">
     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-        <span class="sr-only"><?= Yii::t('app', 'loading') ?>...</span>
+        <span class="sr-only"><?= Yii::t('hipanel', 'loading...') ?></span>
     </div>
 </div>
 
-<?php Modal::end(); ?>
+<?php Modal::end() ?>
 

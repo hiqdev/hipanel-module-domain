@@ -45,7 +45,7 @@ use yii\web\JsExpression;
             <div class="row input-row margin-bottom">
                 <div class="col-sm-5">
                     <?php if ($model->isNewRecord) : ?>
-                        <?= $form->field($model, "[$i]host")->textInput(['placeholder' => Yii::t('app', 'Name server')])->label(false) ?>
+                        <?= $form->field($model, "[$i]host")->textInput(['placeholder' => Yii::t('hipanel', 'Name server')])->label(false) ?>
                     <?php else : ?>
                         <p class="form-control-static text-center"><?= $model->host; ?></p>
                     <?php endif; ?>
@@ -54,7 +54,7 @@ use yii\web\JsExpression;
                     <?= $form->field($model, "[$i]ips")->widget(StaticCombo::class, [
                         'formElementSelector' => '.item',
                         'inputOptions' => [
-                            'placeholder' => Yii::t('app', 'IP addresses'),
+                            'placeholder' => Yii::t('hipanel', 'IP addresses'),
                             'value' => implode(',', (array) $nsModel->ip),
                         ],
                         'pluginOptions' => [
@@ -88,8 +88,8 @@ use yii\web\JsExpression;
     <?php endforeach; ?>
 </div>
 <?php DynamicFormWidget::end() ?>
-<?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+<?= Html::submitButton(Yii::t('hipanel', 'Save'), ['class' => 'btn btn-success']) ?>
 &nbsp;
-<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
+<?= Html::button(Yii::t('hipanel', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
 <?php ActiveForm::end() ?>
 

@@ -2,8 +2,8 @@
 
 use hipanel\widgets\Box;
 
-$this->title = Yii::t('app', 'Create Name Server');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Name Server'), 'url' => ['index']];
+$this->title = Yii::t('hipanel/domain', 'Create name server');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Name Server'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

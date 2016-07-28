@@ -28,7 +28,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function init()
     {
-        $this->description = Yii::t('app', 'Transfer');
+        $this->description = Yii::t('hipanel/domain', 'Transfer');
     }
 
     /** {@inheritdoc} */

@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
-$loadingText = Yii::t('app', 'loading') . '...';
+$loadingText = Yii::t('hipanel', 'loading...');
 $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('change-password');
-$criticalError = Yii::t('app', 'Critical error. Try later.');
+$errorMessage = Yii::t('hipanel', 'An error occurred. Try again please.');
 \yii\bootstrap\BootstrapPluginAsset::register($view);
 $view->registerJs(<<<JS
 
@@ -35,7 +35,7 @@ jQuery('#get-authcode-button').on('click', function() {
         timeout: 0,
         error: function() {
             new PNotify({
-                text: "$criticalError",
+                text: "$errorMessage",
                 type: 'error',
                 buttons: {
                     sticker: false
@@ -72,7 +72,7 @@ jQuery('#change-password-button').on('click', function() {
         timeout: 0,
         error: function() {
             new PNotify({
-                text: "$criticalError",
+                text: "$errorMessage",
                 type: 'error',
                 buttons: {
                     sticker: false
@@ -126,9 +126,9 @@ JS
         <div id="authcode-form" class="input-group">
             <p id="pincode-static" class="form-control-static bg-warning text-center" style="vertical-align: middle;font-size: larger;">*******</p>
             <span class="input-group-btn">
-                <?= Html::button(Yii::t('app', 'Show'), ['id' => 'modal-show-button', 'data-toggle' => 'modal', 'data-target' => '#pincode-modal', 'class' => 'btn btn-default']); ?>
-                <?= Html::button(Yii::t('app', 'Copy'), ['id' => 'copy-to-clipboard', 'class' => 'btn btn-default', 'style' => 'display: none;']); ?>
-                <?= Html::button(Yii::t('app', 'Change password'), ['id' => 'change-password-button', 'class' => 'btn btn-default']); ?>
+                <?= Html::button(Yii::t('hipanel', 'Show'), ['id' => 'modal-show-button', 'data-toggle' => 'modal', 'data-target' => '#pincode-modal', 'class' => 'btn btn-default']); ?>
+                <?= Html::button(Yii::t('hipanel', 'Copy'), ['id' => 'copy-to-clipboard', 'class' => 'btn btn-default', 'style' => 'display: none;']); ?>
+                <?= Html::button(Yii::t('hipanel', 'Change password'), ['id' => 'change-password-button', 'class' => 'btn btn-default']); ?>
             </span>
             <p class="help-block"></p>
         </div>
@@ -143,7 +143,7 @@ JS
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><?= Yii::t('app', 'Enter pincode'); ?></h4>
+                <h4 class="modal-title"><?= Yii::t('hipanel/client', 'Enter pincode'); ?></h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -152,8 +152,8 @@ JS
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close'); ?></button>
-                <?= Html::button(Yii::t('app', 'Send'), [
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('hipanel', 'Close'); ?></button>
+                <?= Html::button(Yii::t('hipanel', 'Send'), [
                     'id' => 'get-authcode-button',
                     'class' => 'btn btn-primary',
                     'autocomplete' => 'off',

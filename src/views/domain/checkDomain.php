@@ -346,7 +346,7 @@ JS
                     <div class="alert alert-warning alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
-                        <strong><?= Yii::t('app', 'There are no available domain zones') ?>!</strong>
+                        <strong><?= Yii::t('hipanel/domain', 'There are no available domain zones') ?>!</strong>
                     </div>
                 <?php endif; ?>
                 <div class="box box-solid">
@@ -383,7 +383,7 @@ JS
                             </div>
                             <!-- /.col-md-3 -->
                             <div
-                                class="col-md-2"><?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
+                                class="col-md-2"><?= Html::submitButton(Yii::t('hipanel', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
                             <!-- /.col-md-1 -->
                         </div>
                         <!-- /.row -->

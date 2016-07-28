@@ -206,8 +206,8 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'set-note' => [
                 'class' => SmartUpdateAction::class,
-                'success' => Yii::t('app', 'Note changed'),
-                'error' => Yii::t('app', 'Failed change note'),
+                'success' => Yii::t('hipanel', 'Note changed'),
+                'error' => Yii::t('hipanel', 'Failed change note'),
                 'POST html' => [
                     'save'    => true,
                     'success' => [
@@ -232,7 +232,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'set-nss' => [
                 'class' => SmartUpdateAction::class,
-                'success' => Yii::t('app', 'Nameservers changed'),
+                'success' => Yii::t('hipanel/domain', 'Name servers changed'),
                 'POST html' => [
                     'save'    => true,
                     'success' => [
@@ -247,7 +247,7 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartUpdateAction::class,
                 'scenario' => 'set-nss',
                 'view' => '_bulkSetNs',
-                'success' => Yii::t('app', 'Nameservers changed'),
+                'success' => Yii::t('hipanel/domain', 'Name servers changed'),
                 'POST pjax' => [
                     'save'    => true,
                     'success' => [
@@ -276,50 +276,50 @@ class DomainController extends \hipanel\base\CrudController
             'delete' => [
                 'class'     => SmartDeleteAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Domain deleted'),
-                'error'     => Yii::t('app', 'Failed delete domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain deleted'),
+                'error'     => Yii::t('hipanel/domain', 'Failed delete domain'),
             ],
             'delete-agp' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Domain deleted'),
-                'error'     => Yii::t('app', 'Failed delete domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain deleted'),
+                'error'     => Yii::t('hipanel/domain', 'Failed delete domain'),
             ],
             'cancel-transfer' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Domain transfer was canceled'),
-                'error'     => Yii::t('app', 'Failed cancel transfer domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain transfer was canceled'),
+                'error'     => Yii::t('hipanel/domain', 'Failed cancel domain transfer'),
             ],
             'reject-transfer' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Domain transfer was rejected'),
-                'error'     => Yii::t('app', 'Failed reject transfer domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain transfer was cancelled'),
+                'error'     => Yii::t('hipanel/domain', 'Failed cancel domain transfer'),
             ],
             'approve-transfer' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Domain transfer was approved'),
-                'error'     => Yii::t('app', 'Failed approve transfer domain'),
+                'success'   => Yii::t('hipanel/domain', 'Domain transfer was approved'),
+                'error'     => Yii::t('hipanel/domain', 'Failed approve domain transfer'),
             ],
             'notify-transfer-in' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'FOA sended'),
-                'error'     => Yii::t('app', 'Failed FOA send'),
+                'success'   => Yii::t('hipanel/domain', 'FOA was sent'),
+                'error'     => Yii::t('hipanel/domain', 'Failed send FOA'),
             ],
             'enable-hold' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Hold was enabled'),
-                'error'     => Yii::t('app', 'Failed enabling Hold'),
+                'success'   => Yii::t('hipanel/domain', 'Hold was enabled'),
+                'error'     => Yii::t('hipanel/domain', 'Failed enabling Hold'),
             ],
             'disable-hold' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'only-object',
-                'success'   => Yii::t('app', 'Hold was disabled'),
-                'error'     => Yii::t('app', 'Failed disabling Hold'),
+                'success'   => Yii::t('hipanel/domain', 'Hold was disabled'),
+                'error'     => Yii::t('hipanel/domain', 'Failed disabling Hold'),
             ],
             'enable-freeze' => [
                 'class'     => SmartPerformAction::class,
@@ -376,7 +376,7 @@ class DomainController extends \hipanel\base\CrudController
             'set-paid-feature-autorenewal' => [
                 'class'     => SmartPerformAction::class,
                 'scenario'  => 'set-autorenewal',
-                'success'   => Yii::t('app', 'Premium autorenewal has been changed'),
+                'success'   => Yii::t('hipanel/domain', 'Premium autorenewal has been changed'),
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
                     $action = $event->sender;
@@ -388,11 +388,11 @@ class DomainController extends \hipanel\base\CrudController
             // Autorenewal
             'set-autorenewal' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Autorenewal has been change'),
+                'success'   => Yii::t('hipanel/domain', 'Autorenewal has been change'),
             ],
             'enable-autorenewal' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Autorenewal has been enabled'),
+                'success'   => Yii::t('hipanel/domain', 'Autorenewal has been enabled'),
                 'scenario'  => 'set-autorenewal',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -404,7 +404,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'disable-autorenewal' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Autorenewal has been disabled'),
+                'success'   => Yii::t('hipanel/domain', 'Autorenewal has been disabled'),
                 'scenario'  => 'set-autorenewal',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -417,11 +417,11 @@ class DomainController extends \hipanel\base\CrudController
             // Whois protect
             'set-whois-protect' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'whois protect is changed'),
+                'success'   => Yii::t('hipanel/domain', 'WHOIS protect is changed'),
             ],
             'enable-whois-protect' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'whois protect is enabled'),
+                'success'   => Yii::t('hipanel/domain', 'WHOIS protect is enabled'),
                 'scenario'  => 'set-whois-protect',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -433,7 +433,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'disable-whois-protect' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'whois protect is disabled'),
+                'success'   => Yii::t('hipanel/domain', 'WHOIS protect is disabled'),
                 'scenario'  => 'set-whois-protect',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -446,11 +446,11 @@ class DomainController extends \hipanel\base\CrudController
             // Lock
             'set-lock' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Records was changed'),
+                'success'   => Yii::t('hipanel/domain', 'Lock was changed'),
             ],
             'enable-lock' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Lock was enabled'),
+                'success'   => Yii::t('hipanel/domain', 'Lock was enabled'),
                 'scenario'  => 'set-lock',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -462,7 +462,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'disable-lock' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Lock was disabled'),
+                'success'   => Yii::t('hipanel/domain', 'Lock was disabled'),
                 'scenario'  => 'set-lock',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -474,7 +474,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'sync' => [
                 'class'     => SmartPerformAction::class,
-                'success'   => Yii::t('app', 'Contacts synced'),
+                'success'   => Yii::t('hipanel/domain', 'Contacts synced'),
             ],
 
             'buy' => [
@@ -573,7 +573,7 @@ class DomainController extends \hipanel\base\CrudController
                 $return = array_merge($return, ['info' => $e->getMessage()]);
             }
         } else {
-            $return = array_merge($return, ['info' => Yii::t('app', 'Invalid data input')]);
+            $return = array_merge($return, ['info' => Yii::t('hipanel', 'Invalid data input')]);
         }
 
         return $return;
@@ -596,7 +596,7 @@ class DomainController extends \hipanel\base\CrudController
                 'modelContactInfo' => $modelContactInfo,
             ]);
         } else {
-            return Yii::t('app', 'No domains is check');
+            return Yii::t('hipanel', 'No items selected');
         }
     }
 
@@ -611,7 +611,7 @@ class DomainController extends \hipanel\base\CrudController
                 'models' => $collection->models,
             ]);
         } else {
-            return Yii::t('app', 'No domains is check');
+            return Yii::t('hipanel', 'No items selected');
         }
     }
 

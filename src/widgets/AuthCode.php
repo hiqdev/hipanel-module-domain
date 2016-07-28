@@ -19,7 +19,7 @@ class AuthCode extends \yii\base\Widget
 
     public function run()
     {
-        $errorText = Yii::t('app', 'An error has occurred. Try again please.');
+        $errorText = Yii::t('hipanel', 'An error occurred. Try again please.');
 
         return $this->render('authcode_view', [
             'domainId' => $this->domainId,
