@@ -152,8 +152,8 @@ class Domain extends \hipanel\base\Model
         return $this->mergeAttributeLabels([
             'epp_client_id'         => Yii::t('hipanel/domain', 'EPP client ID'),
             'remoteid'              => Yii::t('hipanel', 'Remote ID'),
-            'domain'                => Yii::t('hipanel', 'Domain Name'),
-            'domain_like'           => Yii::t('hipanel', 'Domain Name'),
+            'domain'                => Yii::t('hipanel', 'Domain name'),
+            'domain_like'           => Yii::t('hipanel', 'Domain name'),
             'note'                  => Yii::t('hipanel', 'Notes'),
             'nameservers'           => Yii::t('hipanel', 'Name Servers'),
             'transfer_date'         => Yii::t('hipanel/domain', 'Transfered'),
