@@ -1,10 +1,9 @@
 package:
     type:           yii2-extension
     name:           hipanel-domain-checker
-    title:          HiPanel Domain Checker module
-    keywords:       hipanel, domain-checker
+    title:          HiSite Domain module
+    headline:       HiSite Domain
+    keywords:       hisite, domain
     namespace:      hipanel\modules\domainchecker
-
-require:
-    hiqdev/hidev-php:       "*"
-    hiqdev/hidev-vendor:    "*"
+    description: |
+        This package provides operations with domain registering, transfering and more.

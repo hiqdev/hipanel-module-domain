@@ -1,11 +1,15 @@
-HiPanel Domain Checker module
-=============================
+HiSite Domain
+=============
+
+**HiSite Domain module**
 
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hipanel-domain-checker/v/stable)](https://packagist.org/packages/hiqdev/hipanel-domain-checker)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hipanel-domain-checker/downloads)](https://packagist.org/packages/hiqdev/hipanel-domain-checker)
 [![Build Status](https://img.shields.io/travis/hiqdev/hipanel-domain-checker.svg)](https://travis-ci.org/hiqdev/hipanel-domain-checker)
 [![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/hiqdev/hipanel-domain-checker.svg)](https://scrutinizer-ci.com/g/hiqdev/hipanel-domain-checker/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/hiqdev/hipanel-domain-checker.svg)](https://scrutinizer-ci.com/g/hiqdev/hipanel-domain-checker/)
+
+This package provides operations with domain registering, transfering and more.
 
 ## Installation
 
