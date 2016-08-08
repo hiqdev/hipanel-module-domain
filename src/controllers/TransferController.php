@@ -46,26 +46,22 @@ class TransferController extends \hipanel\base\CrudController
             'cancel-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Domain transfer was canceled'),
-                'error' => Yii::t('app', 'Failed cancel transfer domain'),
+                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was canceled'),
             ],
             'reject-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Domain transfer was rejected'),
-                'error' => Yii::t('app', 'Failed reject transfer domain'),
+                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was rejected'),
             ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('app', 'Domain transfer was approved'),
-                'error' => Yii::t('app', 'Failed approve transfer domain'),
+                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was approved'),
             ],
             'notify-transfer-in' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('app', 'FOA sended'),
-                'error' => Yii::t('app', 'Failed FOA send'),
+                'success' => Yii::t('hipanel/domainchecker', 'FOA was sent'),
             ],
         ];
     }
