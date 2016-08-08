@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * HiSite Domain module
+ *
+ * @link      https://github.com/hiqdev/hipanel-domain-checker
+ * @package   hipanel-domain-checker
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
@@ -137,5 +146,5 @@ class DomaincheckerController extends \hipanel\base\CrudController
         return array_filter((array) $tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
-    }    
+    }
 }

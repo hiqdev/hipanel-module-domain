@@ -144,6 +144,7 @@ $id = $model->id ?: 0;
                             if (!$model->hasErrors('password')) {
                                 $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
                             }
+
                             return $html;
                         },
                     ],
