@@ -40,13 +40,15 @@ return [
     'Starting the transfer procedure for the following domains' => 'Начинаем процедуру трансфера для следующих доменов',
     'WHOIS' => 'WHOIS',
     'each pair (domain + code) should be written with a new line' => 'каждая пара (домен + пароль) должна быть написана с новой строки',
+
     'or' => 'или',
+    'year' => 'год',
     'Add to cart' => 'Добавить в корзину',
     'Adding' => 'Добавление',
+
     'Adult' => 'Для взрослых',
     'All' => 'Все',
     'Audio&Music' => 'Музыка и Аудио',
-    'Available' => 'Доступные',
     'Categories' => 'Категории',
     'Domain check' => 'Поиск домена',
     'Domain is not available' => 'Домен не доступен',
@@ -63,10 +65,11 @@ return [
     'Society' => 'Общество',
     'Special' => 'Специальные',
     'Sport' => 'Спорт',
+
     'Status' => 'Статус',
-    'There are no available domain zones' => 'Нет свободных доменных зон',
-    'Unavailable' => 'Недоступны',
-    'year' => 'год',
+    'Available' => 'Доступные',
+    'Unavailable' => 'Недоступные',
+    'There are no available domain zones' => 'Нет доступных доменных зон',
 
     'Domain transfer was canceled' => 'Трансфер домена был отменён',
     'Domain transfer was rejected' => 'Трансфер домена был отклонён',
