@@ -8,9 +8,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = Yii::t('hipanel/domainchecker', 'Domain transfer');
-$this->breadcrumbs->setItems([
-    $this->title,
-]);
+$this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss('
 .step {

@@ -14,9 +14,8 @@ IsotopeAsset::register($this);
 HipanelAsset::register($this);
 
 $this->title = Yii::t('hipanel/domainchecker', 'Domain check');
-$this->breadcrumbs->setItems([
-    $this->title,
-]);
+$this->params['breadcrumbs'][] = $this->title;
+
 $requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
 $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 $this->registerCss('
