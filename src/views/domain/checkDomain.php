@@ -6,16 +6,13 @@ use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+$this->title = Yii::t('hipanel/domain', 'Domain check');
+$this->params['breadcrumbs'][] = $this->title;
+
 DomainCheckPluginAsset::register($this);
 hipanel\frontend\assets\IsotopeAsset::register($this);
 \hipanel\frontend\assets\HipanelAsset::register($this);
 
-//Yii::$app->assetManager->forceCopy = true; // todo: remove this line
-
-$this->title = Yii::t('hipanel/domain', 'Domain check');
-$this->breadcrumbs->setItems([
-    $this->title,
-]);
 $requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
 $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 $this->registerCss('

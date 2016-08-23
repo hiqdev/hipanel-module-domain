@@ -18,16 +18,16 @@ $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
 $this->title = Html::encode($model->domain);
 $this->subtitle = Yii::t('hipanel/domain', 'Domain detailed information') . ' #' . $model->id;
-$this->breadcrumbs->setItems([
-    ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']],
-    $this->title,
-]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+
 $this->registerCss(<<<CSS
 .tab-pane {
     min-height: 300px;
 }
 CSS
 );
+
 ?>
 
 <?php Pjax::begin(Yii::$app->params['pjax']); ?>

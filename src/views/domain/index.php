@@ -12,9 +12,8 @@ use yii\helpers\Html;
 
 $this->title    = Yii::t('hipanel', 'Domains');
 $this->subtitle = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
-$this->breadcrumbs->setItems([
-    $this->title,
-]);
+$this->params['breadcrumbs'][] = $this->title;
+
 $this->registerCss(<<<CSS
 .editable-unsaved {
   font-weight: normal;

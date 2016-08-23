@@ -8,10 +8,8 @@ use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
 $this->subtitle = Yii::t('hipanel/domain', 'Name server detailed information') . ' #' . $model->id;
-$this->breadcrumbs->setItems([
-    ['label' => Yii::t('hipanel/domain', 'Name Servers'), 'url' => ['index']],
-    $this->title,
-]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel/domain', 'Name Servers'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
