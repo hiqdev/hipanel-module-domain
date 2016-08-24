@@ -3,15 +3,14 @@
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\widgets\ActionBox;
 use hipanel\widgets\AjaxModal;
-use hipanel\widgets\IndexLayoutSwitcher;
 use hipanel\widgets\IndexPage;
 use hipanel\widgets\Pjax;
 use yii\bootstrap\Dropdown;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
-$this->title    = Yii::t('hipanel', 'Domains');
-$this->subtitle = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
+$this->title = Yii::t('hipanel', 'Domains');
+$this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss(<<<CSS
@@ -20,29 +19,26 @@ $this->registerCss(<<<CSS
 }
 CSS
 );
-?>
 
+?>
 
 <?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
     <?php $page = IndexPage::begin(compact('model', 'dataProvider')) ?>
 
     <?= $page->setSearchFormData() ?>
 
-    <?php $page->beginContent('main-actions') ?>
-    <?php $page->endContent() ?>
-
     <?php $page->beginContent('show-actions') ?>
-    <?= IndexLayoutSwitcher::widget() ?>
-    <?= $page->renderSorter([
-        'attributes' => [
-            'domain', 'note',
-            'client', 'seller',
-            'state', 'whois_protected', 'is_secured',
-            'created_date', 'expires',
-            'autorenewal', 'id',
-        ],
-    ]) ?>
-    <?= $page->renderPerPage() ?>
+        <?= $page->renderLayoutSwitcher() ?>
+        <?= $page->renderSorter([
+            'attributes' => [
+                'domain', 'note',
+                'client', 'seller',
+                'state', 'whois_protected', 'is_secured',
+                'created_date', 'expires',
+                'autorenewal', 'id',
+            ],
+        ]) ?>
+        <?= $page->renderPerPage() ?>
     <?php $page->endContent() ?>
 
     <?php $page->beginContent('bulk-actions') ?>

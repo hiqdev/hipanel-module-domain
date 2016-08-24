@@ -17,7 +17,7 @@ use yii\helpers\Url;
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
 $this->title = Html::encode($model->domain);
-$this->subtitle = Yii::t('hipanel/domain', 'Domain detailed information') . ' #' . $model->id;
+$this->params['subtitle'] = Yii::t('hipanel/domain', 'Domain detailed information') . ' #' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
