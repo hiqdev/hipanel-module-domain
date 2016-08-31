@@ -12,6 +12,7 @@
 namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\finance\models\DomainResource;
 use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use Yii;
@@ -38,7 +39,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
                 $line['isAvailable'] = false;
             } else {
                 $tariff = $this->getDomainTariff();
-                $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
+                $zones = $this->getDomainZones($tariff, DomainResource::TYPE_DOMAIN_REGISTRATION);
 
                 foreach ($zones as $resource) {
                     if ($resource->zone === $zone) {
@@ -68,7 +69,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
         $model->scenario = 'check-domain';
 
         $tariff = $this->getDomainTariff();
-        $zones = $this->getDomainZones($tariff, Resource::TYPE_DOMAIN_REGISTRATION);
+        $zones = $this->getDomainZones($tariff, DomainResource::TYPE_DOMAIN_REGISTRATION);
 
         $dropDownZones = [];
         foreach ($zones as $resource) {
@@ -137,7 +138,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
      * @param string $type
      * @return array
      */
-    protected function getDomainZones($tariff, $type = Resource::TYPE_DOMAIN_REGISTRATION)
+    protected function getDomainZones($tariff, $type = DomainResource::TYPE_DOMAIN_REGISTRATION)
     {
         if ($tariff === null || !$tariff instanceof Tariff) {
             return [];
