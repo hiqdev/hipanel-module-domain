@@ -13,9 +13,9 @@ namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
-use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use Yii;
+use yii\base\InvalidConfigException;
 
 class DomaincheckerController extends \hipanel\base\CrudController
 {
@@ -75,7 +75,9 @@ class DomaincheckerController extends \hipanel\base\CrudController
         foreach ($zones as $resource) {
             $dropDownZones[$resource->zone] = '.' . $resource->zone;
         }
-        uasort($dropDownZones, function ($a, $b) { return $a === '.com' ? 0 : 1; });
+        uasort($dropDownZones, function ($a, $b) {
+            return $a === '.com' ? 0 : 1;
+        });
         if ($model->load(Yii::$app->request->get(), '') && !empty($dropDownZones)) {
             // Check if domain already have zone
             if (strpos($model->domain, '.') !== false) {
@@ -119,10 +121,19 @@ class DomaincheckerController extends \hipanel\base\CrudController
      */
     protected function getDomainTariff()
     {
-        $params = [
-            Yii::$app->user->isGuest ? Yii::$app->params['seller'] : Yii::$app->user->identity->seller,
-            Yii::$app->user->isGuest ? null : Yii::$app->user->id,
-        ];
+        if (Yii::$app->user->isGuest) {
+            if (isset(Yii::$app->params['seller'])) {
+                $params = [
+                    Yii::$app->params['seller'],
+                    null
+                ];
+            } else throw new InvalidConfigException('"seller" is must be set');
+        } else {
+            $params = [
+                Yii::$app->user->identity->seller,
+                Yii::$app->user->id,
+            ];
+        }
 
         return Yii::$app->getCache()->getTimeCached(3600, $params, function ($seller, $client_id) {
             return Tariff::find(['scenario' => 'get-available-info'])
@@ -144,7 +155,7 @@ class DomaincheckerController extends \hipanel\base\CrudController
             return [];
         }
 
-        return array_filter((array) $tariff->resources, function ($resource) use ($type) {
+        return array_filter((array)$tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
     }
