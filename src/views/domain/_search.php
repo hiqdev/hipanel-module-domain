@@ -37,9 +37,9 @@ use yii\helpers\Html;
         <?= Html::tag('label', Yii::t('hipanel/domain', 'Registered range'), ['class' => 'control-label']); ?>
         <?= DatePicker::widget([
             'model' => $search->model,
-            'type' => DatePicker::TYPE_RANGE,
             'attribute' => 'created_from',
             'attribute2' => 'created_till',
+            'type' => DatePicker::TYPE_RANGE,
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd-mm-yyyy',
