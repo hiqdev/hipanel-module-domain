@@ -15,6 +15,8 @@ return [
     'Domain' => 'Домен',
     'Renew domain' => 'Продлить домен',
     'Registration' => 'Регистрация',
+    'Paid till' => 'Оплачен до',
+    'Protection' => 'Защита',
 
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Incoming transfer domains' => 'Входящий трансфер',
