@@ -8,6 +8,7 @@ $loadingText = Yii::t('hipanel', 'loading...');
 $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('change-password');
 $errorMessage = Yii::t('hipanel', 'An error occurred. Try again please.');
+
 \yii\bootstrap\BootstrapPluginAsset::register($view);
 $view->registerJs(<<<JS
 

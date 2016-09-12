@@ -158,12 +158,12 @@ class Domain extends \hipanel\base\Model
             'nameservers'           => Yii::t('hipanel', 'Name Servers'),
             'transfer_date'         => Yii::t('hipanel/domain', 'Transfered'),
             'expiration_date'       => Yii::t('hipanel/domain', 'System Expiration Time'),
-            'expires'               => Yii::t('hipanel/domain', 'Payed Till'),
+            'expires'               => Yii::t('hipanel/domain', 'Paid till'),
             'since'                 => Yii::t('hipanel/domain', 'Since Time'),
             'lastop'                => Yii::t('hipanel/domain', 'Last Operation'),
             'operated'              => Yii::t('hipanel/domain', 'Last Operation Time'),
             'whois_protected'       => Yii::t('hipanel/domain', 'WHOIS'),
-            'is_secured'            => Yii::t('hipanel/domain', 'Lock'),
+            'is_secured'            => Yii::t('hipanel/domain', 'Protection'),
             'is_holded'             => Yii::t('hipanel/domain', 'On hold'),
             'is_freezed'            => Yii::t('hipanel/domain', 'Domain changes freezed'),
             'wp_freezed'            => Yii::t('hipanel/domain', 'Domain WHOIS freezed'),
@@ -180,10 +180,10 @@ class Domain extends \hipanel\base\Model
             'expires_soon'          => Yii::t('hipanel/domain', ' label'),
 
             // domain transfer
-            'password'              => yii::t('hipanel/domain', 'Transfer (EPP) password'),
+            'password'              => Yii::t('hipanel/domain', 'Transfer (EPP) password'),
 
             // domain transfer
-            'receiver'              => yii::t('hipanel/domain', 'Receiver'),
+            'receiver'              => Yii::t('hipanel/domain', 'Receiver'),
         ]);
     }
 
