@@ -11,7 +11,7 @@
 
 namespace hipanel\modules\domain\cart;
 
-class Calculation extends \hipanel\modules\finance\models\Calculation
+class Calculation extends \hipanel\modules\finance\cart\Calculation
 {
     use \hipanel\base\ModelTrait;
 
