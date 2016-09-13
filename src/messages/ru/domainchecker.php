@@ -51,7 +51,7 @@ return [
     'Audio&Music' => 'Музыка и Аудио',
     'Categories' => 'Категории',
     'Domain check' => 'Поиск домена',
-    'Domain is not available' => 'Домен не доступен',
+    'Domain is not available' => 'Занят',
     'Domain name' => 'Имя домена',
     'GEO' => 'Географические',
     'General' => 'Основные',
