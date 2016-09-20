@@ -77,6 +77,7 @@ return [
 
     'Domain check' => 'Проверка доступности доменов',
     'Check domain' => 'Проверить домен',
+    'Buy domain' => 'Купить домен',
     'Status' => 'Статус',
     'Special' => 'Special',
     'All' => 'Все',

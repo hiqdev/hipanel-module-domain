@@ -43,7 +43,7 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                         'url'   => ['/client/contact/index'],
                     ],
                     'check-domain' => [
-                        'label' => Yii::t('hipanel/domain', 'Check domain'),
+                        'label' => Yii::t('hipanel/domain', 'Buy domain'),
                         'url'   => ['/domainchecker/domainchecker/check-domain'],
                     ],
                     'transfer' => [
