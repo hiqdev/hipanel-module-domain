@@ -20,7 +20,7 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
         return [
             'domains' => [
                 'label' => Yii::t('hipanel', 'Domains'),
-                'url'   => ['/domains/default/index'],
+                'url'   => ['/domains/domain/index'],
                 'icon'  => 'fa-globe',
                 'items' => [
                     'domains' => [
@@ -41,12 +41,12 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                     ],
                     'transfer' => [
                         'label' => Yii::t('hipanel/domain', 'Transfer domain'),
-                        'url'   => ['/domain/domain/transfer'],
+                        'url'   => ['/domainchecker/transfer/index'],
                     ],
-//                  'seo' => [
-//                      'label' => Yii::t('hipanel/domain', 'SEO'),
-//                      'url'   => ['/domain/domain/index'],
-//                  ],
+                    'whois' => [
+                        'label' => Yii::t('hipanel/domainchecker', 'Whois lookup'),
+                        'url'   => ['/domainchecker/whois/index'],
+                    ],
                 ],
             ],
         ];
