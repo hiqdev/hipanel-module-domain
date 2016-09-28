@@ -75,4 +75,9 @@ return [
     'Domain transfer was rejected' => 'Трансфер домена был отклонён',
     'Domain transfer was approved' => 'Трансфер домена был подтверждён',
     'FOA was sent' => 'FOA была отправлена',
+
+    'Whois lookup' => 'Поиск в Whois',
+    'Available zones' => 'Доступные зоны',
+    'Whois lookup result' => 'Результат поиска в Whois',
+    'You could check whois information here. Just enter domain in the form input.' => 'Для того, что бы узнать кому принадлежит домен сайта, добавьте домен для проверки в форму поиска.',
 ];

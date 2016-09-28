@@ -1,24 +1,22 @@
 <?php
 
-use hipanel\modules\domainchecker\assets\WhoisAsset;
+/** @var string $sShotSrc */
+/** @var \hipanel\modules\domain\models\Domain $model */
 
-WhoisAsset::register($this);
-$message = Yii::t('hipanel/domainchecker', '');
-$this->registerJs("
-$('#whois').whois({
-    '': '',
-});
-");
+use yii\helpers\Html;
 
 ?>
-
-<div id="whois">
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-             aria-valuemax="100" style="width: 100%">
-            <span class="sr-only">100% Complete</span>
+<div class="row">
+    <div class="col-md-3">
+        <span class="mailbox-attachment-icon has-img">
+            <?= Html::img($sShotSrc, ['alt' => $model->domain]) ?>
+        </span>
+        <div class="mailbox-attachment-info">
+            <?= Html::a('<i class="fa fa-globe"></i>&nbsp;&nbsp;' . $model->domain, $model->domain, ['class' => 'mailbox-attachment-name']) ?>
         </div>
     </div>
-</div>
+    <div class="com-md-9">
 
+    </div>
+</div>
 
