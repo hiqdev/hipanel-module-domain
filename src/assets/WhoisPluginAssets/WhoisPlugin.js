@@ -4,8 +4,9 @@
 ;(function ($, window, document, undefined) {
     var pluginName = "whois";
     var defaults = {
-        domainRowClass: ".check-item",
-        finally: function () {
+        domain: null,
+        lookupUrl: 'lookup',
+        finally: function (data) {
             console.log('Done!');
         },
         beforeQueryStart: function (item) {
@@ -18,7 +19,6 @@
         this.element = $(element);
         this.items = {};
         this.settings = $.extend({}, defaults, options);
-        this.requests = {};
         this._defaults = defaults;
         this._name = pluginName;
         this.init();
@@ -32,33 +32,35 @@
 
     Plugin.prototype = {
         init: function () {
-            this.items = this.element.find(this.settings.domainRowClass);
-            setTimeout(function () {
-                this.startQuerier();
-            }.bind(this), 500);
+            this.startQuerier();
         },
-        query: function (item) {
-            var domain = $(item).data('domain');
+        startQuerier: function () {
+            if (this.settings.beforeQueryStart()) {
+                this.query();
+            }
+        },
+        query: function () {
+            var _this = this;
+            var domain = this.settings.domain;
 
             if (!domain) return false;
 
             $.ajax({
-                url: "check",
+                url: _this.settings.lookupUrl,
                 dataType: 'html',
                 type: 'POST',
-                beforeSend: function () {
-                    this.registerRequest(domain);
-                }.bind(this),
-                data: {domain: domain},
+                data: {
+                    domain: domain
+                },
                 success: function (data) {
-                    this.registerFinish(domain);
-                    return this.settings.success(data, domain, this.element);
-                }.bind(this)
+                    _this.element.html(data);
+                    _this.settings.finally(data);
+                }
             });
 
             return this;
         },
-        finally: function () {
+        finally: function (data) {
             
         }
     };
