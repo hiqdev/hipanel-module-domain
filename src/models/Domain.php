@@ -105,7 +105,7 @@ class Domain extends \hipanel\base\Model
             [['domains'], 'required', 'when' => function ($model) {
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
-            [['domain'], DomainValidator::className(), 'on' => ['transfer']],
+            [['domain'], DomainValidator::class, 'on' => ['transfer']],
             [['password'], function ($attribute) {
                 try {
                     $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
@@ -118,8 +118,7 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // Whois search
-            [['domain'], 'required', 'on' => ['get-whois']],
-            [['domain'], 'url', 'on' => ['get-whois']],
+            [['domain'], DomainValidator::class, 'on' => ['get-whois']],
 
             // NSs
             [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
