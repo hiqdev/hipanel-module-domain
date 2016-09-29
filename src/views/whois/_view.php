@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
         <div class="col-md-4">
             <div class="md-mb-10">
                 <span
-                    class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain]) ?></span>
+                    class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain, 'class' => 'img-thumbnail']) ?></span>
                 <div class="mailbox-attachment-info">
                     <?= Html::a('<i class="fa fa-globe"></i>&nbsp;&nbsp;' . $model->domain, $model->domain, ['class' => 'mailbox-attachment-name']) ?>
                 </div>
@@ -78,8 +78,8 @@ use yii\widgets\DetailView;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <pre><?= implode('<br>', $whoisData['rawdata']) ?></pre>
+        <div class="col-md-12" style="font-family: monospace">
+            <div class="well well-sm"><?= nl2br(trim(implode("\n", $whoisData['rawdata']))) ?></div>
         </div>
     </div>
 <?php else: ?>
