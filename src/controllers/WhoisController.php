@@ -4,7 +4,6 @@ namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
 use hiqdev\hiart\ErrorResponseException;
-use yii\data\ArrayDataProvider;
 use yii\web\UnprocessableEntityHttpException;
 use Yii;
 
@@ -37,7 +36,7 @@ class WhoisController extends \hipanel\base\CrudController
     {
         $request = Yii::$app->request;
         $model = $this->getModel();
-        $model->load(Yii::$app->request->post(), '');
+        $model->load($request->post(), '');
         if ($request->isAjax && $model->validate()) {
             $sShotSrc = sprintf('//mini.s-shot.ru/1920x1200/JPEG/1920/Z100/?%s', $model->domain);
             try {
