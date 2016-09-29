@@ -1,6 +1,7 @@
 <?php
 
 /** @var string $sShotSrc */
+/** @var array $whoisData */
 /** @var \hipanel\modules\domain\models\Domain $model */
 
 use hipanel\widgets\ArraySpoiler;
