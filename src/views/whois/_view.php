@@ -80,11 +80,7 @@ use yii\widgets\DetailView;
     <div class="row">
         <div class="col-md-12">
             <pre>
-            <?= ArraySpoiler::widget([
-                'data' => $whoisData['rawdata'],
-                'visibleCount' => count($whoisData['rawdata']),
-                'delimiter' => '<br>',
-            ]) ?>
+                <?= implode('<br>', $whoisData['rawdata']) ?>
             </pre>
         </div>
     </div>
