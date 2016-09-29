@@ -13,7 +13,8 @@ use yii\widgets\DetailView;
     <div class="row">
         <div class="col-md-4">
             <div class="md-mb-10">
-                <span class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain]) ?></span>
+                <span
+                    class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain]) ?></span>
                 <div class="mailbox-attachment-info">
                     <?= Html::a('<i class="fa fa-globe"></i>&nbsp;&nbsp;' . $model->domain, $model->domain, ['class' => 'mailbox-attachment-name']) ?>
                 </div>
@@ -78,11 +79,13 @@ use yii\widgets\DetailView;
     </div>
     <div class="row">
         <div class="col-md-12">
+            <pre>
             <?= ArraySpoiler::widget([
                 'data' => $whoisData['rawdata'],
                 'visibleCount' => count($whoisData['rawdata']),
                 'delimiter' => '<br>',
             ]) ?>
+            </pre>
         </div>
     </div>
 <?php else: ?>
