@@ -18,6 +18,8 @@ use yii\widgets\DetailView;
                     <?= Html::a('<i class="fa fa-globe"></i>&nbsp;&nbsp;' . $model->domain, $model->domain, ['class' => 'mailbox-attachment-name']) ?>
                 </div>
             </div>
+        </div>
+        <div class="col-md-9">
             <?= DetailView::widget([
                 'model' => $whoisData,
                 'attributes' => [
@@ -73,7 +75,9 @@ use yii\widgets\DetailView;
                 ]
             ]) ?>
         </div>
-        <div class="col-md-9">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <?= ArraySpoiler::widget([
                 'data' => $whoisData['rawdata'],
                 'visibleCount' => count($whoisData['rawdata']),

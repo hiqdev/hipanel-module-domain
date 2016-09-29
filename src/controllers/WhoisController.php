@@ -38,7 +38,7 @@ class WhoisController extends \hipanel\base\CrudController
         $model = $this->getModel();
         $model->load($request->post(), '');
         if ($request->isAjax && $model->validate()) {
-            $sShotSrc = sprintf('//mini.s-shot.ru/1920x1200/JPEG/1920/Z100/?%s', $model->domain);
+            $sShotSrc = sprintf('//mini.s-shot.ru/1920x1200/JPEG/320/Z100/?%s', $model->domain);
             try {
                 $whoisData = Domain::perform('GetWhois', ['domain' => $model->domain]);
             } catch (ErrorResponseException $e) {
