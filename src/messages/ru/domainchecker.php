@@ -80,4 +80,5 @@ return [
     'Available zones' => 'Доступные зоны',
     'Whois lookup result' => 'Результат поиска в Whois',
     'You could check whois information here. Just enter domain in the form input.' => 'Для того, что бы узнать кому принадлежит домен сайта, добавьте домен для проверки в форму поиска.',
+    'You have entered wrong domain name or domain name with unsupported zone.' => 'Вы ввели неверное имя домена или имя домена с неподдерживаемой зоны.',
 ];

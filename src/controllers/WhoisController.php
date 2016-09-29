@@ -3,6 +3,8 @@
 namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
+use hiqdev\hiart\ErrorResponseException;
+use yii\data\ArrayDataProvider;
 use yii\web\UnprocessableEntityHttpException;
 use Yii;
 
@@ -37,12 +39,17 @@ class WhoisController extends \hipanel\base\CrudController
         $model = $this->getModel();
         $model->load(Yii::$app->request->post(), '');
         if ($request->isAjax && $model->validate()) {
-            sleep(1);
             $sShotSrc = sprintf('//mini.s-shot.ru/1920x1200/JPEG/1920/Z100/?%s', $model->domain);
+            try {
+                $whoisData = Domain::perform('GetWhois', ['domain' => $model->domain]);
+            } catch (ErrorResponseException $e) {
+                $whoisData = false;
+            }
 
             return $this->renderPartial('_view', [
                 'model' => $model,
                 'sShotSrc' => $sShotSrc,
+                'whoisData' => $whoisData,
             ]);
         }
 
