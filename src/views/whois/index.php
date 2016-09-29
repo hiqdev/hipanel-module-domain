@@ -5,6 +5,7 @@
 /** @var \hipanel\modules\domain\models\Domain $model */
 
 use hipanel\modules\domainchecker\assets\WhoisAsset;
+use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
@@ -43,7 +44,10 @@ if ($model->domain !== null) {
                 <?php ActiveForm::end() ?>
                 <div class="bg-warning md-mt-10" style="padding: 5px 7px">
                     <span class="text-bold"><?= Yii::t('hipanel/domainchecker', 'Available zones') ?>:</span><br>
-                    com, net, name, cc, tv, org, info, pro, mobi, biz, xxx, porn, adult, sex, me, kiev.ua, com.ua, su, ru
+                    <?= ArraySpoiler::widget([
+                        'data' => $availableZones,
+                        'visibleCount' => count($availableZones),
+                    ]) ?>
                 </div>
                 <p class="md-mt-20">
                     <?= Yii::t('hipanel/domainchecker', 'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.') ?>

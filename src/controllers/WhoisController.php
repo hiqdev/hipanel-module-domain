@@ -2,9 +2,9 @@
 
 namespace hipanel\modules\domainchecker\controllers;
 
-use hipanel\modules\domain\models\Domain;
+use hipanel\helpers\ArrayHelper;
+use hipanel\modules\domain\repositories\DomainTariffRepository;
 use hipanel\modules\domainchecker\models\Whois;
-use hiqdev\hiart\ErrorResponseException;
 use yii\web\UnprocessableEntityHttpException;
 use Yii;
 
@@ -26,7 +26,9 @@ class WhoisController extends \hipanel\base\CrudController
         if (!$model->validate()) {
             throw new UnprocessableEntityHttpException();
         }
-        $availableZones = [];
+        /** @var DomainTariffRepository $repository */
+        $repository = Yii::createObject(DomainTariffRepository::class);
+        $availableZones = ArrayHelper::getColumn($repository->getAvailableZones(), 'zone', false);
 
         return $this->render('index', [
             'model' => $model,
