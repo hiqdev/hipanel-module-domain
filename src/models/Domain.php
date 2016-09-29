@@ -117,9 +117,6 @@ class Domain extends \hipanel\base\Model
             }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
-            // Whois lookup
-            [['domain'], DomainValidator::class, 'on' => ['get-whois']],
-
             // NSs
             [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
