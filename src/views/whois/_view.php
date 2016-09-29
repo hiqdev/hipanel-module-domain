@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 ?>
 <?php if ($whoisData) : ?>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="md-mb-10">
                 <span class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain]) ?></span>
                 <div class="mailbox-attachment-info">
@@ -19,7 +19,7 @@ use yii\widgets\DetailView;
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <?= DetailView::widget([
                 'model' => $whoisData,
                 'attributes' => [
