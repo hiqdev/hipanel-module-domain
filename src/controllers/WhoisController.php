@@ -3,23 +3,25 @@
 namespace hipanel\modules\domainchecker\controllers;
 
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domainchecker\models\Whois;
 use hiqdev\hiart\ErrorResponseException;
 use yii\web\UnprocessableEntityHttpException;
 use Yii;
 
 class WhoisController extends \hipanel\base\CrudController
 {
-    private function getModel()
+    private function getWhoisModel($domain)
     {
-        $model = new Domain;
-        $model->scenario = 'get-whois';
+        $whois = Yii::$app->hiart->createCommand()->perform('domainGetWhois', ['domain' => $domain]);
+
+        $model = reset(Whois::find()->populate([$whois]));
 
         return $model;
     }
 
     public function actionIndex($domain = null)
     {
-        $model = $this->getModel();
+        $model = new Whois;
         $model->load(Yii::$app->request->get(), '');
         if (!$model->validate()) {
             throw new UnprocessableEntityHttpException();
@@ -35,20 +37,13 @@ class WhoisController extends \hipanel\base\CrudController
     public function actionLookup()
     {
         $request = Yii::$app->request;
-        $model = $this->getModel();
-        $model->load($request->post(), '');
-        if ($request->isAjax && $model->validate()) {
-            $sShotSrc = sprintf('//mini.s-shot.ru/1920x1200/JPEG/320/Z100/?%s', $model->domain);
-            try {
-                $whoisData = Domain::perform('GetWhois', ['domain' => $model->domain]);
-            } catch (ErrorResponseException $e) {
-                $whoisData = false;
-            }
+        $model = $this->getWhoisModel($request->post('domain'));
+        if ($request->isAjax) {
+            // $sShotSrc =
 
             return $this->renderPartial('_view', [
                 'model' => $model,
-                'sShotSrc' => $sShotSrc,
-                'whoisData' => $whoisData,
+              //  'sShotSrc' => $sShotSrc,
             ]);
         }
 

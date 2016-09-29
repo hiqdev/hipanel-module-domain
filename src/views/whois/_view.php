@@ -9,50 +9,42 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 ?>
-<?php if ($whoisData) : ?>
+<?php if ($model) : ?>
     <div class="row">
         <div class="col-md-4">
-            <div class="md-mb-10">
-                <span
-                    class="mailbox-attachment-icon has-img"><?= Html::img($sShotSrc, ['alt' => $model->domain, 'class' => 'img-thumbnail']) ?></span>
-                <div class="mailbox-attachment-info">
-                    <?= Html::a('<i class="fa fa-globe"></i>&nbsp;&nbsp;' . $model->domain, $model->domain, ['class' => 'mailbox-attachment-name']) ?>
-                </div>
+            <div class="md-mb-10 text-center">
+                <?= Html::img($model->screenshot, ['alt' => $model->domain, 'class' => 'img-thumbnail']) ?>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8"$whoisData>
             <?= DetailView::widget([
-                'model' => $whoisData,
+                'model' => $model,
                 'attributes' => [
+                    'domain',
                     [
-                        'label' => Yii::t('hipanel', 'Domain'),
-                        'value' => Html::encode($whoisData['domain']),
+                        'attribute' => 'created',
+                        'format' => 'date',
+                        'visible' => !empty($model->created),
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Created'),
-                        'value' => Yii::$app->formatter->asDate($whoisData['created']),
-                        'visible' => $whoisData['created'] !== null,
+                        'attribute' => 'updated',
+                        'format' => 'date',
+                        'visible' => !empty($model->updated),
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Updated'),
-                        'value' => Yii::$app->formatter->asDate($whoisData['updated']),
-                        'visible' => $whoisData['updated'] !== null,
+                        'attribute' => 'expires',
+                        'format' => 'date',
+                        'visible' => !empty($model->expires),
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Expires'),
-                        'value' => Yii::$app->formatter->asDate($whoisData['expires']),
-                        'visible' => $whoisData['expires'] !== null,
+                        'attribute' => 'registrar',
+                        'visible' => !empty($model->expires),
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Registrar'),
-                        'value' => Html::encode($whoisData['registrar']),
-                        'visible' => $whoisData['registrar'] !== null,
-                    ],
-                    [
-                        'label' => Yii::t('hipanel/domainchecker', 'NS'),
+                        'attribute' => 'nss',
                         'value' => ArraySpoiler::widget([
-                            'data' => $whoisData['nss'],
-                            'visibleCount' => count($whoisData['nss']),
+                            'data' => $model->nss,
+                            'visibleCount' => count($model->nss),
                             'formatter' => function ($ip, $ns) {
                                 return $ns . ' - ' . $ip;
                             },
@@ -61,17 +53,14 @@ use yii\widgets\DetailView;
                         'format' => 'html',
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'IP'),
-                        'value' => $whoisData['ip'],
+                        'attribute' => 'ip',
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Country'),
-                        'value' => $whoisData['country_name'],
+                        'attribute' => 'country_name',
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'City'),
-                        'value' => $whoisData['city'],
-                        'visible' => $whoisData['city'] !== '',
+                        'attribute' => 'city',
+                        'visible' => !empty($model->city),
                     ],
                 ]
             ]) ?>
@@ -79,7 +68,7 @@ use yii\widgets\DetailView;
     </div>
     <div class="row">
         <div class="col-md-12" style="font-family: monospace">
-            <div class="well well-sm"><?= nl2br(trim(implode("\n", $whoisData['rawdata']))) ?></div>
+            <div class="well well-sm"><?= \hipanel\modules\domainchecker\widgets\WhoisData::widget(['data' => $model->rawdata]) ?></div>
         </div>
     </div>
 <?php else: ?>
