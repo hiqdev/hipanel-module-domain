@@ -79,9 +79,7 @@ use yii\widgets\DetailView;
     </div>
     <div class="row">
         <div class="col-md-12">
-            <pre>
-                <?= implode('<br>', $whoisData['rawdata']) ?>
-            </pre>
+            <pre><?= implode('<br>', $whoisData['rawdata']) ?></pre>
         </div>
     </div>
 <?php else: ?>
