@@ -1,6 +1,6 @@
 <?php
 
-namespace hipanel\modules\domainchecker\models;
+namespace hipanel\modules\domain\models;
 
 use hipanel\validators\DomainValidator;
 use hiqdev\hiart\ActiveRecord;
@@ -27,14 +27,14 @@ class Whois extends ActiveRecord
     {
         return [
             'domain' => Yii::t('hipanel', 'Domain'),
-            'created' => Yii::t('hipanel/domainchecker', 'Created'),
-            'updated' => Yii::t('hipanel/domainchecker', 'Updated'),
-            'expires' => Yii::t('hipanel/domainchecker', 'Expires'),
-            'registrar' => Yii::t('hipanel/domainchecker', 'Registrar'),
-            'nss' => Yii::t('hipanel/domainchecker', 'Name servers'),
-            'ip' => Yii::t('hipanel/domainchecker', 'IP'),
-            'country_name' => Yii::t('hipanel/domainchecker', 'Country'),
-            'city' => Yii::t('hipanel/domainchecker', 'City'),
+            'created' => Yii::t('hipanel/domain', 'Created'),
+            'updated' => Yii::t('hipanel/domain', 'Updated'),
+            'expires' => Yii::t('hipanel/domain', 'Expires'),
+            'registrar' => Yii::t('hipanel/domain', 'Registrar'),
+            'nss' => Yii::t('hipanel/domain', 'Name servers'),
+            'ip' => Yii::t('hipanel/domain', 'IP'),
+            'country_name' => Yii::t('hipanel/domain', 'Country'),
+            'city' => Yii::t('hipanel/domain', 'City'),
         ];
     }
 

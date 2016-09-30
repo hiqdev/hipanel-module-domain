@@ -1,10 +1,10 @@
 <?php
 
-namespace hipanel\modules\domainchecker\controllers;
+namespace hipanel\modules\domain\controllers;
 
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
-use hipanel\modules\domainchecker\models\Whois;
+use hipanel\modules\domain\models\Whois;
 use yii\web\UnprocessableEntityHttpException;
 use Yii;
 

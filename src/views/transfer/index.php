@@ -7,7 +7,7 @@ use yii\bootstrap\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = Yii::t('hipanel/domainchecker', 'Domain transfer');
+$this->title = Yii::t('hipanel/domain', 'Domain transfer');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss('
@@ -39,7 +39,7 @@ $id = $model->id ?: 0;
         <div class="col-md-12">
             <div class="box box-solid">
                 <div class="box-body">
-                    <?= Html::submitButton('<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domainchecker', 'Transfer'), ['class' => 'btn btn-success']); ?>
+                    <?= Html::submitButton('<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Transfer'), ['class' => 'btn btn-success']); ?>
                 </div>
             </div>
         </div>
@@ -47,8 +47,8 @@ $id = $model->id ?: 0;
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#single"
-                                          data-toggle="tab"><?= Yii::t('hipanel/domainchecker', 'Domain transfer') ?></a></li>
-                    <li><a href="#bulk" data-toggle="tab"><?= Yii::t('hipanel/domainchecker', 'Bulk domain transfer') ?></a></li>
+                                          data-toggle="tab"><?= Yii::t('hipanel/domain', 'Domain transfer') ?></a></li>
+                    <li><a href="#bulk" data-toggle="tab"><?= Yii::t('hipanel/domain', 'Bulk domain transfer') ?></a></li>
 
                 </ul>
 
@@ -59,7 +59,7 @@ $id = $model->id ?: 0;
                             <div class="col-md-1 step">1.</div>
                             <!-- /.col-md-1 -->
                             <div
-                                class="col-md-11"><?= Yii::t('hipanel/domainchecker', 'Remove WHOIS protection from the current registrar.') ?></div>
+                                class="col-md-11"><?= Yii::t('hipanel/domain', 'Remove WHOIS protection from the current registrar.') ?></div>
                             <!-- /.col-md-11 -->
                         </div>
                         <!-- /.row -->
@@ -83,7 +83,7 @@ $id = $model->id ?: 0;
                             <div class="col-md-1 step">3.</div>
                             <!-- /.col-md-1 -->
                             <div class="col-md-11">
-                                <?= Yii::t('hipanel/domainchecker', 'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.') ?>
+                                <?= Yii::t('hipanel/domain', 'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.') ?>
                             </div>
                             <!-- /.col-md-11 -->
                         </div>
@@ -97,14 +97,14 @@ $id = $model->id ?: 0;
                             </div>
                             <div class="col-md-6 lg-mt-20 md-mt-20 sm-mt-20">
                                 <p class="help-block">
-                                    <?= Yii::t('hipanel/domainchecker', 'For separation of the domain and code use a space, a comma or a semicolon.') ?>
-                                    <?= Yii::t('hipanel/domainchecker', 'Example') ?>:<br>
+                                    <?= Yii::t('hipanel/domain', 'For separation of the domain and code use a space, a comma or a semicolon.') ?>
+                                    <?= Yii::t('hipanel/domain', 'Example') ?>:<br>
                                     <b>yourdomain.com uGt6shlad</b><br>
-                                    <?= Yii::t('hipanel/domainchecker', 'or') ?><br>
+                                    <?= Yii::t('hipanel/domain', 'or') ?><br>
                                     <b>yourdomain.com, uGt6shlad</b><br>
-                                    <?= Yii::t('hipanel/domainchecker', 'or') ?><br>
+                                    <?= Yii::t('hipanel/domain', 'or') ?><br>
                                     <b>yourdomain.com; uGt6shlad</b><br>
-                                    <?= Yii::t('hipanel/domainchecker', 'each pair (domain + code) should be written with a new line') ?>
+                                    <?= Yii::t('hipanel/domain', 'each pair (domain + code) should be written with a new line') ?>
                                 </p>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ $id = $model->id ?: 0;
     <?= Html::beginForm(['add-to-cart-transfer']) ?>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"><?= Yii::t('hipanel/domainchecker', 'Starting the transfer procedure for the following domains'); ?></h3>
+            <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Starting the transfer procedure for the following domains'); ?></h3>
         </div>
         <div class="box-body">
             <?= GridView::widget([
@@ -160,7 +160,7 @@ $id = $model->id ?: 0;
                         },
                     ],
                     [
-                        'label' => Yii::t('hipanel/domainchecker', 'Additional message'),
+                        'label' => Yii::t('hipanel/domain', 'Additional message'),
                         'value' => function ($model) {
                             /* @var Domain $model */
                             return $model->hasErrors('password') ? $model->getFirstError('password') : '';
@@ -170,8 +170,8 @@ $id = $model->id ?: 0;
             ]); ?>
         </div>
         <div class="box-footer">
-            <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> ' . Yii::t('hipanel/domainchecker', 'Add to cart'), ['class' => 'btn btn-success']) ?>
-            <?= Html::a(Yii::t('hipanel/domainchecker', 'Return to transfer form'), ['transfer'], ['class' => 'btn btn-default']) ?>
+            <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> ' . Yii::t('hipanel/domain', 'Add to cart'), ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('hipanel/domain', 'Return to transfer form'), ['transfer'], ['class' => 'btn btn-default']) ?>
         </div>
         <!-- /.box-footer -->
     </div>

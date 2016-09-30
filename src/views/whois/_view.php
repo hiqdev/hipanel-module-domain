@@ -68,11 +68,11 @@ use yii\widgets\DetailView;
     </div>
     <div class="row">
         <div class="col-md-12" style="font-family: monospace">
-            <div class="well well-sm"><?= \hipanel\modules\domainchecker\widgets\WhoisData::widget(['data' => $model->rawdata]) ?></div>
+            <div class="well well-sm"><?= \hipanel\modules\domain\widgets\WhoisData::widget(['data' => $model->rawdata]) ?></div>
         </div>
     </div>
 <?php else: ?>
     <div class="bg-danger text-center">
-        <?= Yii::t('hipanel/domainchecker', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
+        <?= Yii::t('hipanel/domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
     </div>
-<?php endif; ?>
+<?php endif ?>

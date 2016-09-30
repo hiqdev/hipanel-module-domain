@@ -1,11 +1,10 @@
 <?php
 
-namespace hipanel\modules\domainchecker\helpers;
+namespace hipanel\modules\domain\helpers;
 
 use Yii;
-use yii\base\Object;
 
-class EmailObfuscator extends Object
+class EmailObfuscator
 {
     /**
      * default font size.
@@ -100,8 +99,6 @@ class EmailObfuscator extends Object
      * @var string the TrueType font file. This can be either a file path or path alias.
      */
     public $fontFile = '@yii/captcha/SpicyRice.ttf';
-
-
 
     public function generatePng($text)
     {

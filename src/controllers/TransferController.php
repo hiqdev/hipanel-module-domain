@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hipanel\modules\domainchecker\controllers;
+namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\SmartPerformAction;
 use hipanel\actions\ValidateFormAction;
@@ -56,22 +56,22 @@ class TransferController extends \hipanel\base\CrudController
             'cancel-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was canceled'),
+                'success' => Yii::t('hipanel/domain', 'Domain transfer was canceled'),
             ],
             'reject-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was rejected'),
+                'success' => Yii::t('hipanel/domain', 'Domain transfer was rejected'),
             ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('hipanel/domainchecker', 'Domain transfer was approved'),
+                'success' => Yii::t('hipanel/domain', 'Domain transfer was approved'),
             ],
             'notify-transfer-in' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'only-object',
-                'success' => Yii::t('hipanel/domainchecker', 'FOA was sent'),
+                'success' => Yii::t('hipanel/domain', 'FOA was sent'),
             ],
         ];
     }

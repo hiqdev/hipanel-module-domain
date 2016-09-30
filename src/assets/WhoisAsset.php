@@ -1,6 +1,6 @@
 <?php
 
-namespace hipanel\modules\domainchecker\assets;
+namespace hipanel\modules\domain\assets;
 
 use yii\bootstrap\BootstrapAsset;
 use yii\bootstrap\BootstrapPluginAsset;
@@ -9,7 +9,7 @@ use yii\web\JqueryAsset;
 
 class WhoisAsset extends AssetBundle
 {
-    public $sourcePath = '@hipanel/modules/domainchecker/assets/WhoisPluginAssets';
+    public $sourcePath = '@hipanel/modules/domain/assets/WhoisPluginAssets';
 
     public $js = [
         'WhoisPlugin.js',

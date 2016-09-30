@@ -1,8 +1,8 @@
 <?php
 
-namespace hipanel\modules\domainchecker\widgets;
+namespace hipanel\modules\domain\widgets;
 
-use hipanel\modules\domainchecker\helpers\EmailObfuscator;
+use hipanel\modules\domain\helpers\EmailObfuscator;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\captcha\Captcha;

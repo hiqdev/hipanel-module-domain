@@ -11,6 +11,6 @@
 
 return [
     'languages' => ['ru'],
-    'sourcePath' => '@hipanel/modules/domainchecker',
-    'messagePath' => '@hipanel/modules/domainchecker/messages',
+    'sourcePath' => '@hipanel/modules/domain',
+    'messagePath' => '@hipanel/modules/domain/messages',
 ];

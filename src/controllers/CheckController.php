@@ -9,14 +9,14 @@
  * @copyright Copyright (c) 2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hipanel\modules\domainchecker\controllers;
+namespace hipanel\modules\domain\controllers;
 
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
 use hipanel\modules\finance\models\DomainResource;
 use Yii;
 
-class DomaincheckerController extends \hipanel\base\CrudController
+class CheckController extends \hipanel\base\CrudController
 {
     public function actionCheck()
     {
