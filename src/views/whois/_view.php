@@ -1,7 +1,6 @@
 <?php
 
 /** @var string $sShotSrc */
-/** @var array $whoisData */
 /** @var \hipanel\modules\domain\models\Domain $model */
 
 use hipanel\widgets\ArraySpoiler;
@@ -16,7 +15,7 @@ use yii\widgets\DetailView;
                 <?= Html::img($model->screenshot, ['alt' => $model->domain, 'class' => 'img-thumbnail']) ?>
             </div>
         </div>
-        <div class="col-md-8"$whoisData>
+        <div class="col-md-8">
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
