@@ -15,7 +15,7 @@ $this->registerCss("
 }
 ");
 ?>
-<?php if ($model) : ?>
+<?php if ($model->ip) : ?>
     <div class="row">
         <div class="col-md-4">
             <div class="md-mb-10 text-center">
