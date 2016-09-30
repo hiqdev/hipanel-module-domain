@@ -18,6 +18,14 @@ use Yii;
 
 class CheckController extends \hipanel\base\CrudController
 {
+    private function getAvailableZones()
+    {
+        /** @var DomainTariffRepository $repository */
+        $repository = Yii::createObject(DomainTariffRepository::class);
+
+        return $repository->getAvailableZones();
+    }
+
     public function actionCheck()
     {
         session_write_close();
@@ -33,14 +41,10 @@ class CheckController extends \hipanel\base\CrudController
 
         if ($fqdn) {
             $check = Domain::perform('Check', ['domains' => [$fqdn]], true);
-//            $check = [$domain => mt_rand(0,1)]; // todo: remove this line
             if ($check[$fqdn] === 0) {
                 $line['isAvailable'] = false;
             } else {
-                $tariff = $this->getDomainTariff();
-                $zones = $this->getDomainZones($tariff, DomainResource::TYPE_DOMAIN_REGISTRATION);
-
-                foreach ($zones as $resource) {
+                foreach ($this->getAvailableZones() as $resource) {
                     if ($resource->zone === $zone) {
                         $line['resource'] = $resource;
                         break;
@@ -66,9 +70,7 @@ class CheckController extends \hipanel\base\CrudController
         $results = [];
         $model = new Domain();
         $model->scenario = 'check-domain';
-        $repository = Yii::createObject(DomainTariffRepository::class);
-        $tariff = $repository->getTariff();
-        $zones = $repository->getZones($tariff, DomainResource::TYPE_DOMAIN_REGISTRATION);
+        $zones = $this->getAvailableZones();
 
         $dropDownZones = [];
         foreach ($zones as $resource) {
