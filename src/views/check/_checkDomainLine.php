@@ -59,7 +59,7 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
                     'data-domain-url' => Url::to([$addToCartPath, 'name' => $line['fqdn']]),
                 ]) ?>
             <?php elseif ($line['isAvailable'] === false) : ?>
-                <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel/domain', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+                <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel/domain', 'WHOIS'), ['/domain/whois/index', 'domain' => $line['fqdn']], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
             <?php endif; ?>
         </div>
     </div>
