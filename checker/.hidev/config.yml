@@ -1,9 +1,0 @@
-package:
-    type:           yii2-extension
-    name:           hipanel-domain-checker
-    title:          HiSite Domain module
-    headline:       HiSite Domain
-    keywords:       hisite, domain
-    namespace:      hipanel\modules\domainchecker
-    description: |
-        This package provides operations with domain registering, transfering and more.
