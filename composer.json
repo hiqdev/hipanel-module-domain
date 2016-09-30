@@ -44,7 +44,8 @@
     ],
     "require": {
         "hiqdev/hipanel-core": "<2.0 || dev-master",
-        "hiqdev/hipanel-module-client": "<2.0 || dev-master"
+        "hiqdev/hipanel-module-client": "<2.0 || dev-master",
+        "toriphes/yii2-widget-lazyload": "~1.0"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",
