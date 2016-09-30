@@ -41,11 +41,9 @@ class WhoisController extends \hipanel\base\CrudController
         $request = Yii::$app->request;
         $model = $this->getWhoisModel($request->post('domain'));
         if ($request->isAjax) {
-            // $sShotSrc =
 
-            return $this->renderPartial('_view', [
+            return $this->renderAjax('_view', [
                 'model' => $model,
-              //  'sShotSrc' => $sShotSrc,
             ]);
         }
 

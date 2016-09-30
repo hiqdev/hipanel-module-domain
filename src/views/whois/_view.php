@@ -4,15 +4,28 @@
 /** @var \hipanel\modules\domain\models\Domain $model */
 
 use hipanel\widgets\ArraySpoiler;
-use yii\helpers\Html;
+use toriphes\lazyload\LazyLoad;
 use yii\widgets\DetailView;
 
+$this->registerCss("
+.shot-img {
+    background-color: #f4f4f4;
+    width: 520px;
+    height: 325px;
+}
+");
 ?>
 <?php if ($model) : ?>
     <div class="row">
         <div class="col-md-4">
             <div class="md-mb-10 text-center">
-                <?= Html::img($model->screenshot, ['alt' => $model->domain, 'class' => 'img-thumbnail']) ?>
+                <?= LazyLoad::widget([
+                    'src' => $model->screenshot,
+                    'options' => [
+                        'class' => 'img-thumbnail shot-img',
+                        'alt' => $model->domain,
+                    ]
+                ]) ?>
             </div>
         </div>
         <div class="col-md-8">

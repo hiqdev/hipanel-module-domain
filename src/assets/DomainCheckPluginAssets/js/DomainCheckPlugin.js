@@ -2,9 +2,7 @@
     var pluginName = "domainsCheck";
     var defaults = {
         domainRowClass: ".check-item",
-        finally: function () {
-            console.log('Done!');
-        },
+        finally: function () {},
         beforeQueryStart: function (item) {
             return true;
         }
