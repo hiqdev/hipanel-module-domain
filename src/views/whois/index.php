@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('hipanel/domain', 'Whois lookup');
+$this->title = Yii::t('hipanel/domain', 'WHOIS lookup');
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($model->domain !== null) {
@@ -60,7 +60,7 @@ if ($model->domain !== null) {
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= Yii::t('hipanel/domain', 'Whois lookup result') ?>
+                    <?= Yii::t('hipanel/domain', 'WHOIS lookup result') ?>
                 </h3>
                 <div class="box-tools pull-right">
                 </div>

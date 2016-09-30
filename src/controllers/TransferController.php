@@ -24,11 +24,6 @@ use yii\data\ArrayDataProvider;
 
 class TransferController extends \hipanel\base\CrudController
 {
-    public function behaviors()
-    {
-        return []; // todo: remove to enable CRUD
-    }
-
     /**
      * {@inheritdoc}
      */
