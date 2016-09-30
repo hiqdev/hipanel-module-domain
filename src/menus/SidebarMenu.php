@@ -37,15 +37,15 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                     ],
                     'check-domain' => [
                         'label' => Yii::t('hipanel/domain', 'Buy domain'),
-                        'url'   => ['/domainchecker/domainchecker/check-domain'],
+                        'url'   => ['/domain/check/check-domain'],
                     ],
                     'transfer' => [
                         'label' => Yii::t('hipanel/domain', 'Transfer domain'),
-                        'url'   => ['/domainchecker/transfer/index'],
+                        'url'   => ['/domain/transfer/index'],
                     ],
                     'whois' => [
-                        'label' => Yii::t('hipanel/domainchecker', 'Whois lookup'),
-                        'url'   => ['/domainchecker/whois/index'],
+                        'label' => Yii::t('hipanel/domain', 'Whois lookup'),
+                        'url'   => ['/domain/whois/index'],
                     ],
                 ],
             ],
