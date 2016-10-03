@@ -186,4 +186,6 @@ return [
     'You could check whois information here. Just enter domain in the form input.' => 'Для того, что бы узнать кому принадлежит домен сайта, добавьте домен для проверки в форму поиска.',
     'You have entered wrong domain name or domain name with unsupported zone.' => 'Вы ввели неверное имя домена или имя домена с неподдерживаемой зоны.',
     'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.' => 'WHOIS не является аббревиатурой, хотя может выглядеть так. На самом деле, это система, которая предоставляет информацию, которая отвечает за доменное имя.',
+
+    'Domain search' => 'Поиск доменов',
 ];
