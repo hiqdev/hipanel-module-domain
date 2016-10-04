@@ -18,9 +18,9 @@ class DomainTariffRepository
     public function getTariff()
     {
         if (Yii::$app->user->isGuest) {
-            if (isset(Yii::$app->params['seller'])) {
+            if (isset(Yii::$app->params['user.seller'])) {
                 $params = [
-                    Yii::$app->params['seller'],
+                    Yii::$app->params['user.seller'],
                     null
                 ];
             } else throw new InvalidConfigException('"seller" is must be set');
