@@ -20,8 +20,6 @@ class Calculation extends \hipanel\modules\finance\cart\Calculation
     {
         parent::init();
 
-        $this->client = $this->position->getModel()->client;
-        $this->seller = $this->position->getModel()->seller;
         $this->object = 'domain';
     }
 
