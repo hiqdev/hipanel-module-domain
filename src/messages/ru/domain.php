@@ -188,4 +188,6 @@ return [
     'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.' => 'WHOIS не является аббревиатурой, хотя может выглядеть так. На самом деле, это система, которая предоставляет информацию, которая отвечает за доменное имя.',
 
     'Domain search' => 'Поиск доменов',
+
+    '\'{value}\' is not valid domain name' => '\'{value}\' не является правильным доменным именем',
 ];
