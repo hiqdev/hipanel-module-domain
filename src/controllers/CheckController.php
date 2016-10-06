@@ -70,6 +70,7 @@ class CheckController extends \hipanel\base\CrudController
         $results = [];
         $model = new Domain();
         $model->scenario = 'check-domain';
+        $requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
         $zones = $this->getAvailableZones();
 
         $dropDownZones = [];
@@ -106,11 +107,13 @@ class CheckController extends \hipanel\base\CrudController
                 }
             }
         }
+        $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 
         return $this->render('checkDomain', [
             'model' => $model,
             'dropDownZonesOptions' => $dropDownZones,
             'results' => $results,
+            'requestedDomain' => $requestedDomain,
         ]);
     }
 }

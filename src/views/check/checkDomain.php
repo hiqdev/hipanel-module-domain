@@ -9,6 +9,11 @@ use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+/** @var array $requestedDomain */
+/** @var Domain $model */
+/** @var array $dropDownZonesOptions */
+/** @var array $results */
+
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
 HipanelAsset::register($this);
@@ -16,8 +21,6 @@ HipanelAsset::register($this);
 $this->title = Yii::t('hipanel/domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
 
-$requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
-$model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 $this->registerCss('
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
     background: transparent!important;
