@@ -20,9 +20,6 @@ class DomainTransferProduct extends AbstractDomainProduct
     protected $_operation = 'transfer';
 
     /** {@inheritdoc} */
-    protected $_calculationModel = DomainTransferCalculation::class;
-
-    /** {@inheritdoc} */
     protected $_purchaseModel = DomainTransferPurchase::class;
 
     /** {@inheritdoc} */
