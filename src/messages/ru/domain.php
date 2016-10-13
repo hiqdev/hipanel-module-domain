@@ -183,11 +183,11 @@ return [
     'WHOIS lookup' => 'Поиск в WHOIS',
     'Available zones' => 'Доступные зоны',
     'WHOIS lookup result' => 'Результат поиска в WHOIS',
-    'You could check whois information here. Just enter domain in the form input.' => 'Для того, что бы узнать кому принадлежит домен сайта, добавьте домен для проверки в форму поиска.',
-    'You have entered wrong domain name or domain name with unsupported zone.' => 'Вы ввели неверное имя домена или имя домена с неподдерживаемой зоны.',
-    'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.' => 'WHOIS не является аббревиатурой, хотя может выглядеть так. На самом деле, это система, которая предоставляет информацию, которая отвечает за доменное имя.',
+    'You can check WHOIS information here. Just enter domain name in the form input.' => 'Вы можете получить информацию WHOIS на этой странице. Для этого введите доменное имя в поле формы.',
+    'You have entered wrong domain name or domain name with unsupported zone.' => 'Вы ввели неверное имя домена или имя домена из неподдерживаемой зоны.',
+    'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.' => 'WHOIS не является аббревиатурой, хотя может выглядеть так. На самом деле, это система, из которой можно получить информацию об ответственных за доменное имя.',
 
     'Domain search' => 'Поиск доменов',
 
-    '\'{value}\' is not valid domain name' => '\'{value}\' не является правильным доменным именем',
+    "'{value}' is not valid domain name" => "'{value}' не является правильным доменным именем",
 ];
