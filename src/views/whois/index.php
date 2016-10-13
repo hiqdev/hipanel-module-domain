@@ -68,7 +68,7 @@ if ($model->domain !== null) {
             <div class="box-body">
                 <?php if (!$model->domain) : ?>
                     <div class="mailbox-read-message text-center">
-                        <?= Yii::t('hipanel/domain', 'You can check WHOIS information here. Just enter domain in the form input.') ?>
+                        <?= Yii::t('hipanel/domain', 'You can check WHOIS information here. Just enter domain name in the form input.') ?>
                     </div>
                     <?php else: ?>
                     <div id="whois">
