@@ -1,8 +1,7 @@
 <?php
 
-use hipanel\helpers\StringHelper;
 use hiqdev\combo\StaticCombo;
-use wbraganca\dynamicform\DynamicFormWidget;
+use hipanel\widgets\DynamicFormWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -29,6 +28,7 @@ use yii\web\JsExpression;
     'formId' => 'dynamic-form',
     'formFields' => [
         'host',
+        'ips',
     ],
 ]) ?>
 
