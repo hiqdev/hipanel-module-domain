@@ -195,25 +195,25 @@ CSS
                                     'onColor' => 'info',
                                 ],
                             ],
-//                                [
-//                                    'label' => Yii::t('hipanel/domain', 'Premium package autorenewal'),
-//                                    'value' => BootstrapSwitch::widget([
-//                                        'model' => $model,
-//                                        'attribute' => 'premium_autorenewal',
-//                                        'options' => [
-//                                            'label' => false
-//                                        ],
-//                                        'pluginOptions' => [
-//                                            'inlineLabel' => false,
-//                                            'labelText' => false
-//                                        ]
-//                                    ]),
-//                                    'format' => 'raw',
-//                                ]
+//                            [
+//                                'label' => Yii::t('hipanel/domain', 'Premium package autorenewal'),
+//                                'value' => BootstrapSwitch::widget([
+//                                    'model' => $model,
+//                                    'attribute' => 'premium_autorenewal',
+//                                    'options' => [
+//                                        'label' => false
+//                                    ],
+//                                    'pluginOptions' => [
+//                                        'inlineLabel' => false,
+//                                        'labelText' => false
+//                                    ]
+//                                ]),
+//                                'format' => 'raw',
+//                            ]
                         ],
                     ]); ?>
                     <?php if (Yii::$app->hasModule('dns')) {
-    echo DnsZoneEditWidget::widget([
+                        echo DnsZoneEditWidget::widget([
                             'domainId' => $model->id,
                             'clientScriptWrap' => function ($js) {
                                 return new \yii\web\JsExpression("
@@ -225,7 +225,7 @@ CSS
                                 ");
                             },
                         ]);
-} ?>
+                    } ?>
                 </div>
 
                 <!-- URL forwarding -->
