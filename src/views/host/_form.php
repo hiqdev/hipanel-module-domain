@@ -55,7 +55,7 @@ use yii\web\JsExpression;
                         'formElementSelector' => '.item',
                         'inputOptions' => [
                             'placeholder' => Yii::t('hipanel', 'IP addresses'),
-                            'value' => implode(',', (array) $nsModel->ip),
+                            'value' => implode(',', (array) $model->ip),
                         ],
                         'pluginOptions' => [
                             'select2Options' => [
