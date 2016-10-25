@@ -32,7 +32,7 @@ class Host extends \hipanel\base\Model
             [['ip'],                                    'safe'],
             [['ips'],                                   'safe'],
             [['host', 'ips'], 'required', 'on' => 'create'],
-            [['host'], DomainValidator::className()],
+            [['host'], DomainValidator::class],
 
             [['ips'], 'filter', 'filter' => function ($value) {
                 if (!is_array($value)) {

@@ -12,6 +12,7 @@
 namespace hipanel\modules\domain\grid;
 
 use hipanel\grid\BoxedGridView;
+use hipanel\grid\MainColumn;
 use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\controllers\DomainController;
 use yii\helpers\Html;
@@ -22,7 +23,7 @@ class HostGridView extends BoxedGridView
     {
         return [
             'host' => [
-                'class' => 'hipanel\grid\MainColumn',
+                'class' => MainColumn::class,
                 'filterAttribute' => 'host_like',
             ],
             'bold_host' => [
