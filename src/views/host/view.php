@@ -24,22 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'no-padding',
                 ],
             ]) ?>
-            <div class="profile-user-img text-center">
-                <i class="fa fa-globe" style="font-size:7em"></i>
-            </div>
-            <p class="text-center">
-                <span class="profile-user-role"><?= $this->title ?></span>
-                <br>
-                <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
-            </p>
-
-            <div class="profile-usermenu">
-                <ul class="nav">
-                    <li>
-                        <?= Html::a('<i class="ion-close-circled"></i>' . Yii::t('hipanel', 'Delete'), ['delete', 'id' => $model->id]) ?>
-                    </li>
-                </ul>
-            </div>
+                <div class="profile-user-img text-center">
+                    <i class="fa fa-globe" style="font-size:7em"></i>
+                </div>
+                <p class="text-center">
+                    <span class="profile-user-role"><?= $this->title ?></span>
+                    <br>
+                    <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
+                </p>
             <?php Box::end() ?>
         </div>
 
