@@ -1,8 +1,10 @@
 <?php
 
 use hipanel\modules\domain\grid\HostGridView;
+use hipanel\widgets\AjaxModal;
 use hipanel\widgets\IndexPage;
 use hipanel\widgets\Pjax;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
 $this->title    = Yii::t('hipanel/domain', 'Name Servers');
@@ -29,7 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $page->endContent() ?>
 
     <?php $page->beginContent('bulk-actions') ?>
-        <?= $page->renderBulkButton(Yii::t('hipanel/domain', 'Change IP'), 'update', 'info')?>
+        <?= AjaxModal::widget([
+            'id' => 'bulk-set-ips-modal',
+            'bulkPage' => true,
+            'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Set IPs'), ['class' => 'modal-title']),
+            'scenario' => 'bulk-set-ips',
+            'actionUrl' => ['bulk-set-ips'],
+            'size' => Modal::SIZE_LARGE,
+            'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set IPs'), 'class' => 'btn btn-sm btn-default'],
+        ]) ?>
         <?= $page->renderBulkButton(Yii::t('hipanel', 'Delete'), 'delete', 'danger')?>
     <?php $page->endContent('bulk-actions') ?>
 

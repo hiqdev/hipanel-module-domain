@@ -9,13 +9,6 @@
  * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
-/**
- * @link    http://hiqdev.com/hipanel-module-domain
- *
- * @license http://hiqdev.com/hipanel-module-domain/license
- * @copyright Copyright (c) 2015 HiQDev
- */
-
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;

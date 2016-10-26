@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Box::end() ?>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-5">
             <?= HostGridView::detailView([
                 'model'   => $model,
                 'columns' => [

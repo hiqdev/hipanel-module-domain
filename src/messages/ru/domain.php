@@ -23,6 +23,7 @@ return [
     'Outgoing transfer domains' => 'Исходящий трансфер',
     'Expired domains' => 'Просроченные домены',
     'Affected domains' => 'Выбранные домены',
+    'Affected name servers' => 'Выбранные сервера имён',
 
     'There are no available domain zones' => 'Нет доступных доменных зон',
 
