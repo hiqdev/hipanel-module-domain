@@ -191,4 +191,6 @@ return [
     'Domain search' => 'Поиск доменов',
 
     "'{value}' is not valid domain name" => "'{value}' не является правильным доменным именем",
+
+    'Set IPs' => 'Сменить IP',
 ];
