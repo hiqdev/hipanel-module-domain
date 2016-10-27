@@ -25,6 +25,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
             data: form.serialize(),
             error: function() {
                 new PNotify({
+                    styling: 'bootstrap3',
                     text: "$errorMsg",
                     type: 'error',
                     buttons: {
@@ -46,6 +47,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
                 btn.removeAttr('disabled').removeClass('disabled');
                 if (data.errors) {
                     new PNotify({
+                        styling: 'bootstrap3',
                         text: data.errors.title,
                         type: 'error',
                         buttons: {
@@ -61,6 +63,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
                 } else {
                     jQuery('#domain-contacts-modal').modal('hide');
                     new PNotify({
+                        styling: 'bootstrap3',
                         text: '$success',
                         type: 'success',
                         buttons: {

@@ -36,6 +36,7 @@ jQuery('#get-authcode-button').on('click', function() {
         timeout: 0,
         error: function() {
             new PNotify({
+                styling: 'bootstrap3',
                 text: "$errorMessage",
                 type: 'error',
                 buttons: {
@@ -73,6 +74,7 @@ jQuery('#change-password-button').on('click', function() {
         timeout: 0,
         error: function() {
             new PNotify({
+                styling: 'bootstrap3',
                 text: "$errorMessage",
                 type: 'error',
                 buttons: {
@@ -91,6 +93,7 @@ jQuery('#change-password-button').on('click', function() {
         success: function(data) {
             if (data.status == 'error') {
                 new PNotify({
+                    styling: 'bootstrap3',
                     text: data.info,
                     type: 'error',
                     buttons: {
@@ -102,6 +105,7 @@ jQuery('#change-password-button').on('click', function() {
                 jQuery('#modal-show-button').removeAttr('disabled');
                 jQuery('#pincode-static').text('*******');
                 new PNotify({
+                    styling: 'bootstrap3',
                     text: data.result_msg,
                     type: 'success',
                     buttons: {
