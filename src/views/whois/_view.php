@@ -16,7 +16,7 @@ $this->registerCss("
 }
 ");
 ?>
-<?php if ($model->ip) : ?>
+<?php if ($model->registrar) : ?>
     <div class="row">
         <div class="col-md-4">
             <div class="md-mb-10 text-center">
@@ -51,6 +51,7 @@ $this->registerCss("
                     ],
                     [
                         'attribute' => 'registrar',
+                        'value' => is_array($model->registrar) ? rtrim(implode(', ', $model->registrar), ', ') : $model->registrar,
                         'visible' => !empty($model->expires),
                     ],
                     [
