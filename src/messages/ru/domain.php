@@ -193,4 +193,5 @@ return [
     "'{value}' is not valid domain name" => "'{value}' не является правильным доменным именем",
 
     'Set IPs' => 'Сменить IP',
+    'What is a NS-server and how it works' => 'Что такое NS-сервер и как он работает',
 ];
