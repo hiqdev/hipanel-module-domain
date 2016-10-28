@@ -42,7 +42,7 @@ use yii\helpers\Html;
                     'id' => 'domain-' . $contact,
                     'name' => $contact,
                 ],
-            ]); ?>
+            ]) ?>
         </div>
     <?php endforeach; ?>
 </div>

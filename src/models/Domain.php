@@ -184,6 +184,12 @@ class Domain extends \hipanel\base\Model
 
             // domain transfer
             'receiver'              => Yii::t('hipanel/domain', 'Receiver'),
+
+            // contacts
+            'registrant' => Yii::t('hipanel/client', 'Registrant contact'),
+            'admin' => Yii::t('hipanel/client', 'Admin contact'),
+            'tech' => Yii::t('hipanel/client', 'Tech contact'),
+            'billing' => Yii::t('hipanel/client', 'Billing contact'),
         ]);
     }
 
