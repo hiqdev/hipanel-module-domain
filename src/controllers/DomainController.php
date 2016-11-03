@@ -465,11 +465,14 @@ class DomainController extends \hipanel\base\CrudController
                     }
                 },
             ],
+            'regen-password' => [
+                'class' => SmartPerformAction::class,
+                'success' => Yii::t('hipanel/domain', 'The password has been changed'),
+            ],
             'sync' => [
                 'class'     => SmartPerformAction::class,
                 'success'   => Yii::t('hipanel/domain', 'Contacts synced'),
             ],
-
             'buy' => [
                 'class'     => RedirectAction::class,
                 'url'       => Yii::$app->params['orgUrl'],
@@ -545,28 +548,6 @@ class DomainController extends \hipanel\base\CrudController
             }
         } else {
             $return = array_merge($return, ['info' => $model->getFirstError('pincode')]);
-        }
-
-        return $return;
-    }
-
-    public function actionChangePassword()
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $return = ['status' => 'error'];
-        $id = Yii::$app->request->post('id');
-        $model = DynamicModel::validateData(compact('id'), [
-            [['id'], 'required'],
-            [['id'], 'integer'],
-        ]);
-        if (!$model->hasErrors()) {
-            try {
-                $return = Domain::perform('RegenPassword', ['id' => $id]);
-            } catch (\Exception $e) {
-                $return = array_merge($return, ['info' => $e->getMessage()]);
-            }
-        } else {
-            $return = array_merge($return, ['info' => Yii::t('hipanel', 'Invalid data input')]);
         }
 
         return $return;

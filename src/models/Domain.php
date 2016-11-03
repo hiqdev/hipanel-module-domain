@@ -68,16 +68,23 @@ class Domain extends \hipanel\base\Model
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
             [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
             [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
-            [['id', 'note'],                                    'safe',     'on' => ['set-note', 'default']],
+            [['note'],                                    'safe',     'on' => ['set-note', 'default']],
 
             [['registrant', 'admin', 'tech', 'billing'],           'required', 'on' => ['set-contacts']],
 
             [['enable'],                                        'safe',     'on' => ['set-lock', 'set-whois-protect']],
-            [['id', 'domain', 'autorenewal'],                   'safe',     'on' => 'set-autorenewal'],
-            [['id', 'domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
-            [['id', 'domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
-            [['id', 'domain'],                                  'safe',     'on' => ['sync', 'only-object']],
-            [['id'],                                            'integer',  'on' => ['enable-freeze', 'disable-freeze']],
+            [['domain', 'autorenewal'],                   'safe',     'on' => 'set-autorenewal'],
+            [['domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
+            [['domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
+            [['domain'],                                  'safe',     'on' => ['sync', 'only-object']],
+            [['id'], 'required', 'on' => [
+                'enable-freeze', 'disable-freeze',
+                'sync', 'only-object',
+                'regen-password',
+                'set-note',
+                'set-autorenewal', 'set-whois-protect', 'set-lock',
+                'push-with-pincode'
+            ]],
 
             // Check domain
             [['domain'], DomainPartValidator::className(), 'message' => Yii::t('hipanel/domain', '\'{value}\' is not valid domain name'), 'on' => ['check-domain']],
@@ -118,7 +125,7 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
-            [['id', 'domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
+            [['domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
@@ -138,7 +145,7 @@ class Domain extends \hipanel\base\Model
                     $this->addError($attribute, Yii::t('hipanel/client', 'Wrong pincode'));
                 }
             }, 'on' => ['push-with-pincode']],
-            [['id', 'domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
+            [['domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
 
             // Bulk set contacts
             [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],

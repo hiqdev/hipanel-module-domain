@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
-$loadingText = Yii::t('hipanel', 'loading...');
 $getPasswordUrl = Url::toRoute('get-password');
-$changePasswordUrl = Url::toRoute('change-password');
+$changePasswordUrl = Url::toRoute('regen-password');
 $errorMessage = Yii::t('hipanel', 'An error occurred. Try again please.');
+$successMessage = Yii::t('hipanel/domain', 'The password has been changed');
 
 \yii\bootstrap\BootstrapPluginAsset::register($view);
 $view->registerJs(<<<JS
@@ -83,9 +83,9 @@ jQuery('#change-password-button').on('click', function() {
                 icon: false
             });
         },
-        data: {id: '$domainId'},
+        data: {Domain: {id: '$domainId'}},
         beforeSend: function() {
-            btn.button('$loadingText');
+            btn.button('loading');
         },
         complete: function() {
             btn.button('reset');
@@ -106,7 +106,7 @@ jQuery('#change-password-button').on('click', function() {
                 jQuery('#pincode-static').text('*******');
                 new PNotify({
                     styling: 'bootstrap3',
-                    text: data.result_msg,
+                    text: '$successMessage',
                     type: 'success',
                     buttons: {
                         sticker: false
@@ -133,7 +133,11 @@ JS
             <span class="input-group-btn">
                 <?= Html::button(Yii::t('hipanel', 'Show'), ['id' => 'modal-show-button', 'data-toggle' => 'modal', 'data-target' => '#pincode-modal', 'class' => 'btn btn-default']); ?>
                 <?= Html::button(Yii::t('hipanel', 'Copy'), ['id' => 'copy-to-clipboard', 'class' => 'btn btn-default', 'style' => 'display: none;']); ?>
-                <?= Html::button(Yii::t('hipanel', 'Change password'), ['id' => 'change-password-button', 'class' => 'btn btn-default']); ?>
+                <?= Html::button(Yii::t('hipanel/domain', 'Generate new'), [
+                    'id' => 'change-password-button',
+                    'class' => 'btn btn-default',
+                    'data-loading-text' => Yii::t('hipanel', 'loading...')
+                ]); ?>
             </span>
             <p class="help-block"></p>
         </div>
