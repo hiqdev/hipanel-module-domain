@@ -37,7 +37,9 @@ return [
                 'sidebar' => [
                     'add' => [
                         'domain' => [
-                            'menu' => \hipanel\modules\domain\menus\SidebarMenu::class,
+                            'menu' => [
+                                'class' => \hipanel\modules\domain\menus\SidebarMenu::class,
+                            ],
                             'where' => [
                                 'after'  => ['tickets', 'finance', 'clients', 'dashboard', 'header'],
                                 'before' => ['servers', 'hosting'],
