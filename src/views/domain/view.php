@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var $model \hipanel\modules\domain\models\Domain
+ */
+
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\widgets\AuthCode;
@@ -74,9 +78,8 @@ CSS
                             'tag' => 'a',
                         ],
                     ]) ?>
-
                 </li>
-                <?php if ($model->canRenew()) : ?>
+                <?php if ($model->canRenew() && Yii::$app->user->can('deposit')) : ?>
                     <li>
                         <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]) ?>
                     </li>

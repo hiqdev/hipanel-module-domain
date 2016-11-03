@@ -26,7 +26,6 @@ use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
-use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
@@ -43,9 +42,20 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 class DomainController extends \hipanel\base\CrudController
 {
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'renew-access' => [
+                'class' => AccessControl::class,
+                'only' => ['add-to-cart-renewal', 'bulk-renewal'],
+            ]
+        ]);
+    }
+
     public function actions()
     {
         return [
