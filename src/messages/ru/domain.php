@@ -24,6 +24,8 @@ return [
     'Expired domains' => 'Просроченные домены',
     'Affected domains' => 'Выбранные домены',
     'Affected name servers' => 'Выбранные сервера имён',
+    'Generate new' => 'Сгенерировать новый',
+    'The password has been changed' => 'Пароль был изменен',
 
     'There are no available domain zones' => 'Нет доступных доменных зон',
 
