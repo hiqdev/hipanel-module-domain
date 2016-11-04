@@ -14,22 +14,20 @@ use yii\web\JsExpression;
     <div class="col-md-3">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Что такое NS-сервер и как он работает') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Child name server or glue record') ?></h3>
             </div>
             <div class="box-body text-justify">
                 <p>
-                    В интернете каждый компьютер или сервер имеет свой IP-адрес и все обращения к тому или иному серверу
-                    ведутся именно по IP-адресам. Однако, IP-адреса сложно запомнить, поэтому была придумана система
-                    доменных имен, когда вы обращаетесь к серверу по легко запоминаемому доменному имени.
+                    <?= Yii::t('hipanel/domain', 'You can assign up to 13 IPv4 and/or 13 IPv6 addresses to name server.') ?>
                 </p>
-                <h3>Как это работает система DNS?</h3>
-                <p>Когда вы набираете в браузере доменное имя <b>mydomain.com</b>, ваш компьютер для первым делом
-                    обращается к DNS-серверу, указанному в настройках вашего соединения с интернетом. DNS-сервер нужен
-                    для того, чтобы преобразовать запрошенное доменное имя в IP-адрес.
-                    DNS-сервер обращается к одному из корневых NS-серверов интернета, ip-адреса которых жестко заданы и
-                    известны и в ответ Корневой сервер отдает DNS-серверу список ip-адресов серверов, на которых
-                    расположена зона <b>.com</b>
+                <p>
+                    <?= Yii::t('hipanel/domain', 'Child Name Servers can be only created by owner of the primary domain name.') ?>
+                    <?= Yii::t('hipanel/domain', 'That is you can only create ns1.my-domain.com if you are owner of my-domain.com.') ?>
                 </p>
+                <h3><?= Yii::t('hipanel/domain', 'Examples') ?></h3>
+
+                <p>ns1.my-domain.com  10.10.10.10</p>
+                <p>ns2.my-domain.com  12.12.12.12</p>
 
             </div>
         </div>
