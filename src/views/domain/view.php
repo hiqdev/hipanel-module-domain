@@ -133,7 +133,7 @@ CSS
                                 'attribute' => 'authCode',
                                 'label' => Yii::t('hipanel/domain', 'Authorization code'),
                                 'value' => function ($model) {
-                                    return AuthCode::widget(['domainId' => $model->id]);
+                                    return AuthCode::widget(['model' => $model]);
                                 },
                                 'format' => 'raw',
                             ],

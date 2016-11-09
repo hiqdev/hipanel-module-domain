@@ -15,12 +15,12 @@ use Yii;
 
 class AuthCode extends \yii\base\Widget
 {
-    public $domainId;
+    public $model;
 
     public function run()
     {
         return $this->render('AuthCode', [
-            'domainId' => $this->domainId,
+            'model' => $this->model,
             'view' => $this->getView(),
         ]);
     }
