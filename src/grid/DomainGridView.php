@@ -14,13 +14,14 @@ namespace hipanel\modules\domain\grid;
 use hipanel\grid\ActionColumn;
 use hipanel\grid\BoxedGridView;
 use hipanel\grid\MainColumn;
-use hipanel\grid\RefColumn;
 use hipanel\grid\XEditableColumn;
+use hipanel\modules\domain\menus\DomainActionsMenu;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
+use hiqdev\menumanager\MenuColumn;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -31,85 +32,89 @@ class DomainGridView extends BoxedGridView
     {
         return [
             'domain' => [
-                'class'           => MainColumn::class,
-                'attribute'       => 'domain',
-                'note'            => true,
+                'class' => MainColumn::class,
+                'attribute' => 'domain',
+                'note' => true,
                 'filterAttribute' => 'domain_like',
             ],
             'state' => [
 //                'class'         => RefColumn::class,
 //                'gtype'         => 'state,domain',
-                'format'        => 'raw',
+                'format' => 'raw',
                 'filter' => function ($grid, $model, $attribute) {
                     return Html::activeDropDownList($model, $attribute, Domain::stateOptions(), ['prompt' => '--', 'class' => 'form-control']);
                 },
                 'filterInputOptions' => ['style' => 'width:120px'],
-                'value'         => function ($model) {
+                'value' => function ($model) {
                     return State::widget(compact('model'));
                 },
             ],
             'whois_protected' => [
-                'class'         => BootstrapSwitchColumn::class,
-                'filter'        => false,
-                'url'           => Url::toRoute('set-whois-protect'),
-                'popover'       => 'WHOIS protection',
+                'class' => BootstrapSwitchColumn::class,
+                'filter' => false,
+                'url' => Url::toRoute('set-whois-protect'),
+                'popover' => 'WHOIS protection',
                 'pluginOptions' => [
                     'offColor' => 'warning',
                 ],
             ],
-            'is_secured'      => [
-                'class'         => BootstrapSwitchColumn::class,
-                'filter'        => false,
-                'url'           => Url::toRoute('set-lock'),
-                'attribute'     => 'is_secured',
-                'popover'       => Yii::t('hipanel/domain', 'Protection from transfer'),
+            'is_secured' => [
+                'class' => BootstrapSwitchColumn::class,
+                'filter' => false,
+                'url' => Url::toRoute('set-lock'),
+                'attribute' => 'is_secured',
+                'popover' => Yii::t('hipanel/domain', 'Protection from transfer'),
             ],
-            'note'            => [
-                'class'         => XEditableColumn::class,
-                'attribute'     => 'note',
-                'filter'        => true,
-                'popover'       => Yii::t('hipanel/domain', 'Make any notes for your convenience'),
+            'note' => [
+                'class' => XEditableColumn::class,
+                'attribute' => 'note',
+                'filter' => true,
+                'popover' => Yii::t('hipanel/domain', 'Make any notes for your convenience'),
                 'pluginOptions' => [
                     'url' => 'set-note',
                 ],
             ],
-            'created_date'    => [
-                'attribute'      => 'created_date',
-                'format'         => 'date',
-                'filter'         => false,
+            'created_date' => [
+                'attribute' => 'created_date',
+                'format' => 'date',
+                'filter' => false,
                 'contentOptions' => ['class' => 'text-nowrap'],
             ],
-            'expires'         => [
-                'format'        => 'raw',
-                'filter'        => false,
+            'expires' => [
+                'format' => 'raw',
+                'filter' => false,
                 'headerOptions' => ['style' => 'width:1em'],
-                'value'         => function ($model) {
+                'value' => function ($model) {
                     return Expires::widget(compact('model'));
                 },
             ],
-            'autorenewal'     => [
-                'class'         => BootstrapSwitchColumn::class,
-                'label'         => Yii::t('hipanel', 'Autorenew'),
-                'filter'        => false,
-                'url'           => Url::toRoute('set-autorenewal'),
-                'popover'       => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
+            'autorenewal' => [
+                'class' => BootstrapSwitchColumn::class,
+                'label' => Yii::t('hipanel', 'Autorenew'),
+                'filter' => false,
+                'url' => Url::toRoute('set-autorenewal'),
+                'popover' => Yii::t('hipanel/domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
             ],
-            'nameservers'     => [
+            'nameservers' => [
                 'format' => 'raw',
-                'value'  => function ($model) {
+                'value' => function ($model) {
                     return ArraySpoiler::widget(['data' => $model->nameservers]);
                 },
             ],
-            'actions'         => [
-                'class'    => ActionColumn::class,
+            'actions' => [
+                'class' => MenuColumn::class,
+                'menuClass' => DomainActionsMenu::class,
+            ],
+            'old_actions' => [
+                'class' => ActionColumn::class,
                 'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
-                'header'   => Yii::t('hipanel', 'Actions'),
-                'buttons'  => [
+                'header' => Yii::t('hipanel', 'Actions'),
+                'buttons' => [
                     'notify-transfer-in' => function ($url, $model, $key) {
                         return $model->state === 'preincoming'
                             ? Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('hipanel/domain', 'Send FOA again'), $url, [
                                 'data' => [
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
@@ -123,7 +128,7 @@ class DomainGridView extends BoxedGridView
                             ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('hipanel/domain', 'Approve transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
@@ -133,7 +138,7 @@ class DomainGridView extends BoxedGridView
                             ? Html::a('<i class="fa fa-anchor"></i>' . Yii::t('hipanel/domain', 'Reject transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to reject outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
@@ -143,32 +148,32 @@ class DomainGridView extends BoxedGridView
                             ? Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('hipanel/domain', 'Cancel transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $model->domain]),
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
                     },
-                    'sync'          => function ($url, $model, $key) {
+                    'sync' => function ($url, $model, $key) {
                         return (in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel/domain', 'Synchronize contacts'), $url, [
                                 'data' => [
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
                     },
-                    'delete'        => function ($url, $model, $key) {
+                    'delete' => function ($url, $model, $key) {
                         return in_array($model->state, ['ok', 'expired', 'outgoing'], true) && Yii::$app->user->can('support') ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
-                                'title'        => Yii::t('hipanel', 'Delete'),
-                                'aria-label'   => Yii::t('hipanel', 'Delete'),
-                                'data' => [
-                                    'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
-                                    'method'  => 'post',
-                                    'data-pjax' => '0',
-                                ],
+                            'title' => Yii::t('hipanel', 'Delete'),
+                            'aria-label' => Yii::t('hipanel', 'Delete'),
+                            'data' => [
+                                'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                'method' => 'post',
+                                'data-pjax' => '0',
+                            ],
                         ]) : '';
                     },
-                    'delete-agp'    => function ($url, $model, $key) {
+                    'delete-agp' => function ($url, $model, $key) {
                         if (!in_array($model->state, ['ok'], true)) {
                             return '';
                         }
@@ -181,11 +186,11 @@ class DomainGridView extends BoxedGridView
 
                         return in_array(Domain::getZone($model->domain), ['com', 'net'], true)
                             ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel/domain', 'Delete by AGP'), $url, [
-                                'title'        => Yii::t('hipanel/domain', 'Delete by AGP'),
-                                'aria-label'   => Yii::t('hipanel/domain', 'Delete by AGP'),
+                                'title' => Yii::t('hipanel/domain', 'Delete by AGP'),
+                                'aria-label' => Yii::t('hipanel/domain', 'Delete by AGP'),
                                 'data' => [
                                     'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
@@ -194,7 +199,7 @@ class DomainGridView extends BoxedGridView
                         return (!$model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel/domain', 'Freeze domain'), $url, [
                                 'data' => [
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
@@ -203,12 +208,12 @@ class DomainGridView extends BoxedGridView
                         return ($model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('hipanel/domain', 'Unfreeze domain'), $url, [
                                 'data' => [
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
                     },
-                    'enable-hold'   => function ($url, $model, $key) {
+                    'enable-hold' => function ($url, $model, $key) {
                         if ($model->is_holded) {
                             return '';
                         }
@@ -219,16 +224,16 @@ class DomainGridView extends BoxedGridView
 
                         return '';
                     },
-                    'disable-hold'  => function ($url, $model, $key) {
+                    'disable-hold' => function ($url, $model, $key) {
                         return ($model->is_holded && in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel/domain', 'Disable Hold'), $url, [
                                 'data' => [
-                                    'method'  => 'post',
+                                    'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
                             ]) : '';
                     },
-                    'manage-dns'  => function ($url, $model, $key) {
+                    'manage-dns' => function ($url, $model, $key) {
                         if (Yii::getAlias('@dns', false)) {
                             return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel/domain', 'Manage DNS'), ['@dns/zone/view', 'id' => $model->id]);
                         }

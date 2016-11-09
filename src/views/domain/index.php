@@ -118,13 +118,13 @@ CSS
         'columns'      => [
             'checkbox',
             'domain',
+            'actions',
             'client',
             'seller',
             'state',
             'whois_protected', 'is_secured',
             'created_date', 'expires',
             'autorenewal',
-            'actions',
         ],
     ]) ?>
 <?php $page->endBulkForm() ?>
