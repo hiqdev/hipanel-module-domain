@@ -16,7 +16,7 @@ use yii\web\JsExpression;
 Pjax::begin(array_merge(Yii::$app->params['pjax'], ['id' => 'domain-view-sync-button']));
 
 echo Html::a(
-    '<i class="ion-ios-loop-strong"></i>&nbsp;' . Yii::t('hipanel/domain', 'Synchronize contacts'),
+    '<i class="fa fa-fw fa-refresh"></i>&nbsp;' . Yii::t('hipanel/domain', 'Synchronize contacts'),
     ['sync', 'id' => $model->id],
     [
         'id' => 'test123',
@@ -28,7 +28,7 @@ echo Html::a(
             'pjax-container' => '#domain-view-sync-button',
             'pjax-skip-outer-containers' => true,
         ],
-        'onClick' => new JsExpression("$(this).html('<i class=\"ion-ios-loop-strong\">&nbsp;" . Yii::t('hipanel', 'loading...') . "');"),
+        'onClick' => new JsExpression("$(this).html('<i class=\"fa fa-fw fa-refresh\">&nbsp;" . Yii::t('hipanel', 'loading...') . "');"),
     ]
 );
 

@@ -67,7 +67,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw ion-ios-loop-strong"></i> ' . Yii::t('hipanel/domain', 'Synchronize contacts'),
+                'label' => '<i class="fa fa-fw fa-refresh"></i> ' . Yii::t('hipanel/domain', 'Synchronize contacts'),
                 'url' => ['sync', 'id' => $this->model->id],
                 'visible' => (in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,

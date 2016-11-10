@@ -84,7 +84,7 @@ CSS
                         'actionUrl' => ['domain-push-modal', 'id' => $model->id],
                         'size' => Modal::SIZE_DEFAULT,
                         'toggleButton' => [
-                            'label' => '<i class="ion-ios-paperplane-outline"></i> ' . Yii::t('hipanel/domain', 'Push domain'),
+                            'label' => '<i class="fa fa-fw fa-paper-plane-o"></i>' . Yii::t('hipanel/domain', 'Push domain'),
                             'class' => 'clickable',
                             'data-pjax' => 0,
                             'tag' => 'a',
@@ -97,7 +97,7 @@ CSS
                     </li>
                 <?php endif ?>
                 <li>
-                    <?= Html::a('<i class="fa fa-trash"></i> ' . Yii::t('hipanel', 'Delete'), ['@domain/delete', 'id' => $model->id], [
+                    <?= Html::a('<i class="fa fa-fw fa-trash"></i>' . Yii::t('hipanel', 'Delete'), ['@domain/delete', 'id' => $model->id], [
                         'data' => [
                             'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
                             'method' => 'post',
