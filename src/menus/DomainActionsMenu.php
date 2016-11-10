@@ -73,18 +73,6 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-trash"></i> ' . Yii::t('hipanel', 'Delete'),
-                'url' => ['@domain/delete', 'id' => $this->model->id],
-                'linkOptions' => [
-                    'data' => [
-                        'confirm' => Yii::t('hipanel', 'Are you sure you want to delete this item?'),
-                        'method' => 'POST',
-                        'data-pjax' => '0',
-                    ],
-                ],
-                'encode' => false,
-            ],
-            [
                 'label' => '<i class="fa fa-fw fa-trash-o"></i> ' . Yii::t('hipanel/domain', 'Delete by AGP'),
                 'url' => ['@domain/delete-agp', 'id' => $this->model->id],
                 'linkOptions' => [
