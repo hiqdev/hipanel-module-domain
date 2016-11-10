@@ -18,7 +18,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-envelope-o"></i> ' . Yii::t('hipanel/domain', 'Send FOA again'),
+                'label' => '<i class="fa fa-fw fa-envelope-o"></i> ' . Yii::t('hipanel/domain', 'Send FOA again'),
                 'url' => ['@domain/notify-transfer-in', 'id' => $this->model->id],
                 'linkOptions' => [
                     'data' => [
@@ -42,19 +42,19 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-exclamation-circle"></i> ' . Yii::t('hipanel/domain', 'Approve transfer'),
+                'label' => '<i class="fa fa-fw fa-exclamation-circle"></i> ' . Yii::t('hipanel/domain', 'Approve transfer'),
                 'url' => ['@domain/approve-transfer', 'id' => $this->model->id],
                 'visible' => ($this->model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-anchor"></i> ' . Yii::t('hipanel/domain', 'Reject transfer'),
+                'label' => '<i class="fa fa-fw fa-anchor"></i> ' . Yii::t('hipanel/domain', 'Reject transfer'),
                 'url' => ['reject-transfer', 'id' => $this->model->id],
                 'visible' => $this->model->state === 'outgoing',
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-exclamation-triangle"></i> ' . Yii::t('hipanel/domain', 'Cancel transfer'),
+                'label' => '<i class="fa fa-fw fa-exclamation-triangle"></i> ' . Yii::t('hipanel/domain', 'Cancel transfer'),
                 'url' => ['@domain/cancel-transfer', 'id' => $this->model->id],
                 'linkOptions' => [
                     'data' => [
@@ -67,7 +67,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa ion-ios-loop-strong"></i> ' . Yii::t('hipanel/domain', 'Synchronize contacts'),
+                'label' => '<i class="fa fa-fw ion-ios-loop-strong"></i> ' . Yii::t('hipanel/domain', 'Synchronize contacts'),
                 'url' => ['sync', 'id' => $this->model->id],
                 'visible' => (in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
@@ -85,7 +85,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-trash-o"></i> ' . Yii::t('hipanel/domain', 'Delete by AGP'),
+                'label' => '<i class="fa fa-fw fa-trash-o"></i> ' . Yii::t('hipanel/domain', 'Delete by AGP'),
                 'url' => ['@domain/delete-agp', 'id' => $this->model->id],
                 'linkOptions' => [
                     'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
@@ -99,7 +99,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('hipanel/domain', 'Freeze domain'),
+                'label' => '<i class="fa fa-fw fa-lock"></i> ' . Yii::t('hipanel/domain', 'Freeze domain'),
                 'url' => ['@domain/enable-freeze', $this->model->id],
                 'visible' => (!$this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
@@ -111,7 +111,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-unlock"></i> ' . Yii::t('hipanel/domain', 'Unfreeze domain'),
+                'label' => '<i class="fa fa-fw fa-unlock"></i> ' . Yii::t('hipanel/domain', 'Unfreeze domain'),
                 'url' => ['@domain/disable-freeze', 'id' => $this->model->id],
                 'linkOptions' => [
                     'data' => [
@@ -123,13 +123,13 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-bomb"></i> ' . Yii::t('hipanel/domain', 'Enable Hold'),
+                'label' => '<i class="fa fa-fw fa-bomb"></i> ' . Yii::t('hipanel/domain', 'Enable Hold'),
                 'url' => ['@domain/enable-hold', 'id' => $this->model->id],
                 'visible' => !($this->model->is_holded) || (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-link"></i> ' . Yii::t('hipanel/domain', 'Disable Hold'),
+                'label' => '<i class="fa fa-fw fa-link"></i> ' . Yii::t('hipanel/domain', 'Disable Hold'),
                 'url' => ['@domain/disable-hold', 'id' => $this->model->id],
                 'visible' => ($this->model->is_holded && in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
@@ -141,7 +141,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-globe"></i> ' . Yii::t('hipanel/domain', 'Manage DNS'),
+                'label' => '<i class="fa fa-fw fa-globe"></i> ' . Yii::t('hipanel/domain', 'Manage DNS'),
                 'url' => ['@dns/zone/view', 'id' => $this->model->id],
                 'visible' => (Yii::getAlias('@dns', false)),
                 'encode' => false,
