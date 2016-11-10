@@ -29,6 +29,18 @@ $this->registerCss(<<<CSS
 .tab-pane {
     min-height: 300px;
 }
+.profile-usermenu > ul > li a:hover {
+    background-color: #fafcfd;
+    color: #5b9bd1;
+}
+.profile-usermenu > ul > li a {
+    color: #93a3b5;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
 CSS
 );
 
@@ -61,8 +73,8 @@ CSS
                 <li>
                     <?php $url = 'http://' . $model->domain . '/' ?>
                     <?= Html::a('<i class="fa fa-fw fa-globe"></i>' . Yii::t('hipanel/domain', 'Go to site {link}', [
-                        'link' => \yii\helpers\StringHelper::truncate($url, 15)
-                    ]), $url, ['target' => '_blank']); ?>
+                            'link' => \yii\helpers\StringHelper::truncate($url, 15)
+                        ]), $url, ['target' => '_blank']); ?>
                 </li>
                 <li>
                     <?= AjaxModal::widget([
@@ -84,6 +96,15 @@ CSS
                         <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel/domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]) ?>
                     </li>
                 <?php endif ?>
+                <li>
+                    <?= Html::a('<i class="fa fa-trash"></i> ' . Yii::t('hipanel', 'Delete'), ['@domain/delete', 'id' => $model->id], [
+                        'data' => [
+                            'confirm' => Yii::t('hipanel/domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                            'method' => 'post',
+                            'data-pjax' => '0',
+                        ]
+                    ]) ?>
+                </li>
                 <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
                     <li><?= $this->render('_syncButton', compact('model')) ?></li>
                 <?php endif ?>
@@ -101,14 +122,14 @@ CSS
                                       data-toggle="tab"><?= Yii::t('hipanel/domain', 'Domain details') ?></a></li>
                 <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('hipanel/domain', 'NS records') ?></a></li>
                 <!--                    <li><a href="#authorization-code" data-toggle="tab">-->
-                <?php//= Yii::t('hipanel/domain', 'Authorization code') ?><!--</a></li>-->
+                <?php //= Yii::t('hipanel/domain', 'Authorization code') ?><!--</a></li>-->
                 <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('hipanel/domain', 'DNS records') ?></a></li>
                 <!--                    <li><a href="#url-forwarding" data-toggle="tab">-->
-                <?php//= Yii::t('hipanel/domain', 'URL forwarding') ?><!--</a></li>-->
+                <?php //= Yii::t('hipanel/domain', 'URL forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#email-forwarding" data-toggle="tab">-->
-                <?php//= Yii::t('hipanel/domain', 'Email forwarding') ?><!--</a></li>-->
+                <?php //= Yii::t('hipanel/domain', 'Email forwarding') ?><!--</a></li>-->
                 <!--                    <li><a href="#parking" data-toggle="tab">-->
-                <?php//= Yii::t('hipanel/domain', 'Parking') ?><!--</a></li>-->
+                <?php //= Yii::t('hipanel/domain', 'Parking') ?><!--</a></li>-->
                 <li><a href="#contacts" data-toggle="tab"><?= Yii::t('hipanel', 'Contacts') ?></a></li>
             </ul>
             <div class="tab-content">
