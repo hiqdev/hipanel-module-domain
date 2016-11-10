@@ -46,7 +46,7 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                         'visible' => Yii::$app->user->can('deposit'),
                     ],
                     'whois' => [
-                        'label' => Yii::t('hipanel/domain', 'Whois lookup'),
+                        'label' => Yii::t('hipanel/domain', 'WHOIS lookup'),
                         'url'   => ['/domain/whois/index'],
                     ],
                 ],
