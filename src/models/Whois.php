@@ -21,6 +21,7 @@ class Whois extends ActiveRecord
             'domain', 'registrar', 'nss', 'created', 'updated',
             'expires', 'rawdata', 'ip', 'country_name', 'city',
             'available',
+            'unsupported',
         ];
     }
 

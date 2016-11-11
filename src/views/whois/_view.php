@@ -18,6 +18,7 @@ $this->registerCss("
 }
 ");
 ?>
+
 <?php if ($model->registrar) : ?>
     <div class="row">
         <div class="col-md-4">
@@ -87,7 +88,9 @@ $this->registerCss("
             <div class="well well-sm"><?= WhoisData::widget(['data' => $model->rawdata]) ?></div>
         </div>
     </div>
-<?php elseif ($model->available === true) : ?>
+<?php endif ?>
+
+<?php if ($model->available || (!$model->registrar && !$model->unsupported)) : ?>
     <table class="table">
         <thead>
         <tr class="success">
@@ -103,7 +106,9 @@ $this->registerCss("
         </tr>
         </thead>
     </table>
-<?php else : ?>
+<?php endif ?>
+
+<?php if ($model->unsupported) : ?>
     <table class="table">
         <thead>
         <tr class="danger">

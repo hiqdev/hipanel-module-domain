@@ -13,16 +13,17 @@ class WhoisController extends \hipanel\base\CrudController
 {
     private function getWhoisModel($domain)
     {
-        $whois = ['domain' => $domain];
+        $whois = ['domain' => $domain, 'available' => false, 'unsupported' => false];
+        $message = '';
         try {
             $whois = Yii::$app->hiart->createCommand()->perform('domainGetWhois', ['domain' => $domain]);
         } catch (Exception $e) {
             $message = $e->getMessage();
-            switch ($message) {
-                case 'domain available':
-                    $whois['available'] = true;
-                    break;
-            }
+        }
+        if ($message === 'domain available') {
+            $whois['available'] = true;
+        } elseif ($message === 'domain unsupported' || strstr(reset($whois['rawdata']), 'domain is not supported')) {
+            $whois['unsupported'] = true;
         }
         $model = reset(Whois::find()->populate([$whois]));
 
