@@ -2,8 +2,11 @@
 
 namespace hipanel\modules\domain\menus;
 
-use hipanel\modules\domain\models\Domain;
+use hipanel\widgets\AjaxModal;
 use Yii;
+use yii\bootstrap\Dropdown;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
 
 class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
 {
@@ -11,72 +14,62 @@ class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
     {
         return [
             [
-                'label' => Yii::t('hipanel/domain', 'Sync contacts'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'sync'],
-                'visible' => Yii::$app->user->can('support'),
+                'label' => '
+                    <div class="dropdown" style="display: inline-block">
+                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ' . Yii::t('hipanel', 'Basic actions') . '
+                            <span class="caret"></span>
+                        </button>
+                        ' . DomainBulkBasicActionsMenu::create()->render([
+                            'class' => Dropdown::class,
+                            'encodeLabels' => false,
+                        ]) . '
+                    </div>
+                ',
             ],
             [
-                'label' => Yii::t('hipanel/domain', 'Renew'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'bulk-renewal'],
-                'visible' => Yii::$app->user->can('domain.pay'),
+                'label' => AjaxModal::widget([
+                    'id' => 'bulk-domain-push-modal',
+                    'bulkPage' => true,
+                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Push'), ['class' => 'modal-title']),
+                    'scenario' => 'domain-push-modal',
+                    'actionUrl' => ['domain-push-modal'],
+                    'size' => Modal::SIZE_LARGE,
+                    'toggleButton' => false,
+                ]),
             ],
             [
-                'label' => Yii::t('hipanel/domain', 'Push domain'),
-                'url' => '#bulk-domain-push-modal',
-                'linkOptions' => ['data-toggle' => 'modal'],
-                'visible' => Yii::$app->user->can('domain.pay'),
-            ],
-            // Hold
-            '<li role="presentation" class="divider"></li>',
-            [
-                'label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('hipanel/domain', 'Enable Hold'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'enable-hold'],
-                'visible' => Yii::$app->user->can('support'),
+                'label' =>  AjaxModal::widget([
+                    'id' => 'bulk-set-note-modal',
+                    'bulkPage' => true,
+                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Set notes'), ['class' => 'modal-title']),
+                    'scenario' => 'bulk-set-note',
+                    'actionUrl' => ['bulk-set-note'],
+                    'size' => Modal::SIZE_LARGE,
+                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set notes'), 'class' => 'btn btn-sm btn-default'],
+                ]),
             ],
             [
-                'label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('hipanel/domain', 'Disable Hold'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'disable-hold'],
-                'visible' => Yii::$app->user->can('support'),
-            ],
-            // WHOIS protect
-            '<li role="presentation" class="divider"></li>',
-            [
-                'label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('hipanel/domain', 'Enable WHOIS protect'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'enable-whois-protect'],
+                'label' =>  AjaxModal::widget([
+                    'id' => 'bulk-set-nss-modal',
+                    'bulkPage' => true,
+                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Set NS'), ['class' => 'modal-title']),
+                    'scenario' => 'bulk-set-nss',
+                    'actionUrl' => ['bulk-set-nss'],
+                    'size' => Modal::SIZE_LARGE,
+                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set NS'), 'class' => 'btn btn-sm btn-default'],
+                ]),
             ],
             [
-                'label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('hipanel/domain', 'Disable WHOIS protect'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'enable-whois-protect'],
-            ],
-            // Lock
-            '<li role="presentation" class="divider"></li>',
-            [
-                'label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('hipanel/domain', 'Enable Lock'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'enable-lock'],
-            ],
-            [
-                'label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('hipanel/domain', 'Disable Lock'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'disable-lock'],
-            ],
-            // Autorenew
-            '<li role="presentation" class="divider"></li>',
-            [
-                'label' => '<i class="fa fa-toggle-on"></i> ' . Yii::t('hipanel/domain', 'Enable autorenew'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'enable-autorenewal'],
-            ],
-            [
-                'label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('hipanel/domain', 'Disable autorenew'),
-                'url' => '#',
-                'linkOptions' => ['data-action' => 'disable-autorenewal'],
+                'label' =>  AjaxModal::widget([
+                    'id' => 'bulk-change-contacts-modal',
+                    'bulkPage' => true,
+                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Change contacts'), ['class' => 'modal-title']),
+                    'scenario' => 'bulk-set-contacts',
+                    'actionUrl' => ['bulk-set-contacts-modal'],
+                    'size' => Modal::SIZE_LARGE,
+                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
+                ]),
             ],
         ];
     }
