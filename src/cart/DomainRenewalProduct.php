@@ -67,6 +67,8 @@ class DomainRenewalProduct extends AbstractDomainProduct
     {
         return parent::getCalculationModel(array_merge([
             'id' => $this->model_id,
+            'client' => $this->getModel()->client,
+            'seller' => $this->getModel()->seller,
         ], $options));
     }
 
