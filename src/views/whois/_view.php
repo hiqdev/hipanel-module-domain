@@ -3,9 +3,11 @@
 /** @var string $sShotSrc */
 /** @var \hipanel\modules\domain\models\Domain $model */
 
+use hipanel\modules\dashboard\widgets\SmallBox;
 use hipanel\modules\domain\widgets\WhoisData;
 use hipanel\widgets\ArraySpoiler;
 use toriphes\lazyload\LazyLoad;
+use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 $this->registerCss("
@@ -85,8 +87,30 @@ $this->registerCss("
             <div class="well well-sm"><?= WhoisData::widget(['data' => $model->rawdata]) ?></div>
         </div>
     </div>
-<?php else: ?>
-    <div class="bg-danger text-center">
-        <?= Yii::t('hipanel/domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
-    </div>
+<?php elseif ($model->available === true) : ?>
+    <table class="table">
+        <thead>
+        <tr class="success">
+            <td style="vertical-align: middle;">
+                <?= Yii::t('hipanel/domain', 'This domain is available for registration') ?>
+            </td>
+            <td>
+                <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel/domain', 'Buy domain'),
+                    ['@domain/add-to-cart-registration', 'name' => $model->domain],
+                    ['class' => 'btn btn-flat btn-sm ' . SmallBox::COLOR_OLIVE]
+                ) ?>
+            </td>
+        </tr>
+        </thead>
+    </table>
+<?php else : ?>
+    <table class="table">
+        <thead>
+        <tr class="danger">
+            <td class="text-center">
+                <?= Yii::t('hipanel/domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
+            </td>
+        </tr>
+        </thead>
+    </table>
 <?php endif ?>
