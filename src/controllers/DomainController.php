@@ -82,6 +82,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'add-to-cart-registration' => [
                 'class' => AddToCartAction::class,
+                'redirectToCart' => true,
                 'productClass' => DomainRegistrationProduct::class,
             ],
             'add-to-cart-transfer' => [
