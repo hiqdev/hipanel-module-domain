@@ -52,7 +52,13 @@ class DomainController extends \hipanel\base\CrudController
             'renew-access' => [
                 'class' => AccessControl::class,
                 'only' => ['add-to-cart-renewal', 'bulk-renewal'],
-            ]
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['domain.pay'],
+                    ],
+                ],
+            ],
         ]);
     }
 
