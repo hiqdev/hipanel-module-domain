@@ -19,7 +19,7 @@ if ($model->domain !== null) {
 }
 ?>
 <div class="row">
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-3 col-sm-12">
         <div class="box box-solid">
             <div class="box-body">
                 <?php $form = ActiveForm::begin([
@@ -40,16 +40,16 @@ if ($model->domain !== null) {
                     'name' => 'domain',
                 ]) ?>
 
-                <?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block']) ?>
+                <?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block xs-mb-10']) ?>
                 <?php ActiveForm::end() ?>
-                <div class="bg-warning md-mt-10" style="padding: 5px 7px">
+                <div class="bg-warning md-mt-10 xs-mb-10" style="padding: 5px 7px">
                     <span class="text-bold"><?= Yii::t('hipanel/domain', 'Available zones') ?>:</span><br>
                     <?= ArraySpoiler::widget([
                         'data' => $availableZones,
                         'visibleCount' => count($availableZones),
                     ]) ?>
                 </div>
-                <p class="md-mt-20">
+                <p class="md-mt-20 text-justify">
                     <?= Yii::t('hipanel/domain', 'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.') ?>
                 </p>
             </div>
@@ -82,7 +82,6 @@ if ($model->domain !== null) {
                 <?php endif ?>
             </div>
         </div>
-
     </div>
 </div>
 
