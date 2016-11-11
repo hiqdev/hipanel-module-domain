@@ -17,6 +17,7 @@ return [
     'Registration' => 'Регистрация',
     'Paid till' => 'Оплачен до',
     'Protection' => 'Защита',
+    'Receiver' => 'Получатель',
 
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Incoming transfer domains' => 'Входящий трансфер',

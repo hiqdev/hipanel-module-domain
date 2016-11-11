@@ -157,6 +157,13 @@ class DomainController extends \hipanel\base\CrudController
                     'save'    => true,
                     'success' => [
                         'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            if (Yii::$app->user->can('support')) {
+                                return null;
+                            }
+
+                            return ['@hdomain'];
+                        }
                     ],
                     'error' => [
                         'class' => RedirectAction::class,

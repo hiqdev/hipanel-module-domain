@@ -1,9 +1,16 @@
 <?php
 
 use hipanel\helpers\Url;
+use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+
+/**
+ * @var Domain $model
+ * @var Domain[] $models
+ * @var bool $hasPincode
+ */
 
 ?>
 
@@ -51,7 +58,7 @@ use yii\helpers\Html;
     <?= $form->field($model, 'receiver') ?>
 
     <?php if ($hasPincode) : ?>
-        <?= $form->field($model, 'pincode') ?>
+        <?= $form->field($model, 'pincode')->input('password') ?>
     <?php endif; ?>
     <hr>
     <?= Html::submitButton(Yii::t('hipanel/domain', 'Push'), ['class' => 'btn btn-success']) ?>
