@@ -36,17 +36,17 @@ class SidebarMenu extends \hiqdev\menumanager\Menu
                         'url'   => ['/client/contact/index'],
                     ],
                     'check-domain' => [
-                        'label' => Yii::t('hipanel/domain', 'Buy domain'),
+                        'label' => Yii::t('hipanel:domain', 'Buy domain'),
                         'url'   => ['/domain/check/check-domain'],
                         'visible' => Yii::$app->user->can('deposit'),
                     ],
                     'transfer' => [
-                        'label' => Yii::t('hipanel/domain', 'Transfer domain'),
+                        'label' => Yii::t('hipanel:domain', 'Transfer domain'),
                         'url'   => ['/domain/transfer/index'],
                         'visible' => Yii::$app->user->can('deposit'),
                     ],
                     'whois' => [
-                        'label' => Yii::t('hipanel/domain', 'WHOIS lookup'),
+                        'label' => Yii::t('hipanel:domain', 'WHOIS lookup'),
                         'url'   => ['/domain/whois/index'],
                     ],
                 ],

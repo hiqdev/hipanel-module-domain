@@ -12,7 +12,7 @@ use yii\web\View;
 $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('regen-password');
 $errorMessage = Yii::t('hipanel', 'An error occurred. Try again please.');
-$successMessage = Yii::t('hipanel/domain', 'The password has been changed');
+$successMessage = Yii::t('hipanel:domain', 'The password has been changed');
 
 \yii\bootstrap\BootstrapPluginAsset::register($view);
 $view->registerJs(<<<JS
@@ -140,7 +140,7 @@ JS
                 <?= Html::button(Yii::t('hipanel', 'Copy'), ['id' => 'copy-to-clipboard', 'class' => 'btn btn-default', 'style' => 'display: none;']); ?>
                 <?php
                     if ($model->canRenew()) {
-                        echo Html::button(Yii::t('hipanel/domain', 'Generate new'), [
+                        echo Html::button(Yii::t('hipanel:domain', 'Generate new'), [
                             'id' => 'change-password-button',
                             'class' => 'btn btn-default',
                             'data-loading-text' => Yii::t('hipanel', 'loading...')

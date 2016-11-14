@@ -14,17 +14,17 @@ use yii\web\JsExpression;
     <div class="col-md-3">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Child name server or glue record') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Child name server or glue record') ?></h3>
             </div>
             <div class="box-body text-justify">
                 <p>
-                    <?= Yii::t('hipanel/domain', 'You can assign up to 13 IPv4 and/or 13 IPv6 addresses to name server.') ?>
+                    <?= Yii::t('hipanel:domain', 'You can assign up to 13 IPv4 and/or 13 IPv6 addresses to name server.') ?>
                 </p>
                 <p>
-                    <?= Yii::t('hipanel/domain', 'Child Name Servers can be only created by owner of the primary domain name.') ?>
-                    <?= Yii::t('hipanel/domain', 'That is you can only create ns1.my-domain.com if you are owner of my-domain.com.') ?>
+                    <?= Yii::t('hipanel:domain', 'Child Name Servers can be only created by owner of the primary domain name.') ?>
+                    <?= Yii::t('hipanel:domain', 'That is you can only create ns1.my-domain.com if you are owner of my-domain.com.') ?>
                 </p>
-                <h3><?= Yii::t('hipanel/domain', 'Examples') ?></h3>
+                <h3><?= Yii::t('hipanel:domain', 'Examples') ?></h3>
 
                 <p>ns1.my-domain.com  10.10.10.10</p>
                 <p>ns2.my-domain.com  12.12.12.12</p>
@@ -96,12 +96,12 @@ use yii\web\JsExpression;
                                 '),
                                         'formatNoMatches' => new JsExpression('
                                     function (term) {
-                                        return "' . Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
+                                        return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
                                     }
                                 ')
                                     ],
                                 ],
-                            ])->label(false)->hint(Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>
+                            ])->label(false)->hint(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>
                         </div>
                         <div class="col-sm-2">
                             <?php if ($model->isNewRecord) : ?>

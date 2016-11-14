@@ -6,9 +6,9 @@ use yii\web\JsExpression;
 
 Modal::begin([
     'id' => 'domain-contacts-modal',
-    'header' => '<h4 class="modal-title">' . Yii::t('hipanel/domain', 'Change contacts') . '</h4>',
+    'header' => '<h4 class="modal-title">' . Yii::t('hipanel:domain', 'Change contacts') . '</h4>',
     'toggleButton' => [
-        'label' => Yii::t('hipanel/domain', 'Change contacts'),
+        'label' => Yii::t('hipanel:domain', 'Change contacts'),
         'class' => 'btn btn-default',
     ],
     'clientEvents' => [

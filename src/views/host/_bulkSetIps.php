@@ -30,7 +30,7 @@ use yii\helpers\Html;
                     <?= Html::textInput('bulk_ips', null, ['class' => 'form-control', 'placeholder' => Yii::t('hipanel', 'Type here...')]); ?>
                     <br>
                     <div class="panel panel-default">
-                        <div class="panel-heading"><?= Yii::t('hipanel/domain', 'Affected name servers') ?></div>
+                        <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected name servers') ?></div>
                         <div class="panel-body">
                             <?= ArraySpoiler::widget([
                                 'data' => $models,

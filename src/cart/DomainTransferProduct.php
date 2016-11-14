@@ -25,7 +25,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function init()
     {
-        $this->description = Yii::t('hipanel/domain', 'Transfer');
+        $this->description = Yii::t('hipanel:domain', 'Transfer');
     }
 
     /** {@inheritdoc} */
@@ -37,7 +37,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
-        return [1 => Yii::t('hipanel/domain', '{0, plural, one{# year} other{# years}}', 1)];
+        return [1 => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', 1)];
     }
 
     /** {@inheritdoc} */

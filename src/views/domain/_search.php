@@ -34,7 +34,7 @@ use yii\helpers\Html;
 
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
-        <?= Html::tag('label', Yii::t('hipanel/domain', 'Registered range'), ['class' => 'control-label']); ?>
+        <?= Html::tag('label', Yii::t('hipanel:domain', 'Registered range'), ['class' => 'control-label']); ?>
         <?= DatePicker::widget([
             'model' => $search->model,
             'attribute' => 'created_from',

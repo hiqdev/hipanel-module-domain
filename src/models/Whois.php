@@ -29,14 +29,14 @@ class Whois extends ActiveRecord
     {
         return [
             'domain' => Yii::t('hipanel', 'Domain'),
-            'created' => Yii::t('hipanel/domain', 'Created'),
-            'updated' => Yii::t('hipanel/domain', 'Updated'),
-            'expires' => Yii::t('hipanel/domain', 'Expires'),
-            'registrar' => Yii::t('hipanel/domain', 'Registrar'),
-            'nss' => Yii::t('hipanel/domain', 'Name servers'),
-            'ip' => Yii::t('hipanel/domain', 'IP'),
-            'country_name' => Yii::t('hipanel/domain', 'Country'),
-            'city' => Yii::t('hipanel/domain', 'City'),
+            'created' => Yii::t('hipanel:domain', 'Created'),
+            'updated' => Yii::t('hipanel:domain', 'Updated'),
+            'expires' => Yii::t('hipanel:domain', 'Expires'),
+            'registrar' => Yii::t('hipanel:domain', 'Registrar'),
+            'nss' => Yii::t('hipanel:domain', 'Name servers'),
+            'ip' => Yii::t('hipanel:domain', 'IP'),
+            'country_name' => Yii::t('hipanel:domain', 'Country'),
+            'city' => Yii::t('hipanel:domain', 'City'),
         ];
     }
 

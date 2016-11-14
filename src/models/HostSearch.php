@@ -20,8 +20,8 @@ class HostSearch extends Host
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'domain_like' => Yii::t('hipanel/domain', 'Domain name'),
-            'host_like' => Yii::t('hipanel/domain', 'Name server'),
+            'domain_like' => Yii::t('hipanel:domain', 'Domain name'),
+            'host_like' => Yii::t('hipanel:domain', 'Name server'),
         ]);
     }
 }

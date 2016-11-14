@@ -52,9 +52,9 @@ JS
 <?php Modal::begin([
     'id' => 'ns-modal',
     'size' => Modal::SIZE_LARGE,
-    'header' => '<h4 class="modal-title">' . Yii::t('hipanel/domain', 'Change NS') . '</h4>',
+    'header' => '<h4 class="modal-title">' . Yii::t('hipanel:domain', 'Change NS') . '</h4>',
     'toggleButton' => [
-        'label' => Yii::t('hipanel/domain', 'Change NS'),
+        'label' => Yii::t('hipanel:domain', 'Change NS'),
         'class' => 'btn btn-default',
     ],
     'clientEvents' => [

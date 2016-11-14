@@ -42,7 +42,7 @@ use yii\helpers\Url;
 
             <?php elseif ($line['isAvailable'] === false) : ?>
                 <span class="domain-taken">
-                    <?= Yii::t('hipanel/domain', 'Domain is not available') ?>
+                    <?= Yii::t('hipanel:domain', 'Domain is not available') ?>
                 </span>
             <?php endif; ?>
         </span>
@@ -52,12 +52,12 @@ use yii\helpers\Url;
             <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel', 'Add to cart'), ['add-to-cart-registration', 'name' => $line['fqdn']], [
                 'data-pjax' => 0,
                 'class' => 'btn btn-flat bg-olive add-to-cart-button',
-                'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Adding'),
-                'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'In cart'),
+                'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Adding'),
+                'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'In cart'),
                 'data-domain-url' => Url::to(['add-to-cart-registration', 'name' => $line['fqdn']]),
             ]) ?>
         <?php elseif ($line['isAvailable'] === false) : ?>
-            <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel/domain', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
+            <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel:domain', 'WHOIS'), 'https://ahnames.com/ru/search/whois/#' . $line['fqdn'], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
         <?php endif; ?>
     </div>
 </div>

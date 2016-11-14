@@ -7,8 +7,8 @@ use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
-$this->params['subtitle'] = Yii::t('hipanel/domain', 'Name server detailed information') . ' #' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel/domain', 'Name Servers'), 'url' => ['index']];
+$this->params['subtitle'] = Yii::t('hipanel:domain', 'Name server detailed information') . ' #' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel:domain', 'Name Servers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

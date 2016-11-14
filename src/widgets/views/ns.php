@@ -59,9 +59,9 @@ $(document).on('pjax:complete', function(event) {
         <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
 
         <p>
-            <?= Yii::t('hipanel/domain', 'With this form you can assign the authoritative name servers for your domain.') ?></p><p>
-            <?= Yii::t('hipanel/domain', 'IP addresses can be assigned to child name servers only.') ?>
-            <?= Yii::t('hipanel/domain', 'Child name servers are created or changed automatically according to specified data.') ?>
+            <?= Yii::t('hipanel:domain', 'With this form you can assign the authoritative name servers for your domain.') ?></p><p>
+            <?= Yii::t('hipanel:domain', 'IP addresses can be assigned to child name servers only.') ?>
+            <?= Yii::t('hipanel:domain', 'Child name servers are created or changed automatically according to specified data.') ?>
         </p>
     </div>
 
@@ -146,7 +146,7 @@ $(document).on('pjax:complete', function(event) {
                                                         '),
                                                         'formatNoMatches' => new JsExpression('
                                                             function (term) {
-                                                                return "' . Yii::t('hipanel/domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
+                                                                return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
                                                             }
                                                         ')
                                                     ],

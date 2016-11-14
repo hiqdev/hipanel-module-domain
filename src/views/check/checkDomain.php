@@ -18,7 +18,7 @@ DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
 HipanelAsset::register($this);
 
-$this->title = Yii::t('hipanel/domain', 'Domain check');
+$this->title = Yii::t('hipanel:domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss('
@@ -251,13 +251,13 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Status') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Status') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="status">
-                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
-                    <li><a href="#" data-filter=".available"><?= Yii::t('hipanel/domain', 'Available') ?></a></li>
-                    <li><a href="#" data-filter=".unavailable"><?= Yii::t('hipanel/domain', 'Unavailable') ?></a>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel:domain', 'All') ?></a></li>
+                    <li><a href="#" data-filter=".available"><?= Yii::t('hipanel:domain', 'Available') ?></a></li>
+                    <li><a href="#" data-filter=".unavailable"><?= Yii::t('hipanel:domain', 'Unavailable') ?></a>
                     </li>
                 </ul>
             </div>
@@ -266,13 +266,13 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Special') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Special') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="special">
-                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?></a></li>
-                    <li><a href="#" data-filter=".popular"><?= Yii::t('hipanel/domain', 'Popular Domains') ?></a></li>
-                    <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel/domain', 'Promotion') ?></a></li>
+                    <li class="active"><a href="#" data-filter=""><?= Yii::t('hipanel:domain', 'All') ?></a></li>
+                    <li><a href="#" data-filter=".popular"><?= Yii::t('hipanel:domain', 'Popular Domains') ?></a></li>
+                    <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel:domain', 'Promotion') ?></a></li>
                 </ul>
             </div>
             <!-- /.box-body -->
@@ -280,57 +280,57 @@ JS
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hipanel/domain', 'Categories') ?></h3>
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Categories') ?></h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked" data-filter-group="categories">
                     <li class="active">
-                        <a href="#" data-filter=""><?= Yii::t('hipanel/domain', 'All') ?>
+                        <a href="#" data-filter=""><?= Yii::t('hipanel:domain', 'All') ?>
                             <span class="label label-default pull-right"><?= count($results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel/domain', 'Adult') ?>
+                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel:domain', 'Adult') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel/domain', 'GEO') ?>
+                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel:domain', 'GEO') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('geo', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".general"><?= Yii::t('hipanel/domain', 'General') ?>
+                        <a href="#" data-filter=".general"><?= Yii::t('hipanel:domain', 'General') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('general', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel/domain', 'Nature') ?>
+                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel:domain', 'Nature') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('nature', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".internet"><?= Yii::t('hipanel/domain', 'Internet') ?>
+                        <a href="#" data-filter=".internet"><?= Yii::t('hipanel:domain', 'Internet') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('internet', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".sport"><?= Yii::t('hipanel/domain', 'Sport') ?>
+                        <a href="#" data-filter=".sport"><?= Yii::t('hipanel:domain', 'Sport') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('sport', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".society"><?= Yii::t('hipanel/domain', 'Society') ?>
+                        <a href="#" data-filter=".society"><?= Yii::t('hipanel:domain', 'Society') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('society', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".audio_music"><?= Yii::t('hipanel/domain', 'Audio&Music') ?>
+                        <a href="#" data-filter=".audio_music"><?= Yii::t('hipanel:domain', 'Audio&Music') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('audio_music', $results) ?></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".home_gifts"><?= Yii::t('hipanel/domain', 'Home&Gifts') ?>
+                        <a href="#" data-filter=".home_gifts"><?= Yii::t('hipanel:domain', 'Home&Gifts') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('home_gifts', $results) ?></span>
                         </a>
                     </li>
@@ -349,7 +349,7 @@ JS
                     <div class="alert alert-warning alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
-                        <strong><?= Yii::t('hipanel/domain', 'There are no available domain zones') ?>!</strong>
+                        <strong><?= Yii::t('hipanel:domain', 'There are no available domain zones') ?>!</strong>
                     </div>
                 <?php endif; ?>
                 <div class="box box-solid">
@@ -370,7 +370,7 @@ JS
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <?= $form->field($model, 'domain')->textInput([
-                                        'placeholder' => Yii::t('hipanel/domain', 'Domain name'),
+                                        'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
                                         'class' => 'form-control input-lg',
                                         'name' => 'domain',
                                     ]); ?>
@@ -392,7 +392,7 @@ JS
                             </div>
                             <!-- /.col-md-3 -->
                             <div
-                                class="col-md-2"><?= Html::submitButton(Yii::t('hipanel/domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
+                                class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
                             <!-- /.col-md-1 -->
                         </div>
                         <!-- /.row -->

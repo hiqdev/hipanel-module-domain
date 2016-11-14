@@ -31,7 +31,7 @@ class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => AjaxModal::widget([
                     'id' => 'bulk-domain-push-modal',
                     'bulkPage' => true,
-                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Push'), ['class' => 'modal-title']),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Push'), ['class' => 'modal-title']),
                     'scenario' => 'domain-push-modal',
                     'actionUrl' => ['domain-push-modal'],
                     'size' => Modal::SIZE_LARGE,
@@ -42,33 +42,33 @@ class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
                 'label' =>  AjaxModal::widget([
                     'id' => 'bulk-set-note-modal',
                     'bulkPage' => true,
-                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Set notes'), ['class' => 'modal-title']),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Set notes'), ['class' => 'modal-title']),
                     'scenario' => 'bulk-set-note',
                     'actionUrl' => ['bulk-set-note'],
                     'size' => Modal::SIZE_LARGE,
-                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set notes'), 'class' => 'btn btn-sm btn-default'],
+                    'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Set notes'), 'class' => 'btn btn-sm btn-default'],
                 ]),
             ],
             [
                 'label' =>  AjaxModal::widget([
                     'id' => 'bulk-set-nss-modal',
                     'bulkPage' => true,
-                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Set NS'), ['class' => 'modal-title']),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Set NS'), ['class' => 'modal-title']),
                     'scenario' => 'bulk-set-nss',
                     'actionUrl' => ['bulk-set-nss'],
                     'size' => Modal::SIZE_LARGE,
-                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Set NS'), 'class' => 'btn btn-sm btn-default'],
+                    'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Set NS'), 'class' => 'btn btn-sm btn-default'],
                 ]),
             ],
             [
                 'label' =>  AjaxModal::widget([
                     'id' => 'bulk-change-contacts-modal',
                     'bulkPage' => true,
-                    'header' => Html::tag('h4', Yii::t('hipanel/domain', 'Change contacts'), ['class' => 'modal-title']),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Change contacts'), ['class' => 'modal-title']),
                     'scenario' => 'bulk-set-contacts',
                     'actionUrl' => ['bulk-set-contacts-modal'],
                     'size' => Modal::SIZE_LARGE,
-                    'toggleButton' => ['label' => Yii::t('hipanel/domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
+                    'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
                 ]),
             ],
         ];

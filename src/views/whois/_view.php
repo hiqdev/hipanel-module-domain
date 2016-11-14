@@ -95,10 +95,10 @@ $this->registerCss("
         <thead>
         <tr class="success">
             <td class="text-bold" style="vertical-align: middle;">
-                <?= Yii::t('hipanel/domain', 'This domain is available for registration') ?>
+                <?= Yii::t('hipanel:domain', 'This domain is available for registration') ?>
             </td>
             <td>
-                <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel/domain', 'Buy domain'),
+                <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel:domain', 'Buy domain'),
                     ['@domain/add-to-cart-registration', 'name' => $model->domain],
                     ['class' => 'btn btn-flat btn-block btn-sm ' . SmallBox::COLOR_OLIVE]
                 ) ?>
@@ -113,7 +113,7 @@ $this->registerCss("
         <thead>
         <tr class="danger">
             <td class="text-center text-bold">
-                <?= Yii::t('hipanel/domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
+                <?= Yii::t('hipanel:domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
             </td>
         </tr>
         </thead>

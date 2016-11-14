@@ -27,7 +27,7 @@ use yii\helpers\Html;
                     ]); ?>
                     <br>
                     <div class="panel panel-default">
-                        <div class="panel-heading"><?= Yii::t('hipanel/domain', 'Affected domains') ?></div>
+                        <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
                         <div class="panel-body">
                             <?= \hipanel\widgets\ArraySpoiler::widget([
                                 'data' => $models,

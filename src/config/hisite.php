@@ -22,13 +22,10 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                'hipanel/domain' => [
+                'hipanel:domain' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
                     'forceTranslation' => true,
                     'basePath' => '@hipanel/modules/domain/messages',
-                    'fileMap' => [
-                        'hipanel/domain' => 'domain.php',
-                    ],
                 ],
             ],
         ],

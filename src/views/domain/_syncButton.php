@@ -16,7 +16,7 @@ use yii\web\JsExpression;
 Pjax::begin(array_merge(Yii::$app->params['pjax'], ['id' => 'domain-view-sync-button']));
 
 echo Html::a(
-    '<i class="fa fa-fw fa-refresh"></i>&nbsp;' . Yii::t('hipanel/domain', 'Synchronize contacts'),
+    '<i class="fa fa-fw fa-refresh"></i>&nbsp;' . Yii::t('hipanel:domain', 'Synchronize contacts'),
     ['sync', 'id' => $model->id],
     [
         'id' => 'test123',

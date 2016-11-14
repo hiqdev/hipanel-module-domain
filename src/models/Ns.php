@@ -31,7 +31,7 @@ class Ns extends Model
             [['ip'], 'each', 'rule' => ['ip']],
             [['ip'],  function ($attribute, $params) {
                 if (!StringHelper::endsWith($this->name, $this->domain_name)) {
-                    $this->addError($attribute, Yii::t('hipanel/domain', 'To assign the IP, NS must be a child from main domain'));
+                    $this->addError($attribute, Yii::t('hipanel:domain', 'To assign the IP, NS must be a child from main domain'));
                 }
             }],
         ];
@@ -40,8 +40,8 @@ class Ns extends Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
-            'name' => Yii::t('hipanel/domain', 'Name server'),
-            'ip' => Yii::t('hipanel/domain', 'IP'),
+            'name' => Yii::t('hipanel:domain', 'Name server'),
+            'ip' => Yii::t('hipanel:domain', 'IP'),
         ]);
     }
 }

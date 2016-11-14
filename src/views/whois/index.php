@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('hipanel/domain', 'WHOIS lookup');
+$this->title = Yii::t('hipanel:domain', 'WHOIS lookup');
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($model->domain !== null) {
@@ -35,22 +35,22 @@ if ($model->domain !== null) {
                 ]) ?>
 
                 <?= $form->field($model, 'domain')->textInput([
-                    'placeholder' => Yii::t('hipanel/domain', 'Domain name'),
+                    'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
                     'class' => 'form-control',
                     'name' => 'domain',
                 ]) ?>
 
-                <?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;' . Yii::t('hipanel/domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block xs-mb-10']) ?>
+                <?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block xs-mb-10']) ?>
                 <?php ActiveForm::end() ?>
                 <div class="bg-warning md-mt-10 xs-mb-10" style="padding: 5px 7px">
-                    <span class="text-bold"><?= Yii::t('hipanel/domain', 'Available zones') ?>:</span><br>
+                    <span class="text-bold"><?= Yii::t('hipanel:domain', 'Available zones') ?>:</span><br>
                     <?= ArraySpoiler::widget([
                         'data' => $availableZones,
                         'visibleCount' => count($availableZones),
                     ]) ?>
                 </div>
                 <p class="md-mt-20 text-justify">
-                    <?= Yii::t('hipanel/domain', 'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.') ?>
+                    <?= Yii::t('hipanel:domain', 'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.') ?>
                 </p>
             </div>
         </div>
@@ -60,7 +60,7 @@ if ($model->domain !== null) {
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= Yii::t('hipanel/domain', 'WHOIS lookup result') ?>
+                    <?= Yii::t('hipanel:domain', 'WHOIS lookup result') ?>
                 </h3>
                 <div class="box-tools pull-right">
                 </div>
@@ -68,7 +68,7 @@ if ($model->domain !== null) {
             <div class="box-body">
                 <?php if (!$model->domain) : ?>
                     <div class="mailbox-read-message text-center">
-                        <?= Yii::t('hipanel/domain', 'You can check WHOIS information here. Just enter domain name in the form input.') ?>
+                        <?= Yii::t('hipanel:domain', 'You can check WHOIS information here. Just enter domain name in the form input.') ?>
                     </div>
                     <?php else: ?>
                     <div id="whois">

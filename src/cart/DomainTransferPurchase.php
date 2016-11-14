@@ -35,7 +35,7 @@ class DomainTransferPurchase extends AbstractDomainPurchase
 
     public function renderNotes()
     {
-        return Yii::t('hipanel/domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
+        return Yii::t('hipanel:domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
     }
 
     public function execute()
