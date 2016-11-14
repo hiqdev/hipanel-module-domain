@@ -142,7 +142,7 @@ class Domain extends \hipanel\base\Model
                 try {
                     $response = Client::perform('CheckPincode', [$attribute => $this->$attribute, 'id' => Yii::$app->user->id]);
                 } catch (Exception $e) {
-                    $this->addError($attribute, Yii::t('hipanel/client', 'Wrong pincode'));
+                    $this->addError($attribute, Yii::t('hipanel:client', 'Wrong pincode'));
                 }
             }, 'on' => ['push-with-pincode']],
             [['domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
@@ -194,10 +194,10 @@ class Domain extends \hipanel\base\Model
             'pincode'               => Yii::t('hipanel/domain', 'Пин-код'),
 
             // contacts
-            'registrant' => Yii::t('hipanel/client', 'Registrant contact'),
-            'admin' => Yii::t('hipanel/client', 'Admin contact'),
-            'tech' => Yii::t('hipanel/client', 'Tech contact'),
-            'billing' => Yii::t('hipanel/client', 'Billing contact'),
+            'registrant' => Yii::t('hipanel:client', 'Registrant contact'),
+            'admin' => Yii::t('hipanel:client', 'Admin contact'),
+            'tech' => Yii::t('hipanel:client', 'Tech contact'),
+            'billing' => Yii::t('hipanel:client', 'Billing contact'),
         ]);
     }
 
