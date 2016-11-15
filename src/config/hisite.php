@@ -33,6 +33,10 @@ return [
             'items' => [
                 'sidebar' => [
                     'add' => [
+                        'check-domain' => [
+                            'menu' => \hipanel\modules\domain\menus\CheckDomainMenu::class,
+                            'where' => 'first',
+                        ],
                         'domain' => [
                             'menu' => [
                                 'class' => \hipanel\modules\domain\menus\SidebarMenu::class,
