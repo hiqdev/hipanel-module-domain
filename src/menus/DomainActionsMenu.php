@@ -113,7 +113,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             [
                 'label' => '<i class="fa fa-fw fa-bomb"></i> ' . Yii::t('hipanel:domain', 'Enable Hold'),
                 'url' => ['@domain/enable-hold', 'id' => $this->model->id],
-                'visible' => !($this->model->is_holded) || (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
+                'visible' => !($this->model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
                 'encode' => false,
             ],
             [

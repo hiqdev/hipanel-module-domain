@@ -6,7 +6,7 @@ $options = [
     'data-pjax' => '0',
 ];
 ?>
-<?php if (!($model->is_holded) || (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id))) : ?>
+<?php if (!($model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id))) : ?>
     <li>
         <?= Html::a('<i class="fa fa-fw fa-bomb"></i> ' . Yii::t('hipanel:domain', 'Enable Hold'), ['@domain/enable-hold', 'id' => $model->id], $options) ?>
     </li>
