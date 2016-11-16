@@ -6,6 +6,7 @@
 
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
+use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\AjaxModal;
@@ -96,6 +97,7 @@ CSS
                         <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel:domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]) ?>
                     </li>
                 <?php endif ?>
+                <?= $this->render('_holdButtons', compact('model')) ?>
                 <li>
                     <?= Html::a('<i class="fa fa-fw fa-trash"></i>' . Yii::t('hipanel', 'Delete'), ['@domain/delete', 'id' => $model->id], [
                         'data' => [
