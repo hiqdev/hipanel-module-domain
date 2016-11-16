@@ -2,7 +2,10 @@
 
 namespace hipanel\modules\domain\repositories;
 
+use hipanel\helpers\ArrayHelper;
+use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
+use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -43,17 +46,25 @@ class DomainTariffRepository
     /**
      * @param Tariff $tariff
      * @param string $type
+     * @param bool $orderByDefault whether to order zones by default zone
+     * @see orderZones
      * @return array
      */
-    public function getZones($tariff, $type = DomainResource::TYPE_DOMAIN_REGISTRATION)
+    public function getZones($tariff, $type = DomainResource::TYPE_DOMAIN_REGISTRATION, $orderByDefault = true)
     {
         if ($tariff === null || !$tariff instanceof Tariff) {
             return [];
         }
 
-        return array_filter((array)$tariff->resources, function ($resource) use ($type) {
+        $resources = array_filter((array)$tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
+
+        if ($orderByDefault) {
+            return $this->orderZones($resources);
+        }
+
+        return $resources;
     }
 
     public function getAvailableZones()
@@ -61,5 +72,20 @@ class DomainTariffRepository
         $tariff = $this->getTariff();
 
         return $this->getZones($tariff);
+    }
+
+    /**
+     * @param Resource[] $zones array of domain resources to be sorted
+     * @return array sorted by the default zone resources
+     */
+    public function orderZones($zones)
+    {
+        $result = ArrayHelper::index($zones, 'zone');
+
+        uasort($result, function ($a, $b) {
+            return $a->zone === Domain::DEFAULT_ZONE;
+        });
+
+        return $result;
     }
 }

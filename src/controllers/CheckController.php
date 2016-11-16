@@ -11,109 +11,73 @@
 
 namespace hipanel\modules\domain\controllers;
 
-use hipanel\modules\domain\models\Domain;
+use hipanel\helpers\ArrayHelper;
+use hipanel\modules\domain\forms\CheckForm;
+use hipanel\modules\domain\logic\DomainVariationsGenerator;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
-use hipanel\modules\finance\models\DomainResource;
 use Yii;
+use yii\base\Module;
 
 class CheckController extends \hipanel\base\CrudController
 {
+    /**
+     * @var DomainTariffRepository
+     */
+    protected $domainTariffRepository;
+
+    public function __construct($id, Module $module, DomainTariffRepository $domainTariffRepository, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+
+        $this->domainTariffRepository = $domainTariffRepository;
+    }
+
     private function getAvailableZones()
     {
-        /** @var DomainTariffRepository $repository */
-        $repository = Yii::createObject(DomainTariffRepository::class);
-
-        return $repository->getAvailableZones();
+        return $this->domainTariffRepository->getAvailableZones();
     }
 
     public function actionCheck()
     {
         session_write_close();
         Yii::$app->get('hiart')->disableAuth();
-        $fqdn = Yii::$app->request->post('domain');
-        list($domain, $zone) = explode('.', $fqdn, 2);
-        $line = [
-            'fqdn' => $fqdn,
-            'domain' => $domain,
-            'zone' => $zone,
-            'resource' => null,
-        ];
 
-        if ($fqdn) {
-            $check = Domain::perform('Check', ['domains' => [$fqdn]], true);
-            if ($check[$fqdn] === 0) {
-                $line['isAvailable'] = false;
-            } else {
+        $model = new CheckForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($available = $model->checkIsAvailable()) {
                 foreach ($this->getAvailableZones() as $resource) {
-                    if ($resource->zone === $zone) {
-                        $line['resource'] = $resource;
+                    if ($resource->zone === $model->zone) {
+                        $model->resource = $resource;
                         break;
                     }
                 }
-
-                $line['isAvailable'] = true;
             }
 
-            return $this->renderAjax('_checkDomainLine', [
-                'line' => $line,
+            return $this->renderAjax('_checkDomainItem', [
+                'model' => $model,
             ]);
-        } else {
-            Yii::$app->end();
         }
+
+        return Yii::$app->end();
     }
 
-    /**
-     * @return string
-     */
     public function actionCheckDomain()
     {
         $results = [];
-        $model = new Domain();
-        $model->scenario = 'check-domain';
-        $requestedDomain = implode('.', Yii::$app->request->get('Domain') ?: []);
-        $zones = $this->getAvailableZones();
-
-        $dropDownZones = [];
-        foreach ($zones as $resource) {
-            $dropDownZones[$resource->zone] = '.' . $resource->zone;
-        }
-        uasort($dropDownZones, function ($a, $b) {
-            return $a === '.com' ? 0 : 1;
+        $model = new CheckForm();
+        $zones = ArrayHelper::map($this->getAvailableZones(), 'zone', function ($resource) {
+            return '.' . $resource->zone;
         });
-        if ($model->load(Yii::$app->request->get(), '') && !empty($dropDownZones)) {
-            // Check if domain already have zone
-            if (strpos($model->domain, '.') !== false) {
-                list($domain, $zone) = explode('.', $model->domain, 2);
-                if (!in_array('.' . $zone, $dropDownZones, true)) {
-                    $zone = 'com';
-                }
-                $model->zone = $zone;
-            }
 
-            if ($model->validate()) {
-                $requestedDomain = $model->domain . '.' . $model->zone;
-                foreach ($dropDownZones as $zone => $label) {
-                    $domains[] = $model->domain . '.' . $zone;
-                }
-                // Make the requestedDomain the first element of array
-                $domains = array_diff($domains, [$requestedDomain]);
-                array_unshift($domains, $requestedDomain);
-                foreach ($domains as $domain) {
-                    $results[] = [
-                        'fqdn' => $domain,
-                        'domain' => $model->domain,
-                        'zone' => substr($domain, strpos($domain, '.') + 1),
-                    ];
-                }
-            }
+        if ($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $generator = new DomainVariationsGenerator($model->getDomain(), $model->getZone(), $zones);
+            $results = $generator->run();
         }
-        $model->domain = empty($model->domain) ? Yii::$app->request->get('domain-check') : $model->domain;
 
         return $this->render('checkDomain', [
             'model' => $model,
-            'dropDownZonesOptions' => $dropDownZones,
+            'dropDownZonesOptions' => $zones,
             'results' => $results,
-            'requestedDomain' => $requestedDomain,
         ]);
     }
 }

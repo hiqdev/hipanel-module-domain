@@ -13,6 +13,7 @@ return [
     'aliases' => [
         '@domain' => '/domain/domain',
         '@host'   => '/domain/host',
+        '@domain-check' => '/domain/check'
     ],
     'modules' => [
         'domain' => [

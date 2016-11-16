@@ -3,6 +3,7 @@
 namespace hipanel\modules\domain\models;
 
 use Exception;
+use hipanel\validators\DomainValidator;
 use hipanel\validators\IdnValidator;
 use hiqdev\hiart\ActiveRecord;
 use SEOstats\SEOstats;
@@ -20,7 +21,7 @@ class Whois extends ActiveRecord
     public function rules()
     {
         return [
-            [['domain'], IdnValidator::class],
+            [['domain'], DomainValidator::class, 'enableIdn' => true],
         ];
     }
 
@@ -35,7 +36,7 @@ class Whois extends ActiveRecord
 
     public function getDomainAsUtf8()
     {
-        return (new IdnValidator())->convertAsciiToIdn($this->domain);
+        return (new DomainValidator())->convertAsciiToIdn($this->domain);
     }
 
     public function attributeLabels()

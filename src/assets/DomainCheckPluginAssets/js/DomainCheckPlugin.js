@@ -76,7 +76,7 @@
                 beforeSend: function () {
                     this.registerRequest(domain);
                 }.bind(this),
-                data: {domain: domain},
+                data: {fqdn: domain},
                 success: function (data) {
                     this.registerFinish(domain);
                     return this.settings.success(data, domain, this.element);

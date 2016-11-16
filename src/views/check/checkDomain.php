@@ -9,8 +9,7 @@ use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-/** @var array $requestedDomain */
-/** @var Domain $model */
+/** @var \hipanel\modules\domain\forms\CheckForm $model */
 /** @var array $dropDownZonesOptions */
 /** @var array $results */
 
@@ -369,10 +368,11 @@ JS
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'domain')->textInput([
+                                    <?= $form->field($model, 'fqdn')->textInput([
                                         'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
                                         'class' => 'form-control input-lg',
-                                        'name' => 'domain',
+                                        'name' => 'fqdn',
+                                        'value' => $model->domain
                                     ]); ?>
                                 </div>
                             </div>
@@ -383,7 +383,7 @@ JS
                                         'data' => $dropDownZonesOptions,
                                         'hasId' => true,
                                         'inputOptions' => [
-                                            'value' => $model->zone !== null ? $model->zone : $model::DEFAULT_ZONE,
+                                            'value' => ($model->zone !== null) ? $model->zone : $model::DEFAULT_ZONE,
                                             'class' => 'form-control input-lg',
                                             'name' => 'zone',
                                         ],
@@ -391,8 +391,7 @@ JS
                                 </div>
                             </div>
                             <!-- /.col-md-3 -->
-                            <div
-                                class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
+                            <div class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
                             <!-- /.col-md-1 -->
                         </div>
                         <!-- /.row -->
@@ -409,8 +408,8 @@ JS
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="domain-list">
-                        <?php foreach ($results as $line) : ?>
-                            <?= $this->render('_checkDomainLine', ['line' => $line, 'requestedDomain' => $requestedDomain]) ?>
+                        <?php foreach ($results as $model) : ?>
+                            <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
