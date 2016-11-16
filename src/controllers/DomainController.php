@@ -163,7 +163,7 @@ class DomainController extends \hipanel\base\CrudController
                                 return null;
                             }
 
-                            return ['@hdomain'];
+                            return ['@domain'];
                         }
                     ],
                     'error' => [
