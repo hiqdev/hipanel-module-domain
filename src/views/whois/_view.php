@@ -131,7 +131,7 @@ $this->registerCss("
         <thead>
         <tr class="danger">
             <td class="text-center text-bold">
-                <?= Yii::t('hipanel:domain', 'You have entered wrong domain name or domain name with unsupported zone.') ?>
+                <?= Yii::t('hipanel:domain', 'Domain name is not registered yet, or the domain zone is not supported.') ?>
             </td>
         </tr>
         </thead>

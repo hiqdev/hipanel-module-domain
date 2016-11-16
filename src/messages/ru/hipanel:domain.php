@@ -195,7 +195,7 @@ return [
     'Available zones' => 'Доступные зоны',
     'WHOIS lookup result' => 'Результат поиска в WHOIS',
     'You can check WHOIS information here. Just enter domain name in the form input.' => 'Вы можете получить информацию WHOIS на этой странице. Для этого введите доменное имя в поле формы.',
-    'You have entered wrong domain name or domain name with unsupported zone.' => 'Вы ввели неверное имя домена или имя домена из неподдерживаемой зоны.',
+    'Domain name is not registered yet, or the domain zone is not supported.' => 'Этот домен еще не зарегистрирован, или доменная зона не поддерживается.',
     'WHOIS isn’t an acronym, though it may look like one. In fact, it is the system that provides information, who is responsible for a domain name.' => 'WHOIS не является аббревиатурой, хотя может выглядеть так. На самом деле, это система, из которой можно получить информацию об ответственных за доменное имя.',
 
     'Domain search' => 'Поиск доменов',
