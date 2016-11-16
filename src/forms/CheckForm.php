@@ -69,7 +69,7 @@ class CheckForm extends Model
     public function rules()
     {
         return [
-            [['fqdn'], DomainPartValidator::class, 'enableIdn' => true],
+            [['fqdn'], DomainPartValidator::class],
         ];
     }
 
