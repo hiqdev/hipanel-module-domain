@@ -182,6 +182,13 @@ return [
     'Society' => 'Общество',
     'Sport' => 'Спорт',
 
+    'Registered' => 'Зарегистрирован',
+    'Updated' => 'Изменен',
+    'Expires' => 'Регистрация заканчивается',
+    'Name servers' => 'Серверы имён',
+    'Country' => 'Страна',
+    'Registrar' => 'Регситратор',
+
     'Domain transfer was rejected' => 'Трансфер домена был отклонён',
 
     'WHOIS lookup' => 'Поиск в WHOIS',

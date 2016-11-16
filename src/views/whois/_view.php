@@ -36,7 +36,10 @@ $this->registerCss("
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'domain',
+                    [
+                        'attribute' => 'domain',
+                        'value' => $model->getDomainAsUtf8()
+                    ],
                     [
                         'attribute' => 'created',
                         'format' => 'date',

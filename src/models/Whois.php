@@ -2,16 +2,22 @@
 
 namespace hipanel\modules\domain\models;
 
-use hipanel\validators\DomainValidator;
+use hipanel\validators\IdnValidator;
 use hiqdev\hiart\ActiveRecord;
 use Yii;
 
+/**
+ * Class Whois represents WHOIS request for the domain
+ *
+ * @property string $domain
+ * @package hipanel\modules\domain\models
+ */
 class Whois extends ActiveRecord
 {
     public function rules()
     {
         return [
-            [['domain'], DomainValidator::class],
+            [['domain'], IdnValidator::class],
         ];
     }
 
@@ -25,11 +31,16 @@ class Whois extends ActiveRecord
         ];
     }
 
+    public function getDomainAsUtf8()
+    {
+        return (new IdnValidator())->convertAsciiToIdn($this->domain);
+    }
+
     public function attributeLabels()
     {
         return [
             'domain' => Yii::t('hipanel', 'Domain'),
-            'created' => Yii::t('hipanel:domain', 'Created'),
+            'created' => Yii::t('hipanel:domain', 'Registered'),
             'updated' => Yii::t('hipanel:domain', 'Updated'),
             'expires' => Yii::t('hipanel:domain', 'Expires'),
             'registrar' => Yii::t('hipanel:domain', 'Registrar'),
