@@ -2,8 +2,11 @@
 
 namespace hipanel\modules\domain\models;
 
+use Exception;
 use hipanel\validators\IdnValidator;
 use hiqdev\hiart\ActiveRecord;
+use SEOstats\SEOstats;
+use SEOstats\Services\Alexa;
 use Yii;
 
 /**
@@ -26,8 +29,7 @@ class Whois extends ActiveRecord
         return [
             'domain', 'registrar', 'nss', 'created', 'updated',
             'expires', 'rawdata', 'ip', 'country_name', 'city',
-            'available',
-            'unsupported',
+            'available', 'unsupported',
         ];
     }
 
@@ -48,12 +50,55 @@ class Whois extends ActiveRecord
             'ip' => Yii::t('hipanel:domain', 'IP'),
             'country_name' => Yii::t('hipanel:domain', 'Country'),
             'city' => Yii::t('hipanel:domain', 'City'),
+            'google' => Yii::t('hipanel:domain', 'Google PR'),
+            'alexa' => Yii::t('hipanel:domain', 'Alexa Rank'),
+            'yandex' => Yii::t('hipanel:domain', 'Yandex TIC'),
         ];
     }
 
     public function getScreenshot()
     {
         return sprintf('//mini.s-shot.ru/1920x1200/JPEG/520/Z100/?%s', $this->domain);
+    }
+
+    public function getUrl()
+    {
+        return 'http://' . $this->domain;
+    }
+
+    public function getGoogle()
+    {
+        return intval(\SEOstats\Services\Google::getPageRank($this->url));
+    }
+
+    public function getAlexa()
+    {
+        try {
+            $seostats = new SEOstats;
+            if ($seostats->setUrl($this->url)) {
+                return Alexa::getGlobalRank();
+            }
+        } catch (Exception $e) {
+            $e->getMessage();
+        }
+    }
+
+    public function getYandex()
+    {
+        $str = file('http://bar-navig.yandex.ru/u?ver=2&show=32&url=' . $this->url);
+        if ($str == false) {
+            $ans = false;
+        } else {
+            $is_find = preg_match("/value=\"(.\d*)\"/", join("", $str), $tic);
+
+            if ($is_find < 1) {
+                $ans = 0;
+            } else {
+                $ans = $tic[1];
+            }
+        }
+
+        return $ans;
     }
 }
 

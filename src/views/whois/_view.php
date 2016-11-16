@@ -73,6 +73,21 @@ $this->registerCss("
                         'format' => 'html',
                     ],
                     [
+                        'attribute' => 'seo',
+                        'label' => Yii::t('hipanel:domain', 'SEO'),
+                        'value' => ArraySpoiler::widget([
+                            'data' => ['google', 'alexa', 'yandex'],
+                            'visibleCount' => 3,
+                            'delimiter' => '<br>',
+                            'formatter' => function ($attribute) use ($model) {
+                                if ($model->{$attribute}) {
+                                    return $model->getAttributeLabel($attribute) . ': ' . $model->{$attribute};
+                                }
+                            },
+                        ]),
+                        'format' => 'html',
+                    ],
+                    [
                         'attribute' => 'ip',
                     ],
                     [
