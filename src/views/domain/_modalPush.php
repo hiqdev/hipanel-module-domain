@@ -58,7 +58,7 @@ use yii\helpers\Html;
     <?= $form->field($model, 'receiver') ?>
 
     <?php if ($hasPincode) : ?>
-        <?= $form->field($model, 'pincode')->input('password') ?>
+        <?= $form->field($model, 'pincode')->input('password', ['autocomplete' => 'off']) ?>
     <?php endif; ?>
     <hr>
     <?= Html::submitButton(Yii::t('hipanel:domain', 'Push'), ['class' => 'btn btn-success']) ?>
