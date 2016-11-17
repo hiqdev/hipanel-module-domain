@@ -59,22 +59,26 @@ class DomainController extends \hipanel\base\CrudController
                     ],
                 ],
             ],
-//            'freeze-access' => [
-//                'class' => AccessControl::class,
-//                'only' => ['enable-freeze', 'disable-freeze', 'enable-freeze-w-p', 'disable-freeze-w-p'],
-//                'rules' => [
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['domain.freeze'],
-//                        'actions' => ['enable-freeze', 'enable-freeze-w-p'],
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['domain.unfreeze'],
-//                        'actions' => ['disable-freeze', 'disable-freeze-w-p'],
-//                    ],
-//                ],
-//            ],
+            'freeze-access' => [
+                'class' => AccessControl::class,
+                'only' => ['enable-freeze', 'enable-freeze-w-p'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['domain.freeze'],
+                    ],
+                ],
+            ],
+            'unfreeze-access' => [
+                'class' => AccessControl::class,
+                'only' => ['disable-freeze', 'disable-freeze-w-p'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['domain.unfreeze'],
+                    ],
+                ],
+            ],
         ]);
     }
 
