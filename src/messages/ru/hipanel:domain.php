@@ -30,6 +30,7 @@ return [
 
     'There are no available domain zones' => 'Нет доступных доменных зон',
 
+    'Domain name is invalid' => 'Доменное имя неправильное',
     'Domain is not available' => 'Домен недоступен',
     'Domain details' => 'Подробности о домене',
     'Domain detailed information' => 'Подробная информация о домене',

@@ -5,6 +5,7 @@ namespace hipanel\modules\domain\forms;
 use Guzzle\Plugin\ErrorResponse\Exception\ErrorResponseException;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\models\Domain;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -34,6 +35,18 @@ class CheckForm extends Model
      * @var Resource
      */
     public $resource;
+
+    /**
+     * @var array available domain zones
+     */
+    public $availableZones;
+
+    public function __construct($availableZones, $config = [])
+    {
+        parent::__construct($config);
+
+        $this->availableZones = $availableZones;
+    }
 
     /**
      * @return array
@@ -69,8 +82,16 @@ class CheckForm extends Model
     public function rules()
     {
         return [
-            [['fqdn'], DomainPartValidator::class],
+            [['fqdn'], DomainPartValidator::class, 'enableIdn' => true, 'mutateAttribute' => false, 'message' => Yii::t('hipanel:domain', 'Domain name is invalid')],
+            [['fqdn'], 'zoneIsAllowed'],
         ];
+    }
+
+    public function zoneIsAllowed()
+    {
+        if (!in_array($this->getZone(), $this->availableZones)) {
+            $this->fqdn = $this->getDomain() . '.' . static::DEFAULT_ZONE;
+        }
     }
 
     /**
@@ -110,5 +131,12 @@ class CheckForm extends Model
         }
 
         return $this->isAvailable;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'fqdn' => Yii::t('hipanel:domain', 'Domain'),
+        ];
     }
 }

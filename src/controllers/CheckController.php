@@ -37,14 +37,23 @@ class CheckController extends \hipanel\base\CrudController
         return $this->domainTariffRepository->getAvailableZones();
     }
 
+    private function getAvailableZonesList()
+    {
+        return ArrayHelper::map($this->getAvailableZones(), 'zone', function ($resource) {
+            return '.' . $resource->zone;
+        });
+    }
+
     public function actionCheck()
     {
         session_write_close();
         Yii::$app->get('hiart')->disableAuth();
 
-        $model = new CheckForm();
+        $zones = $this->getAvailableZonesList();
+        $model = new CheckForm(array_keys($zones));
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($available = $model->checkIsAvailable()) {
+            if ($model->checkIsAvailable()) {
                 foreach ($this->getAvailableZones() as $resource) {
                     if ($resource->zone === $model->zone) {
                         $model->resource = $resource;
@@ -64,12 +73,11 @@ class CheckController extends \hipanel\base\CrudController
     public function actionCheckDomain()
     {
         $results = [];
-        $model = new CheckForm();
-        $zones = ArrayHelper::map($this->getAvailableZones(), 'zone', function ($resource) {
-            return '.' . $resource->zone;
-        });
+        $zones = $this->getAvailableZonesList();
 
-        if ($model->load(Yii::$app->request->get()) && $model->validate()) {
+        $model = new CheckForm(array_keys($zones));
+
+        if ($model->load(Yii::$app->request->get()) && $model->validate() && !empty($model->fqdn)) {
             $generator = new DomainVariationsGenerator($model->getDomain(), $model->getZone(), $zones);
             $results = $generator->run();
         }

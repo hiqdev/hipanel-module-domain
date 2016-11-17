@@ -82,7 +82,7 @@ class DomainVariationsGenerator
         $results = [];
 
         foreach ($variations as $domain) {
-            $results[] = new CheckForm(['fqdn' => $domain]);
+            $results[] = new CheckForm(array_keys($this->availableZones), ['fqdn' => $domain]);
         }
 
         return $results;
@@ -113,7 +113,9 @@ class DomainVariationsGenerator
      */
     protected function orderVariations(&$variations)
     {
-        $variations = array_diff($variations, [$this->getFqdn()]);
-        array_unshift($variations, $this->getFqdn());
+        if (in_array($this->getFqdn(), $variations)) {
+            $variations = array_diff($variations, [$this->getFqdn()]);
+            array_unshift($variations, $this->getFqdn());
+        }
     }
 }
