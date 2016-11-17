@@ -19,11 +19,15 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-envelope-o"></i> ' . Yii::t('hipanel:domain', 'Send FOA again'),
-                'url' => ['@domain/notify-transfer-in', 'id' => $this->model->id],
+                'url' => ['@domain/notify-transfer-in'],
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'data-pjax' => '0',
+                        'form' => 'notify-transfer-in',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ]
                     ],
                 ],
                 'encode' => false,
@@ -43,9 +47,20 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-exclamation-circle"></i> ' . Yii::t('hipanel:domain', 'Approve transfer'),
-                'url' => ['@domain/approve-transfer', 'id' => $this->model->id],
+                'url' => ['@domain/approve-transfer'],
                 'visible' => ($this->model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'data-pjax' => '0',
+                        'form' => 'approve-transfer',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ]
+                    ],
+                ],
             ],
             [
                 'label' => '<i class="fa fa-fw fa-anchor"></i> ' . Yii::t('hipanel:domain', 'Reject transfer'),
@@ -55,12 +70,16 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-exclamation-triangle"></i> ' . Yii::t('hipanel:domain', 'Cancel transfer'),
-                'url' => ['@domain/cancel-transfer', 'id' => $this->model->id],
+                'url' => ['@domain/cancel-transfer'],
                 'linkOptions' => [
                     'data' => [
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
                         'data-pjax' => '0',
+                        'form' => 'cancel-transfer',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ]
                     ],
                 ],
                 'visible' => $this->model->state === 'incoming',
@@ -84,10 +103,10 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                         'Domain[id]' => $this->model->id,
                     ],
                 ],
-                'visible' => !(!in_array($this->model->state, ['ok'], true)) ||
-                    !(time() >= strtotime('+5 days', strtotime($this->model->created_date))) ||
-                    !(strtotime('+1 year', time()) < strtotime($this->model->expires)) ||
-                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true),
+                'visible' => Yii::$app->user->can('manage') && (!(!in_array($this->model->state, ['ok'], true)) ||
+                        !(time() >= strtotime('+5 days', strtotime($this->model->created_date))) ||
+                        !(strtotime('+1 year', time()) < strtotime($this->model->expires)) ||
+                        in_array(Domain::getZone($this->model->domain), ['com', 'net'], true)),
                 'encode' => false,
             ],
             [
