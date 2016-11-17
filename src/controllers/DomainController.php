@@ -59,22 +59,22 @@ class DomainController extends \hipanel\base\CrudController
                     ],
                 ],
             ],
-            'freeze-access' => [
-                'class' => AccessControl::class,
-                'only' => ['enable-freeze', 'disable-freeze', 'enable-freeze-w-p', 'disable-freeze-w-p'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.freeze'],
-                        'actions' => ['enable-freeze', 'enable-freeze-w-p'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.unfreeze'],
-                        'actions' => ['disable-freeze', 'disable-freeze-w-p'],
-                    ],
-                ],
-            ],
+//            'freeze-access' => [
+//                'class' => AccessControl::class,
+//                'only' => ['enable-freeze', 'disable-freeze', 'enable-freeze-w-p', 'disable-freeze-w-p'],
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['domain.freeze'],
+//                        'actions' => ['enable-freeze', 'enable-freeze-w-p'],
+//                    ],
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['domain.unfreeze'],
+//                        'actions' => ['disable-freeze', 'disable-freeze-w-p'],
+//                    ],
+//                ],
+//            ],
         ]);
     }
 
@@ -344,13 +344,13 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'enable-hold' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
+                'scenario' => 'enable-hold',
                 'success' => Yii::t('hipanel:domain', 'Hold was enabled'),
                 'error' => Yii::t('hipanel:domain', 'Failed enabling Hold'),
             ],
             'disable-hold' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
+                'scenario' => 'disable-hold',
                 'success' => Yii::t('hipanel:domain', 'Hold was disabled'),
                 'error' => Yii::t('hipanel:domain', 'Failed disabling Hold'),
             ],

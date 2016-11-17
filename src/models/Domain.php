@@ -83,7 +83,9 @@ class Domain extends \hipanel\base\Model
                 'regen-password',
                 'set-note',
                 'set-autorenewal', 'set-whois-protect', 'set-lock',
-                'push-with-pincode'
+                'push-with-pincode',
+                'enable-hold',
+                'disable-hold',
             ]],
 
             // Check domain

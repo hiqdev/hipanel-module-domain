@@ -74,11 +74,15 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-trash-o"></i> ' . Yii::t('hipanel:domain', 'Delete by AGP'),
-                'url' => ['@domain/delete-agp', 'id' => $this->model->id],
+                'url' => ['@domain/delete-agp'],
                 'linkOptions' => [
                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
                     'method' => 'post',
                     'data-pjax' => '0',
+                    'form' => 'delete-agp',
+                    'params' => [
+                        'Domain[id]' => $this->model->id,
+                    ],
                 ],
                 'visible' => !(!in_array($this->model->state, ['ok'], true)) ||
                     !(time() >= strtotime('+5 days', strtotime($this->model->created_date))) ||
@@ -88,23 +92,31 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-lock"></i> ' . Yii::t('hipanel:domain', 'Freeze domain'),
-                'url' => ['@domain/enable-freeze', $this->model->id],
+                'url' => ['@domain/enable-freeze'],
                 'visible' => (!$this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'data-pjax' => '0',
+                        'form' => 'freeze',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
                     ],
                 ],
                 'encode' => false,
             ],
             [
                 'label' => '<i class="fa fa-fw fa-unlock"></i> ' . Yii::t('hipanel:domain', 'Unfreeze domain'),
-                'url' => ['@domain/disable-freeze', 'id' => $this->model->id],
+                'url' => ['@domain/disable-freeze'],
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'data-pjax' => '0',
+                        'form' => 'unfreeze',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
                     ],
                 ],
                 'visible' => ($this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
@@ -112,18 +124,32 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => '<i class="fa fa-fw fa-bomb"></i> ' . Yii::t('hipanel:domain', 'Enable Hold'),
-                'url' => ['@domain/enable-hold', 'id' => $this->model->id],
+                'url' => ['@domain/enable-hold'],
+                'linkOptions' => [
+                    'data' => [
+                        'method' => 'post',
+                        'data-pjax' => '0',
+                        'form' => 'hold',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
+                    ],
+                ],
                 'visible' => !($this->model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
                 'encode' => false,
             ],
             [
                 'label' => '<i class="fa fa-fw fa-link"></i> ' . Yii::t('hipanel:domain', 'Disable Hold'),
-                'url' => ['@domain/disable-hold', 'id' => $this->model->id],
+                'url' => ['@domain/disable-hold'],
                 'visible' => ($this->model->is_holded && in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'data-pjax' => '0',
+                        'form' => 'unhold',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
                     ],
                 ],
                 'encode' => false,
