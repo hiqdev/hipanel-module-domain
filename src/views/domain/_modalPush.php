@@ -55,7 +55,7 @@ use yii\helpers\Html;
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
     <?php endforeach; ?>
 
-    <?= $form->field($model, 'receiver') ?>
+    <?= $form->field($model, 'receiver')->textInput(['autocomplete' => 'off']) ?>
 
     <?php if ($hasPincode) : ?>
         <?= $form->field($model, 'pincode')->input('password', ['autocomplete' => 'off']) ?>
