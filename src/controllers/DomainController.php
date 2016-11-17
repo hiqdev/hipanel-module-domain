@@ -312,37 +312,31 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'delete' => [
                 'class' => SmartDeleteAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'Domain deleted'),
                 'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
             ],
             'delete-agp' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'Domain deleted'),
                 'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
             ],
             'cancel-transfer' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was canceled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],
             'reject-transfer' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was approved'),
                 'error' => Yii::t('hipanel:domain', 'Failed approve domain transfer'),
             ],
             'notify-transfer-in' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'only-object',
                 'success' => Yii::t('hipanel:domain', 'FOA was sent'),
                 'error' => Yii::t('hipanel:domain', 'Failed send FOA'),
             ],
