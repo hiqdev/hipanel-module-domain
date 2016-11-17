@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<?php if (!$model->isFreezed() && Yii::$app->user->can('freeze')) : ?>
+<?php if (!$model->isFreezed() && Yii::$app->user->can('domain.freeze')) : ?>
     <li>
         <?= ModalButton::widget([
             'model' => $model,
@@ -29,7 +29,7 @@ use yii\helpers\Url;
         ]) ?>
     </li>
 <?php endif ?>
-<?php if ($model->isFreezed() && Yii::$app->user->can('unfreeze')) : ?>
+<?php if ($model->isFreezed() && Yii::$app->user->can('domain.unfreeze')) : ?>
     <li>
         <?= ModalButton::widget([
             'model' => $model,
@@ -53,7 +53,7 @@ use yii\helpers\Url;
         ]) ?>
     </li>
 <?php endif ?>
-<?php if (!$model->isWPFreezed() && Yii::$app->user->can('freeze')) : ?>
+<?php if (!$model->isWPFreezed() && Yii::$app->user->can('domain.freeze')) : ?>
     <li>
         <?= ModalButton::widget([
             'model' => $model,
@@ -77,7 +77,7 @@ use yii\helpers\Url;
         ]) ?>
     </li>
 <?php endif ?>
-<?php if ($model->isWPFreezed() && Yii::$app->user->can('unfreeze')) : ?>
+<?php if ($model->isWPFreezed() && Yii::$app->user->can('domain.unfreeze')) : ?>
     <li>
         <?= ModalButton::widget([
             'model' => $model,
