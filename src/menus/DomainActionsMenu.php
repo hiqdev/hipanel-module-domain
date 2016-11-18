@@ -22,7 +22,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                     'target' => '_blank',
                 ],
             ],
-            [
+            'view' => [
                 'label' => '<i class="fa fa-fw fa-info"></i> ' . Yii::t('hipanel', 'View'),
                 'url' => ['@domain/view', 'id' => $this->model->id],
                 'encode' => false,

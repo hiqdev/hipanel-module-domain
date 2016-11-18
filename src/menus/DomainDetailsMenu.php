@@ -18,7 +18,7 @@ class DomainDetailsMenu extends \hiqdev\menumanager\Menu
             'model' => $this->model,
         ])->items();
 
-        return array_merge($actions, [
+        $items = array_merge($actions, [
             [
                 'label' => AjaxModal::widget([
                     'id' => 'push-modal-link',
@@ -56,5 +56,9 @@ class DomainDetailsMenu extends \hiqdev\menumanager\Menu
                 ],
             ],
         ]);
+
+        unset($items['view']);
+
+        return $items;
     }
 }
