@@ -6,16 +6,14 @@
 
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\menus\DomainActionsMenu;
+use hipanel\modules\domain\menus\DomainDetailsMenu;
 use hipanel\widgets\DetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
-use hipanel\widgets\AjaxModal;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
-use yii\bootstrap\Modal;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -52,7 +50,6 @@ CSS
 <div class="row" xmlns="http://www.w3.org/1999/html">
 
     <div class="col-md-3">
-
         <?php Box::begin([
             'options' => [
                 'class' => 'box-solid',
@@ -71,49 +68,7 @@ CSS
         </p>
 
         <div class="profile-usermenu">
-            <?= DomainActionsMenu::create(['model' => $model])->render(DetailMenu::class) ?>
-            <ul class="nav">
-                <li>
-                    <?php $url = 'http://' . $model->domain . '/' ?>
-                    <?= Html::a('<i class="fa fa-fw fa-globe"></i>' . Yii::t('hipanel:domain', 'Go to site {link}', [
-                            'link' => \yii\helpers\StringHelper::truncate($url, 15)
-                        ]), $url, ['target' => '_blank']); ?>
-                </li>
-                <li>
-                    <?= AjaxModal::widget([
-                        'id' => 'push-modal-link',
-                        'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
-                        'scenario' => 'push',
-                        'actionUrl' => ['domain-push-modal', 'id' => $model->id],
-                        'size' => Modal::SIZE_DEFAULT,
-                        'toggleButton' => [
-                            'label' => '<i class="fa fa-fw fa-paper-plane-o"></i>' . Yii::t('hipanel:domain', 'Push domain'),
-                            'class' => 'clickable',
-                            'data-pjax' => 0,
-                            'tag' => 'a',
-                        ],
-                    ]) ?>
-                </li>
-                <?php if ($model->canRenew() && Yii::$app->user->can('deposit')) : ?>
-                    <li>
-                        <?= Html::a('<i class="fa fa-fw fa-forward"></i>' . Yii::t('hipanel:domain', 'Renew domain'), ['add-to-cart-renewal', 'model_id' => $model->id], ['data-pjax' => 0]) ?>
-                    </li>
-                <?php endif ?>
-                <?= $this->render('_holdButtons', compact('model')) ?>
-                <li>
-                    <?= Html::a('<i class="fa fa-fw fa-trash"></i>' . Yii::t('hipanel', 'Delete'), ['@domain/delete', 'id' => $model->id], [
-                        'data' => [
-                            'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
-                            'method' => 'post',
-                            'data-pjax' => '0',
-                        ]
-                    ]) ?>
-                </li>
-                <?php if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id)) : ?>
-                    <li><?= $this->render('_syncButton', compact('model')) ?></li>
-                <?php endif ?>
-                <?= $this->render('_freezeButtons', compact('model')) ?>
-            </ul>
+            <?= DomainDetailsMenu::create(['model' => $model])->render(DetailMenu::class) ?>
         </div>
         <?php Box::end() ?>
     </div>

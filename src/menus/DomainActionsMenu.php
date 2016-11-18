@@ -11,7 +11,17 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
 
     public function items()
     {
+        $url = 'http://' . $this->model->domain . '/';
+
         return [
+            [
+                'icon' => 'globe',
+                'label' => Yii::t('hipanel:domain', 'Go to site {link}', ['link' => \yii\helpers\StringHelper::truncate($url, 15)]),
+                'url' => $url,
+                'linkOptions' => [
+                    'target' => '_blank',
+                ],
+            ],
             [
                 'label' => '<i class="fa fa-fw fa-info"></i> ' . Yii::t('hipanel', 'View'),
                 'url' => ['@domain/view', 'id' => $this->model->id],
