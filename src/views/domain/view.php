@@ -6,7 +6,8 @@
 
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\menus\DomainActionsMenu;
+use hipanel\widgets\DetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\AjaxModal;
@@ -70,6 +71,7 @@ CSS
         </p>
 
         <div class="profile-usermenu">
+            <?= DomainActionsMenu::create(['model' => $model])->render(DetailMenu::class) ?>
             <ul class="nav">
                 <li>
                     <?php $url = 'http://' . $model->domain . '/' ?>
