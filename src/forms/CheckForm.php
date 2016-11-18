@@ -84,6 +84,7 @@ class CheckForm extends Model
         return [
             [['fqdn'], DomainPartValidator::class, 'enableIdn' => true, 'mutateAttribute' => false, 'message' => Yii::t('hipanel:domain', 'Domain name is invalid')],
             [['fqdn'], 'zoneIsAllowed'],
+            [['fqdn'], 'required']
         ];
     }
 
