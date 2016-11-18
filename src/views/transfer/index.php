@@ -19,8 +19,8 @@ $this->registerCss('
 }
 ');
 $this->registerJs(<<<JS
-    jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        jQuery('#' + e.relatedTarget.getAttribute('href').substr(1)).find('input:text, textarea').val(''); //e.target
+    jQuery('#domain-transfer-single').on('submit', function (e) {
+        $(this).find('.tab-pane').not('.active').find('input:text, textarea').val('');
     });
 JS
 );
