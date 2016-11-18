@@ -145,6 +145,10 @@ return [
     'Disable Lock' => 'Откл. защиту от трансфера',
     'Lock was enabled' => 'Защита от трансфера включена',
     'Lock was disabled' => 'Защита от трансфера отключена',
+    'Freeze was enabled' => 'Заморозка включена',
+    'Freeze was disabled' => 'Заморозка выключена',
+    'WP freeze was enabled' => 'WP заморозка включена',
+    'WP freeze was disabled' => 'WP заморозка выключена',
 
     'Enable autorenew' => 'Вкл. автопродление',
     'Disable autorenew' => 'Откл. автопродление',
