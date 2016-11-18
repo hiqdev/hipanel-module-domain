@@ -64,7 +64,7 @@ class CheckForm extends Model
      */
     public function load($data, $formName = '')
     {
-        if (strpos($data['fqdn'], '.') === false) {
+        if (strlen($data['fqdn']) && strpos($data['fqdn'], '.') === false) {
             if (strlen($data['zone'])) {
                 $data['fqdn'] .= '.' . $data['zone'];
                 unset($data['zone']);
