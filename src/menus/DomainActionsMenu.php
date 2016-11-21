@@ -121,10 +121,17 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                         'Domain[id]' => $this->model->id,
                     ],
                 ],
-                'visible' => Yii::$app->user->can('manage') && (!(!in_array($this->model->state, ['ok'], true)) ||
-                        !(time() >= strtotime('+5 days', strtotime($this->model->created_date))) ||
-                        !(strtotime('+1 year', time()) < strtotime($this->model->expires)) ||
-                        in_array(Domain::getZone($this->model->domain), ['com', 'net'], true)),
+                'visible' =>
+                    Yii::$app->user->can('manage')
+                    &&
+                    in_array($this->model->state, ['ok'], true)
+                    &&
+                    time() <= strtotime('+5 days', strtotime($this->model->created_date))
+                    &&
+                    strtotime('+1 year', time()) > strtotime($this->model->expires)
+                    &&
+                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true)
+                ,
                 'encode' => false,
             ],
             [
