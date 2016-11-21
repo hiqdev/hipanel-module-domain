@@ -77,18 +77,9 @@ CSS
         <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#domain-details"
-                                      data-toggle="tab"><?= Yii::t('hipanel:domain', 'Domain details') ?></a></li>
+                <li class="active"><a href="#domain-details" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Domain details') ?></a></li>
                 <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('hipanel:domain', 'NS records') ?></a></li>
-                <!--                    <li><a href="#authorization-code" data-toggle="tab">-->
-                <?php //= Yii::t('hipanel:domain', 'Authorization code') ?><!--</a></li>-->
                 <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('hipanel:domain', 'DNS records') ?></a></li>
-                <!--                    <li><a href="#url-forwarding" data-toggle="tab">-->
-                <?php //= Yii::t('hipanel:domain', 'URL forwarding') ?><!--</a></li>-->
-                <!--                    <li><a href="#email-forwarding" data-toggle="tab">-->
-                <?php //= Yii::t('hipanel:domain', 'Email forwarding') ?><!--</a></li>-->
-                <!--                    <li><a href="#parking" data-toggle="tab">-->
-                <?php //= Yii::t('hipanel:domain', 'Parking') ?><!--</a></li>-->
                 <li><a href="#contacts" data-toggle="tab"><?= Yii::t('hipanel', 'Contacts') ?></a></li>
             </ul>
             <div class="tab-content">
