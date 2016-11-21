@@ -44,7 +44,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                     ],
                 ],
                 'encode' => false,
-                'visible' => $this->model->state === 'preincoming',
+                'visible' => $this->model->state === Domain::STATE_PREINCOMING,
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'approve-preincoming'),
@@ -62,7 +62,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => Yii::t('hipanel:domain', 'Approve transfer'),
                 'icon' => 'fa-exclamation-circle',
                 'url' => ['@domain/approve-transfer'],
-                'visible' => ($this->model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => ($this->model->state === Domain::STATE_OUTGOING && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
                 'linkOptions' => [
                     'data' => [
@@ -80,7 +80,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => Yii::t('hipanel:domain', 'Reject transfer'),
                 'icon' => 'fa-anchor',
                 'url' => ['reject-transfer', 'id' => $this->model->id],
-                'visible' => $this->model->state === 'outgoing',
+                'visible' => $this->model->state === Domain::STATE_OUTGOING,
                 'encode' => false,
             ],
             [
@@ -98,14 +98,14 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                         ]
                     ],
                 ],
-                'visible' => $this->model->state === 'incoming',
+                'visible' => $this->model->state === Domain::STATE_INCOMING,
                 'encode' => false,
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
                 'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
-                'visible' => (in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => (in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
             ],
             [
@@ -124,7 +124,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'visible' =>
                     Yii::$app->user->can('manage')
                     &&
-                    in_array($this->model->state, ['ok'], true)
+                    in_array($this->model->state, [Domain::STATE_OK], true)
                     &&
                     time() <= strtotime('+5 days', strtotime($this->model->created_date))
                     &&
@@ -189,7 +189,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => Yii::t('hipanel:domain', 'Disable Hold'),
                 'icon' => 'fa-link',
                 'url' => ['@domain/disable-hold'],
-                'visible' => ($this->model->is_holded && in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => ($this->model->is_holded && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
