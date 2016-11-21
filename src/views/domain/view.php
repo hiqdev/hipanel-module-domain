@@ -7,7 +7,7 @@
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainDetailsMenu;
-use hipanel\widgets\DetailMenu;
+use hipanel\menumanager\widgets\DetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\Box;
