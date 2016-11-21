@@ -21,7 +21,6 @@ use hipanel\modules\domain\validators\NsValidator;
 use hipanel\validators\DomainValidator;
 use hiqdev\hiart\ErrorResponseException;
 use Yii;
-use yii\helpers\Html;
 
 class Domain extends \hipanel\base\Model
 {
