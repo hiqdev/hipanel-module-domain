@@ -29,6 +29,7 @@ class Domain extends \hipanel\base\Model
     const STATE_INCOMING = 'incoming';
     const STATE_OUTGOING = 'outgoing';
     const STATE_EXPIRED = 'expired';
+    const STATE_PREINCOMING = 'preincoming';
 
     const DEFAULT_ZONE = 'com';
 
