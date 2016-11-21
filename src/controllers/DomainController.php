@@ -94,6 +94,7 @@ class DomainController extends \hipanel\base\CrudController
             'add-to-cart-renewal' => [
                 'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
+                'redirectToCart' => true,
             ],
             'bulk-renewal' => [
                 'class' => AddToCartAction::class,
