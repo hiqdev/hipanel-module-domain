@@ -2,6 +2,7 @@
 
 namespace hipanel\modules\domain\menus;
 
+use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\AjaxModal;
 use Yii;
 use yii\bootstrap\Modal;
@@ -33,6 +34,7 @@ class DomainDetailMenu extends \hiqdev\menumanager\Menu
                     ],
                 ]),
                 'encode' => false,
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true),
             ],
             [
                 'visible' => $this->model->canRenew() && Yii::$app->user->can('domain.pay'),
@@ -54,6 +56,7 @@ class DomainDetailMenu extends \hiqdev\menumanager\Menu
                         'pjax' => '0',
                     ]
                 ],
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true),
             ],
         ]);
 
