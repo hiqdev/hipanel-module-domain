@@ -6,7 +6,7 @@
 
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\menus\DomainDetailsMenu;
+use hipanel\modules\domain\menus\DomainDetailMenu;
 use hiqdev\menumanager\widgets\DetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
@@ -68,7 +68,7 @@ CSS
         </p>
 
         <div class="profile-usermenu">
-            <?= DomainDetailsMenu::create(['model' => $model])->render(DetailMenu::class) ?>
+            <?= DomainDetailMenu::create(['model' => $model])->render(DetailMenu::class) ?>
         </div>
         <?php Box::end() ?>
     </div>
