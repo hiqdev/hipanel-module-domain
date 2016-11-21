@@ -2,7 +2,6 @@
 
 namespace hipanel\modules\domain\menus;
 
-use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\AjaxModal;
 use Yii;
 use yii\bootstrap\Modal;
@@ -27,7 +26,7 @@ class DomainDetailsMenu extends \hiqdev\menumanager\Menu
                     'actionUrl' => ['domain-push-modal', 'id' => $this->model->id],
                     'size' => Modal::SIZE_DEFAULT,
                     'toggleButton' => [
-                        'label' => '<i class="fa fa-fw fa-paper-plane-o"></i>' . Yii::t('hipanel:domain', 'Push domain'),
+                        'label' => '<i class="fa fa-fw fa-exchange"></i>' . Yii::t('hipanel:domain', 'Push domain'),
                         'class' => 'clickable',
                         'data-pjax' => 0,
                         'tag' => 'a',
@@ -38,7 +37,7 @@ class DomainDetailsMenu extends \hiqdev\menumanager\Menu
             [
                 'visible' => $this->model->canRenew() && Yii::$app->user->can('domain.pay'),
                 'label' => Yii::t('hipanel:domain', 'Renew domain'),
-                'icon' => 'forward',
+                'icon' => 'fa-forward',
                 'url' => ['add-to-cart-renewal', 'model_id' => $this->model->id],
                 'linkOptions' => [
                     'data-pjax' => 0,
@@ -46,12 +45,13 @@ class DomainDetailsMenu extends \hiqdev\menumanager\Menu
             ],
             [
                 'label' => Yii::t('hipanel', 'Delete'),
+                'icon' => 'fa-trash',
                 'url' => ['@domain/delete', 'id' => $this->model->id],
                 'linkOptions' => [
                     'data' => [
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                     ]
                 ],
             ],

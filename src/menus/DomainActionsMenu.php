@@ -15,25 +15,28 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
 
         return [
             [
-                'icon' => 'globe',
+                'icon' => 'fa-paper-plane',
                 'label' => Yii::t('hipanel:domain', 'Go to site {link}', ['link' => \yii\helpers\StringHelper::truncate($url, 15)]),
                 'url' => $url,
+                'encode' => false,
                 'linkOptions' => [
                     'target' => '_blank',
                 ],
             ],
             'view' => [
-                'label' => '<i class="fa fa-fw fa-info"></i> ' . Yii::t('hipanel', 'View'),
+                'label' => Yii::t('hipanel', 'View'),
+                'icon' => 'fa-info',
                 'url' => ['@domain/view', 'id' => $this->model->id],
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-envelope-o"></i> ' . Yii::t('hipanel:domain', 'Send FOA again'),
+                'label' => Yii::t('hipanel:domain', 'Send FOA again'),
+                'icon' => 'fa-envelope-o',
                 'url' => ['@domain/notify-transfer-in'],
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'notify-transfer-in',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -44,19 +47,20 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'visible' => $this->model->state === 'preincoming',
             ],
             [
-                'label' => '<i class=""></i> ' . Yii::t('hipanel:domain', 'approve-preincoming'),
+                'label' => Yii::t('hipanel:domain', 'approve-preincoming'),
                 'url' => '#',
                 'visible' => false,
                 'encode' => false,
             ],
             [
-                'label' => '<i class=""></i> ' . Yii::t('hipanel:domain', 'reject-preincoming'),
+                'label' => Yii::t('hipanel:domain', 'reject-preincoming'),
                 'url' => '#',
                 'visible' => false,
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-exclamation-circle"></i> ' . Yii::t('hipanel:domain', 'Approve transfer'),
+                'label' => Yii::t('hipanel:domain', 'Approve transfer'),
+                'icon' => 'fa-exclamation-circle',
                 'url' => ['@domain/approve-transfer'],
                 'visible' => ($this->model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
@@ -64,7 +68,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                     'data' => [
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'approve-transfer',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -73,19 +77,21 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 ],
             ],
             [
-                'label' => '<i class="fa fa-fw fa-anchor"></i> ' . Yii::t('hipanel:domain', 'Reject transfer'),
+                'label' => Yii::t('hipanel:domain', 'Reject transfer'),
+                'icon' => 'fa-anchor',
                 'url' => ['reject-transfer', 'id' => $this->model->id],
                 'visible' => $this->model->state === 'outgoing',
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-exclamation-triangle"></i> ' . Yii::t('hipanel:domain', 'Cancel transfer'),
+                'label' => Yii::t('hipanel:domain', 'Cancel transfer'),
+                'icon' => 'fa-exclamation-triangle',
                 'url' => ['@domain/cancel-transfer'],
                 'linkOptions' => [
                     'data' => [
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'cancel-transfer',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -96,13 +102,15 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-refresh"></i> ' . Yii::t('hipanel:domain', 'Synchronize contacts'),
+                'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
+                'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
                 'visible' => (in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-trash-o"></i> ' . Yii::t('hipanel:domain', 'Delete by AGP'),
+                'label' => Yii::t('hipanel:domain', 'Delete by AGP'),
+                'icon' => 'fa-trash-o',
                 'url' => ['@domain/delete-agp'],
                 'linkOptions' => [
                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
@@ -120,13 +128,14 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-lock"></i> ' . Yii::t('hipanel:domain', 'Freeze domain'),
+                'label' => Yii::t('hipanel:domain', 'Freeze domain'),
+                'icon' => 'fa-lock',
                 'url' => ['@domain/enable-freeze'],
                 'visible' => (!$this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'freeze',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -136,12 +145,13 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-unlock"></i> ' . Yii::t('hipanel:domain', 'Unfreeze domain'),
+                'label' => Yii::t('hipanel:domain', 'Unfreeze domain'),
+                'icon' => 'fa-unlock',
                 'url' => ['@domain/disable-freeze'],
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'unfreeze',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -152,12 +162,13 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-bomb"></i> ' . Yii::t('hipanel:domain', 'Enable Hold'),
+                'label' => Yii::t('hipanel:domain', 'Enable Hold'),
+                'icon' => 'fa-ban',
                 'url' => ['@domain/enable-hold'],
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'hold',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -168,13 +179,14 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-link"></i> ' . Yii::t('hipanel:domain', 'Disable Hold'),
+                'label' => Yii::t('hipanel:domain', 'Disable Hold'),
+                'icon' => 'fa-link',
                 'url' => ['@domain/disable-hold'],
                 'visible' => ($this->model->is_holded && in_array($this->model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
-                        'data-pjax' => '0',
+                        'pjax' => '0',
                         'form' => 'unhold',
                         'params' => [
                             'Domain[id]' => $this->model->id,
@@ -184,7 +196,8 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => '<i class="fa fa-fw fa-globe"></i> ' . Yii::t('hipanel:domain', 'Manage DNS'),
+                'label' => Yii::t('hipanel:domain', 'Manage DNS'),
+                'icon' => 'fa-globe',
                 'url' => ['@dns/zone/view', 'id' => $this->model->id],
                 'visible' => (Yii::getAlias('@dns', false)),
                 'encode' => false,
