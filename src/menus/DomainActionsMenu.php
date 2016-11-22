@@ -4,6 +4,7 @@ namespace hipanel\modules\domain\menus;
 
 use hipanel\modules\domain\models\Domain;
 use Yii;
+use yii\helpers\StringHelper;
 
 class DomainActionsMenu extends \hiqdev\menumanager\Menu
 {
@@ -16,7 +17,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
         return [
             [
                 'icon' => 'fa-paper-plane',
-                'label' => Yii::t('hipanel:domain', 'Go to site {link}', ['link' => \yii\helpers\StringHelper::truncate($url, 15)]),
+                'label' => Yii::t('hipanel:domain', 'Go to site {link}', ['link' => StringHelper::truncate($url, 15)]),
                 'url' => $url,
                 'encode' => false,
                 'linkOptions' => [
@@ -135,72 +136,52 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => Yii::t('hipanel:domain', 'Freeze domain'),
-                'icon' => 'fa-lock',
-                'url' => ['@domain/enable-freeze'],
-                'visible' => (!$this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'label' => $this->model->isFreezed() ? Yii::t('hipanel:domain', 'Freeze domain') : Yii::t('hipanel:domain', 'Unfreeze domain'),
+                'url' => $this->model->isFreezed() ? ['@domain/enable-freeze'] : ['@domain/disable-freeze'],
+                'icon' => 'fa-snowflake-o',
+                'visible' => Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'pjax' => '0',
-                        'form' => 'freeze',
+                        'form' => 'freeze-' . $this->model->id,
                         'params' => [
                             'Domain[id]' => $this->model->id,
                         ],
                     ],
                 ],
-                'encode' => false,
             ],
             [
-                'label' => Yii::t('hipanel:domain', 'Unfreeze domain'),
-                'icon' => 'fa-unlock',
-                'url' => ['@domain/disable-freeze'],
+                'label' => !$this->model->isWPFreezed() ? Yii::t('hipanel:domain', 'Enable WHOIS-protect freeze') : Yii::t('hipanel:domain', 'Disable WHOIS-protect freeze'),
+                'url' => !$this->model->isWPFreezed() ? ['enable-w-p-freeze'] : ['disable-w-p-freeze'],
+                'icon' => 'fa-snowflake-o',
+                'visible' => Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'pjax' => '0',
-                        'form' => 'unfreeze',
+                        'form' => 'freeze-w-p-' . $this->model->id,
                         'params' => [
                             'Domain[id]' => $this->model->id,
                         ],
                     ],
                 ],
-                'visible' => ($this->model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
-                'encode' => false,
             ],
             [
-                'label' => Yii::t('hipanel:domain', 'Enable Hold'),
-                'icon' => 'fa-ban',
-                'url' => ['@domain/enable-hold'],
+                'label' => !$this->model->isHolded() ? Yii::t('hipanel:domain', 'Enable Hold') : Yii::t('hipanel:domain', 'Disable Hold'),
+                'url' => !$this->model->isHolded() ? ['@domain/enable-hold'] : ['@domain/disable-hold'],
+                'icon' => !$this->model->isHolded() ? 'fa-ban' : 'fa-link',
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
                         'pjax' => '0',
-                        'form' => 'hold',
+                        'form' => 'hold-' . $this->model->id,
                         'params' => [
                             'Domain[id]' => $this->model->id,
                         ],
                     ],
                 ],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && !($this->model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
-                'encode' => false,
-            ],
-            [
-                'label' => Yii::t('hipanel:domain', 'Disable Hold'),
-                'icon' => 'fa-link',
-                'url' => ['@domain/disable-hold'],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && ($this->model->is_holded && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
-                'linkOptions' => [
-                    'data' => [
-                        'method' => 'post',
-                        'pjax' => '0',
-                        'form' => 'unhold',
-                        'params' => [
-                            'Domain[id]' => $this->model->id,
-                        ],
-                    ],
-                ],
-                'encode' => false,
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Manage DNS'),
