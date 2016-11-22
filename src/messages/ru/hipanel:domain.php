@@ -147,8 +147,8 @@ return [
     'Lock was disabled' => 'Защита от трансфера отключена',
     'Freeze was enabled' => 'Заморозка включена',
     'Freeze was disabled' => 'Заморозка выключена',
-    'WP freeze was enabled' => 'WP заморозка включена',
-    'WP freeze was disabled' => 'WP заморозка выключена',
+    'WP Freeze Enabled' => 'WP заморозка включена',
+    'WP Freeze Disabled' => 'WP заморозка выключена',
 
     'Enable autorenew' => 'Вкл. автопродление',
     'Disable autorenew' => 'Откл. автопродление',
@@ -213,4 +213,6 @@ return [
 
     'Froze' => 'Заморожен',
     'Held' => 'Не делегируется',
+    'Enable WHOIS-protect freeze' => 'Зафризить WHOIS-protect',
+    'Disable WHOIS-protect freeze' => 'Расфризить WHOIS-protect',
 ];
