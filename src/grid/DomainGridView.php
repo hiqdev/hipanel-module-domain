@@ -22,6 +22,7 @@ use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\menumanager\MenuColumn;
+use hiqdev\menumanager\widgets\Menu;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -38,15 +39,20 @@ class DomainGridView extends BoxedGridView
                 'filterAttribute' => 'domain_like',
             ],
             'state' => [
-//                'class'         => RefColumn::class,
-//                'gtype'         => 'state,domain',
                 'format' => 'raw',
                 'filter' => function ($grid, $model, $attribute) {
                     return Html::activeDropDownList($model, $attribute, Domain::stateOptions(), ['prompt' => '--', 'class' => 'form-control']);
                 },
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'value' => function ($model) {
-                    return State::widget(compact('model'));
+                    $out = State::widget(compact('model'));
+                    if ($model->is_freezed || $model->is_holded) {
+                        $out .= '<br>';
+                        $out .= $model->is_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
+                        $out .= $model->is_holded ? ' ' . Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
+                    }
+
+                    return $out;
                 },
             ],
             'whois_protected' => [
