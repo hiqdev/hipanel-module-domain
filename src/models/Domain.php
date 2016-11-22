@@ -89,6 +89,8 @@ class Domain extends \hipanel\base\Model
                 'push-with-pincode',
                 'enable-hold',
                 'disable-hold',
+                'enable-w-p-freeze',
+                'disable-w-p-freeze',
             ]],
 
             // Check domain
@@ -213,12 +215,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return $this->is_freezed;
+        return (boolean) $this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return $this->wp_freezed;
+        return (boolean) $this->wp_freezed;
+    }
+
+    public function isHolded()
+    {
+        return (boolean) $this->is_holded;
     }
 
     public function scenarioCommands()
