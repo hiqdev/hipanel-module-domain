@@ -210,4 +210,7 @@ return [
     'Set IPs' => 'Сменить IP',
     'What is a NS-server and how it works' => 'Что такое NS-сервер и как он работает',
     'This domain is available for registration' => 'Этот домен доступен для регистрации',
+
+    'Froze' => 'Заморожен',
+    'Held' => 'Не делегируется',
 ];
