@@ -93,7 +93,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
             $diff = $interval->format('%a') - $minDays;
             if ($diff > 0) {
                 $date = Yii::$app->formatter->asDate((new DateTime())->add(new \DateInterval("P{$diff}D")));
-                $this->addError('id', Yii::t('hipanel:domain', 'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})', ['zone' => $this->getZone(), 'min' => $minDays, 'date' => $date, 'days' => $diff, 'domain' => $this->name]));
+                $this->addError('id', Yii::t('hipanel:domain', 'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})', ['zone' => (string) $this->getZone(), 'min' => (int) $minDays, 'date' => (string) $date, 'days' => (int) $diff, 'domain' => (string) $this->name]));
 
                 return false;
             }
