@@ -34,7 +34,7 @@ class DomainDetailMenu extends \hiqdev\menumanager\Menu
                     ],
                 ]),
                 'encode' => false,
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true),
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true),
             ],
             [
                 'visible' => $this->model->canRenew() && Yii::$app->user->can('domain.pay'),
@@ -56,7 +56,7 @@ class DomainDetailMenu extends \hiqdev\menumanager\Menu
                         'pjax' => '0',
                     ]
                 ],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true),
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true),
             ],
         ]);
 

@@ -105,7 +105,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
                 'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
-                'visible' => (!in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true) && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => (!in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'encode' => false,
             ],
             [
@@ -182,14 +182,14 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                         ],
                     ],
                 ],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true) && !($this->model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && !($this->model->is_holded) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
                 'encode' => false,
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Disable Hold'),
                 'icon' => 'fa-link',
                 'url' => ['@domain/disable-hold'],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ру', 'су', 'рф'], true) && ($this->model->is_holded && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && ($this->model->is_holded && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
