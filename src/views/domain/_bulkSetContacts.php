@@ -7,7 +7,7 @@ use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$hasUnchangeableZones = [];
+$unchangeableZones = [];
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'bulk-set-contact-form',
@@ -23,9 +23,9 @@ $hasUnchangeableZones = [];
         <?= ArraySpoiler::widget([
             'data' => $models,
             'visibleCount' => count($models),
-            'formatter' => function ($model) use (&$hasUnchangeableZones) {
+            'formatter' => function ($model) use (&$unchangeableZones) {
                 if (!$model->isContactChangeable()) {
-                    $hasUnchangeableZones[] = $model->domain;
+                    $unchangeableZones[] = Html::tag('b', $model->domain);
                 }
                 return $model->domain;
             },
@@ -34,13 +34,13 @@ $hasUnchangeableZones = [];
     </div>
 </div>
 
-<?php if (!empty($hasUnchangeableZones)) : ?>
+<?php if (!empty($unchangeableZones)) : ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-warning" role="alert">
                 <?= Yii::t('hipanel:domain', 'Selected domains contain areas which can not be changed contact details:') ?>
                 <br>
-                <?= implode(', ', $hasUnchangeableZones) ?>
+                <?= implode(', ', $unchangeableZones) ?>
             </div>
         </div>
     </div>
