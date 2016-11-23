@@ -34,12 +34,17 @@ class Domain extends \hipanel\base\Model
 
     public $authCode;
 
-    public static $contactOptions = [
-        'registrant',
-        'admin',
-        'tech',
-        'billing',
-    ];
+    public static $contactOptions = ['registrant', 'admin', 'tech', 'billing'];
+
+    public static function contactOptionsWithLabel()
+    {
+        return [
+            'registrant' => Yii::t('hipanel:domain', 'Registrant contact'),
+            'admin' => Yii::t('hipanel:domain', 'Admin contact'),
+            'tech' => Yii::t('hipanel:domain', 'Tech contact'),
+            'billing' => Yii::t('hipanel:domain', 'Billing contact'),
+        ];
+    }
 
     public static function stateOptions()
     {
@@ -57,26 +62,26 @@ class Domain extends \hipanel\base\Model
     public function rules()
     {
         return [
-            [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'],                      'integer'],
-            [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'],                                  'safe'],
-            [['seller', 'seller_name', 'client', 'client_name'],                                                        'safe'],
-            [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'],  'date'],
-            [['registered', 'operated'],                                                                                'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'],          'boolean'],
-            [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'],                                 'boolean'],
-            [['foa_sent_to'],                                                                                           'email'],
-            [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'],                                             'safe'],
-            [['registrant', 'admin', 'tech', 'billing'],                                                                'integer'],
-            [['block', 'epp_client_id', 'nameservers', 'nsips'],                                                        'safe'],
-            [['note'],                                    'safe',     'on' => ['set-note', 'default']],
+            [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'], 'integer'],
+            [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'], 'safe'],
+            [['seller', 'seller_name', 'client', 'client_name'], 'safe'],
+            [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date'],
+            [['registered', 'operated'], 'date'],
+            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'], 'boolean'],
+            [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
+            [['foa_sent_to'], 'email'],
+            [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
+            [['registrant', 'admin', 'tech', 'billing'], 'integer'],
+            [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
+            [['note'], 'safe', 'on' => ['set-note', 'default']],
 
-            [['registrant', 'admin', 'tech', 'billing'],           'required', 'on' => ['set-contacts']],
+            [['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['set-contacts']],
 
-            [['enable'],                                        'safe',     'on' => ['set-lock', 'set-whois-protect']],
-            [['domain', 'autorenewal'],                   'safe',     'on' => 'set-autorenewal'],
-            [['domain', 'whois_protected'],               'safe',     'on' => 'set-whois-protect'],
-            [['domain', 'is_secured'],                    'safe',     'on' => 'set-lock'],
-            [['domain'],                                  'safe',     'on' => ['sync', 'only-object']],
+            [['enable'], 'safe', 'on' => ['set-lock', 'set-whois-protect']],
+            [['domain', 'autorenewal'], 'safe', 'on' => 'set-autorenewal'],
+            [['domain', 'whois_protected'], 'safe', 'on' => 'set-whois-protect'],
+            [['domain', 'is_secured'], 'safe', 'on' => 'set-lock'],
+            [['domain'], 'safe', 'on' => ['sync', 'only-object']],
             [['id'], 'required', 'on' => [
                 'enable-freeze',
                 'disable-freeze',
@@ -132,7 +137,7 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
-            [['domain', 'nameservers', 'nsips'],                   'safe',     'on' => 'set-nss'],
+            [['domain', 'nameservers', 'nsips'], 'safe', 'on' => 'set-nss'],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
@@ -164,41 +169,41 @@ class Domain extends \hipanel\base\Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
-            'epp_client_id'         => Yii::t('hipanel:domain', 'EPP client ID'),
-            'remoteid'              => Yii::t('hipanel', 'Remote ID'),
-            'domain'                => Yii::t('hipanel', 'Domain name'),
-            'domain_like'           => Yii::t('hipanel', 'Domain name'),
-            'note'                  => Yii::t('hipanel', 'Notes'),
-            'nameservers'           => Yii::t('hipanel', 'Name Servers'),
-            'transfer_date'         => Yii::t('hipanel:domain', 'Transfered'),
-            'expiration_date'       => Yii::t('hipanel:domain', 'System Expiration Time'),
-            'expires'               => Yii::t('hipanel:domain', 'Paid till'),
-            'since'                 => Yii::t('hipanel:domain', 'Since Time'),
-            'lastop'                => Yii::t('hipanel:domain', 'Last Operation'),
-            'operated'              => Yii::t('hipanel:domain', 'Last Operation Time'),
-            'whois_protected'       => Yii::t('hipanel:domain', 'WHOIS'),
-            'is_secured'            => Yii::t('hipanel:domain', 'Protection'),
-            'is_holded'             => Yii::t('hipanel:domain', 'On hold'),
-            'is_freezed'            => Yii::t('hipanel:domain', 'Domain changes freezed'),
-            'wp_freezed'            => Yii::t('hipanel:domain', 'Domain WHOIS freezed'),
-            'foa_sent_to'           => Yii::t('hipanel:domain', 'FOA was sent to'),
-            'is_premium'            => Yii::t('hipanel:domain', 'Is premium'),
-            'prem_expires'          => Yii::t('hipanel:domain', 'Premium expires'),
-            'prem_daysleft'         => Yii::t('hipanel:domain', 'Premium days left'),
-            'premium_autorenewal'   => Yii::t('hipanel:domain', 'Premium autorenewal'),
-            'url_fwval'             => Yii::t('hipanel:domain', 'Url forwarding'),
-            'mailval'               => Yii::t('hipanel:domain', 'Mail'),
-            'parkval'               => Yii::t('hipanel:domain', 'Parking'),
-            'daysleft'              => Yii::t('hipanel:domain', 'Days left'),
-            'is_expired'            => Yii::t('hipanel:domain', 'Is expired'),
-            'expires_soon'          => Yii::t('hipanel:domain', 'Expires soon'),
+            'epp_client_id' => Yii::t('hipanel:domain', 'EPP client ID'),
+            'remoteid' => Yii::t('hipanel', 'Remote ID'),
+            'domain' => Yii::t('hipanel', 'Domain name'),
+            'domain_like' => Yii::t('hipanel', 'Domain name'),
+            'note' => Yii::t('hipanel', 'Notes'),
+            'nameservers' => Yii::t('hipanel', 'Name Servers'),
+            'transfer_date' => Yii::t('hipanel:domain', 'Transfered'),
+            'expiration_date' => Yii::t('hipanel:domain', 'System Expiration Time'),
+            'expires' => Yii::t('hipanel:domain', 'Paid till'),
+            'since' => Yii::t('hipanel:domain', 'Since Time'),
+            'lastop' => Yii::t('hipanel:domain', 'Last Operation'),
+            'operated' => Yii::t('hipanel:domain', 'Last Operation Time'),
+            'whois_protected' => Yii::t('hipanel:domain', 'WHOIS'),
+            'is_secured' => Yii::t('hipanel:domain', 'Protection'),
+            'is_holded' => Yii::t('hipanel:domain', 'On hold'),
+            'is_freezed' => Yii::t('hipanel:domain', 'Domain changes freezed'),
+            'wp_freezed' => Yii::t('hipanel:domain', 'Domain WHOIS freezed'),
+            'foa_sent_to' => Yii::t('hipanel:domain', 'FOA was sent to'),
+            'is_premium' => Yii::t('hipanel:domain', 'Is premium'),
+            'prem_expires' => Yii::t('hipanel:domain', 'Premium expires'),
+            'prem_daysleft' => Yii::t('hipanel:domain', 'Premium days left'),
+            'premium_autorenewal' => Yii::t('hipanel:domain', 'Premium autorenewal'),
+            'url_fwval' => Yii::t('hipanel:domain', 'Url forwarding'),
+            'mailval' => Yii::t('hipanel:domain', 'Mail'),
+            'parkval' => Yii::t('hipanel:domain', 'Parking'),
+            'daysleft' => Yii::t('hipanel:domain', 'Days left'),
+            'is_expired' => Yii::t('hipanel:domain', 'Is expired'),
+            'expires_soon' => Yii::t('hipanel:domain', 'Expires soon'),
 
             // domain transfer
-            'password'              => Yii::t('hipanel:domain', 'Transfer (EPP) password'),
+            'password' => Yii::t('hipanel:domain', 'Transfer (EPP) password'),
 
             // domain transfer
-            'receiver'              => Yii::t('hipanel:domain', 'Receiver'),
-            'pincode'               => Yii::t('hipanel:domain', 'Pin code'),
+            'receiver' => Yii::t('hipanel:domain', 'Receiver'),
+            'pincode' => Yii::t('hipanel:domain', 'Pin code'),
 
             // contacts
             'registrant' => Yii::t('hipanel:client', 'Registrant contact'),
@@ -215,17 +220,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return (boolean) $this->is_freezed;
+        return (boolean)$this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return (boolean) $this->wp_freezed;
+        return (boolean)$this->wp_freezed;
     }
 
     public function isHolded()
     {
-        return (boolean) $this->is_holded;
+        return (boolean)$this->is_holded;
     }
 
     public function scenarioCommands()
@@ -238,7 +243,7 @@ class Domain extends \hipanel\base\Model
     public static function isDomainOwner($model)
     {
         return Yii::$app->user->is($model->client_id)
-             || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
+        || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
     }
 
     public static function notDomainOwner($model)
@@ -470,5 +475,30 @@ class Domain extends \hipanel\base\Model
     public function canRenew()
     {
         return in_array($this->state, [static::STATE_OK, static::STATE_EXPIRED], true);
+    }
+
+    public function isContactChangeable()
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function isRenewable()
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function isSynchronizable()
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function isPushable()
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function isRussianZones()
+    {
+        return in_array(self::getZone($this->domain), ['ru', 'su', 'рф'], true);
     }
 }
