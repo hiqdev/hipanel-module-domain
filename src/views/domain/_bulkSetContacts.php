@@ -38,7 +38,7 @@ $unchangeableZones = [];
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-warning" role="alert">
-                <?= Yii::t('hipanel:domain', 'Selected domains contain areas which can not be changed contact details:') ?>
+                <?= Yii::t('hipanel:domain', 'Selected domains contain zones which can not be changed contact details:') ?>
                 <br>
                 <?= implode(', ', $unchangeableZones) ?>
             </div>
