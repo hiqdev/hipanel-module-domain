@@ -19,13 +19,15 @@ use yii\widgets\DetailView;
             <div class="col-md-6">
                 <div class="pull-right btn-group" style="padding-top:10px">
                     <?= Html::a(Yii::t('hipanel', 'Details'), ['@contact/view', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
-                    <?= Html::a(Yii::t('hipanel', 'Change'), [
-                        '@contact/change-contact',
-                        'contactId' => $contact['id'],
-                        'contactType' => $contactType,
-                        'domainId' => $domainId,
-                        'domainName' => $domainName,
-                    ], ['class' => 'btn btn-default btn-xs']) ?>
+                    <?php
+//                    Html::a(Yii::t('hipanel', 'Change'), [
+//                        '@contact/change-contact',
+//                        'contactId' => $contact['id'],
+//                        'contactType' => $contactType,
+//                        'domainId' => $domainId,
+//                        'domainName' => $domainName,
+//                    ], ['class' => 'btn btn-default btn-xs'])
+                    ?>
                 </div>
             </div>
         </div>
