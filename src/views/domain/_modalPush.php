@@ -11,7 +11,7 @@ use yii\helpers\Html;
  * @var Domain[] $models
  * @var bool $hasPincode
  */
-
+$unPushable = [];
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -21,46 +21,62 @@ use yii\helpers\Html;
     'validationUrl' => Url::toRoute(['validate-push-form', 'scenario' => $hasPincode ? 'push-with-pincode' : 'push']),
 ]) ?>
 
-    <div class="alert alert-info alert-dismissible fade in" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-        </button>
+<div class="alert alert-info alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+    </button>
 
-        <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
+    <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
 
-        <p>
-            <?= Yii::t('hipanel:domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
-            <?php if ($hasPincode) : ?>
-                <?= Yii::t('hipanel', 'To confirm this operation please enter your PIN code') ?>
-            <?php endif; ?>
-        </p>
+    <p>
+        <?= Yii::t('hipanel:domain', 'This operation pushes the domain to another user irrevocably. You can not bring it back.') ?>
+        <?php if ($hasPincode) : ?>
+            <?= Yii::t('hipanel', 'To confirm this operation please enter your PIN code') ?>
+        <?php endif; ?>
+    </p>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
+    <div class="panel-body">
+        <?= ArraySpoiler::widget([
+            'data' => $models,
+            'visibleCount' => count($models),
+            'formatter' => function ($model) use (&$unPushable) {
+                if (!$model->isPushable()) {
+                    $unPushable[] = Html::tag('b', $model->domain);
+                }
+                return $model->domain;
+            },
+            'delimiter' => ',&nbsp; ',
+        ]); ?>
     </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
-        <div class="panel-body">
-            <?= ArraySpoiler::widget([
-                'data' => $models,
-                'visibleCount' => count($models),
-                'formatter' => function ($model) {
-                    return $model->domain;
-                },
-                'delimiter' => ',&nbsp; ',
-            ]); ?>
+</div>
+<?php if (!empty($unPushable)) : ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning" role="alert">
+                <?= Yii::t('hipanel:domain', 'Selected domains contain items which can not be Push:') ?>
+                <br>
+                <?= implode(', ', $unPushable) ?>
+            </div>
         </div>
     </div>
+<?php endif; ?>
 
-    <?php foreach ($models as $model) : ?>
+<?php foreach ($models as $model) : ?>
+    <?php if ($model->isPushable()) : ?>
         <?= Html::activeHiddenInput($model, "[$model->id]id") ?>
         <?= Html::activeHiddenInput($model, "[$model->id]domain") ?>
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
-    <?php endforeach; ?>
-
-    <?= $form->field($model, 'receiver')->textInput(['autocomplete' => 'off']) ?>
-
-    <?php if ($hasPincode) : ?>
-        <?= $form->field($model, 'pincode')->input('password', ['autocomplete' => 'off']) ?>
     <?php endif; ?>
-    <hr>
-    <?= Html::submitButton(Yii::t('hipanel:domain', 'Push'), ['class' => 'btn btn-success']) ?>
+<?php endforeach; ?>
+
+<?= $form->field($model, 'receiver')->textInput(['autocomplete' => 'off']) ?>
+
+<?php if ($hasPincode) : ?>
+    <?= $form->field($model, 'pincode')->input('password', ['autocomplete' => 'off']) ?>
+<?php endif; ?>
+<hr>
+<?= Html::submitButton(Yii::t('hipanel:domain', 'Push'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>
