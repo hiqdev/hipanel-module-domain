@@ -222,5 +222,6 @@ return [
     'Tech contact' => 'Технический контакт',
     'Billing contact' => 'Биллинг контакт',
     'Can not change the contact information for this zone.' => 'Невозможно изменить контактные данные для этой зоны.',
-    'Selected domains contain areas which can not be changed contact details:' => 'Выбранные домены содержат зоны которым невозможно изменить контактные данные:',
+    'Selected domains contain zones which can not be changed contact details:' => 'Выбранные домены содержат зоны которым невозможно изменить контактные данные:',
+    'Selected domains contain items which can not be Push:' => 'Из списка выбранных доменов не все возможно Передать:',
 ];
