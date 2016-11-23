@@ -215,4 +215,11 @@ return [
     'Held' => 'Не делегируется',
     'Enable WHOIS-protect freeze' => 'Зафризить WHOIS-protect',
     'Disable WHOIS-protect freeze' => 'Расфризить WHOIS-protect',
+
+    // Contacts
+    'Registrant contact' => 'Регистрант',
+    'Admin contact' => 'Административный контакт',
+    'Tech contact' => 'Технический контакт',
+    'Billing contact' => 'Биллинг контакт',
+    'Can not change the contact information for this zone.' => 'Невозможно изменить контактные данные для этой зоны.',
 ];
