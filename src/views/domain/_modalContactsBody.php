@@ -85,16 +85,15 @@ JS
 <?= Html::beginForm(Url::toRoute('set-contacts'), 'POST', ['id' => 'set-contacts-form', 'class' => 'form-horizontal']) ?>
 
 <?php foreach ($domainContacts as $k => $v) : ?>
-    <?php if (Domain::getZone($v['domain']) === 'ru' || Domain::getZone($v['domain']) === 'su') : ?>
-        <?php continue ?>
+    <?php if (!in_array(Domain::getZone($v['domain']), ['ru', 'su', 'рф'])) : ?>
+        <?= Html::hiddenInput('id[]', $k); ?>
     <?php endif ?>
-    <?= Html::hiddenInput('id[]', $k); ?>
 <?php endforeach ?>
 
-<?php foreach (Domain::$contactOptions as $item) : ?>
+<?php foreach (Domain::contactOptionsWithLabel() as $item => $label) : ?>
 <div class="form-group">
-    <?= Html::label(ucfirst($item), $item, ['class' => 'col-sm-2 control-label']); ?>
-    <div class="col-sm-10">
+    <?= Html::label($label, $item, ['class' => 'col-sm-4 control-label']); ?>
+    <div class="col-sm-8">
         <?= Html::dropDownList($item, count($domainContacts) < 2 ? reset($domainContacts)[$item] : null, $modelContactInfo, ['prompt' => '--', 'id' => 'modal_' . $item, 'class' => 'form-control']); ?>
         <p class="help-block help-block-error"></p>
     </div>
