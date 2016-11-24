@@ -28,6 +28,7 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\client\models\Client;
 use hipanel\modules\client\models\Contact;
+use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
@@ -419,8 +420,8 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Autorenewal
             'set-autorenewal' => [
-                'class' => SmartPerformAction::class,
-                'success' => Yii::t('hipanel:domain', 'Autorenewal has been change'),
+                'class' => DomainOptionSwitcherAction::class,
+                'success' => Yii::t('hipanel:domain', 'Autorenewal has been changed'),
             ],
             'enable-autorenewal' => [
                 'class' => SmartPerformAction::class,
@@ -448,7 +449,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Whois protect
             'set-whois-protect' => [
-                'class' => SmartPerformAction::class,
+                'class' => DomainOptionSwitcherAction::class,
                 'success' => Yii::t('hipanel:domain', 'WHOIS protect is changed'),
             ],
             'enable-whois-protect' => [
@@ -477,7 +478,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             // Lock
             'set-lock' => [
-                'class' => SmartPerformAction::class,
+                'class' => DomainOptionSwitcherAction::class,
                 'success' => Yii::t('hipanel:domain', 'Lock was changed'),
             ],
             'enable-lock' => [
@@ -600,8 +601,12 @@ class DomainController extends \hipanel\base\CrudController
     public function actionModalContactsBody()
     {
         $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
+        $domainContactModels = [];
         if ($ids) {
             $domainContacts = Domain::perform('GetContacts', ArrayHelper::make_sub($ids, 'id'), true);
+            foreach ($domainContacts as $item) {
+                $domainContactModels[] = Domain::find()->populate([$item]);
+            }
             $modelContactInfo = Contact::perform('GetList', ['domain_ids' => $ids, 'limit' => 1000], true);
 
             return $this->renderAjax('_modalContactsBody', [

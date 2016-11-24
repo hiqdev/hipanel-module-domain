@@ -20,6 +20,7 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
+use hiqdev\bootstrap_switch\BootstrapSwitchAsset;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\menumanager\MenuColumn;
 use hiqdev\menumanager\widgets\Menu;
@@ -57,6 +58,7 @@ class DomainGridView extends BoxedGridView
             ],
             'whois_protected' => [
                 'class' => BootstrapSwitchColumn::class,
+                'attribute' => 'whois_protected',
                 'filter' => false,
                 'url' => Url::toRoute('set-whois-protect'),
                 'popover' => 'WHOIS protection',
