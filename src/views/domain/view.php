@@ -107,6 +107,7 @@ CSS
                                     return AuthCode::widget(['model' => $model]);
                                 },
                                 'format' => 'raw',
+                                'visible' => !$model->isRussianZones(),
                             ],
                         ],
                     ]) ?>
