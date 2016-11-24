@@ -25,7 +25,7 @@ $unchangeableZones = [];
             'visibleCount' => count($models),
             'formatter' => function ($model) use (&$unchangeableZones) {
                 if (!$model->isContactChangeable()) {
-                    $unchangeableZones[] = Html::tag('b', $model->domain);
+                    $unchangeableZones[] = $model->domain;
                 }
                 return $model->domain;
             },
@@ -35,13 +35,12 @@ $unchangeableZones = [];
 </div>
 
 <?php if (!empty($unchangeableZones)) : ?>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-warning" role="alert">
-                <?= Yii::t('hipanel:domain', 'Selected domains contain zones which can not be changed contact details:') ?>
-                <br>
-                <?= implode(', ', $unchangeableZones) ?>
-            </div>
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <?= Yii::t('hipanel:domain', 'Selected domains contain zones which can not be changed contact details:') ?>
+        </div>
+        <div class="panel-body">
+            <?= implode(', ', $unchangeableZones) ?>
         </div>
     </div>
 <?php endif; ?>
