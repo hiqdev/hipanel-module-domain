@@ -35,7 +35,7 @@ $unPushable = [];
     </p>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
     <div class="panel-body">
         <?= ArraySpoiler::widget([
@@ -43,7 +43,7 @@ $unPushable = [];
             'visibleCount' => count($models),
             'formatter' => function ($model) use (&$unPushable) {
                 if (!$model->isPushable()) {
-                    $unPushable[] = Html::tag('b', $model->domain);
+                    $unPushable[] =  $model->domain;
                 }
                 return $model->domain;
             },
@@ -52,13 +52,12 @@ $unPushable = [];
     </div>
 </div>
 <?php if (!empty($unPushable)) : ?>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-warning" role="alert">
-                <?= Yii::t('hipanel:domain', 'Selected domains contain items which can not be Push:') ?>
-                <br>
-                <?= implode(', ', $unPushable) ?>
-            </div>
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <?= Yii::t('hipanel:domain', 'Selected domains contain items which can not be Push:') ?>
+        </div>
+        <div class="panel-body">
+            <?= implode(', ', $unPushable) ?>
         </div>
     </div>
 <?php endif; ?>
