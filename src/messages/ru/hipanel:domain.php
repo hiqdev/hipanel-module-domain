@@ -213,8 +213,8 @@ return [
 
     'Froze' => 'Заморожен',
     'Held' => 'Не делегируется',
-    'Enable WHOIS-protect freeze' => 'Зафризить WHOIS-protect',
-    'Disable WHOIS-protect freeze' => 'Расфризить WHOIS-protect',
+    'Enable WHOIS-protect freeze' => 'Заморозить WHOIS-protect',
+    'Disable WHOIS-protect freeze' => 'Разморозить WHOIS-protect',
 
     // Contacts
     'Registrant contact' => 'Регистрант',
