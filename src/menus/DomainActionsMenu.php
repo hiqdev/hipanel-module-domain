@@ -139,7 +139,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => !$this->model->isFreezed() ? Yii::t('hipanel:domain', 'Freeze domain') : Yii::t('hipanel:domain', 'Unfreeze domain'),
                 'url' => !$this->model->isFreezed() ? ['@domain/enable-freeze'] : ['@domain/disable-freeze'],
                 'icon' => 'fa-snowflake-o',
-                'visible' => Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
+                'visible' => !$this->model->isRussianZones() && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
@@ -155,7 +155,7 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'label' => !$this->model->isWPFreezed() ? Yii::t('hipanel:domain', 'Enable WHOIS-protect freeze') : Yii::t('hipanel:domain', 'Disable WHOIS-protect freeze'),
                 'url' => !$this->model->isWPFreezed() ? ['enable-w-p-freeze'] : ['disable-w-p-freeze'],
                 'icon' => 'fa-snowflake-o',
-                'visible' => Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
+                'visible' => !$this->model->isRussianZones() && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
