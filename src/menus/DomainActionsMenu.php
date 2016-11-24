@@ -136,8 +136,8 @@ class DomainActionsMenu extends \hiqdev\menumanager\Menu
                 'encode' => false,
             ],
             [
-                'label' => $this->model->isFreezed() ? Yii::t('hipanel:domain', 'Freeze domain') : Yii::t('hipanel:domain', 'Unfreeze domain'),
-                'url' => $this->model->isFreezed() ? ['@domain/enable-freeze'] : ['@domain/disable-freeze'],
+                'label' => !$this->model->isFreezed() ? Yii::t('hipanel:domain', 'Freeze domain') : Yii::t('hipanel:domain', 'Unfreeze domain'),
+                'url' => !$this->model->isFreezed() ? ['@domain/enable-freeze'] : ['@domain/disable-freeze'],
                 'icon' => 'fa-snowflake-o',
                 'visible' => Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
                 'linkOptions' => [
