@@ -114,4 +114,45 @@ class TransferController extends \hipanel\base\CrudController
             'transferDataProvider' => $transferDataProvider,
         ]);
     }
+
+    public function actionTransfer()
+    {
+        $model = new Domain();
+        $model->scenario = 'transfer';
+        $transferDataProvider = null;
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post($model->formName(), []);
+            if (!empty($post[0]['domains'])) {
+                $domains = [];
+                foreach (StringHelper::explode($post[0]['domains'], "\n") as $line) {
+                    preg_match('/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i', $line, $matches);
+                    if ($matches) {
+                        $domain = strtolower($matches[1]);
+                        $password = $matches[2];
+                        $domains[] = compact('domain', 'password');
+                    }
+                }
+                $post = $domains;
+            }
+
+            $collection = (new Collection(['model' => $model]))->load($post);
+            $models = $collection->getModels();
+
+            foreach ($models as $model) {
+                try {
+                    Domain::perform('CheckTransfer', $model->getAttributes(['domain', 'password']));
+                } catch (ErrorResponseException $e) {
+                    $model->addError('password', $e->getMessage());
+                }
+            }
+
+            Yii::$app->session->setFlash('transferGrid', 1);
+            $transferDataProvider = new ArrayDataProvider(['models' => $models]);
+        }
+
+        return $this->render('index', [
+            'model' => $model,
+            'transferDataProvider' => $transferDataProvider,
+        ]);
+    }
 }
