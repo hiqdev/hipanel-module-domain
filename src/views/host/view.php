@@ -1,9 +1,11 @@
 <?php
 
 use hipanel\modules\domain\grid\HostGridView;
+use hipanel\modules\domain\menus\HostDetailMenu;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
+use hiqdev\menumanager\widgets\DetailMenu;
 use yii\helpers\Html;
 
 $this->title    = Html::encode($model->host);
@@ -32,6 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <br>
                     <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
                 </p>
+                <div class="profile-usermenu">
+                    <?= HostDetailMenu::create(['model' => $model])->render(DetailMenu::class) ?>
+                </div>
             <?php Box::end() ?>
         </div>
 
