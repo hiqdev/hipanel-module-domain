@@ -14,6 +14,6 @@ class CheckCircle extends Widget
 
     public function run()
     {
-        return Html::tag('i', null, ['class' => 'fa fa-fw fa-check-circle ' . (boolval($this->value) ? 'text-muted' : 'text-success')]);
+        return Html::tag('i', null, ['class' => 'fa fa-fw fa-check-circle pull-right ' . (boolval($this->value) ? 'text-muted' : 'text-success')]);
     }
 }

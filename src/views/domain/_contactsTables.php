@@ -1,6 +1,8 @@
 <?php
 
+use hipanel\modules\client\widgets\Verification;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\widgets\CheckCircle;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -13,6 +15,7 @@ use yii\widgets\DetailView;
 
 <?php foreach (Domain::contactOptionsWithLabel() as $contactType => $label) : ?>
     <?php $contact = $domainContactInfo[$contactType] ?>
+    <?php $verificationModel = $contactModels[$contactType] ?>
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-6"><?= Html::tag('h4', Yii::t('hipanel:domain', $label)) ?></div>
@@ -34,11 +37,11 @@ use yii\widgets\DetailView;
         <?= DetailView::widget([
             'model' => $contact,
             'attributes' => [
-                'name:raw:' .           Yii::t('hipanel:client', 'Name'),
-                'email:email:' .        Yii::t('hipanel:client', 'Email'),
-                'organization:raw:' .   Yii::t('hipanel:client', 'Organization'),
-                'voice_phone:raw:' .    Yii::t('hipanel:client', 'Phone'),
-                'fax_phone:raw:' .      Yii::t('hipanel:client', 'Fax'),
+                'name:raw:' .         Yii::t('hipanel:client', 'Name') .         CheckCircle::widget(['value' => $verificationModel->getVerification('name')->isVerified()]),
+                'email:email:' .      Yii::t('hipanel:client', 'Email') .        CheckCircle::widget(['value' => $verificationModel->getVerification('email')->isVerified()]),
+                'organization:raw:' . Yii::t('hipanel:client', 'Organization'),
+                'voice_phone:raw:' .  Yii::t('hipanel:client', 'Phone') .        CheckCircle::widget(['value' => $verificationModel->getVerification('voice_phone')->isVerified()]),
+                'fax_phone:raw:' .    Yii::t('hipanel:client', 'Fax') .          CheckCircle::widget(['value' => $verificationModel->getVerification('fax_phone')->isVerified()]),
             ],
         ]) ?>
     </div>
