@@ -212,10 +212,18 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'view' => [
                 'class' => ViewAction::class,
-                'findOptions' => ['with_nsips' => 1],
+                'on beforePerform' => function ($event) {
+                    $action = $event->sender;
+                    $action->getDataProvider()->query
+                        ->addSelect(['nsips','contacts'])
+                        ->joinWith('registrant')
+                        ->joinWith('admin')
+                        ->joinWith('tech')
+                        ->joinWith('billing')
+                    ;
+                },
                 'data' => function ($action) {
                     return [
-                        'domainContactInfo' => Domain::perform('GetContactsInfo', ['id' => $action->getId()]),
                         'pincodeModel' => new DynamicModel(['pincode']),
                     ];
                 },

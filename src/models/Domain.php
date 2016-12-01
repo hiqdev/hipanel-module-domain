@@ -15,6 +15,7 @@ use Exception;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\client\models\Client;
+use hipanel\modules\client\models\Contact;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\validators\NsValidator;
@@ -71,11 +72,12 @@ class Domain extends \hipanel\base\Model
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
-            [['registrant', 'admin', 'tech', 'billing'], 'integer'],
             [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
 
-            [['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['set-contacts']],
+            //[['registrant', 'admin', 'tech', 'billing'], 'integer'],
+            //[['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['set-contacts']],
+            //[['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['bulk-set-contacts']],
 
             [['enable'], 'safe', 'on' => ['set-lock', 'set-whois-protect']],
             [['domain', 'autorenewal'], 'safe', 'on' => 'set-autorenewal'],
@@ -161,7 +163,6 @@ class Domain extends \hipanel\base\Model
 
             // Bulk set contacts
             [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],
-            [['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['bulk-set-contacts']],
         ];
     }
 
@@ -211,6 +212,31 @@ class Domain extends \hipanel\base\Model
             'tech' => Yii::t('hipanel:client', 'Tech contact'),
             'billing' => Yii::t('hipanel:client', 'Billing contact'),
         ]);
+    }
+
+    public function getContacts()
+    {
+        return $this->hasMany(Contact::class, ['domain_id' => 'id']);
+    }
+
+    public function getRegistrant()
+    {
+        return $this->hasOne(Contact::class, ['domain_id' => 'id']);
+    }
+
+    public function getAdmin()
+    {
+        return $this->hasOne(Contact::class, ['domain_id' => 'id']);
+    }
+
+    public function getTech()
+    {
+        return $this->hasOne(Contact::class, ['domain_id' => 'id']);
+    }
+
+    public function getBilling()
+    {
+        return $this->hasOne(Contact::class, ['domain_id' => 'id']);
     }
 
     public static function getZone($domain)

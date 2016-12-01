@@ -219,7 +219,7 @@ CSS
                             <?= $this->render('_modalContacts', ['model' => $model]) ?>
                         </div>
                         <div id="contacts-tables">
-                            <?= $this->render('_contactsTables', ['domainContactInfo' => $domainContactInfo, 'domainId' => $model->id, 'domainName' => $model->domain]) ?>
+                            <?= $this->render('_contactsTables', ['model' => $model]) ?>
                         </div>
                     </div>
                 </div>
