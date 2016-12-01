@@ -1,9 +1,7 @@
 <?php
 
 use hipanel\modules\client\grid\ContactGridView;
-use hipanel\modules\domain\widgets\CheckCircle;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 ?>
 
@@ -16,13 +14,13 @@ use yii\widgets\DetailView;
                 <div class="pull-right btn-group" style="padding-top:10px">
                     <?= Html::a(Yii::t('hipanel', 'Details'), ['@contact/view', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
                     <?php
-                    //                    Html::a(Yii::t('hipanel', 'Change'), [
-                    //                        '@contact/change-contact',
-                    //                        'contactId' => $contact['id'],
-                    //                        'contactType' => $contactType,
-                    //                        'domainId' => $model->id,
-                    //                        'domainName' => $model->domain,
-                    //                    ], ['class' => 'btn btn-default btn-xs'])
+                    // Html::a(Yii::t('hipanel', 'Change'), [
+                    // @contact/change-contact',
+                    // contactId' => $contact['id'],
+                    // contactType' => $contactType,
+                    // domainId' => $model->id,
+                    // domainName' => $model->domain,
+                    // class' => 'btn btn-default btn-xs'])
                     ?>
                 </div>
             </div>
@@ -31,7 +29,7 @@ use yii\widgets\DetailView;
             'boxed' => false,
             'model' => $contact,
             'columns' => [
-                'name',
+                'name_v',
                 'email_v',
                 'organization',
                 'voice_phone',
