@@ -13,7 +13,7 @@ $unchangeableZones = [];
     'id' => 'bulk-set-contact-form',
     'action' => Url::toRoute('bulk-set-contacts'),
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['validate-set-contacts-form', 'scenario' => 'bulk-set-contacts']),
+//    'validationUrl' => Url::toRoute(['validate-set-contacts-form', 'scenario' => 'bulk-set-contacts']),
 ]) ?>
 
 
@@ -67,6 +67,6 @@ $unchangeableZones = [];
 </div>
 
 <hr>
-<?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+<?= Html::submitButton(Yii::t('hipanel', 'Save'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>

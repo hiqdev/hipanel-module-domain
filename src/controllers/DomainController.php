@@ -113,11 +113,6 @@ class DomainController extends \hipanel\base\CrudController
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad' => true,
             ],
-            'bulk-set-contacts-modal' => [
-                'class' => PrepareBulkAction::class,
-                'scenario' => 'bulk-set-contacts',
-                'view' => '_bulkSetContacts',
-            ],
             'domain-push-modal' => [
                 'class' => PrepareBulkAction::class,
                 'view' => '_modalPush',
@@ -130,21 +125,11 @@ class DomainController extends \hipanel\base\CrudController
                     $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
                 },
             ],
-            'validate-set-contacts-form' => [
-                'class' => ValidateFormAction::class,
-                'collectionLoader' => function ($action) {
-                    /** @var SmartPerformAction $action */
-                    $request = Yii::$app->request;
-                    $action->collection->load([[
-                        'registrant' => $request->post('registrant'),
-                        'admin' => $request->post('admin'),
-                        'tech' => $request->post('tech'),
-                        'billing' => $request->post('billing'),
-                    ]]);
-                },
-                'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
-                    return 'domain-' . $attribute;
-                },
+            // Work with contacts
+            'bulk-set-contacts-modal' => [
+                'class' => PrepareBulkAction::class,
+                'scenario' => 'bulk-set-contacts',
+                'view' => '_bulkSetContacts',
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
@@ -162,6 +147,7 @@ class DomainController extends \hipanel\base\CrudController
                     $action->collection->load($data);
                 },
             ],
+
             'push' => [
                 'class' => SmartPerformAction::class,
                 'collectionLoader' => function ($action) {
@@ -215,12 +201,11 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
                     $action->getDataProvider()->query
-                        ->addSelect(['nsips','contacts'])
+                        ->addSelect(['nsips', 'contacts'])
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')
-                        ->joinWith('billing')
-                    ;
+                        ->joinWith('billing');
                 },
                 'data' => function ($action) {
                     return [
@@ -560,31 +545,6 @@ class DomainController extends \hipanel\base\CrudController
         return $return;
     }
 
-    /**
-     * @throws \HttpInvalidParamException
-     *
-     * @return string
-     */
-    public function actionModalContactsBody()
-    {
-        $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
-        $domainContactModels = [];
-        if ($ids) {
-            $domainContacts = Domain::perform('GetContacts', ArrayHelper::make_sub($ids, 'id'), true);
-            foreach ($domainContacts as $item) {
-                $domainContactModels[] = Domain::find()->populate([$item]);
-            }
-            $modelContactInfo = Contact::perform('GetList', ['domain_ids' => $ids, 'limit' => 1000], true);
-
-            return $this->renderAjax('_modalContactsBody', [
-                'domainContacts' => $domainContacts,
-                'modelContactInfo' => $modelContactInfo,
-            ]);
-        } else {
-            return Yii::t('hipanel', 'No items selected');
-        }
-    }
-
     public function actionModalNsBody()
     {
         $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
@@ -600,59 +560,79 @@ class DomainController extends \hipanel\base\CrudController
         }
     }
 
-    public function actionSetContacts()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $post = Yii::$app->request->post();
-        $model = DynamicModel::validateData($post, [
-            [Domain::$contactTypes, 'required'],
-        ]);
+//    public function actionModalContactsBody()
+//    {
+//        $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
+//        $domainContactModels = [];
+//        if ($ids) {
+//            $domainContacts = Domain::perform('GetContacts', ArrayHelper::make_sub($ids, 'id'), true);
+//            foreach ($domainContacts as $item) {
+//                $domainContactModels[] = Domain::find()->populate([$item]);
+//            }
+//            $modelContactInfo = Contact::perform('GetList', ['domain_ids' => $ids, 'limit' => 1000], true);
+//
+//            return $this->renderAjax('_modalContactsBody', [
+//                'domainContacts' => $domainContacts,
+//                'modelContactInfo' => $modelContactInfo,
+//            ]);
+//        } else {
+//            return Yii::t('hipanel', 'No items selected');
+//        }
+//    }
 
-        if ($model->hasErrors()) {
-            return ['errors' => $model->errors];
-        }
+//    public function actionSetContacts()
+//    {
+//        Yii::$app->response->format = Response::FORMAT_JSON;
+//        $post = Yii::$app->request->post();
+//        $model = DynamicModel::validateData($post, [
+//            [Domain::$contactTypes, 'required'],
+//        ]);
+//
+//        if ($model->hasErrors()) {
+//            return ['errors' => $model->errors];
+//        }
+//
+//        $ids = Yii::$app->request->post('id');
+//        $data = iterator_to_array(
+//            new RecursiveIteratorIterator(
+//                new RecursiveArrayIterator(
+//                    array_map(
+//                        function ($key) use ($post) {
+//                            return [$key => $post[$key]];
+//                        },
+//                        Domain::$contactTypes
+//                    )
+//                )
+//            )
+//        );
+//        $preparedData = [];
+//        foreach ($ids as $id) {
+//            $preparedData[] = ArrayHelper::merge(['id' => $id], $data);
+//        }
+//        try {
+//            $result = Domain::perform('SetContacts', $preparedData, true);
+//        } catch (\Exception $e) {
+//            $result = [
+//                'errors' => [
+//                    'title' => $e->getMessage(),
+//                    'detail' => $e->getMessage(),
+//                ],
+//            ];
+//        }
+//
+//        return $result;
+//    }
 
-        $ids = Yii::$app->request->post('id');
-        $data = iterator_to_array(
-            new RecursiveIteratorIterator(
-                new RecursiveArrayIterator(
-                    array_map(
-                        function ($key) use ($post) {
-                            return [$key => $post[$key]];
-                        },
-                        Domain::$contactTypes
-                    )
-                )
-            )
-        );
-        $preparedData = [];
-        foreach ($ids as $id) {
-            $preparedData[] = ArrayHelper::merge(['id' => $id], $data);
-        }
-        try {
-            $result = Domain::perform('SetContacts', $preparedData, true);
-        } catch (\Exception $e) {
-            $result = [
-                'errors' => [
-                    'title' => $e->getMessage(),
-                    'detail' => $e->getMessage(),
-                ],
-            ];
-        }
-
-        return $result;
-    }
-
-    public function actionGetContactsByAjax($id)
-    {
-        if (Yii::$app->request->isAjax) {
-            $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
-
-            return $this->renderAjax('_contactsTables', ['domainContactInfo' => $domainContactInfo]);
-        } else {
-            Yii::$app->end();
-        }
-    }
+//    public function actionGetContactsByAjax($id)
+//    {
+//        if (Yii::$app->request->isAjax) {
+//            $domainContactInfo = Domain::perform('GetContactsInfo', ['id' => $id]);
+//
+//            return $this->renderAjax('_contactsTables', ['domainContactInfo' => $domainContactInfo]);
+//        } else {
+//            Yii::$app->end();
+//        }
+//    }
 
     public function getStateData()
     {

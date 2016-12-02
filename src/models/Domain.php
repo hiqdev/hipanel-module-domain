@@ -40,10 +40,10 @@ class Domain extends \hipanel\base\Model
     public static function contactTypesWithLabels()
     {
         return [
-            'registrant'    => Yii::t('hipanel:domain', 'Registrant contact'),
-            'admin'         => Yii::t('hipanel:domain', 'Admin contact'),
-            'tech'          => Yii::t('hipanel:domain', 'Tech contact'),
-            'billing'       => Yii::t('hipanel:domain', 'Billing contact'),
+            'registrant' => Yii::t('hipanel:domain', 'Registrant contact'),
+            'admin' => Yii::t('hipanel:domain', 'Admin contact'),
+            'tech' => Yii::t('hipanel:domain', 'Tech contact'),
+            'billing' => Yii::t('hipanel:domain', 'Billing contact'),
         ];
     }
 
@@ -75,9 +75,9 @@ class Domain extends \hipanel\base\Model
             [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
 
-            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'integer'],
-            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['set-contacts']],
-            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['bulk-set-contacts']],
+            // Contacts
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'integer', 'on' => ['set-contacts', 'bulk-set-contacts']],
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['set-contacts', 'bulk-set-contacts']],
 
             [['enable'], 'safe', 'on' => ['set-lock', 'set-whois-protect']],
             [['domain', 'autorenewal'], 'safe', 'on' => 'set-autorenewal'],

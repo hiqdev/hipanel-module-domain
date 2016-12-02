@@ -216,7 +216,7 @@ CSS
                 <div class=" tab-pane" id="contacts">
                     <div class="row">
                         <div class="col-md-12">
-                            <?= $this->render('_modalContacts', ['model' => $model]) ?>
+                            <?= $this->render('_contacts', ['model' => $model]) ?>
                         </div>
                         <div id="contacts-tables">
                             <?= $this->render('_contactsTables', ['model' => $model]) ?>
