@@ -44,6 +44,7 @@ use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -545,7 +546,7 @@ class DomainController extends \hipanel\base\CrudController
             [['pincode'], 'trim'],
         ]);
 
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
         if (!$model->hasErrors()) {
             try {
@@ -602,7 +603,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionSetContacts()
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $post = Yii::$app->request->post();
         $model = DynamicModel::validateData($post, [
             [Domain::$contactOptions, 'required'],

@@ -37,13 +37,13 @@ class Domain extends \hipanel\base\Model
 
     public static $contactOptions = ['registrant', 'admin', 'tech', 'billing'];
 
-    public static function contactOptionsWithLabel()
+    public static function contactTypesWithLabels()
     {
         return [
-            'registrant' => Yii::t('hipanel:domain', 'Registrant contact'),
-            'admin' => Yii::t('hipanel:domain', 'Admin contact'),
-            'tech' => Yii::t('hipanel:domain', 'Tech contact'),
-            'billing' => Yii::t('hipanel:domain', 'Billing contact'),
+            'registrant'    => Yii::t('hipanel:domain', 'Registrant contact'),
+            'admin'         => Yii::t('hipanel:domain', 'Admin contact'),
+            'tech'          => Yii::t('hipanel:domain', 'Tech contact'),
+            'billing'       => Yii::t('hipanel:domain', 'Billing contact'),
         ];
     }
 

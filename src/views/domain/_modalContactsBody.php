@@ -86,21 +86,18 @@ JS
 
 <?php foreach ($domainContacts as $k => $v) : ?>
     <?php if (!in_array(Domain::getZone($v['domain']), ['ru', 'su', 'рф'])) : ?>
-        <?= Html::hiddenInput('id[]', $k); ?>
+        <?= Html::hiddenInput('id[]', $k) ?>
     <?php endif ?>
 <?php endforeach ?>
 
-<?php foreach (Domain::contactOptionsWithLabel() as $item => $label) : ?>
+<?php foreach (Domain::contactTypesWithLabels() as $item => $label) : ?>
 <div class="form-group">
-    <?= Html::label($label, $item, ['class' => 'col-sm-4 control-label']); ?>
+    <?= Html::label($label, $item, ['class' => 'col-sm-4 control-label']) ?>
     <div class="col-sm-8">
-        <?= Html::dropDownList($item, count($domainContacts) < 2 ? reset($domainContacts)[$item] : null, $modelContactInfo, ['prompt' => '--', 'id' => 'modal_' . $item, 'class' => 'form-control']); ?>
+        <?= Html::dropDownList($item, count($domainContacts) < 2 ? reset($domainContacts)[$item] : null, $modelContactInfo, ['prompt' => '--', 'id' => 'modal_' . $item, 'class' => 'form-control']) ?>
         <p class="help-block help-block-error"></p>
     </div>
 </div>
-<?php endforeach; ?>
+<?php endforeach ?>
 
 <?= Html::endForm() ?>
-
-
-

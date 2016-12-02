@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 ?>
 
-<?php foreach ($model->contactOptionsWithLabel() as $contactType => $label) : ?>
+<?php foreach ($model->contactTypesWithLabels() as $contactType => $label) : ?>
     <?php $contact = $model->{$contactType} ?>
     <div class="col-md-6">
         <div class="row">
