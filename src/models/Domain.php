@@ -75,9 +75,9 @@ class Domain extends \hipanel\base\Model
             [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
 
-            //[['registrant', 'admin', 'tech', 'billing'], 'integer'],
-            //[['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['set-contacts']],
-            //[['registrant', 'admin', 'tech', 'billing'], 'required', 'on' => ['bulk-set-contacts']],
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'integer'],
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['set-contacts']],
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['bulk-set-contacts']],
 
             [['enable'], 'safe', 'on' => ['set-lock', 'set-whois-protect']],
             [['domain', 'autorenewal'], 'safe', 'on' => 'set-autorenewal'],

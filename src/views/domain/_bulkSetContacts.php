@@ -55,11 +55,11 @@ $unchangeableZones = [];
 <div class="row">
     <?php foreach (Domain::$contactTypes as $type) : ?>
         <div class="col-sm-6">
-            <?= $form->field($model, $type)->widget(ContactCombo::class, [
+            <?= $form->field($model, '[0]' . $type . '_id')->widget(ContactCombo::class, [
                 'hasId' => true,
                 'inputOptions' => [
-                    'id' => 'domain-' . $type,
-                    'name' => $type,
+                    'id' => 'domain-0-' . $type . '_id',
+                    'name' => $type . '_id',
                 ],
             ]) ?>
         </div>

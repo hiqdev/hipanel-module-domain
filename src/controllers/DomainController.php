@@ -155,8 +155,8 @@ class DomainController extends \hipanel\base\CrudController
 
                     $data = $request->post($action->collection->getModel()->formName());
                     foreach ($data as &$item) {
-                        foreach (Domain::$contactTypes as $contact) {
-                            $item[$contact] = $request->post($contact);
+                        foreach (Domain::$contactTypes as $type) {
+                            $item[$type . '_id'] = $request->post($type . '_id');
                         }
                     }
                     $action->collection->load($data);
