@@ -47,13 +47,15 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'value' => function ($model) {
                     $out = State::widget(compact('model'));
-                    if ($model->is_freezed || $model->is_holded) {
+                    $status = [];
+                    if ($model->is_freezed || $model->is_holded || $model->wp_freezed) {
                         $out .= '<br>';
-                        $out .= $model->is_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
-                        $out .= $model->is_holded ? ' ' . Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
+                        $status[] = $model->is_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
+                        $status[] = $model->wp_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
+                        $status[] = $model->is_holded ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
                     }
 
-                    return $out;
+                    return $out . implode('&nbsp;', $status);
                 },
             ],
             'whois_protected' => [

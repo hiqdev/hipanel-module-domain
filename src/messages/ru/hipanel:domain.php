@@ -212,6 +212,7 @@ return [
     'This domain is available for registration' => 'Этот домен доступен для регистрации',
 
     'Froze' => 'Заморожен',
+    'WP Froze' => 'WP Заморожен',
     'Held' => 'Не делегируется',
     'Enable WHOIS-protect freeze' => 'Заморозить WHOIS-protect',
     'Disable WHOIS-protect freeze' => 'Разморозить WHOIS-protect',
