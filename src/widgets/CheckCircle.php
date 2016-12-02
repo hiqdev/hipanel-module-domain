@@ -14,6 +14,9 @@ class CheckCircle extends Widget
 
     public function run()
     {
-        return Html::tag('i', null, ['class' => 'fa fa-fw fa-lg fa-check-circle pull-right', 'style' =>  'color: ' . (boolval($this->value) ? '#b3b3b3' : '#00a65a')]);
+        return Html::tag('i', null, [
+            'class' => 'fa fa-fw fa-lg fa-check-circle pull-right',
+            'style' =>  'color: #' . (boolval($this->value) ? '00a65a' : 'b3b3b3')
+        ]);
     }
 }
