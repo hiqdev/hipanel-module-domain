@@ -8,14 +8,16 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 $unchangeableZones = [];
+$model->setScenario(isset($domainContact) ? 'set-contacts' : 'bulk-set-contacts');
+$i = 0;
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'bulk-set-contact-form',
     'action' => Url::toRoute('bulk-set-contacts'),
     'enableAjaxValidation' => true,
-//    'validationUrl' => Url::toRoute(['validate-set-contacts-form', 'scenario' => 'bulk-set-contacts']),
 ]) ?>
 
+<?= $model->scenario ?>
 
 <div class="panel panel-default">
     <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
@@ -55,14 +57,25 @@ $unchangeableZones = [];
 <div class="row">
     <?php foreach (Domain::$contactTypes as $type) : ?>
         <div class="col-sm-6">
-            <?= $form->field($model, '[0]' . $type . '_id')->widget(ContactCombo::class, [
+            <?php
+            if (isset($domainContact) && is_array($domainContact)) {
+                $model->{$type . '_id'} = $domainContact[$type];
+            }
+            print $form->field($model, '[0]' . $type . '_id')->widget(ContactCombo::class, [
                 'hasId' => true,
                 'inputOptions' => [
                     'id' => 'domain-0-' . $type . '_id',
                     'name' => $type . '_id',
                 ],
-            ]) ?>
+            ])
+            ?>
         </div>
+        <?php
+        if ($i % 2) {
+            print Html::tag('span', null, ['class' => 'clearfix']);
+        }
+        $i++;
+        ?>
     <?php endforeach ?>
 </div>
 

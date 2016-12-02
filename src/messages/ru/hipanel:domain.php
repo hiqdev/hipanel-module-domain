@@ -228,4 +228,6 @@ return [
     'WHOIS protect is changed' => 'WHOIS protect успешно изменен',
     'Lock was changed' => 'Параметр "Защита" был успешно изменен',
     'Autorenewal has been changed' => 'Параметр "Автопродление" был успешно изменен',
+
+    'Contacts is changed' => 'Контакты изменены',
 ];

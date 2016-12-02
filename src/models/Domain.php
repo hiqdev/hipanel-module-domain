@@ -77,7 +77,7 @@ class Domain extends \hipanel\base\Model
 
             // Contacts
             [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'integer', 'on' => ['set-contacts', 'bulk-set-contacts']],
-            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['set-contacts', 'bulk-set-contacts']],
+            [['registrant_id', 'admin_id', 'tech_id', 'billing_id'], 'required', 'on' => ['set-contacts']],
 
             [['enable'], 'safe', 'on' => ['set-lock', 'set-whois-protect']],
             [['domain', 'autorenewal'], 'safe', 'on' => 'set-autorenewal'],
@@ -263,6 +263,7 @@ class Domain extends \hipanel\base\Model
     {
         return [
             'get-zones' => ['aux', 'get-zones'],
+            'bulk-set-contacts' => 'set-contacts',
         ];
     }
 

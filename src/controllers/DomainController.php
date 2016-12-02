@@ -130,10 +130,20 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => PrepareBulkAction::class,
                 'scenario' => 'bulk-set-contacts',
                 'view' => '_bulkSetContacts',
+                'data' => function ($action) {
+                    $id = Yii::$app->request->get('id', false);
+                    if ($id) {
+                        $domainContacts = Domain::perform('GetContacts', ['ids' => [$id]], true);
+                        return [
+                            'domainContact' => reset($domainContacts),
+                        ];
+                    }
+                },
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'set-contacts',
+//                'scenario' => 'set-contacts',
+                'success' => Yii::t('hipanel:domain', 'Contacts is changed'),
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $request = Yii::$app->request;
