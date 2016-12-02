@@ -368,7 +368,7 @@ JS
                             <!-- /.col-md-8 -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'zone')->widget(StaticCombo::classname(), [
+                                    <?= $form->field($model, 'zone')->widget(StaticCombo::class, [
                                         'data' => $dropDownZonesOptions,
                                         'hasId' => true,
                                         'inputOptions' => [

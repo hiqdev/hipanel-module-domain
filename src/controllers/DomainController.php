@@ -152,11 +152,10 @@ class DomainController extends \hipanel\base\CrudController
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $request = Yii::$app->request;
-                    $contactOptions = Domain::$contactOptions;
 
                     $data = $request->post($action->collection->getModel()->formName());
-                    foreach ($data as $k => &$item) {
-                        foreach ($contactOptions as $contact) {
+                    foreach ($data as &$item) {
+                        foreach (Domain::$contactTypes as $contact) {
                             $item[$contact] = $request->post($contact);
                         }
                     }
@@ -606,7 +605,7 @@ class DomainController extends \hipanel\base\CrudController
         Yii::$app->response->format = Response::FORMAT_JSON;
         $post = Yii::$app->request->post();
         $model = DynamicModel::validateData($post, [
-            [Domain::$contactOptions, 'required'],
+            [Domain::$contactTypes, 'required'],
         ]);
 
         if ($model->hasErrors()) {
@@ -618,10 +617,11 @@ class DomainController extends \hipanel\base\CrudController
             new RecursiveIteratorIterator(
                 new RecursiveArrayIterator(
                     array_map(
-                        function ($i) use ($post) {
-                            return [$i => $post[$i]];
+                        function ($key) use ($post) {
+                            return [$key => $post[$key]];
                         },
-                        Domain::$contactOptions)
+                        Domain::$contactTypes
+                    )
                 )
             )
         );

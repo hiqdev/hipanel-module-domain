@@ -30,7 +30,7 @@ $unchangeableZones = [];
                 return $model->domain;
             },
             'delimiter' => ',&nbsp; ',
-        ]); ?>
+        ]) ?>
     </div>
 </div>
 
@@ -43,27 +43,27 @@ $unchangeableZones = [];
             <?= implode(', ', $unchangeableZones) ?>
         </div>
     </div>
-<?php endif; ?>
+<?php endif ?>
 
 <?php foreach ($models as $item) : ?>
     <?php if ($item->isContactChangeable()) : ?>
         <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
         <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
-    <?php endif; ?>
-<?php endforeach; ?>
+    <?php endif ?>
+<?php endforeach ?>
 
 <div class="row">
-    <?php foreach (Domain::$contactOptions as $contact) : ?>
+    <?php foreach (Domain::$contactTypes as $type) : ?>
         <div class="col-sm-6">
-            <?= $form->field($model, $contact)->widget(ContactCombo::classname(), [
+            <?= $form->field($model, $type)->widget(ContactCombo::class, [
                 'hasId' => true,
                 'inputOptions' => [
-                    'id' => 'domain-' . $contact,
-                    'name' => $contact,
+                    'id' => 'domain-' . $type,
+                    'name' => $type,
                 ],
             ]) ?>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach ?>
 </div>
 
 <hr>

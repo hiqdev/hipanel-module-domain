@@ -35,7 +35,7 @@ class Domain extends \hipanel\base\Model
 
     public $authCode;
 
-    public static $contactOptions = ['registrant', 'admin', 'tech', 'billing'];
+    public static $contactTypes = ['registrant', 'admin', 'tech', 'billing'];
 
     public static function contactTypesWithLabels()
     {

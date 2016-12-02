@@ -13,15 +13,6 @@ use yii\helpers\Html;
             <div class="col-md-6">
                 <div class="pull-right btn-group" style="padding-top:10px">
                     <?= Html::a(Yii::t('hipanel', 'Details'), ['@contact/view', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
-                    <?php
-                    // Html::a(Yii::t('hipanel', 'Change'), [
-                    // @contact/change-contact',
-                    // contactId' => $contact['id'],
-                    // contactType' => $contactType,
-                    // domainId' => $model->id,
-                    // domainName' => $model->domain,
-                    // class' => 'btn btn-default btn-xs'])
-                    ?>
                 </div>
             </div>
         </div>
