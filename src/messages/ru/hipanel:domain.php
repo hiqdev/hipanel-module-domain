@@ -192,7 +192,7 @@ return [
     'Expires' => 'Регистрация заканчивается',
     'Name servers' => 'Серверы имён',
     'Country' => 'Страна',
-    'Registrar' => 'Регситратор',
+    'Registrar' => 'Регистратор',
 
     'Domain transfer was rejected' => 'Трансфер домена был отклонён',
 
