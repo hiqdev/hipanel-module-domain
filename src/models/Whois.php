@@ -18,6 +18,10 @@ use Yii;
  */
 class Whois extends ActiveRecord
 {
+    const REGISTRATION_AVAILABLE = 'available';
+    const REGISTRATION_UNAVAILABLE = 'unavailable';
+    const REGISTRATION_UNSUPPORTED = 'unsupported';
+
     public function rules()
     {
         return [
@@ -30,7 +34,7 @@ class Whois extends ActiveRecord
         return [
             'domain', 'registrar', 'nss', 'created', 'updated',
             'expires', 'rawdata', 'ip', 'country_name', 'city',
-            'available', 'unsupported',
+            'availability',
         ];
     }
 
@@ -80,7 +84,7 @@ class Whois extends ActiveRecord
                 return Alexa::getGlobalRank();
             }
         } catch (Exception $e) {
-            $e->getMessage();
+            print $e->getMessage();
         }
     }
 

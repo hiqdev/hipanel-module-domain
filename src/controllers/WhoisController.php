@@ -13,19 +13,23 @@ class WhoisController extends \hipanel\base\CrudController
 {
     private function getWhoisModel($domain)
     {
-        $whois = ['domain' => $domain, 'available' => false, 'unsupported' => false];
-        $message = '';
+        $whoisDefault = ['domain' => $domain];
         try {
-            $whois = Yii::$app->hiart->createCommand()->perform('domainGetWhois', ['domain' => $domain]);
+            $apiData = Yii::$app->hiart->createCommand()->perform('domainGetWhois', ['domain' => $domain]);
         } catch (Exception $e) {
-            $message = $e->getMessage();
+            $apiData['message'] = $e->getMessage();
         }
-        if ($message === 'domain available') {
-            $whois['available'] = true;
-        } elseif ($message === 'domain unsupported' || strstr(reset($whois['rawdata']), 'domain is not supported')) {
-            $whois['unsupported'] = true;
+        if ($apiData['registrar'] || is_array($apiData['nss'])) {
+            $whoisDefault['availability'] = Whois::REGISTRATION_UNAVAILABLE;
         }
-        $model = reset(Whois::find()->populate([$whois]));
+        if ($apiData['message'] === 'domain available') {
+            $whoisDefault['availability'] = Whois::REGISTRATION_AVAILABLE;
+        }
+        if ($apiData['message'] === 'domain unsupported' || ($apiData['rawdata'] && strstr(reset($apiData['rawdata']), 'domain is not supported'))) {
+            $whoisDefault['availability'] = Whois::REGISTRATION_UNSUPPORTED;
+        }
+
+        $model = reset(Whois::find()->populate([array_merge($whoisDefault, $apiData)]));
 
         return $model;
     }
