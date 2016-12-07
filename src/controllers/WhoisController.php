@@ -13,14 +13,11 @@ class WhoisController extends \hipanel\base\CrudController
 {
     private function getWhoisModel($domain)
     {
-        $whoisDefault = ['domain' => $domain];
+        $whoisDefault = ['domain' => $domain, 'availability' => Whois::REGISTRATION_UNAVAILABLE];
         try {
             $apiData = Yii::$app->hiart->createCommand()->perform('domainGetWhois', ['domain' => $domain]);
         } catch (Exception $e) {
             $apiData['message'] = $e->getMessage();
-        }
-        if ($apiData['registrar'] || is_array($apiData['nss'])) {
-            $whoisDefault['availability'] = Whois::REGISTRATION_UNAVAILABLE;
         }
         if ($apiData['message'] === 'domain available') {
             $whoisDefault['availability'] = Whois::REGISTRATION_AVAILABLE;
