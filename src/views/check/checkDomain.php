@@ -177,6 +177,7 @@ if (!empty($results)) {
             var $parentElem = $(element).find("div[data-domain='" + domain + "']").parents('div.domain-iso-line').eq(0);
             $elem.replaceWith($(data).find('.domain-line'));
             $parentElem.attr('class', $(data).attr('class'));
+            $('.filters .nav li.active a').click(); // FIX remove not filtred items
 
             return this;
         },
