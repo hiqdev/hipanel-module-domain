@@ -47,7 +47,7 @@ CSS
 ?>
 
 <?php Pjax::begin(Yii::$app->params['pjax']); ?>
-<div class="row" xmlns="http://www.w3.org/1999/html">
+<div class="row">
 
     <div class="col-md-3">
         <?php Box::begin([

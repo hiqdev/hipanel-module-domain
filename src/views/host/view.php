@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php Pjax::begin() ?>
-    <div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
         <div class="col-md-3">
             <?php Box::begin([
                 'options' => [
