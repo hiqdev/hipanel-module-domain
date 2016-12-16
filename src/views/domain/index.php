@@ -28,8 +28,7 @@ CSS
             'attributes' => [
                 'domain', 'note', 'client', 'seller',
                 'state', 'whois_protected', 'is_secured',
-                'created_date', 'expires',
-                'autorenewal', 'id',
+                'created_date', 'expires', 'id',
             ],
         ]) ?>
         <?= $page->renderPerPage() ?>

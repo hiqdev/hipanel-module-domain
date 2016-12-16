@@ -100,10 +100,13 @@ class DomainGridView extends BoxedGridView
             ],
             'autorenewal' => [
                 'class' => BootstrapSwitchColumn::class,
-                'label' => Yii::t('hipanel', 'Autorenew'),
-                'filter' => false,
                 'url' => Url::toRoute('set-autorenewal'),
+                'label' => Yii::t('hipanel', 'Autorenew'),
+                'enableSorting' => false,
                 'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
+                'popoverOptions' => [
+                    'placement' => 'bottom',
+                ]
             ],
             'nameservers' => [
                 'format' => 'raw',
