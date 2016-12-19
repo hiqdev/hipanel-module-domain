@@ -30,6 +30,8 @@ class Domain extends \hipanel\base\Model
     const STATE_OUTGOING = 'outgoing';
     const STATE_EXPIRED = 'expired';
     const STATE_PREINCOMING = 'preincoming';
+    const STATE_DELETING = 'deleting';
+    const STATE_DELETED = 'deleted';
 
     const DEFAULT_ZONE = 'com';
 
@@ -49,12 +51,21 @@ class Domain extends \hipanel\base\Model
 
     public static function stateOptions()
     {
-        return [
+        $out = [
             self::STATE_OK => Yii::t('hipanel:domain', 'Domains in «ok» state'),
             self::STATE_INCOMING => Yii::t('hipanel:domain', 'Incoming transfer domains'),
             self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Outgoing transfer domains'),
             self::STATE_EXPIRED => Yii::t('hipanel:domain', 'Expired domains'),
         ];
+        if (Yii::$app->user->can('support')) {
+            $out = array_merge($out, [
+                self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
+                self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
+                self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'FOA sent'),
+            ]);
+        }
+
+        return $out;
     }
 
     use \hipanel\base\ModelTrait;
