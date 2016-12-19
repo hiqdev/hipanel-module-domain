@@ -193,11 +193,6 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'index' => [
                 'class' => IndexAction::class,
-                'data' => function ($action) {
-                    return [
-                        'stateData' => $action->controller->getStateData(),
-                    ];
-                },
                 'filterStorageMap' => [
                     'domain_like' => 'domain.domain.domain_like',
                     'ips' => 'hosting.ip.ip_in',
@@ -568,10 +563,5 @@ class DomainController extends \hipanel\base\CrudController
         } else {
             return Yii::t('hipanel', 'No items selected');
         }
-    }
-
-    public function getStateData()
-    {
-        return $this->getRefs('state,domain', 'hipanel:domain');
     }
 }
