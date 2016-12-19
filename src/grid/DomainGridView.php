@@ -22,6 +22,7 @@ use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
 use hiqdev\bootstrap_switch\BootstrapSwitchAsset;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
+use hiqdev\combo\StaticCombo;
 use hiqdev\menumanager\MenuColumn;
 use hiqdev\menumanager\widgets\Menu;
 use Yii;
@@ -40,9 +41,14 @@ class DomainGridView extends BoxedGridView
                 'filterAttribute' => 'domain_like',
             ],
             'state' => [
-                'format' => 'raw',
+                'format' => 'html',
                 'filter' => function ($grid, $model, $attribute) {
-                    return Html::activeDropDownList($model, $attribute, Domain::stateOptions(), ['prompt' => '--', 'class' => 'form-control']);
+                    return StaticCombo::widget([
+                        'model' => $model,
+                        'attribute' => $attribute,
+                        'data' => Domain::stateOptions(),
+                        'hasId' => true,
+                    ]);
                 },
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'value' => function ($model) {

@@ -4,6 +4,7 @@ use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\client\widgets\combo\SellerCombo;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\DatePicker;
+use hiqdev\combo\StaticCombo;
 use yii\helpers\Html;
 
 /**
@@ -29,7 +30,12 @@ use yii\helpers\Html;
 <?php } ?>
 
 <div class="col-md-4 col-sm-6 col-xs-12">
-    <?= $search->field('state')->dropDownList(Domain::stateOptions(), ['prompt' => '--']) ?>
+    <?= $search->field('state')->widget(StaticCombo::class, [
+        'attribute' => 'state',
+        'model' => $search->model,
+        'hasId' => true,
+        'data' => Domain::stateOptions(),
+    ]) ?>
 </div>
 
 <div class="col-md-4 col-sm-6 col-xs-12">
