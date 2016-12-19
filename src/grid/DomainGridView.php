@@ -51,6 +51,7 @@ class DomainGridView extends BoxedGridView
                     ]);
                 },
                 'filterInputOptions' => ['style' => 'width:120px'],
+                'enableSorting' => false,
                 'value' => function ($model) {
                     $out = State::widget(compact('model'));
                     $status = [];
