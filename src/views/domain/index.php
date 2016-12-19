@@ -27,8 +27,7 @@ CSS
         <?= $page->renderSorter([
             'attributes' => [
                 'domain', 'note', 'client', 'seller',
-                'state', 'whois_protected', 'is_secured',
-                'created_date', 'expires', 'id',
+                'state', 'created_date', 'expires', 'id',
             ],
         ]) ?>
         <?= $page->renderPerPage() ?>
