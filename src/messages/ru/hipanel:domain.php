@@ -27,6 +27,9 @@ return [
     'Affected name servers' => 'Выбранные сервера имён',
     'Generate new' => 'Сгенерировать новый',
     'The password has been changed' => 'Пароль был изменен',
+    'Deleted' => 'Удален',
+    'Deleting' => 'Удаляется',
+    'FOA sent' => 'Запрос подтверждения послан',
 
     'There are no available domain zones' => 'Нет доступных доменных зон',
 
@@ -231,4 +234,6 @@ return [
     'Autorenewal has been changed' => 'Параметр "Автопродление" был успешно изменен',
 
     'Contacts is changed' => 'Контакты изменены',
+
+
 ];
