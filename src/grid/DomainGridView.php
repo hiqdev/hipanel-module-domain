@@ -67,19 +67,33 @@ class DomainGridView extends BoxedGridView
             'whois_protected' => [
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'whois_protected',
-                'filter' => false,
                 'url' => Url::toRoute('set-whois-protect'),
+                'filter' => false,
+                'enableSorting' => false,
+                'encodeLabel' => false,
+                'label' => Html::tag('span', 'WHOIS'),
                 'popover' => 'WHOIS protection',
+                'popoverOptions' => [
+                    'placement' => 'bottom',
+                    'selector' => 'span',
+                ],
                 'pluginOptions' => [
                     'offColor' => 'warning',
                 ],
             ],
             'is_secured' => [
                 'class' => BootstrapSwitchColumn::class,
+                'encodeLabel' => false,
                 'filter' => false,
+                'enableSorting' => false,
+                'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
                 'url' => Url::toRoute('set-lock'),
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
+                'popoverOptions' => [
+                    'placement' => 'bottom',
+                    'selector' => 'span',
+                ],
             ],
             'note' => [
                 'class' => XEditableColumn::class,
@@ -106,12 +120,15 @@ class DomainGridView extends BoxedGridView
             ],
             'autorenewal' => [
                 'class' => BootstrapSwitchColumn::class,
+                'filter' => false,
                 'url' => Url::toRoute('set-autorenewal'),
-                'label' => Yii::t('hipanel', 'Autorenew'),
+                'label' => Html::tag('span', Yii::t('hipanel', 'Autorenew')),
                 'enableSorting' => false,
+                'encodeLabel' => false,
                 'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
                 'popoverOptions' => [
                     'placement' => 'bottom',
+                    'selector' => 'span',
                 ]
             ],
             'nameservers' => [
