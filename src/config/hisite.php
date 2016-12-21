@@ -34,18 +34,26 @@ return [
             'items' => [
                 'sidebar' => [
                     'add' => [
-                        'check-domain' => [
-                            'menu' => \hipanel\modules\domain\menus\CheckDomainMenu::class,
-                            'where' => 'first',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'container' => [
+        'definitions' => [
+            \hiqdev\thememanager\menus\AbstractSidebarMenu::class => [
+                'add' => [
+                    'check-domain' => [
+                        'menu' => \hipanel\modules\domain\menus\CheckDomainMenu::class,
+                        'where' => 'first',
+                    ],
+                    'domain' => [
+                        'menu' => [
+                            'class' => \hipanel\modules\domain\menus\SidebarMenu::class,
                         ],
-                        'domain' => [
-                            'menu' => [
-                                'class' => \hipanel\modules\domain\menus\SidebarMenu::class,
-                            ],
-                            'where' => [
-                                'after'  => ['tickets', 'finance', 'clients', 'dashboard', 'header'],
-                                'before' => ['servers', 'hosting'],
-                            ],
+                        'where' => [
+                            'after'  => ['tickets', 'finance', 'clients', 'dashboard', 'header'],
+                            'before' => ['servers', 'hosting'],
                         ],
                     ],
                 ],
