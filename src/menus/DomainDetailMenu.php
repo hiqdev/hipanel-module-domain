@@ -8,7 +8,7 @@ use Yii;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
-class DomainDetailMenu extends \hiqdev\menumanager\Menu
+class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
 {
     public $model;
 

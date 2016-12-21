@@ -34,7 +34,7 @@ CSS
     <?php $page->endContent() ?>
 
     <?php $page->beginContent('bulk-actions') ?>
-        <?= DomainBulkActionsMenu::create()->render([
+        <?= DomainBulkActionsMenu::widget([], [
             'encodeLabels' => false,
             'itemOptions' => [
                 'tag' => false,
@@ -51,12 +51,8 @@ CSS
                 'columns'      => [
                     'checkbox',
                     'domain', 'actions', 'client', 'seller',
-                    'state',
-                    'whois_protected',
-                    'is_secured',
-                    'created_date',
-                    'expires',
-                    'autorenewal',
+                    'state', 'whois_protected', 'is_secured',
+                    'created_date', 'expires', 'autorenewal',
                 ],
             ]) ?>
         <?php $page->endBulkForm() ?>

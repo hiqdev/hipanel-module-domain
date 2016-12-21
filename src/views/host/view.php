@@ -5,10 +5,9 @@ use hipanel\modules\domain\menus\HostDetailMenu;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
-use hiqdev\menumanager\widgets\DetailMenu;
 use yii\helpers\Html;
 
-$this->title    = Html::encode($model->host);
+$this->title = Html::encode($model->host);
 $this->params['subtitle'] = Yii::t('hipanel:domain', 'Name server detailed information') . ' #' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel:domain', 'Name Servers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="text-center">
                     <span class="profile-user-role"><?= $this->title ?></span>
                     <br>
-                    <span class="profile-user-name"><?= ClientSellerLink::widget(compact('model')) ?></span>
+                    <span class="profile-user-name"><?= ClientSellerLink::widget(['model' => $model]) ?></span>
                 </p>
                 <div class="profile-usermenu">
-                    <?= HostDetailMenu::create(['model' => $model])->render(DetailMenu::class) ?>
+                    <?= HostDetailMenu::widget(['model' => $model]) ?>
                 </div>
             <?php Box::end() ?>
         </div>

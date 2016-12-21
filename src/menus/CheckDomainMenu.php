@@ -19,7 +19,7 @@ class CheckDomainMenu extends \hiqdev\menumanager\Menu
     {
         return [
             'check-domain' => [
-                'label' => $this->renderView('checkDomain'),
+                'label' => $this->render('checkDomain'),
                 'encode' => false,
             ],
         ];

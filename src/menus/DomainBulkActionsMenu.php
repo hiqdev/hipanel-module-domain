@@ -20,7 +20,7 @@ class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
                             ' . Yii::t('hipanel', 'Basic actions') . '
                             <span class="caret"></span>
                         </button>
-                        ' . DomainBulkBasicActionsMenu::create()->render([
+                        ' . DomainBulkBasicActionsMenu::widget([], [
                             'class' => Dropdown::class,
                             'encodeLabels' => false,
                         ]) . '
