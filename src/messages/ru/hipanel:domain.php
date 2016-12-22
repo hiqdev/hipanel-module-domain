@@ -30,6 +30,7 @@ return [
     'Deleted' => 'Удален',
     'Deleting' => 'Удаляется',
     'FOA sent' => 'Запрос подтверждения послан',
+    'Transferred out' => 'Странсферен от нас',
 
     'There are no available domain zones' => 'Нет доступных доменных зон',
 
