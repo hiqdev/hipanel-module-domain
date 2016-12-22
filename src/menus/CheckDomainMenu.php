@@ -13,7 +13,7 @@ namespace hipanel\modules\domain\menus;
 
 use Yii;
 
-class CheckDomainMenu extends \hiqdev\menumanager\Menu
+class CheckDomainMenu extends \hiqdev\yii2\menus\Menu
 {
     public function items()
     {

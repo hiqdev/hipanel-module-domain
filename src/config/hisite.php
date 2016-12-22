@@ -30,14 +30,6 @@ return [
                 ],
             ],
         ],
-        'menuManager' => [
-            'items' => [
-                'sidebar' => [
-                    'add' => [
-                    ],
-                ],
-            ],
-        ],
     ],
     'container' => [
         'definitions' => [

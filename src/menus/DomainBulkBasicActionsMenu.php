@@ -2,10 +2,9 @@
 
 namespace hipanel\modules\domain\menus;
 
-use hipanel\modules\domain\models\Domain;
 use Yii;
 
-class DomainBulkBasicActionsMenu extends \hiqdev\menumanager\Menu
+class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
 {
     public function items()
     {

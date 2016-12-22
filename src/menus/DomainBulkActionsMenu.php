@@ -8,7 +8,7 @@ use yii\bootstrap\Dropdown;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
-class DomainBulkActionsMenu extends \hiqdev\menumanager\Menu
+class DomainBulkActionsMenu extends \hiqdev\yii2\menus\Menu
 {
     public function items()
     {

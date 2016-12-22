@@ -6,7 +6,7 @@ use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\helpers\StringHelper;
 
-class DomainActionsMenu extends \hiqdev\menumanager\Menu
+class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
 {
     public $model;
 
