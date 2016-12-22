@@ -32,6 +32,7 @@ class Domain extends \hipanel\base\Model
     const STATE_PREINCOMING = 'preincoming';
     const STATE_DELETING = 'deleting';
     const STATE_DELETED = 'deleted';
+    const STATE_GONE = 'gone';
 
     const DEFAULT_ZONE = 'com';
 
@@ -62,6 +63,7 @@ class Domain extends \hipanel\base\Model
                 self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
                 self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
                 self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'FOA sent'),
+                self::STATE_GONE => Yii::t('hipanel:domain', 'Transferred out'),
             ]);
         }
 
