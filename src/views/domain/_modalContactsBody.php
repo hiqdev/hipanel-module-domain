@@ -24,15 +24,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
             timeout: 0,
             data: form.serialize(),
             error: function() {
-                new PNotify({
-                    styling: 'bootstrap3',
-                    text: "$errorMsg",
-                    type: 'error',
-                    buttons: {
-                        sticker: false
-                    },
-                    icon: false
-                });
+                hipanel.notify.error('$errorMsg');
                 ajaxRequestStatus = 0;
             },
             beforeSend: function() {
@@ -46,15 +38,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
             success: function(data) {
                 btn.removeAttr('disabled').removeClass('disabled');
                 if (data.errors) {
-                    new PNotify({
-                        styling: 'bootstrap3',
-                        text: data.errors.title,
-                        type: 'error',
-                        buttons: {
-                            sticker: false
-                        },
-                        icon: false
-                    });
+                    hipanel.notify.error(data.errors.title);
                     jQuery.each(data.errors, function(k, v) {
                         var elem = jQuery('#modal_' + k);
                         elem.closest('.form-group').addClass('has-error');
@@ -62,15 +46,7 @@ jQuery('#modal-save-contacts-button').on('click', function(event) {
                     })
                 } else {
                     jQuery('#domain-contacts-modal').modal('hide');
-                    new PNotify({
-                        styling: 'bootstrap3',
-                        text: '$success',
-                        type: 'success',
-                        buttons: {
-                            sticker: false
-                        },
-                        icon: false
-                    });
+                    hipanel.notify.success('$success');
                     jQuery('#contacts-tables').load('$contactTablesLink');
                 }
                 ajaxRequestStatus = 0;

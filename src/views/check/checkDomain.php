@@ -1,6 +1,5 @@
 <?php
 
-use hipanel\assets\HipanelAsset;
 use hipanel\assets\IsotopeAsset;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
@@ -15,7 +14,6 @@ use yii\helpers\Html;
 
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
-HipanelAsset::register($this);
 
 $this->title = Yii::t('hipanel:domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
@@ -120,7 +118,7 @@ if (!empty($results)) {
         var addToCartElem = $(this);
         addToCartElem.button('loading');
         $.post(addToCartElem.data('domain-url'), function() {
-            Hipanel.updateCart(function() {
+            hipanel.updateCart(function() {
                 addToCartElem.button('complete');
                 setTimeout(function () {addToCartElem.addClass('disabled')}, 0);
             });

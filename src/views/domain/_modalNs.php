@@ -21,14 +21,7 @@ $this->registerJs(<<<JS
                 timeout: 0,
                 data: jQuery('#set-ns-form').serialize(),
                 error: function() {
-                    new PNotify({
-                        text: "Error",
-                        type: 'error',
-                        buttons: {
-                            sticker: false
-                        },
-                        icon: false
-                    });
+                    hipanel.notify.error('Error');
                     ajaxRequestStatus = 0;
                 },
                 beforeSend: function() {

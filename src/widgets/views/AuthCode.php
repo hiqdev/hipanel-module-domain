@@ -40,15 +40,7 @@ jQuery('#get-authcode-button').on('click', function() {
         dataType: 'json',
         timeout: 0,
         error: function() {
-            new PNotify({
-                styling: 'bootstrap3',
-                text: "$errorMessage",
-                type: 'error',
-                buttons: {
-                    sticker: false
-                },
-                icon: false
-            });
+            hipanel.notify.error("$errorMessage");
         },
         data: {id: '{$model->id}', pincode: pin},
         beforeSend: function() {
@@ -78,15 +70,7 @@ jQuery('#change-password-button').on('click', function() {
         dataType: 'json',
         timeout: 0,
         error: function() {
-            new PNotify({
-                styling: 'bootstrap3',
-                text: "$errorMessage",
-                type: 'error',
-                buttons: {
-                    sticker: false
-                },
-                icon: false
-            });
+            hipanel.notify.error("$errorMessage");
         },
         data: {Domain: {id: '{$model->id}'}},
         beforeSend: function() {
@@ -97,27 +81,11 @@ jQuery('#change-password-button').on('click', function() {
         },
         success: function(data) {
             if (data.status == 'error') {
-                new PNotify({
-                    styling: 'bootstrap3',
-                    text: data.info,
-                    type: 'error',
-                    buttons: {
-                        sticker: false
-                    },
-                    icon: false
-                });
+                hipanel.notify.error(data.info);
             } else {
                 jQuery('#modal-show-button').removeAttr('disabled');
                 jQuery('#pincode-static').text('*******');
-                new PNotify({
-                    styling: 'bootstrap3',
-                    text: '$successMessage',
-                    type: 'success',
-                    buttons: {
-                        sticker: false
-                    },
-                    icon: false
-                });
+                hipanel.notify.success('$successMessage')
             }
         }
     });

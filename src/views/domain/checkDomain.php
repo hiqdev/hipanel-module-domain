@@ -115,7 +115,7 @@ if (!empty($results)) {
         var addToCartElem = $(this);
         addToCartElem.button('loading');
         $.post(addToCartElem.data('domain-url'), function() {
-            Hipanel.updateCart(function() {
+            hipanel.updateCart(function() {
                 addToCartElem.button('complete');
                 setTimeout(function () {addToCartElem.addClass('disabled')}, 0);
             });
