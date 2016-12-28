@@ -3,7 +3,6 @@
 use hipanel\modules\domain\menus\DomainBulkActionsMenu;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\widgets\IndexPage;
-use hipanel\widgets\Pjax;
 
 $this->title = Yii::t('hipanel', 'Domains');
 $this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
