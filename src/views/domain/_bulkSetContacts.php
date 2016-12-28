@@ -5,6 +5,7 @@ use hipanel\modules\client\widgets\combo\ContactCombo;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 $unchangeableZones = [];
@@ -64,6 +65,9 @@ $i = 0;
                 'inputOptions' => [
                     'id' => 'domain-0-' . $type . '_id',
                     'name' => $type . '_id',
+                ],
+                'filter' => [
+                    'client_id_in' => ['format' => ArrayHelper::getColumn($models, 'client_id')],
                 ],
             ])
             ?>
