@@ -151,8 +151,28 @@ class TransferController extends \hipanel\base\CrudController
         }
 
         return $this->render('index', [
+            'models' => $models,
             'model' => $model,
             'transferDataProvider' => $transferDataProvider,
-        ]);
+       ]);
+    }
+
+    /**
+     * @param $models
+     * @return bool
+     */
+    public function isButtonDisabled(array $models)
+    {
+        foreach ($models as $model) {
+            if ($model instanceof Domain) {
+                /** @var Domain $model */
+                $errors = $model->getErrors();
+                if (empty($errors)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

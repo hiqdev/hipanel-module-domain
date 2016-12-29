@@ -19,7 +19,7 @@ $this->registerCss('
 }
 ');
 $this->registerJs(<<<JS
-    jQuery('#domain-transfer-single').on('submit', function (e) {
+    $('#domain-transfer-single').on('submit', function (e) {
         $(this).find('.tab-pane').not('.active').find('input:text, textarea').val('');
     });
 JS
@@ -170,10 +170,9 @@ $id = $model->id ?: 0;
             ]); ?>
         </div>
         <div class="box-footer">
-            <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> ' . Yii::t('hipanel:domain', 'Add to cart'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> ' . Yii::t('hipanel:domain', 'Add to cart'), ['disabled' => $this->context->isButtonDisabled($models), 'class' => 'btn btn-success']) ?>
             <?= Html::a(Yii::t('hipanel:domain', 'Return to transfer form'), ['transfer'], ['class' => 'btn btn-default']) ?>
         </div>
-        <!-- /.box-footer -->
     </div>
     <?= Html::endForm(); ?>
 <?php endif; ?>
