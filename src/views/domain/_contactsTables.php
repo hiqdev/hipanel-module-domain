@@ -20,8 +20,8 @@ use yii\helpers\Html;
             'boxed' => false,
             'model' => $contact,
             'columns' => [
-                'name_v',
-                'email_v',
+                'name_link_with_verification',
+                'email_link_with_verification',
                 'organization',
                 'voice_phone',
                 'fax_phone',
