@@ -20,7 +20,7 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
         return [
             'domains' => [
                 'label' => Yii::t('hipanel', 'Domains'),
-                'url'   => ['/domains/domain/index'],
+                'url'   => ['/domain/domain/index'],
                 'icon'  => 'fa-globe',
                 'items' => [
                     'domains' => [
