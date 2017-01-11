@@ -20,7 +20,6 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
-use hiqdev\bootstrap_switch\BootstrapSwitchAsset;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\combo\StaticCombo;
 use hiqdev\yii2\menus\grid\MenuColumn;

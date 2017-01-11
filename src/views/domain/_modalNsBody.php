@@ -69,7 +69,7 @@ foreach ($models as $id => $model) : ?>
         </div>
         <div class="col-sm-2">
             <?= \hiqdev\bootstrap_switch\BootstrapSwitch::widget([
-                'type' => \hiqdev\bootstrap_switch\BootstrapSwitchAsset::TYPE_RADIO,
+                'type' => \hiqdev\bootstrap_switch\BootstrapSwitch::TYPE_RADIO,
                 'name' => 'check',
                 'items' => [$id => null],
                 'options' => [
