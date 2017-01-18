@@ -1,12 +1,11 @@
 <?php
-
-/*
+/**
  * Domain plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\models;
@@ -259,17 +258,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return (boolean)$this->is_freezed;
+        return (bool) $this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return (boolean)$this->wp_freezed;
+        return (bool) $this->wp_freezed;
     }
 
     public function isHolded()
     {
-        return (boolean)$this->is_holded;
+        return (bool) $this->is_holded;
     }
 
     public function scenarioCommands()

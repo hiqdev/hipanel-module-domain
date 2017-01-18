@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\menus;
 
@@ -20,7 +28,7 @@ class HostActionsMenu extends \hiqdev\yii2\menus\Menu
                         'confirm' => Yii::t('hipanel', 'Are you sure you want to delete this item?'),
                         'method' => 'post',
                         'pjax' => '0',
-                    ]
+                    ],
                 ],
             ],
         ];

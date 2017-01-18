@@ -1,8 +1,8 @@
 <?php
 
 use hipanel\widgets\Box;
-use hiqdev\combo\StaticCombo;
 use hipanel\widgets\DynamicFormWidget;
+use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -98,7 +98,7 @@ use yii\web\JsExpression;
                                     function (term) {
                                         return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
                                     }
-                                ')
+                                '),
                                     ],
                                 ],
                             ])->label(false)->hint(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>

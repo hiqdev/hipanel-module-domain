@@ -148,7 +148,7 @@ $(document).on('pjax:complete', function(event) {
                                                             function (term) {
                                                                 return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
                                                             }
-                                                        ')
+                                                        '),
                                                     ],
                                                 ],
                                             ])->label(false) ?>

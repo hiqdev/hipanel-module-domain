@@ -1,24 +1,23 @@
 <?php
-
-/*
+/**
  * Domain plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\IndexAction;
 use hipanel\actions\OrientationAction;
+use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\RedirectAction;
 use hipanel\actions\SmartCreateAction;
 use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
-use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\ViewAction;
 use Yii;
 use yii\base\Event;
@@ -31,8 +30,8 @@ class HostController extends \hipanel\base\CrudController
             'set-orientation' => [
                 'class' => OrientationAction::class,
                 'allowedRoutes' => [
-                    '@host/index'
-                ]
+                    '@host/index',
+                ],
             ],
             'index' => [
                 'class'     => IndexAction::class,

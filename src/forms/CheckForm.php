@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\forms;
 
@@ -9,13 +17,11 @@ use Yii;
 use yii\base\Model;
 
 /**
- * Class CheckForm
+ * Class CheckForm.
  *
  * @property string $fqdn fully-qualified domain name
  * @property string $domain domain name
  * @property string $zone domain zone
- *
- * @package hipanel\modules\domain\forms
  */
 class CheckForm extends Model
 {
@@ -32,7 +38,7 @@ class CheckForm extends Model
     public $isAvailable;
 
     /**
-     * @var Resource
+     * @var resource
      */
     public $resource;
 
@@ -60,7 +66,7 @@ class CheckForm extends Model
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load($data, $formName = '')
     {
@@ -77,26 +83,26 @@ class CheckForm extends Model
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['fqdn'], DomainPartValidator::class, 'enableIdn' => true, 'mutateAttribute' => false, 'message' => Yii::t('hipanel:domain', 'Domain name is invalid')],
             [['fqdn'], 'zoneIsAllowed'],
-            [['fqdn'], 'required']
+            [['fqdn'], 'required'],
         ];
     }
 
     public function zoneIsAllowed()
     {
-        if (!in_array($this->getZone(), $this->availableZones)) {
+        if (!in_array($this->getZone(), $this->availableZones, true)) {
             $this->fqdn = $this->getDomain() . '.' . static::DEFAULT_ZONE;
         }
     }
 
     /**
-     * Returns domain zone from the [[fqdn]]
+     * Returns domain zone from the [[fqdn]].
      * @return string
      */
     public function getZone()
@@ -107,18 +113,18 @@ class CheckForm extends Model
     }
 
     /**
-     * Returns domain name from the [[fqdn]]
+     * Returns domain name from the [[fqdn]].
      * @return string
      */
     public function getDomain()
     {
-        list($domain,) = explode('.', $this->fqdn, 2);
+        list($domain) = explode('.', $this->fqdn, 2);
 
         return $domain;
     }
 
     /**
-     * Sends API request to check whether domain is available and sets result to [[isAvailable]]
+     * Sends API request to check whether domain is available and sets result to [[isAvailable]].
      *
      * @return bool whether domain is available
      */

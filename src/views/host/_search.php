@@ -4,7 +4,7 @@ use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\client\widgets\combo\SellerCombo;
 
 /**
- * @var \hipanel\widgets\AdvancedSearch $search
+ * @var \hipanel\widgets\AdvancedSearch
  */
 ?>
 
@@ -16,7 +16,8 @@ use hipanel\modules\client\widgets\combo\SellerCombo;
     <?= $search->field('domain_like') ?>
 </div>
 
-<?php if (Yii::$app->user->can('support')) { ?>
+<?php if (Yii::$app->user->can('support')) {
+    ?>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <?= $search->field('client_id')->widget(ClientCombo::class) ?>
     </div>
@@ -24,4 +25,5 @@ use hipanel\modules\client\widgets\combo\SellerCombo;
     <div class="col-md-4 col-sm-6 col-xs-12">
         <?= $search->field('seller_id')->widget(SellerCombo::class) ?>
     </div>
-<?php } ?>
+<?php 
+} ?>

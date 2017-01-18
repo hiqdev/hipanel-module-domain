@@ -1,19 +1,17 @@
 <?php
-
-/*
+/**
  * Domain plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\models;
 
 use hipanel\helpers\StringHelper;
 use hipanel\validators\DomainValidator;
-use Yii;
 
 class Host extends \hipanel\base\Model
 {
@@ -45,5 +43,4 @@ class Host extends \hipanel\base\Model
             [['ips'], 'each', 'rule' => ['ip'], 'on' => ['create', 'update']],
         ];
     }
-
 }

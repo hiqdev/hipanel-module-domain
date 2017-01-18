@@ -60,7 +60,7 @@ $i = 0;
             if (isset($domainContact) && is_array($domainContact)) {
                 $model->{$type . '_id'} = $domainContact[$type];
             }
-            print $form->field($model, '[0]' . $type . '_id')->widget(ContactCombo::class, [
+            echo $form->field($model, '[0]' . $type . '_id')->widget(ContactCombo::class, [
                 'hasId' => true,
                 'inputOptions' => [
                     'id' => 'domain-0-' . $type . '_id',
@@ -74,9 +74,9 @@ $i = 0;
         </div>
         <?php
         if ($i % 2) {
-            print Html::tag('span', null, ['class' => 'clearfix']);
+            echo Html::tag('span', null, ['class' => 'clearfix']);
         }
-        $i++;
+        ++$i;
         ?>
     <?php endforeach ?>
 </div>

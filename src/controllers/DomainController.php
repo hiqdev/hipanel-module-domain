@@ -1,12 +1,11 @@
 <?php
-
-/*
+/**
  * Domain plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\controllers;
@@ -25,9 +24,7 @@ use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
-use hipanel\helpers\StringHelper;
 use hipanel\modules\client\models\Client;
-use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
@@ -35,14 +32,10 @@ use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Ns;
 use hiqdev\hiart\Collection;
-use hiqdev\hiart\ErrorResponseException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
 use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
-use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Response;
 
@@ -90,8 +83,8 @@ class DomainController extends \hipanel\base\CrudController
             'set-orientation' => [
                 'class' => OrientationAction::class,
                 'allowedRoutes' => [
-                    '@domain/index'
-                ]
+                    '@domain/index',
+                ],
             ],
             'add-to-cart-renewal' => [
                 'class' => AddToCartAction::class,
@@ -182,7 +175,7 @@ class DomainController extends \hipanel\base\CrudController
                             }
 
                             return ['@domain'];
-                        }
+                        },
                     ],
                     'error' => [
                         'class' => RedirectAction::class,
@@ -289,8 +282,8 @@ class DomainController extends \hipanel\base\CrudController
                     'save' => true,
                     'success' => [
                         'class' => ProxyAction::class,
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ],
                 'on beforeFetch' => function (Event $event) {
                     /** @var \hipanel\actions\SearchAction $action */

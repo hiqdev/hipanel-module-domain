@@ -1,12 +1,11 @@
 <?php
-
-/*
- * HiSite Domain module
+/**
+ * Domain plugin for HiPanel
  *
- * @link      https://github.com/hiqdev/hipanel-domain-checker
- * @package   hipanel-domain-checker
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 return [

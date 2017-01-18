@@ -1,20 +1,26 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\models;
 
 use Exception;
 use hipanel\validators\DomainValidator;
-use hipanel\validators\IdnValidator;
 use hiqdev\hiart\ActiveRecord;
 use SEOstats\SEOstats;
 use SEOstats\Services\Alexa;
 use Yii;
 
 /**
- * Class Whois represents WHOIS request for the domain
+ * Class Whois represents WHOIS request for the domain.
  *
  * @property string $domain
- * @package hipanel\modules\domain\models
  */
 class Whois extends ActiveRecord
 {
@@ -79,22 +85,22 @@ class Whois extends ActiveRecord
     public function getAlexa()
     {
         try {
-            $seostats = new SEOstats;
+            $seostats = new SEOstats();
             if ($seostats->setUrl($this->url)) {
                 return Alexa::getGlobalRank();
             }
         } catch (Exception $e) {
-            print $e->getMessage();
+            echo $e->getMessage();
         }
     }
 
     public function getYandex()
     {
         $str = file('http://bar-navig.yandex.ru/u?ver=2&show=32&url=' . $this->url);
-        if ($str == false) {
+        if ($str === false) {
             $ans = false;
         } else {
-            $is_find = preg_match("/value=\"(.\d*)\"/", join("", $str), $tic);
+            $is_find = preg_match("/value=\"(.\d*)\"/", implode('', $str), $tic);
 
             if ($is_find < 1) {
                 $ans = 0;
@@ -106,4 +112,3 @@ class Whois extends ActiveRecord
         return $ans;
     }
 }
-

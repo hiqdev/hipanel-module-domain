@@ -11,7 +11,6 @@ use yii\helpers\Html;
 /** @var \hipanel\modules\domain\forms\CheckForm $model */
 /** @var array $dropDownZonesOptions */
 /** @var array $results */
-
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
 
@@ -371,7 +370,7 @@ JS
                                         'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
                                         'class' => 'form-control input-lg',
                                         'name' => 'fqdn',
-                                        'value' => $model->domain
+                                        'value' => $model->domain,
                                     ]); ?>
                                 </div>
                             </div>

@@ -1,11 +1,18 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\widgets;
 
 use hipanel\modules\domain\helpers\EmailObfuscator;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
-use yii\captcha\Captcha;
 use yii\helpers\Html;
 
 class WhoisData extends Widget

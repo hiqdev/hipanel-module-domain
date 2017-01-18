@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace  hipanel\modules\domain\logic;
 
@@ -18,8 +26,6 @@ use hipanel\modules\domain\forms\CheckForm;
  * $generator->run(); // returns array of 2 CheckForm models: for `example.com` and `example.net` respectively.
  *
  * ```
- *
- * @package hipanel\modules\domain\logic
  */
 class DomainVariationsGenerator
 {
@@ -41,7 +47,7 @@ class DomainVariationsGenerator
     protected $availableZones;
 
     /**
-     * DomainVariationsGenerator constructor
+     * DomainVariationsGenerator constructor.
      *
      * @param string $domain The domain name. See [[domain]] description for details.
      * @param string $zone The zone. See [[zone]] description for details.
@@ -107,13 +113,13 @@ class DomainVariationsGenerator
     }
 
     /**
-     * Orders $variations to have the originally queried domain on top of the list
+     * Orders $variations to have the originally queried domain on top of the list.
      *
      * @param array $variations
      */
     protected function orderVariations(&$variations)
     {
-        if (in_array($this->getFqdn(), $variations)) {
+        if (in_array($this->getFqdn(), $variations, true)) {
             $variations = array_diff($variations, [$this->getFqdn()]);
             array_unshift($variations, $this->getFqdn());
         }

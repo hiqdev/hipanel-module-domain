@@ -1,12 +1,11 @@
 <?php
-
-/*
+/**
  * Domain plugin for HiPanel
  *
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -30,7 +29,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
     }
 
     /**
-     * @var integer[] The limit of days before expiration date for each domain zone, when domain can be renewed.
+     * @var integer[] the limit of days before expiration date for each domain zone, when domain can be renewed
      */
     protected $daysBeforeExpire = [
         'ru' => 56,
@@ -80,7 +79,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
     }
 
     /**
-     * Checks whether domain reached the limit of days before expiration date and can be renewed
+     * Checks whether domain reached the limit of days before expiration date and can be renewed.
      *
      * @param $attribute
      * @return bool

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\helpers;
 
@@ -10,7 +18,6 @@ class EmailObfuscator
      * default font size.
      *
      * @var int
-     * @access private
      */
     private $size = 11;
 
@@ -18,7 +25,6 @@ class EmailObfuscator
      * rotation in degrees.
      *
      * @var int
-     * @access private
      */
     private $rot = 0;
 
@@ -26,7 +32,6 @@ class EmailObfuscator
      * horizontal padding.
      *
      * @var int
-     * @access private
      */
     private $hpad = 0;
 
@@ -34,7 +39,6 @@ class EmailObfuscator
      * vertical padding.
      *
      * @var int
-     * @access private
      */
     private $vpad = 0;
 
@@ -42,7 +46,6 @@ class EmailObfuscator
      * transparency.
      *
      * @var boolean
-     * @access private
      */
     private $transparent = true;
 
@@ -50,7 +53,6 @@ class EmailObfuscator
      * foreground red.
      *
      * @var int
-     * @access private
      */
     private $red = 0;
 
@@ -58,7 +60,6 @@ class EmailObfuscator
      * foreground green.
      *
      * @var int
-     * @access private
      */
     private $grn = 0;
 
@@ -66,7 +67,6 @@ class EmailObfuscator
      * foreground blue.
      *
      * @var int
-     * @access private
      */
     private $blu = 0;
 
@@ -74,7 +74,6 @@ class EmailObfuscator
      * background red.
      *
      * @var int
-     * @access private
      */
     private $bg_red = 255;
 
@@ -82,7 +81,6 @@ class EmailObfuscator
      * background green.
      *
      * @var int
-     * @access private
      */
     private $bg_grn = 255;
 
@@ -90,10 +88,8 @@ class EmailObfuscator
      * background blue.
      *
      * @var int
-     * @access private
      */
     private $bg_blu = 255;
-
 
     /**
      * @var string the TrueType font file. This can be either a file path or path alias.
@@ -105,7 +101,7 @@ class EmailObfuscator
         $font = Yii::getAlias($this->fontFile);
 
         // get the font height.
-        $bounds = imagettfbbox($this->size, $this->rot, $font, "W");
+        $bounds = imagettfbbox($this->size, $this->rot, $font, 'W');
         if ($this->rot < 0) {
             $font_height = abs($bounds[7] - $bounds[1]);
         } elseif ($this->rot > 0) {

@@ -1,11 +1,18 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\repositories;
 
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
-use hipanel\modules\finance\models\Resource;
 use hipanel\modules\finance\models\Tariff;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -24,9 +31,11 @@ class DomainTariffRepository
             if (isset(Yii::$app->params['user.seller'])) {
                 $params = [
                     Yii::$app->params['user.seller'],
-                    null
+                    null,
                 ];
-            } else throw new InvalidConfigException('"seller" is must be set');
+            } else {
+                throw new InvalidConfigException('"seller" is must be set');
+            }
         } else {
             $params = [
                 Yii::$app->user->identity->seller,
@@ -56,7 +65,7 @@ class DomainTariffRepository
             return [];
         }
 
-        $resources = array_filter((array)$tariff->resources, function ($resource) use ($type) {
+        $resources = array_filter((array) $tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
 

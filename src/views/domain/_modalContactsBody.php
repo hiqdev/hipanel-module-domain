@@ -61,7 +61,7 @@ JS
 <?= Html::beginForm(Url::toRoute('set-contacts'), 'POST', ['id' => 'set-contacts-form', 'class' => 'form-horizontal']) ?>
 
 <?php foreach ($domainContacts as $k => $v) : ?>
-    <?php if (!in_array(Domain::getZone($v['domain']), ['ru', 'su', 'рф'])) : ?>
+    <?php if (!in_array(Domain::getZone($v['domain']), ['ru', 'su', 'рф'], true)) : ?>
         <?= Html::hiddenInput('id[]', $k) ?>
     <?php endif ?>
 <?php endforeach ?>

@@ -2,7 +2,6 @@
 
 /** @var string $sShotSrc */
 /** @var \hipanel\modules\domain\models\Domain $model */
-
 use hipanel\modules\dashboard\widgets\SmallBox;
 use hipanel\modules\domain\models\Whois;
 use hipanel\modules\domain\widgets\WhoisData;
@@ -11,17 +10,17 @@ use toriphes\lazyload\LazyLoad;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-$this->registerCss("
+$this->registerCss('
 .shot-img {
     background-color: #f4f4f4;
     width: 520px;
     height: 325px;
 }
-");
+');
 ?>
 
 <?php switch ($model->availability) : ?>
-<?php case Whois::REGISTRATION_UNAVAILABLE : ?>
+<?php case Whois::REGISTRATION_UNAVAILABLE: ?>
         <div class="row">
             <div class="col-md-4">
                 <div class="md-mb-10 text-center">
@@ -30,7 +29,7 @@ $this->registerCss("
                         'options' => [
                             'class' => 'img-thumbnail shot-img',
                             'alt' => $model->domain,
-                        ]
+                        ],
                     ]) ?>
                 </div>
             </div>
@@ -40,7 +39,7 @@ $this->registerCss("
                     'attributes' => [
                         [
                             'attribute' => 'domain',
-                            'value' => $model->getDomainAsUtf8()
+                            'value' => $model->getDomainAsUtf8(),
                         ],
                         [
                             'attribute' => 'created',
@@ -99,7 +98,7 @@ $this->registerCss("
                             'attribute' => 'city',
                             'visible' => !empty($model->city),
                         ],
-                    ]
+                    ],
                 ]) ?>
             </div>
         </div>
@@ -110,7 +109,7 @@ $this->registerCss("
         </div>
         <?php break; ?>
 
-    <?php case Whois::REGISTRATION_AVAILABLE : ?>
+    <?php case Whois::REGISTRATION_AVAILABLE: ?>
         <table class="table">
             <thead>
             <tr class="success">
@@ -130,7 +129,7 @@ $this->registerCss("
         </table>
         <?php break; ?>
 
-    <?php case Whois::REGISTRATION_UNSUPPORTED : ?>
+    <?php case Whois::REGISTRATION_UNSUPPORTED: ?>
         <table class="table">
             <thead>
             <tr class="danger">

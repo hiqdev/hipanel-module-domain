@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\menus;
 
@@ -41,7 +49,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'form' => 'notify-transfer-in',
                         'params' => [
                             'Domain[id]' => $this->model->id,
-                        ]
+                        ],
                     ],
                 ],
                 'encode' => false,
@@ -73,7 +81,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'form' => 'approve-transfer',
                         'params' => [
                             'Domain[id]' => $this->model->id,
-                        ]
+                        ],
                     ],
                 ],
             ],
@@ -96,7 +104,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'form' => 'cancel-transfer',
                         'params' => [
                             'Domain[id]' => $this->model->id,
-                        ]
+                        ],
                     ],
                 ],
                 'visible' => $this->model->state === Domain::STATE_INCOMING,
@@ -122,8 +130,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'Domain[id]' => $this->model->id,
                     ],
                 ],
-                'visible' =>
-                    Yii::$app->user->can('manage')
+                'visible' => Yii::$app->user->can('manage')
                     &&
                     in_array($this->model->state, [Domain::STATE_OK], true)
                     &&
@@ -131,8 +138,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                     &&
                     strtotime('+1 year', time()) > strtotime($this->model->expires)
                     &&
-                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true)
-                ,
+                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true),
                 'encode' => false,
             ],
             [

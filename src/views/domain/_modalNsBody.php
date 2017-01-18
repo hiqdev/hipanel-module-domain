@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 //\yii\helpers\VarDumper::dump($domainsList, 10, true);
-$this->registerJs(<<<JS
+$this->registerJs(<<<'JS'
 jQuery('.radio-check').iCheck({
     checkboxClass: 'icheckbox_minimal-blue',
     radioClass: 'iradio_minimal-blue'
@@ -81,7 +81,6 @@ foreach ($models as $id => $model) : ?>
                     'radioAllOff' => true,
                     'onText' => Yii::t('hipanel', 'For all'),
                 ],
-
             ]) ?>
         </div>
     </div>

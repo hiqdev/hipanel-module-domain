@@ -6,9 +6,8 @@ use yii\helpers\Url;
 use yii\web\View;
 
 /**
- * @var Domain $model
+ * @var Domain
  */
-
 $getPasswordUrl = Url::toRoute('get-password');
 $changePasswordUrl = Url::toRoute('regen-password');
 $errorMessage = Yii::t('hipanel', 'An error occurred. Try again please.');
@@ -111,7 +110,7 @@ JS
                         echo Html::button(Yii::t('hipanel:domain', 'Generate new'), [
                             'id' => 'change-password-button',
                             'class' => 'btn btn-default',
-                            'data-loading-text' => Yii::t('hipanel', 'loading...')
+                            'data-loading-text' => Yii::t('hipanel', 'loading...'),
                         ]);
                     }
                 ?>

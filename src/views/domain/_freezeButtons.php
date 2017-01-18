@@ -2,7 +2,6 @@
 
 use hipanel\widgets\ModalButton;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 ?>
 <?php if (!$model->isFreezed() && Yii::$app->user->can('domain.freeze')) : ?>
@@ -25,7 +24,7 @@ use yii\helpers\Url;
             'body' => Yii::t('hipanel:domain',
                 'Are you sure, that you want to freeze domain <b>{domain}</b>?',
                 ['domain' => $model->domain]
-            )
+            ),
         ]) ?>
     </li>
 <?php endif ?>
@@ -49,7 +48,7 @@ use yii\helpers\Url;
             'body' => Yii::t('hipanel:domain',
                 'Are you sure, that you want to unfreeze domain <b>{domain}</b>?',
                 ['domain' => $model->domain]
-            )
+            ),
         ]) ?>
     </li>
 <?php endif ?>
@@ -73,7 +72,7 @@ use yii\helpers\Url;
             'body' => Yii::t('hipanel:domain',
                 'Are you sure, that you want to freeze WHOIS-protect <b>{domain}</b>?',
                 ['domain' => $model->domain]
-            )
+            ),
         ]) ?>
     </li>
 <?php endif ?>
@@ -97,7 +96,7 @@ use yii\helpers\Url;
             'body' => Yii::t('hipanel:domain',
                 'Are you sure, that you want to unfreeze WHOIS-protect for domain <b>{domain}</b>?',
                 ['domain' => $model->domain]
-            )
+            ),
         ]) ?>
     </li>
 <?php endif ?>

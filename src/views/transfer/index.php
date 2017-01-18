@@ -18,7 +18,7 @@ $this->registerCss('
     text-align: center;
 }
 ');
-$this->registerJs(<<<JS
+$this->registerJs(<<<'JS'
     $('#domain-transfer-single').on('submit', function (e) {
         $(this).find('.tab-pane').not('.active').find('input:text, textarea').val('');
     });

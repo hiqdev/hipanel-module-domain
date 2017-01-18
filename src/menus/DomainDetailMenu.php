@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\menus;
 
@@ -54,7 +62,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
                         'pjax' => '0',
-                    ]
+                    ],
                 ],
                 'visible' => !$this->model->isRussianZones(),
             ],

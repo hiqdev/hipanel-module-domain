@@ -7,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var Domain $model
+ * @var Domain
  * @var Domain[] $models
  * @var bool $hasPincode
  */

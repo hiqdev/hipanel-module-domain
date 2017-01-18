@@ -3,7 +3,6 @@
 /** @var string $domain */
 /** @var array $availableZones */
 /** @var \hipanel\modules\domain\models\Whois $model */
-
 use hipanel\modules\domain\assets\WhoisAsset;
 use hipanel\widgets\ArraySpoiler;
 use yii\bootstrap\ActiveForm;
@@ -38,7 +37,7 @@ if ($model->domain !== null) {
                     'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
                     'class' => 'form-control',
                     'name' => 'domain',
-                    'value' => $model->getDomainAsUtf8()
+                    'value' => $model->getDomainAsUtf8(),
                 ]) ?>
 
                 <?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block xs-mb-10']) ?>
