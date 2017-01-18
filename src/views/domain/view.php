@@ -1,9 +1,8 @@
 <?php
 
 /**
- * @var $model \hipanel\modules\domain\models\Domain
+ * @var \hipanel\modules\domain\models\Domain
  */
-
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainDetailMenu;
@@ -24,7 +23,7 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'Domain detailed informatio
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerCss(<<<CSS
+$this->registerCss(<<<'CSS'
 .tab-pane {
     min-height: 300px;
 }
@@ -96,9 +95,11 @@ CSS
                             ],
                             'note',
                             'state',
-                            'whois_protected', 'is_secured',
-                            'created_date', 'expires',
-                            'autorenewal',
+                            'whois_protected_with_label',
+                            'is_secured_with_label',
+                            'created_date',
+                            'expires',
+                            'autorenewal_with_label',
                             [
                                 'attribute' => 'authCode',
                                 'label' => Yii::t('hipanel:domain', 'Authorization code'),
