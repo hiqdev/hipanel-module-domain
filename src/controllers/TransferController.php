@@ -98,7 +98,7 @@ class TransferController extends \hipanel\base\CrudController
 
             foreach ($models as $model) {
                 try {
-                    Domain::perform('CheckTransfer', $model->getAttributes(['domain', 'password']));
+                    Domain::perform('check-transfer', $model->getAttributes(['domain', 'password']));
                 } catch (ErrorResponseException $e) {
                     $model->addError('password', $e->getMessage());
                 }
@@ -139,7 +139,7 @@ class TransferController extends \hipanel\base\CrudController
 
             foreach ($models as $model) {
                 try {
-                    Domain::perform('CheckTransfer', $model->getAttributes(['domain', 'password']));
+                    Domain::perform('check-transfer', $model->getAttributes(['domain', 'password']));
                 } catch (ErrorResponseException $e) {
                     $model->addError('password', $e->getMessage());
                 }

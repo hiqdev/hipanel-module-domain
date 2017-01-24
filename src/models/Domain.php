@@ -166,7 +166,7 @@ class Domain extends \hipanel\base\Model
             [['pincode'], 'required', 'on' => ['push-with-pincode']],
             [['pincode'], function ($attribute, $params) {
                 try {
-                    $response = Client::perform('CheckPincode', [$attribute => $this->$attribute, 'id' => Yii::$app->user->id]);
+                    $response = Client::perform('check-pincode', [$attribute => $this->$attribute, 'id' => Yii::$app->user->id]);
                 } catch (Exception $e) {
                     $this->addError($attribute, Yii::t('hipanel:client', 'Wrong pincode'));
                 }

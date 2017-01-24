@@ -131,7 +131,7 @@ class CheckForm extends Model
     public function checkIsAvailable()
     {
         try {
-            $check = Domain::perform('Check', ['domains' => [$this->fqdn]], true);
+            $check = Domain::perform('check', ['domains' => [$this->fqdn]], ['batch' => true]);
             $this->isAvailable = $check[$this->fqdn] === 1;
         } catch (ErrorResponseException $e) {
             $this->isAvailable = false;

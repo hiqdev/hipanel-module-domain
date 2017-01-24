@@ -112,7 +112,7 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     /** @var Action $action */
                     $action = $event->sender;
-                    $pincodeData = Client::perform('HasPincode', ['id' => Yii::$app->user->id]);
+                    $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
                     $hasPincode = $pincodeData['pincode_enabled'];
                     $action->data['hasPincode'] = $hasPincode;
                     $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
@@ -126,7 +126,7 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     $id = Yii::$app->request->get('id', false);
                     if ($id) {
-                        $domainContacts = Domain::perform('GetContacts', ['ids' => [$id]], true);
+                        $domainContacts = Domain::perform('get-contacts', ['ids' => [$id]], ['batch' => true]);
                         return [
                             'domainContact' => reset($domainContacts),
                         ];
@@ -532,7 +532,7 @@ class DomainController extends \hipanel\base\CrudController
 
         if (!$model->hasErrors()) {
             try {
-                $return = Domain::perform('GetPassword', ['id' => $id, 'pincode' => $pincode]);
+                $return = Domain::perform('get-password', ['id' => $id, 'pincode' => $pincode]);
             } catch (\Exception $e) {
                 $return = array_merge($return, ['info' => $e->getMessage()]);
             }
@@ -548,7 +548,7 @@ class DomainController extends \hipanel\base\CrudController
         $ids = ArrayHelper::csplit(Yii::$app->request->post('ids'));
         if ($ids) {
             $model = $this->newModel(['scenario' => 'set-ns']);
-            $collection = (new Collection(['model' => $model]))->load($model::perform('GetNSs', ArrayHelper::make_sub($ids, 'id'), true));
+            $collection = (new Collection(['model' => $model]))->load($model::perform('get-NSs', ArrayHelper::make_sub($ids, 'id'), ['batch' => true]));
 
             return $this->renderAjax('_modalNsBody', [
                 'models' => $collection->models,
