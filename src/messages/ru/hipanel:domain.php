@@ -233,5 +233,12 @@ return [
     'Lock was changed' => 'Параметр "Защита" был успешно изменен',
     'Autorenewal has been changed' => 'Параметр "Автопродление" был успешно изменен',
 
+    'The contact data is visible to everybody in the Internet' => 'Контактные данные доступны всем в Интернете',
+    'The contact data is protected and not exposed' => 'Контактные данные защищены и не раскрываются',
+    'The domain can be transferred, edited or deleted' => 'Возможен трасфер, редактирование или удаление домена',
+    'The domain can not be transferred, edited or deleted' => 'Трансфер, редактирование и удаление домена запрещены',
+    'The domain will not be renewed automatically' => 'Домен не будет продлён автоматически',
+    'The domain will be renewed automatically if balance is sufficient' => 'Домен будет продлен автоматически при достаточном балансе',
+
     'Contacts is changed' => 'Контакты изменены',
 ];

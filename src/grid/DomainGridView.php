@@ -103,7 +103,7 @@ class DomainGridView extends BoxedGridView
                         0 => [
                             'style' => 'display: none;',
                             'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'The contact data is visible to everybody'),
+                            'content' => Yii::t('hipanel:domain', 'The contact data is visible to everybody in the Internet'),
                         ],
                         1 => [
                             'style' => 'display: none;',
