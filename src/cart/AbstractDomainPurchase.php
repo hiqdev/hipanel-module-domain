@@ -18,7 +18,7 @@ abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\Abst
     use \hipanel\base\ModelTrait;
 
     /** {@inheritdoc} */
-    public static function from()
+    public static function tableName()
     {
         return 'domain';
     }
