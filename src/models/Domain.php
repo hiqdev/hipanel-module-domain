@@ -19,7 +19,7 @@ use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\validators\NsValidator;
 use hipanel\validators\DomainValidator;
-use hiqdev\hiart\ErrorResponseException;
+use hiqdev\hiart\ResponseErrorException;
 use Yii;
 
 class Domain extends \hipanel\base\Model
@@ -332,7 +332,7 @@ class Domain extends \hipanel\base\Model
     {
         try {
             $response = $this->perform('CheckTransfer', $data, true);
-        } catch (ErrorResponseException $e) {
+        } catch (ResponseErrorException $e) {
             $response = $e->getMessage();
         }
 

@@ -10,7 +10,7 @@
 
 namespace hipanel\modules\domain\forms;
 
-use Guzzle\Plugin\ErrorResponse\Exception\ErrorResponseException;
+use Guzzle\Plugin\ErrorResponse\Exception\ResponseErrorException;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\models\Domain;
 use Yii;
@@ -133,7 +133,7 @@ class CheckForm extends Model
         try {
             $check = Domain::perform('check', ['domains' => [$this->fqdn]], ['batch' => true]);
             $this->isAvailable = $check[$this->fqdn] === 1;
-        } catch (ErrorResponseException $e) {
+        } catch (ResponseErrorException $e) {
             $this->isAvailable = false;
         }
 

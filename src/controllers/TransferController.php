@@ -16,7 +16,7 @@ use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
 use hiqdev\hiart\Collection;
-use hiqdev\hiart\ErrorResponseException;
+use hiqdev\hiart\ResponseErrorException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -99,7 +99,7 @@ class TransferController extends \hipanel\base\CrudController
             foreach ($models as $model) {
                 try {
                     Domain::perform('check-transfer', $model->getAttributes(['domain', 'password']));
-                } catch (ErrorResponseException $e) {
+                } catch (ResponseErrorException $e) {
                     $model->addError('password', $e->getMessage());
                 }
             }
@@ -140,7 +140,7 @@ class TransferController extends \hipanel\base\CrudController
             foreach ($models as $model) {
                 try {
                     Domain::perform('check-transfer', $model->getAttributes(['domain', 'password']));
-                } catch (ErrorResponseException $e) {
+                } catch (ResponseErrorException $e) {
                     $model->addError('password', $e->getMessage());
                 }
             }
