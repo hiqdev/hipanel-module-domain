@@ -199,7 +199,7 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
                     $action->getDataProvider()->query
-                        ->addSelect(['nsips', 'contacts'])
+                        ->addSelect(['nsips', 'contacts', 'foasent'])
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')
