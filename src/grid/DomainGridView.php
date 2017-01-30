@@ -52,18 +52,17 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'enableSorting' => false,
                 'value' => function ($model) {
-                    $out = State::widget([
-                        'model' => $model,
-                        'addField' => 'foa_sent_to',
-                    ]);
+                    $out = State::widget(compact('model'));
                     $status = [];
+                    if (($model->state == 'preincoming') && ($model->getAttribute('foa_sent_to') !== null)) {
+                        $out = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Yii::t('hipanel:domain', 'FOA sent to {email}', [ 'email' => $model->foa_sent_to]),  ['class' => 'label label-warning']);
+                    }
                     if ($model->is_freezed || $model->is_holded || $model->wp_freezed) {
                         $out .= '<br>';
                         $status[] = $model->is_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
                         $status[] = $model->wp_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
                         $status[] = $model->is_holded ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
                     }
-
                     return $out . implode('&nbsp;', $status);
                 },
             ],

@@ -241,4 +241,5 @@ return [
     'The domain will be renewed automatically if balance is sufficient' => 'Домен будет продлен автоматически при достаточном балансе',
 
     'Contacts is changed' => 'Контакты изменены',
+    'FOA sent to {email}' => 'Запрос подтверждения послан на {email}',
 ];

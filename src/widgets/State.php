@@ -21,18 +21,4 @@ class State extends \hipanel\widgets\Type
         'warning'   => [],
     ];
     public $field = 'state';
-
-    /**
-     * @var string
-     */
-    public $addField = null;
-
-    public function init () {
-        parent::init();
-        if ($this->addField !== null ) {
-            if ($this->model->getAttribute($this->addField)!==null) {
-                $this->label = $this->label . " " . $this->model->{$this->addField};
-            }
-        }
-    }
 }
