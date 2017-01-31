@@ -54,7 +54,7 @@ class DomainGridView extends BoxedGridView
                 'value' => function ($model) {
                     $out = State::widget(compact('model'));
                     $status = [];
-                    if (($model->state == 'preincoming') && ($model->getAttribute('foa_sent_to') !== null)) {
+                    if (($model->state === Domain::STATE_PREINCOMING) && ($model->getAttribute('foa_sent_to') !== null)) {
                         $out = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Yii::t('hipanel:domain', 'FOA sent to {email}', [ 'email' => $model->foa_sent_to]),  ['class' => 'label label-warning']);
                     }
                     if ($model->is_freezed || $model->is_holded || $model->wp_freezed) {
