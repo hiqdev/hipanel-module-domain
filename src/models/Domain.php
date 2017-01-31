@@ -271,7 +271,7 @@ class Domain extends \hipanel\base\Model
         return (bool) $this->is_holded;
     }
 
-    public function scenarioCommands()
+    public function scenarioActions()
     {
         return [
             'get-zones' => ['aux', 'get-zones'],
