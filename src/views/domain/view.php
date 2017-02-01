@@ -8,6 +8,8 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainDetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
+use hipanel\modules\domain\models\Domain;
+use hiqdev\yii2\menus\widgets\Menu;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
@@ -95,6 +97,17 @@ CSS
                             ],
                             'note',
                             'state',
+                            [
+                                'format' => 'html',
+                                'attribute' => 'foa_sent_to',
+                                'filter' => false,
+                                'attribute' => 'foa_sent_to',
+                                'visible' => $model->state === Domain::STATE_PREINCOMING,
+                                'label' => Yii::t('hipanel:domain', 'FOA sent'),
+                                'value' => function ($model) {
+                                    return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
+                                }
+                            ],
                             'whois_protected_with_label',
                             'is_secured_with_label',
                             'created_date',
