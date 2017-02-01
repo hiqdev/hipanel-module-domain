@@ -60,7 +60,6 @@ class DomainGridView extends BoxedGridView
                         $status[] = $model->wp_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
                         $status[] = $model->is_holded ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
                     }
-
                     return $out . implode('&nbsp;', $status);
                 },
             ],
