@@ -24,6 +24,8 @@ class CheckController extends \hipanel\base\CrudController
      */
     protected $domainTariffRepository;
 
+    public $defaultAction = 'check-domain';
+
     public function __construct($id, Module $module, DomainTariffRepository $domainTariffRepository, array $config = [])
     {
         parent::__construct($id, $module, $config);
