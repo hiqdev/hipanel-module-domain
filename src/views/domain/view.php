@@ -8,8 +8,6 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainDetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
-use hipanel\modules\domain\models\Domain;
-use hiqdev\yii2\menus\widgets\Menu;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;

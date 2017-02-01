@@ -65,7 +65,6 @@ class DomainGridView extends BoxedGridView
             ],
             'foa_sent_to' => [
                 'format' => 'html',
-                'attribute' => 'foa_sent_to',
                 'filter' => false,
                 'visible' => function ($model) {
                     return $model->state === Domain::STATE_PREINCOMING;
