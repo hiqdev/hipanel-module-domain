@@ -110,6 +110,7 @@ class Domain extends \hipanel\base\Model
                 'disable-hold',
                 'enable-w-p-freeze',
                 'disable-w-p-freeze',
+                'notify-transfer-in',
             ]],
 
             // Check domain
