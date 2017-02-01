@@ -63,6 +63,17 @@ class DomainGridView extends BoxedGridView
                     return $out . implode('&nbsp;', $status);
                 },
             ],
+            'foa_sent_to' => [
+                'format' => 'html',
+                'attribute' => 'foa_sent_to',
+                'filter' => false,
+                'visible' => function ($model) {
+                    return $model->state === Domain::STATE_PREINCOMING;
+                },
+                'value' => function ($model) {
+                    return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
+                }
+            ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'whois_protected',
