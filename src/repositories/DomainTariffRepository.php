@@ -14,42 +14,39 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
 use hipanel\modules\finance\models\Tariff;
-use Yii;
-use yii\base\InvalidConfigException;
+use yii\base\Application;
 
 class DomainTariffRepository
 {
+    protected $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     /**
      * Returns the tariff for the domain operations
      * Caches the API request for 3600 seconds and depends on client id and seller login.
-     * @throws \yii\base\InvalidConfigException
      * @return Tariff
      */
     public function getTariff()
     {
-        if (Yii::$app->user->isGuest) {
-            if (isset(Yii::$app->params['user.seller'])) {
-                $params = [
-                    Yii::$app->params['user.seller'],
-                    null,
-                ];
-            } else {
-                throw new InvalidConfigException('"seller" is must be set');
-            }
+        if ($this->app->user->isGuest) {
+            $seller = $this->app->user->seller;
+            $client_id = null;
         } else {
-            $params = [
-                Yii::$app->user->identity->seller,
-                Yii::$app->user->id,
-            ];
+            $seller = $this->app->user->identity->seller;
+            $client_id = $this->app->user->id;
         }
 
-        return Yii::$app->getCache()->getTimeCached(3600, $params, function ($seller, $client_id) {
+        return $this->app->get('cache')->getOrSet([__METHOD__, $seller, $client_id], function () use ($seller, $client_id) {
             return Tariff::find(['scenario' => 'get-available-info'])
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
                 ->andFilterWhere(['seller' => $seller])
                 ->one();
-        });
+        }, 3600);
     }
 
     /**
