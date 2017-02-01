@@ -45,6 +45,7 @@ class DomainTariffRepository
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
                 ->andFilterWhere(['seller' => $seller])
+                ->andWhere(['with_resources' => true])
                 ->one();
         }, 3600);
     }
