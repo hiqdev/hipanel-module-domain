@@ -535,7 +535,7 @@ class Domain extends \hipanel\base\Model
 
     public function isPushable()
     {
-        return !$this->isRussianZones();
+        return !$this->isRussianZones() && (($this->state === self::STATE_OK) || Yii::$app->user->can('domain.force-push'));
     }
 
     public function isRussianZones()
