@@ -241,4 +241,10 @@ return [
     'The domain will be renewed automatically if balance is sufficient' => 'Домен будет продлен автоматически при достаточном балансе',
 
     'Contacts is changed' => 'Контакты изменены',
+
+    'Child name server or glue record' => 'Дочерний сервер имен или Glue record (приклеивающая запись)',
+    'You can assign up to 13 IPv4 and/or 13 IPv6 addresses to name server.' => 'Вы можете назначить до 13 IPv4 и / или 13 IPv6-адресов серверов имен.',
+    'Child Name Servers can be only created by owner of the primary domain name.' => 'Дочерний Сервер Имен может быть создан только владельцем первичного доменного имени.',
+    'That is you can only create ns1.my-domain.com if you are owner of my-domain.com.' => 'То есть вы можете создать ns1.my-domain.com, только если вы являетесь владельцем my-domain.com.',
+    'Examples' => 'Примеры',
 ];
