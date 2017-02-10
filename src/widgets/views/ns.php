@@ -7,13 +7,15 @@ use hipanel\widgets\Pjax;
 use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
 // TODO: To delete this
 NSyncPluginAsset::register($this);
 
-/*
+/**
+ * @var \yii\web\View
  * @var array|string $actionUrl url to send the form
  */
 ?>
@@ -129,26 +131,21 @@ $(document).on('pjax:complete', function(event) {
                                                 'formElementSelector' => '.item',
                                                 'inputOptions' => [
                                                     'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
-                                                    'placeholder' => $nsModel->getAttributeLabel('ip'),
                                                     'data-attribute' => 'ip',
-                                                    'value' => implode(',', (array) $nsModel->ip),
                                                 ],
+                                                'data' => $nsModel->ip ? array_combine($nsModel->ip, $nsModel->ip) : [],
+                                                'multiple' => true,
                                                 'pluginOptions' => [
                                                     'select2Options' => [
-                                                        'tags' => [],
-                                                        'multiple' => true,
-                                                        'tokenSeparator' => [';', ',', ' '],
-                                                        'minimumResultsForSearch' => -1,
-                                                        'createSearchChoice' => new JsExpression('
-                                                            function(term, data) {
-                                                                return {id:term, text:term};
-                                                            }
-                                                        '),
-                                                        'formatNoMatches' => new JsExpression('
-                                                            function (term) {
-                                                                return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
-                                                            }
-                                                        '),
+                                                        'tags' => true,
+                                                        'tokenSeparators' => [';', ',', ' '],
+                                                        'minimumResultsForSearch' => new JsExpression('Infinity'),
+                                                        'placeholder' => $nsModel->getAttributeLabel('ip'),
+                                                        'language' => [
+                                                            'noResults' => new JsExpression("function (params) {
+                                                                return " . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ";
+                                                            }")
+                                                        ]
                                                     ],
                                                 ],
                                             ])->label(false) ?>

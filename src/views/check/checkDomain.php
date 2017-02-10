@@ -385,6 +385,11 @@ JS
                                             'class' => 'form-control input-lg',
                                             'name' => 'zone',
                                         ],
+                                        'pluginOptions' => [
+                                            'select2Options' => [
+                                                'containerCssClass' => 'form-control input-lg'
+                                            ]
+                                        ]
                                     ]); ?>
                                 </div>
                             </div>

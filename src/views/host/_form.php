@@ -5,8 +5,13 @@ use hipanel\widgets\DynamicFormWidget;
 use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
+
+/**
+ * @var \yii\web\View
+ */
 
 ?>
 
@@ -79,26 +84,26 @@ use yii\web\JsExpression;
                         <div class="col-sm-5">
                             <?= $form->field($model, "[$i]ips")->widget(StaticCombo::class, [
                                 'formElementSelector' => '.item',
-                                'inputOptions' => [
-                                    'placeholder' => Yii::t('hipanel', 'IP addresses'),
-                                    'value' => is_array($model->ips) ? implode(',', $model->ips) : $model->ips,
-                                ],
+                                'multiple' => true,
+                                'data' => $model->ips ? array_combine($model->ips, $model->ips) : [],
                                 'pluginOptions' => [
                                     'select2Options' => [
-                                        'tags' => [],
-                                        'multiple' => true,
-                                        'tokenSeparator' => [';', ',', ' '],
-                                        'minimumResultsForSearch' => -1,
-                                        'createSearchChoice' => new JsExpression('
-                                    function(term, data) {
-                                        return {id:term, text:term};
-                                    }
-                                '),
-                                        'formatNoMatches' => new JsExpression('
-                                    function (term) {
-                                        return "' . Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma') . '";
-                                    }
-                                '),
+                                        'placeholder' => Yii::t('hipanel', 'IP addresses'),
+                                        'tags' => true,
+                                        'tokenSeparators' => [';', ',', ' '],
+                                        'minimumResultsForSearch' => new JsExpression('Infinity'),
+                                        'createTag' => new JsExpression("function (query) {
+                                            return {
+                                                id: query.term,
+                                                text: query.term,
+                                                tag: true
+                                            };
+                                        }"),
+                                        'language' => [
+                                            'noResults' => new JsExpression("function (params) {
+                                                return " . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ";
+                                            }")
+                                        ]
                                     ],
                                 ],
                             ])->label(false)->hint(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>

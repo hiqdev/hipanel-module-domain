@@ -1,6 +1,3 @@
-/**
- * Created by tofid on 23.11.15.
- */
 ;
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function(suffix) {
@@ -111,7 +108,7 @@ if (typeof String.prototype.endsWith !== 'function') {
                     that.updateInlineForm(event);
                 }
             });
-            $(this.element).find(this.options.dynamicFormWidgetContainer).on('change keyup input', 'input', function (event) {
+            $(this.element).find(this.options.dynamicFormWidgetContainer).on('change', 'select', function (event) {
                 that.updateInlineForm(event);
             });
         },
@@ -140,11 +137,17 @@ if (typeof String.prototype.endsWith !== 'function') {
                 var stateItem = state.shift();
                 that.getNameInput(element).val(stateItem.name);
                 if (that.isChildDomain(stateItem.name) && stateItem.ip) {
-                    that.getIpInput(element).select2('val', stateItem.ip.split(';').filter(
-                        function (val) {
+                    var ips = stateItem.ip.split(';').filter(function (val) {
                             return val.length;
-                        }
-                    ));
+                        }),
+                        data = $.map(ips, function (value) {
+                            return {
+                                'id': value,
+                                'text': value
+                            }
+                        });
+
+                    that.getIpInput(element).data('field').setData(data);
                 }
             });
         },
@@ -161,7 +164,7 @@ if (typeof String.prototype.endsWith !== 'function') {
                 var ipInput = this.getIpInput(elem);
                 items.push({
                     name: this.getNameInput(elem).val(),
-                    ip: ipInput.data('select2') ? ipInput.select2('val').join(';') : ''
+                    ip: ipInput.val() ? ipInput.val().join(';') : ''
                 });
             }.bind(this));
 
@@ -171,12 +174,6 @@ if (typeof String.prototype.endsWith !== 'function') {
             var df = $(this.element).find(this.options.dynamicFormWidgetContainer);
             var df_options = window[df.data('dynamicform')];
             df.yiiDynamicForm("addItem", df_options, event, $(df).find(this.options.dynamicFormWidgetInsertButton).eq(-1));
-            //var lastItem = df.find(this.options.dynamicFormWidgetItem).eq(-1);
-            //this.getIpInput(lastItem).select2({
-            //    'tags': true,
-            //    'tokenSeparator': [',', ' ', ';'],
-            //    'minimumResultsForSearch': -1
-            //});
         },
         deleteDynamicItem: function (event) {
             var df = $(this.element).find(this.options.dynamicFormWidgetContainer);
@@ -187,7 +184,7 @@ if (typeof String.prototype.endsWith !== 'function') {
             return $(row).find('input[data-attribute="name"]');
         },
         getIpInput: function (row) {
-            return $(row).find('input[data-attribute="ip"]');
+            return $(row).find('select[data-attribute="ip"]');
         }
     };
 
