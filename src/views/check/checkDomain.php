@@ -18,6 +18,12 @@ $this->title = Yii::t('hipanel:domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss('
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single.input-lg {
+    height: 46px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+}
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
     background: transparent!important;
     color: #444!important;
