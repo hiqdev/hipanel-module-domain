@@ -41,7 +41,8 @@ class DomainTariffRepository
         }
 
         return $this->app->get('cache')->getOrSet([__METHOD__, $seller, $client_id], function () use ($seller, $client_id) {
-            return Tariff::find(['scenario' => 'get-available-info'])
+            return Tariff::find()
+                ->action('get-available-info')
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
                 ->andFilterWhere(['seller' => $seller])
