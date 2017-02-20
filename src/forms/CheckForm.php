@@ -10,9 +10,9 @@
 
 namespace hipanel\modules\domain\forms;
 
-use Guzzle\Plugin\ErrorResponse\Exception\ResponseErrorException;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\models\Domain;
+use hiqdev\hiart\ResponseErrorException;
 use Yii;
 use yii\base\Model;
 
