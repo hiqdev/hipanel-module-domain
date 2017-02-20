@@ -15,6 +15,7 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
 use hipanel\modules\finance\models\Tariff;
 use yii\base\Application;
+use yii\web\UnprocessableEntityHttpException;
 
 class DomainTariffRepository
 {
@@ -41,13 +42,19 @@ class DomainTariffRepository
         }
 
         return $this->app->get('cache')->getOrSet([__METHOD__, $seller, $client_id], function () use ($seller, $client_id) {
-            return Tariff::find()
+            $res = Tariff::find()
                 ->action('get-available-info')
                 ->joinWith('resources')
                 ->andFilterWhere(['type' => 'domain'])
                 ->andFilterWhere(['seller' => $seller])
                 ->andWhere(['with_resources' => true])
-                ->one();
+                ->all();
+
+            if (is_array($res) && !empty($res)) {
+                return reset($res);
+            } else {
+                throw  new UnprocessableEntityHttpException('Could not find any Tariff.');
+            }
         }, 3600);
     }
 
@@ -64,7 +71,7 @@ class DomainTariffRepository
             return [];
         }
 
-        $resources = array_filter((array) $tariff->resources, function ($resource) use ($type) {
+        $resources = array_filter((array)$tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
 
