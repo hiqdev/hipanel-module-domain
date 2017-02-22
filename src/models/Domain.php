@@ -111,6 +111,7 @@ class Domain extends \hipanel\base\Model
                 'enable-w-p-freeze',
                 'disable-w-p-freeze',
                 'notify-transfer-in',
+                'delete',
             ]],
 
             // Check domain
