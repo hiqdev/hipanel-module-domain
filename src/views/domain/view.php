@@ -95,7 +95,6 @@ CSS
                             ],
                             'note',
                             'state',
-                            'foa_sent_to',
                             'whois_protected_with_label',
                             'is_secured_with_label',
                             'created_date',

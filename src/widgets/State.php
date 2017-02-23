@@ -10,6 +10,8 @@
 
 namespace hipanel\modules\domain\widgets;
 
+use yii\helpers\Html;
+
 class State extends \hipanel\widgets\Type
 {
     /** {@inheritdoc} */
@@ -21,4 +23,22 @@ class State extends \hipanel\widgets\Type
         'warning'   => [],
     ];
     public $field = 'state';
+    public $addField = 'foa_sent_to';
+
+    public function init()
+    {
+        parent::init();
+
+        if (($this->model->state !== $this->model::STATE_PREINCOMING) || !$this->model->hasAttribute($this->addField))
+        {
+            return ;
+        }
+
+        if ($this->model->{$this->addField} === null)
+        {
+            return ;
+        }
+
+        $this->label .= " " . $this->model->{$this->addField};
+    }
 }
