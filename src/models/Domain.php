@@ -111,6 +111,7 @@ class Domain extends \hipanel\base\Model
                 'enable-w-p-freeze',
                 'disable-w-p-freeze',
                 'notify-transfer-in',
+                'delete',
             ]],
 
             // Check domain
@@ -536,6 +537,11 @@ class Domain extends \hipanel\base\Model
     public function isPushable()
     {
         return !$this->isRussianZones() && (($this->state === self::STATE_OK) || Yii::$app->user->can('domain.force-push'));
+    }
+
+    public function isDeleteble()
+    {
+        return in_array($this->state, [self::STATE_OK, self::STATE_EXPIRED], true) && Yii::$app->user->can('domain.delete');
     }
 
     public function isRussianZones()
