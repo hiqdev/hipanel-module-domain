@@ -23,22 +23,25 @@ class State extends \hipanel\widgets\Type
         'warning'   => [],
     ];
     public $field = 'state';
-    public $addField = 'foa_sent_to';
-
+    public $foaField = 'foa_sent_to';
+    
     public function init()
     {
         parent::init();
-
-        if (($this->model->state !== $this->model::STATE_PREINCOMING) || !$this->model->hasAttribute($this->addField))
-        {
-            return ;
+        
+        $this->addFoaStatus();
+    }
+    
+    protected function addFoaStatus()
+    {        
+        if (!$this->model->hasAttribute($this->foaField)) {
+            return;
+        }
+        
+        if ($this->model->state !== $this->model::STATE_PREINCOMING || $this->model->{$this->foaField} === null) {
+            return;
         }
 
-        if ($this->model->{$this->addField} === null)
-        {
-            return ;
-        }
-
-        $this->label .= " " . $this->model->{$this->addField};
+        $this->label .= " " . $this->model->{$this->foaField};
     }
 }
