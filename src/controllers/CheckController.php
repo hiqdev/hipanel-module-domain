@@ -16,6 +16,7 @@ use hipanel\modules\domain\logic\DomainVariationsGenerator;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
 use Yii;
 use yii\base\Module;
+use yii\web\NotFoundHttpException;
 
 class CheckController extends \hipanel\base\CrudController
 {
@@ -35,7 +36,13 @@ class CheckController extends \hipanel\base\CrudController
 
     private function getAvailableZones()
     {
-        return $this->domainTariffRepository->getAvailableZones();
+        $zones = $this->domainTariffRepository->getAvailableZones();
+
+        if ($zones === []) {
+            throw new NotFoundHttpException('No available domain zones found.');
+        }
+
+        return $zones;
     }
 
     private function getAvailableZonesList()

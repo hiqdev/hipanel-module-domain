@@ -29,7 +29,7 @@ class DomainTariffRepository
     /**
      * Returns the tariff for the domain operations
      * Caches the API request for 3600 seconds and depends on client id and seller login.
-     * @return Tariff
+     * @return Tariff|null The domain tariff or boolean `false` when no tariff was found
      */
     public function getTariff()
     {
@@ -52,9 +52,9 @@ class DomainTariffRepository
 
             if (is_array($res) && !empty($res)) {
                 return reset($res);
-            } else {
-                throw  new UnprocessableEntityHttpException('Could not find any Tariff.');
             }
+
+            return null;
         }, 3600);
     }
 
@@ -82,6 +82,11 @@ class DomainTariffRepository
         return $resources;
     }
 
+    /**
+     * Method provides list of domain zones available for registration.
+     *
+     * @return array|null array of zones or `null`, when no zones were found.
+     */
     public function getAvailableZones()
     {
         $tariff = $this->getTariff();
