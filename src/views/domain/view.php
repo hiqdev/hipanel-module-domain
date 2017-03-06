@@ -144,7 +144,7 @@ CSS
 
                 <!-- DNS records -->
                 <div class="tab-pane" id="dns-records">
-                    <?= DomainGridView::detailView([
+                    <?php /* DomainGridView::detailView([
                         'model' => $model,
                         'boxed' => false,
                         'dataProvider' => new ArrayDataProvider(['allModels' => [$config['model'], 'pagination' => false]]),
@@ -170,23 +170,8 @@ CSS
                                     'onColor' => 'info',
                                 ],
                             ],
-//                            [
-//                                'label' => Yii::t('hipanel:domain', 'Premium package autorenewal'),
-//                                'value' => BootstrapSwitch::widget([
-//                                    'model' => $model,
-//                                    'attribute' => 'premium_autorenewal',
-//                                    'options' => [
-//                                        'label' => false
-//                                    ],
-//                                    'pluginOptions' => [
-//                                        'inlineLabel' => false,
-//                                        'labelText' => false
-//                                    ]
-//                                ]),
-//                                'format' => 'raw',
-//                            ]
                         ],
-                    ]); ?>
+                    ]); */ ?>
                     <?php if (Yii::$app->hasModule('dns')) {
                         echo DnsZoneEditWidget::widget([
                             'domainId' => $model->id,
