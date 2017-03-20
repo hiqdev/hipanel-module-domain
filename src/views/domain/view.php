@@ -1,7 +1,9 @@
 <?php
 
 /**
- * @var \hipanel\modules\domain\models\Domain
+ * @var \yii\web\View $this
+ * @var \hipanel\modules\domain\models\Domain $model
+ * @var boolean $hasPincode
  */
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
@@ -11,10 +13,7 @@ use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\Box;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
-use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
-use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
@@ -103,8 +102,11 @@ CSS
                             [
                                 'attribute' => 'authCode',
                                 'label' => Yii::t('hipanel:domain', 'Authorization code'),
-                                'value' => function ($model) {
-                                    return AuthCode::widget(['model' => $model]);
+                                'value' => function ($model) use ($hasPincode) {
+                                    return AuthCode::widget([
+                                        'model' => $model,
+                                        'askPincode' => !$hasPincode,
+                                    ]);
                                 },
                                 'format' => 'raw',
                                 'visible' => !$model->isRussianZones(),

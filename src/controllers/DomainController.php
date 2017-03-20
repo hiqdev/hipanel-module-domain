@@ -112,8 +112,8 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     /** @var Action $action */
                     $action = $event->sender;
-                    $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
-                    $hasPincode = $pincodeData['pincode_enabled'];
+                    $hasPincode = $this->checkUserHasPincode();
+
                     $action->data['hasPincode'] = $hasPincode;
                     $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
                 },
@@ -131,6 +131,8 @@ class DomainController extends \hipanel\base\CrudController
                             'domainContact' => reset($domainContacts),
                         ];
                     }
+
+                    return [];
                 },
             ],
             'bulk-set-contacts' => [
@@ -208,6 +210,7 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
+                        'hasPincode' => $this->checkUserHasPincode()
                     ];
                 },
             ],
@@ -522,11 +525,11 @@ class DomainController extends \hipanel\base\CrudController
         $id = Yii::$app->request->post('id');
         $pincode = Yii::$app->request->post('pincode');
 
-        $model = DynamicModel::validateData(compact('id', 'pincode'), [
-            [['id', 'pincode'], 'required'],
+        $model = DynamicModel::validateData(compact('id', 'pincode'), array_filter([
             [['id'], 'integer'],
             [['pincode'], 'trim'],
-        ]);
+            $this->checkUserHasPincode() ? [['id', 'pincode'], 'required'] : null,
+        ]));
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -556,5 +559,13 @@ class DomainController extends \hipanel\base\CrudController
         } else {
             return Yii::t('hipanel', 'No items selected');
         }
+    }
+
+    protected function checkUserHasPincode()
+    {
+        return Yii::$app->cache->getOrSet(['user-pincode-enabled', Yii::$app->user->id], function () {
+            $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
+            return $pincodeData['pincode_enabled'];
+        }, 3600);
     }
 }

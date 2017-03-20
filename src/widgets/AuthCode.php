@@ -10,15 +10,34 @@
 
 namespace hipanel\modules\domain\widgets;
 
+use hipanel\modules\domain\models\Domain;
+use hipanel\widgets\PincodePrompt;
+
 class AuthCode extends \yii\base\Widget
 {
+    /**
+     * @var Domain
+     */
     public $model;
+
+    /**
+     * @var boolean whether to ask pincode
+     */
+    public $askPincode;
 
     public function run()
     {
-        return $this->render('AuthCode', [
+        $this->registerClientScript();
+
+        return $this->render('auth-code', [
             'model' => $this->model,
             'view' => $this->getView(),
+            'askPincode' => $this->askPincode,
         ]);
+    }
+
+    protected function registerClientScript()
+    {
+        echo PincodePrompt::widget();
     }
 }

@@ -56,6 +56,8 @@ return [
     'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.' => 'Письмо отправлено на емейл указанный в WHOIS. Чтобы начать трансфер нажмите на ссылку в письме.',
     'For separation of the domain and code use a space, a comma or a semicolon.' => 'Для отделения домена от пароя используйте пробел, запятую или точку с запятой',
     'each pair (domain + code) should be written with a new line' => 'каждая пара (домен + пароль) должна быть написана с новой строки',
+    'Getting code...' => 'Получение кода...',
+    'Code generation...' => 'Генерация кода...',
 
     'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account' => 'Домен будет продлён на один год автоматически за неделю до окончания срока при наличии средств на счету',
     'This operation pushes the domain to another user irrevocably. You can not bring it back.' => 'Данная операция передаёт домен другому пользователю необратимо. Вы не сможете отменить эту операцию.',
