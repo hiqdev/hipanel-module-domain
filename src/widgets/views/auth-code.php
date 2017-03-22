@@ -33,7 +33,7 @@ use yii\web\View;
                     'data-id' => $model->id,
                     'data-url' => Url::to(['@domain/get-password']),
                     'data-error-message' => Yii::t('hipanel', 'An error occurred. Try again please.'),
-                    'data-ask-pincode' => $askPincode
+                    'data-ask-pincode' => (int) $askPincode
                 ]); ?>
                 <?php if ($model->canRenew()) : ?>
                     <?= Html::button(Yii::t('hipanel:domain', 'Generate new'), [
@@ -75,6 +75,7 @@ $('#get-authcode-button').on('click', function() {
             data: data,
             success: function (data) {
                 if (data.status == 'error') {
+                    btn.button('reset');
                     hipanel.notify.error(data.info);
                     return;
                 }
@@ -88,7 +89,6 @@ $('#get-authcode-button').on('click', function() {
                 authCode.text(data.password);
             },
             error: function () {
-                btn.button('reset');
                 hipanel.notify.error(btn.data('error-message'));
             }
         });

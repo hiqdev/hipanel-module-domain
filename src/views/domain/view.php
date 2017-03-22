@@ -105,7 +105,7 @@ CSS
                                 'value' => function ($model) use ($hasPincode) {
                                     return AuthCode::widget([
                                         'model' => $model,
-                                        'askPincode' => !$hasPincode,
+                                        'askPincode' => $hasPincode,
                                     ]);
                                 },
                                 'format' => 'raw',
@@ -113,7 +113,6 @@ CSS
                             ],
                         ],
                     ]) ?>
-
                 </div>
 
                 <!-- NS records -->
