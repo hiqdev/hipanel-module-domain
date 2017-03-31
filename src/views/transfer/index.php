@@ -37,13 +37,6 @@ $id = $model->id ?: 0;
     ]) ?>
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-solid">
-                <div class="box-body">
-                    <?= Html::submitButton('<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Transfer'), ['class' => 'btn btn-success']); ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#single"
@@ -111,6 +104,13 @@ $id = $model->id ?: 0;
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-widget">
+                <div class="box-body">
+                    <?= Html::submitButton('<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Transfer'), ['class' => 'btn btn-success']); ?>
+                </div>
             </div>
         </div>
 
