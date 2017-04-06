@@ -55,15 +55,12 @@ $(document).on('pjax:complete', function(event) {
         <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
     <?php endforeach; ?>
 <?php endif; ?>
-<div class="callout callout-warning">
-    <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;<?= Yii::t('hipanel', 'Notice') ?></h4>
-    <p>
-        <?= Yii::t('hipanel:domain', 'With this form you can assign the authoritative name servers for your domain.') ?>
-        <br>
-        <?= Yii::t('hipanel:domain', 'IP addresses can be assigned to child name servers only.') ?>
-        <?= Yii::t('hipanel:domain', 'Child name servers are created or changed automatically according to specified data.') ?>
-    </p>
-</div>
+<blockquote class="text-warning">
+    <?= Yii::t('hipanel:domain', 'With this form you can assign the authoritative name servers for your domain.') ?>
+    <br>
+    <?= Yii::t('hipanel:domain', 'IP addresses can be assigned to child name servers only.') ?>
+    <?= Yii::t('hipanel:domain', 'Child name servers are created or changed automatically according to specified data.') ?>
+</blockquote>
 
 <div class="row" style="margin-top: 15pt;">
     <div class="col-md-10 inline-form-selector">
