@@ -80,12 +80,6 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
-            'set-orientation' => [
-                'class' => OrientationAction::class,
-                'allowedRoutes' => [
-                    '@domain/index',
-                ],
-            ],
             'add-to-cart-renewal' => [
                 'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,

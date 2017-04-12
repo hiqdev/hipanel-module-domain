@@ -27,12 +27,6 @@ class HostController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
-            'set-orientation' => [
-                'class' => OrientationAction::class,
-                'allowedRoutes' => [
-                    '@host/index',
-                ],
-            ],
             'index' => [
                 'class'     => IndexAction::class,
                 'filterStorageMap' => [
