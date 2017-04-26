@@ -49,7 +49,7 @@ CSS
                 'filterModel'  => $model,
                 'columns'      => [
                     'checkbox',
-                    'domain', 'actions', 'client', 'seller',
+                    'domain', 'actions', 'client_like', 'seller',
                     'state', 'whois_protected', 'is_secured',
                     'created_date', 'expires', 'autorenewal',
                 ],
