@@ -23,6 +23,7 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
                 'linkOptions' => ['data-action' => 'sync'],
                 'visible' => Yii::$app->user->can('support'),
             ],
+            '<li role="presentation" class="divider"></li>',
             [
                 'label' => Yii::t('hipanel:domain', 'Renew'),
                 'url' => '#',
@@ -33,7 +34,7 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Push domain'),
                 'url' => '#bulk-domain-push-modal',
                 'linkOptions' => ['data-toggle' => 'modal'],
-                'visible' => Yii::$app->user->can('domain.pay'),
+                'visible' => Yii::$app->user->can('domain.pay') || Yii::$app->user->can('support'),
             ],
             // Hold
             '<li role="presentation" class="divider"></li>',
