@@ -34,7 +34,7 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Push domain'),
                 'url' => '#bulk-domain-push-modal',
                 'linkOptions' => ['data-toggle' => 'modal'],
-                'visible' => Yii::$app->user->can('domain.pay') || Yii::$app->user->can('support'),
+                'visible' => Yii::$app->user->can('domain.pay') || Yii::$app->user->can('manage'),
             ],
             // Hold
             '<li role="presentation" class="divider"></li>',
