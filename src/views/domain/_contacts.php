@@ -18,6 +18,9 @@ $buttonOptions = [
         'scenario' => 'set-contacts',
         'actionUrl' => ['bulk-set-contacts-modal', 'id' => $model->id],
         'size' => Modal::SIZE_LARGE,
+        'options' => [
+            'tabindex' => false,
+        ],
         'toggleButton' => ['label' => '<i class="fa fa-fw fa-pencil"></i> ' . Yii::t('hipanel:domain', 'Change contacts'), 'class' => 'btn btn-sm btn-success btn-flat'],
     ]); ?>
 <?php else: ?>

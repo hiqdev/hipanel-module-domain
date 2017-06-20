@@ -76,6 +76,9 @@ class DomainBulkActionsMenu extends \hiqdev\yii2\menus\Menu
                     'scenario' => 'bulk-set-contacts',
                     'actionUrl' => ['bulk-set-contacts-modal'],
                     'size' => Modal::SIZE_LARGE,
+                    'options' => [
+                        'tabindex' => false,
+                    ],
                     'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
                 ]),
             ],
