@@ -1,5 +1,4 @@
-HiPanel Domain Module
-=====================
+# HiPanel Domain Module
 
 **Domain plugin for HiPanel**
 
