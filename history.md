@@ -2,13 +2,57 @@
 
 ## [Under development]
 
+    - [4f75f93] 2017-06-20 csfixed [@hiqsol]
+    - [264344b] 2017-06-20 renamed `web` config <- hisite [@hiqsol]
+    - [e5edd65] 2017-06-20 renamed `hidev.yml` [@hiqsol]
+    - [a316b0b] 2017-06-19 allow domain push for managers [@hiqsol]
+    - [056c2c4] 2017-06-19 Merge pull request #7 from bladeroot/domain-push-support [@hiqsol]
+    - [2e96a65] 2017-06-17 enable push ability for support [@BladeRoot]
+    - [725a827] 2017-04-26 Added search by `client_like` to Domain [@tafid]
+    - [5535c87] 2017-04-12 Removed set-orientation action [@tafid]
+    - [7191a9d] 2017-04-06 Changed design for ns view Note [@tafid]
+    - [e4f5225] 2017-04-06 Changed info block color from info to warning in NS tab widget [@tafid]
+    - [40130cd] 2017-03-31 Moved transfer buttom to bottom of box [@tafid]
+    - [cafa3bb] 2017-03-27 translation [@tafid]
+    - [15db7e9] 2017-03-27 quick fixed check for can buy domain [@hiqsol]
+    - [995557b] 2017-03-22 Fixed domain authcode pincode prompting [@SilverFire]
+    - [bdab663] 2017-03-20 Refactored picode prompting; [@SilverFire]
+    - [9e8f29c] 2017-03-06 Hid Premium DNS block with no implementation [@SilverFire]
+    - [1c2849c] 2017-03-03 Merge pull request #5 from bladeroot/domain-foa [@SilverFire]
+    - [cf462b4] 2017-02-27 Chaged  DomainTariffRepository::getTariff() to return `null` instead of Exception throwing [@SilverFire]
+    - [33054f7] 2017-02-23 Fixed code style [@SilverFire]
+    - [256c4ef] 2017-02-23 fix rendering foa [@BladeRoot]
+    - [46bf764] 2017-02-23 only role domain:maser allowed for deleting domain (#4) [@BladeRoot]
+    - [87922fd] 2017-02-20 Fixed wrong use statement [@SilverFire]
+    - [395ad78] 2017-02-20 Fixed perform method [@tafid]
+    - [f1de7e0] 2017-02-20 Fixed Tariff::find [@tafid]
+    - [5d7e254] 2017-02-15 Updated DomainTariffRepository::getTariff() to follow HiArt API changes [@SilverFire]
+    - [129b24e] 2017-02-15 Fixed css for select2 zone dropdown, apply input-lg [@tafid]
+    - [13cef6b] 2017-02-15 Deleted unnecessary views checkDomain and `_checkDomainLine` [@tafid]
+    - [7c30551] 2017-02-10 Updated widgets and views to follow yii2-combo API changes [@SilverFire]
+    - [801e6c3] 2017-02-09 Fixed translation typo [@tafid]
+    - [204b00d] 2017-02-09 Added new translations for domain/host/create page [@tafid]
+    - [8c50f40] 2017-02-09 Merge pull request #3 from bladeroot/domain-is-pushable [@hiqsol]
+    - [edca268] 2017-02-09 change condition [@BladeRoot]
+    - [7e03ca9] 2017-02-08 Added config for themeManager [@tafid]
+    - [4b8f830] 2017-02-03 Fix Domain notify transfer in: + scenario (#2) [@BladeRoot]
+    - [47e3f6d] 2017-02-01 Fixed DomainTariffRepository to join resources [@SilverFire]
+    - [4622151] 2017-02-01 fixing DomainTariffRepository, NOT FINISHED [@hiqsol]
+    - [83e930f] 2017-02-01 + defaultAction = check-domain in CheckController [@hiqsol]
+    - [74c7a32] 2017-01-31 renamed scenarioActions <- scenarioCommands [@hiqsol]
+    - [b4cf7a4] 2017-01-30 renamed hiqdev\\hiart\\ResponseErrorException <- ErrorResponseException [@hiqsol]
+    - [04c3b12] 2017-01-27 renamed from -> `tableName` in ActiveRecord [@hiqsol]
+    - [cbd343b] 2017-01-27 changed index/type -> `from` in ActiveRecord [@hiqsol]
+    - [824b0c8] 2017-01-25 Updated translations [@SilverFire]
+    - [8eb7be4] 2017-01-24 fixed hiart `perform()` usage [@hiqsol]
+    - [e62cb1e] 2017-01-18 Updated changelog [@SilverFire]
 - Fixed many different issues
     - [3650409] 2017-01-18 csfixed [@SilverFire]
     - [3c7144d] 2017-01-18 Added labels to whois, is_secured, autorenewal switches [@SilverFire]
     - [c3d8260] 2017-01-11 Updated to follow yii2-bootstrap-switch changes [@SilverFire]
     - [052d366] 2017-01-10 Fixed parent menu url from `domains` to `domain` [@tafid]
     - [2ad7d5e] 2016-12-29 Added disabled send transfer button if all records has error [@tafid]
-    - [9216ba6] 2016-12-28 Domain view _bulkSetContacts fixed to filter contacts that belong only to the client of selected domain [@SilverFire]
+    - [9216ba6] 2016-12-28 Domain view `_bulkSetContacts` fixed to filter contacts that belong only to the client of selected domain [@SilverFire]
     - [d954157] 2016-12-28 Removed unused use [@tafid]
     - [5cf8e37] 2016-12-23 Following hipanel js plugin API changes [@SilverFire]
     - [6022b24] 2016-12-22 redone yii2-thememanager -> yii2-menus [@hiqsol]
@@ -988,3 +1032,47 @@
 [9d41857]: https://github.com/hiqdev/hipanel-module-domain/commit/9d41857
 [Under development]: https://github.com/hiqdev/hipanel-module-domain/releases
 [Under]: https://github.com/hiqdev/hipanel-module-domain/releases/tag/Under
+[4f75f93]: https://github.com/hiqdev/hipanel-module-domain/commit/4f75f93
+[264344b]: https://github.com/hiqdev/hipanel-module-domain/commit/264344b
+[e5edd65]: https://github.com/hiqdev/hipanel-module-domain/commit/e5edd65
+[a316b0b]: https://github.com/hiqdev/hipanel-module-domain/commit/a316b0b
+[056c2c4]: https://github.com/hiqdev/hipanel-module-domain/commit/056c2c4
+[2e96a65]: https://github.com/hiqdev/hipanel-module-domain/commit/2e96a65
+[725a827]: https://github.com/hiqdev/hipanel-module-domain/commit/725a827
+[5535c87]: https://github.com/hiqdev/hipanel-module-domain/commit/5535c87
+[7191a9d]: https://github.com/hiqdev/hipanel-module-domain/commit/7191a9d
+[e4f5225]: https://github.com/hiqdev/hipanel-module-domain/commit/e4f5225
+[40130cd]: https://github.com/hiqdev/hipanel-module-domain/commit/40130cd
+[cafa3bb]: https://github.com/hiqdev/hipanel-module-domain/commit/cafa3bb
+[15db7e9]: https://github.com/hiqdev/hipanel-module-domain/commit/15db7e9
+[995557b]: https://github.com/hiqdev/hipanel-module-domain/commit/995557b
+[bdab663]: https://github.com/hiqdev/hipanel-module-domain/commit/bdab663
+[9e8f29c]: https://github.com/hiqdev/hipanel-module-domain/commit/9e8f29c
+[1c2849c]: https://github.com/hiqdev/hipanel-module-domain/commit/1c2849c
+[cf462b4]: https://github.com/hiqdev/hipanel-module-domain/commit/cf462b4
+[33054f7]: https://github.com/hiqdev/hipanel-module-domain/commit/33054f7
+[256c4ef]: https://github.com/hiqdev/hipanel-module-domain/commit/256c4ef
+[46bf764]: https://github.com/hiqdev/hipanel-module-domain/commit/46bf764
+[87922fd]: https://github.com/hiqdev/hipanel-module-domain/commit/87922fd
+[395ad78]: https://github.com/hiqdev/hipanel-module-domain/commit/395ad78
+[f1de7e0]: https://github.com/hiqdev/hipanel-module-domain/commit/f1de7e0
+[5d7e254]: https://github.com/hiqdev/hipanel-module-domain/commit/5d7e254
+[129b24e]: https://github.com/hiqdev/hipanel-module-domain/commit/129b24e
+[13cef6b]: https://github.com/hiqdev/hipanel-module-domain/commit/13cef6b
+[7c30551]: https://github.com/hiqdev/hipanel-module-domain/commit/7c30551
+[801e6c3]: https://github.com/hiqdev/hipanel-module-domain/commit/801e6c3
+[204b00d]: https://github.com/hiqdev/hipanel-module-domain/commit/204b00d
+[8c50f40]: https://github.com/hiqdev/hipanel-module-domain/commit/8c50f40
+[edca268]: https://github.com/hiqdev/hipanel-module-domain/commit/edca268
+[7e03ca9]: https://github.com/hiqdev/hipanel-module-domain/commit/7e03ca9
+[4b8f830]: https://github.com/hiqdev/hipanel-module-domain/commit/4b8f830
+[47e3f6d]: https://github.com/hiqdev/hipanel-module-domain/commit/47e3f6d
+[4622151]: https://github.com/hiqdev/hipanel-module-domain/commit/4622151
+[83e930f]: https://github.com/hiqdev/hipanel-module-domain/commit/83e930f
+[74c7a32]: https://github.com/hiqdev/hipanel-module-domain/commit/74c7a32
+[b4cf7a4]: https://github.com/hiqdev/hipanel-module-domain/commit/b4cf7a4
+[04c3b12]: https://github.com/hiqdev/hipanel-module-domain/commit/04c3b12
+[cbd343b]: https://github.com/hiqdev/hipanel-module-domain/commit/cbd343b
+[824b0c8]: https://github.com/hiqdev/hipanel-module-domain/commit/824b0c8
+[8eb7be4]: https://github.com/hiqdev/hipanel-module-domain/commit/8eb7be4
+[e62cb1e]: https://github.com/hiqdev/hipanel-module-domain/commit/e62cb1e
