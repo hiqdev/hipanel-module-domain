@@ -4,7 +4,6 @@ package:
     title:          Domain plugin for HiPanel
     headline:       HiPanel Domain Module
     keywords:       domain, hipanel, plugin
-    namespace:      hipanel\modules\domain
     description:    |
         [![Logo](https://raw.githubusercontent.com/hiqdev/hipanel-core/master/docs/logo.png)](https://hipanel.com/)
 
