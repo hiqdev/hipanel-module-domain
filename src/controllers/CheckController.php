@@ -11,6 +11,8 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\helpers\ArrayHelper;
+use hipanel\modules\domain\forms\BulkCheckDomainForm;
+use hipanel\modules\domain\forms\BulkCheckForm;
 use hipanel\modules\domain\forms\CheckForm;
 use hipanel\modules\domain\logic\DomainVariationsGenerator;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
@@ -99,6 +101,12 @@ class CheckController extends \hipanel\base\CrudController
 
     public function actionBulkCheckDomain()
     {
-        return $this->render('bulkCheckDomain');
+        $zones = $this->getAvailableZonesList();
+        $model = new BulkCheckForm(array_keys($zones));
+
+        return $this->render('bulkCheckDomain', [
+            'zones' => $zones,
+            'model' => $model,
+        ]);
     }
 }
