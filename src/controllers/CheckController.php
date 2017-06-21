@@ -96,4 +96,9 @@ class CheckController extends \hipanel\base\CrudController
             'results' => $results,
         ]);
     }
+
+    public function actionBulkCheckDomain()
+    {
+        return $this->render('bulkCheckDomain');
+    }
 }
