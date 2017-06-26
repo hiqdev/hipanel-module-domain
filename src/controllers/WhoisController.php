@@ -23,7 +23,7 @@ class WhoisController extends \hipanel\base\CrudController
     {
         $whoisDefault = ['domain' => $domain, 'availability' => Whois::REGISTRATION_UNAVAILABLE];
         try {
-            $apiData = Yii::$app->hiart->createCommand()->perform('get-whois', 'domain', ['domain' => $domain]);
+            $apiData = Yii::$app->hiart->createCommand()->perform('get-whois', 'domain', ['domain' => $domain])->getData();
         } catch (Exception $e) {
             $apiData['message'] = $e->getMessage();
         }
