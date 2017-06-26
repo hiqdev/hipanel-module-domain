@@ -45,6 +45,7 @@ if (typeof String.prototype.endsWith !== 'function') {
                     var isChildDomain = that.isChildDomain(that.getNameInput(elem).val());
                     that.getIpInput(elem).attr('disabled', !isChildDomain);
                 });
+                that.updateInlineForm(event);
             });
         },
         isChildDomain: function (nsName) {
@@ -55,6 +56,7 @@ if (typeof String.prototype.endsWith !== 'function') {
         // Inline Processing
         addInlineFormListener: function (event) {
             var that = this;
+
             $(this.element).find(this.options.inlineFieldSelector).on('change keyup input', function (event) {
                 $(this).data('touched', 1);
                 that.updateDynamicForm(event);
