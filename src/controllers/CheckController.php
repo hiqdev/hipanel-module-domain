@@ -11,10 +11,8 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\helpers\ArrayHelper;
-use hipanel\modules\domain\forms\BulkCheckDomainForm;
 use hipanel\modules\domain\forms\BulkCheckForm;
 use hipanel\modules\domain\forms\CheckForm;
-use hipanel\modules\domain\logic\DomainVariationsGenerator;
 use hipanel\modules\domain\repositories\DomainTariffRepository;
 use Yii;
 use yii\base\Module;
@@ -60,7 +58,7 @@ class CheckController extends \hipanel\base\CrudController
         Yii::$app->get('hiart')->disableAuth();
 
         $zones = $this->getAvailableZonesList();
-        $model = new CheckForm(array_keys($zones));
+        $model = new CheckForm($zones);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->checkIsAvailable()) {
@@ -83,30 +81,17 @@ class CheckController extends \hipanel\base\CrudController
     public function actionCheckDomain()
     {
         $results = [];
-        $zones = $this->getAvailableZonesList();
+        $availableZones = $this->getAvailableZonesList();
+        $bulkForm = new BulkCheckForm($availableZones);
 
-        $model = new CheckForm(array_keys($zones));
-
-        if ($model->load(Yii::$app->request->get()) && $model->validate() && !empty($model->fqdn)) {
-            $generator = new DomainVariationsGenerator($model->getDomain(), $model->getZone(), $zones);
-            $results = $generator->run();
+        if ($bulkForm->load(Yii::$app->request->get(), '') && $bulkForm->validate()) {
+            $results = $bulkForm->variateAll();
         }
 
         return $this->render('checkDomain', [
-            'model' => $model,
-            'dropDownZonesOptions' => $zones,
+            'model' => $bulkForm,
+            'dropDownZonesOptions' => $availableZones,
             'results' => $results,
-        ]);
-    }
-
-    public function actionBulkCheckDomain()
-    {
-        $zones = $this->getAvailableZonesList();
-        $model = new BulkCheckForm(array_keys($zones));
-
-        return $this->render('bulkCheckDomain', [
-            'zones' => $zones,
-            'model' => $model,
         ]);
     }
 }
