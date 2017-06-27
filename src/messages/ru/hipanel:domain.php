@@ -249,5 +249,7 @@ return [
     'Child Name Servers can be only created by owner of the primary domain name.' => 'Дочерний Сервер Имен может быть создан только владельцем первичного доменного имени.',
     'That is you can only create ns1.my-domain.com if you are owner of my-domain.com.' => 'То есть вы можете создать ns1.my-domain.com, только если вы являетесь владельцем my-domain.com.',
     'Examples' => 'Примеры',
-    'Zones' => 'Зоны'
+    'Zones' => 'Зоны',
+
+    'You can search by multiple domains for availability. Use a space, comma, semicolon or newline for word separation.' => 'Вы можете выполнить поиск по нескольким доменам. Используйте пробел, запятую, точку с запятой или новую строку для разделения слов.',
 ];
