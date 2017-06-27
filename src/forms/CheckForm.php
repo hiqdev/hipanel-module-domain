@@ -96,7 +96,7 @@ class CheckForm extends Model
 
     public function zoneIsAllowed()
     {
-        if (!in_array($this->getZone(), $this->availableZones, true)) {
+        if (!in_array($this->getZone(), array_keys($this->availableZones), true)) {
             $this->fqdn = $this->getDomain() . '.' . static::DEFAULT_ZONE;
         }
     }
