@@ -264,7 +264,6 @@ JS
                     </li>
                 </ul>
             </div>
-            <!-- /.box-body -->
         </div>
 
         <div class="box box-solid">
@@ -278,7 +277,6 @@ JS
                     <li><a href="#" data-filter=".promotion"><?= Yii::t('hipanel:domain', 'Promotion') ?></a></li>
                 </ul>
             </div>
-            <!-- /.box-body -->
         </div>
 
         <div class="box box-solid">
@@ -339,7 +337,6 @@ JS
                     </li>
                 </ul>
             </div>
-            <!-- /.box-body -->
         </div>
 
     </div>
@@ -351,7 +348,7 @@ JS
                 <?php if (empty($dropDownZonesOptions)) : ?>
                     <div class="alert alert-warning alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                aria-hidden="true">×</span></button>
+                                    aria-hidden="true">×</span></button>
                         <strong><?= Yii::t('hipanel:domain', 'There are no available domain zones') ?>!</strong>
                     </div>
                 <?php endif; ?>
@@ -372,43 +369,33 @@ JS
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'fqdn')->textInput([
+                                    <?= $form->field($model, 'fqdns')->textInput([
                                         'placeholder' => Yii::t('hipanel:domain', 'Domain name'),
-                                        'class' => 'form-control input-lg',
-                                        'name' => 'fqdn',
-                                        'value' => $model->domain,
-                                    ]); ?>
+                                        'class' => 'form-control',
+                                        'name' => 'fqdns',
+                                        'value' => $model->fqdnsInline,
+                                    ])->hint(Yii::t('hipanel:domain', 'You can search by multiple domains for availability. Use a space, comma, semicolon or newline for word separation.')); ?>
                                 </div>
                             </div>
-                            <!-- /.col-md-8 -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <?= $form->field($model, 'zone')->widget(StaticCombo::class, [
+                                    <?= $form->field($model, 'zones')->widget(StaticCombo::class, [
                                         'data' => $dropDownZonesOptions,
                                         'hasId' => true,
+                                        'multiple' => true,
                                         'inputOptions' => [
-                                            'value' => ($model->zone !== null) ? $model->zone : $model::DEFAULT_ZONE,
-                                            'class' => 'form-control input-lg',
-                                            'name' => 'zone',
+                                            'value' => $model->zones,
+                                            'class' => 'form-control',
+                                            'name' => 'zones[]',
                                         ],
-                                        'pluginOptions' => [
-                                            'select2Options' => [
-                                                'containerCssClass' => 'form-control input-lg'
-                                            ]
-                                        ]
                                     ]); ?>
                                 </div>
                             </div>
-                            <!-- /.col-md-3 -->
-                            <div class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-lg btn-block']); ?></div>
-                            <!-- /.col-md-1 -->
+                            <div class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block']); ?></div>
                         </div>
-                        <!-- /.row -->
                         <?php ActiveForm::end() ?>
                     </div>
-                    <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
             </div>
         </div>
 
@@ -422,9 +409,7 @@ JS
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         <?php endif; ?>
     </div>
 </div>
