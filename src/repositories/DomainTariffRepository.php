@@ -15,7 +15,6 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
 use hipanel\modules\finance\models\Tariff;
 use yii\base\Application;
-use yii\web\UnprocessableEntityHttpException;
 
 class DomainTariffRepository
 {
@@ -103,7 +102,7 @@ class DomainTariffRepository
         $result = ArrayHelper::index($zones, 'zone');
 
         uasort($result, function ($a, $b) {
-            return $a->zone === Domain::DEFAULT_ZONE;
+            return $a->zone === Domain::DEFAULT_ZONE ? -1 : 1;
         });
 
         return $result;
