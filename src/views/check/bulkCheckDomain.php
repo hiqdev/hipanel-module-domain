@@ -18,7 +18,7 @@ $this->registerCss('
 ?>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'check-domain',
+    'id' => 'bulk-check-domain',
     'action' => Url::to(['/domain/check/check-domain']),
     'method' => 'get',
     'options' => [
@@ -35,10 +35,13 @@ $this->registerCss('
                 <p>
                     <?= Yii::t('hipanel:domain', 'You can add domains indicating the specific area, as well as a word, selecting the necessary zones afterwards. Use a space, comma, semicolon or newline for word separation.') ?>
                 </p>
-                <?= $form->field($model, 'fqdn')->textarea(['placeholder' => Yii::t('hipanel:domain', 'Bulk search'), 'rows' => 10])
-                    ->hint(Yii::t('hipanel:domain', 'Bulk search allows you to check multiple domains for availability.')); ?>
+                <?= $form->field($model, 'fqdns')->textarea([
+                    'placeholder' => Yii::t('hipanel:domain', 'Bulk search'),
+                    'rows' => 10,
+                    'name' => 'fqdns',
+                ])->hint(Yii::t('hipanel:domain', 'Bulk search allows you to check multiple domains for availability.')); ?>
                 <div class="zones">
-                    <?= $form->field($model, 'zone')->checkboxList($zones); ?>
+                    <?= $form->field($model, 'zones')->checkboxList($zones, ['name' => 'zones']); ?>
                 </div>
             </div>
             <div class="box-footer">
