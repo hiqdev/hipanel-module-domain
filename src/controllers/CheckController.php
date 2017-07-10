@@ -38,10 +38,6 @@ class CheckController extends \hipanel\base\CrudController
     {
         $zones = $this->domainTariffRepository->getAvailableZones();
 
-        if ($zones === []) {
-            throw new NotFoundHttpException('No available domain zones found.');
-        }
-
         return $zones;
     }
 
