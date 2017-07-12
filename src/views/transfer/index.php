@@ -137,8 +137,8 @@ $id = $model->id ?: 0;
                         'attribute' => 'domain',
                         'format' => 'raw',
                         'value' => function ($model, $key, $i) {
-                            $html = Html::tag('span', $model->domain, ['class' => 'text-bold']);
                             /** @var Domain $model */
+                            $html = Html::tag('span', htmlspecialchars($model->domain), ['class' => 'text-bold']);
                             if (!$model->hasErrors('password')) {
                                 $html .= Html::hiddenInput("DomainTransferProduct[$i][name]", $model->domain);
                             }
@@ -150,8 +150,8 @@ $id = $model->id ?: 0;
                         'attribute' => 'password',
                         'format' => 'raw',
                         'value' => function ($model, $key, $i) {
-                            $html = $model->password;
                             /** @var Domain $model */
+                            $html = htmlspecialchars($model->password);
                             if (!$model->hasErrors('password')) {
                                 $html .= Html::hiddenInput("DomainTransferProduct[$i][password]", $model->password);
                             }
