@@ -4,21 +4,18 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainBulkActionsMenu;
 use hipanel\widgets\IndexPage;
 
+/**
+ * @var $this \yii\web\View
+ * @var $dataProvider \hiqdev\hiart\ActiveDataProvider
+ */
+
 $this->title = Yii::t('hipanel', 'Domains');
 $this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerCss(<<<'CSS'
-.editable-unsaved {
-  font-weight: normal;
-}
-CSS
-);
-
 ?>
 
 <?php $page = IndexPage::begin(compact('model', 'dataProvider')) ?>
-
     <?= $page->setSearchFormData() ?>
 
     <?php $page->beginContent('show-actions') ?>
@@ -39,7 +36,7 @@ CSS
                 'tag' => false,
             ],
         ]) ?>
-    <?php $page->endContent('bulk-actions') ?>
+    <?php $page->endContent() ?>
 
     <?php $page->beginContent('table') ?>
         <?php $page->beginBulkForm() ?>
