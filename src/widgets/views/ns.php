@@ -47,13 +47,13 @@ $(document).on('pjax:complete', function(event) {
     ],
 ]); ?>
 <?php if (!is_array($model)) : ?>
-    <?php if ($model->state !== $model::STATE_OK) : ?>
+    <?php if ($model->state === $model::STATE_OK) : ?>
         <?= Html::activeHiddenInput($model, 'id') ?>
         <?= Html::activeHiddenInput($model, 'domain') ?>
     <?php endif ?>
 <?php else : ?>
     <?php foreach ($model as $item) : ?>
-        <?php if ($item->state !== $item::STATE_OK) : ?>
+        <?php if ($item->state === $item::STATE_OK) : ?>
             <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
             <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
         <?php endif ?>
@@ -74,7 +74,6 @@ $(document).on('pjax:complete', function(event) {
                 'placeholder' => $model->getAttributeLabel('nameservers'),
                 'autocomplete' => 'off',
                 'readonly' => $model->state !== $model::STATE_OK,
-
             ]) ?>
         <?php else : ?>
             <?= Html::textInput('nsips', '', [

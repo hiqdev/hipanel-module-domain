@@ -543,7 +543,7 @@ class Domain extends \hipanel\base\Model
         );
     }
 
-    public function isDeleteble()
+    public function isDeletable()
     {
         return in_array($this->state, [self::STATE_OK, self::STATE_EXPIRED], true) && Yii::$app->user->can('domain.delete') && !$this->isRussianZones();
     }

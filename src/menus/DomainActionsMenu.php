@@ -53,7 +53,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                     ],
                 ],
                 'encode' => false,
-                'visible' => $this->model->state === Domain::STATE_PREINCOMING && !$this->model->isRussianZones(),
+                'visible' => !$this->model->isRussianZones() && $this->model->state === Domain::STATE_PREINCOMING,
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'approve-preincoming'),

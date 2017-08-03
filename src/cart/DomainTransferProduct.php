@@ -36,9 +36,8 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
-        return in_array($this->getZone(), ['ru', 'su', 'рф'], true)
-            ? [0 => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', 0)]
-            : [1 => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', 1)];
+        $amount = in_array($this->getZone(), ['ru', 'su', 'рф'], true) ? 0 : 1;
+        return [$amount => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', $amount)];
     }
 
     /** {@inheritdoc} */

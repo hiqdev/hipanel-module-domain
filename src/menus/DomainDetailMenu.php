@@ -64,7 +64,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                         'pjax' => '0',
                     ],
                 ],
-                'visible' => $this->model->isDeleteble(),
+                'visible' => $this->model->isDeletable(),
             ],
         ]);
 
