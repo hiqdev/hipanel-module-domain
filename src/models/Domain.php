@@ -516,7 +516,7 @@ class Domain extends \hipanel\base\Model
 
     public function canRenew()
     {
-        return in_array($this->state, [static::STATE_OK, static::STATE_EXPIRED], true);
+        return in_array($this->state, [static::STATE_OK, static::STATE_EXPIRED], true) && Yii::$app->user->can('domain.pay');
     }
 
     public function isContactChangeable()
@@ -526,7 +526,7 @@ class Domain extends \hipanel\base\Model
 
     public function isRenewable()
     {
-        return !$this->isRussianZones();
+        return !$this->isRussianZones() || ($this->isRussianZones() && strtotime('+56 days', time()) > strtotime($this->expires));
     }
 
     public function isSynchronizable()
@@ -536,12 +536,25 @@ class Domain extends \hipanel\base\Model
 
     public function isPushable()
     {
-        return !$this->isRussianZones() && (($this->state === self::STATE_OK) || Yii::$app->user->can('domain.force-push'));
+        return !$this->isRussianZones() && (
+            ($this->state === self::STATE_OK)
+            ||
+            (in_array($this->state, [self::STATE_EXPIRED, self::STATE_DELETING], true) && Yii::$app->user->can('domain.force-push'))
+        );
     }
 
     public function isDeleteble()
     {
-        return in_array($this->state, [self::STATE_OK, self::STATE_EXPIRED], true) && Yii::$app->user->can('domain.delete');
+        return in_array($this->state, [self::STATE_OK, self::STATE_EXPIRED], true) && Yii::$app->user->can('domain.delete') && !$this->isRussianZones();
+    }
+
+    public function isDeletebleAGP()
+    {
+        return in_array(self::getZone($this->domain), ['com','net'], true)
+            && $this->state === self::STATE_OK
+            && strtotime($this->created_date) > strtotime('-5 days', time())
+            && strtotime($this->expires) < strtotime('+1 year', time())
+            &&  Yii::$app->user->can('manage');
     }
 
     public function isRussianZones()

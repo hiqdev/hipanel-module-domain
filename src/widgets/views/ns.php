@@ -47,14 +47,18 @@ $(document).on('pjax:complete', function(event) {
     ],
 ]); ?>
 <?php if (!is_array($model)) : ?>
-    <?= Html::activeHiddenInput($model, 'id') ?>
-    <?= Html::activeHiddenInput($model, 'domain') ?>
+    <?php if ($model->state !== $model::STATE_OK) : ?>
+        <?= Html::activeHiddenInput($model, 'id') ?>
+        <?= Html::activeHiddenInput($model, 'domain') ?>
+    <?php endif ?>
 <?php else : ?>
     <?php foreach ($model as $item) : ?>
-        <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
-        <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
-    <?php endforeach; ?>
-<?php endif; ?>
+        <?php if ($item->state !== $item::STATE_OK) : ?>
+            <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
+            <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
+        <?php endif ?>
+    <?php endforeach ?>
+<?php endif ?>
 <blockquote class="text-warning">
     <?= Yii::t('hipanel:domain', 'With this form you can assign the authoritative name servers for your domain.') ?>
     <br>
@@ -69,6 +73,8 @@ $(document).on('pjax:complete', function(event) {
                 'class' => 'form-control',
                 'placeholder' => $model->getAttributeLabel('nameservers'),
                 'autocomplete' => 'off',
+                'readonly' => $model->state !== $model::STATE_OK,
+
             ]) ?>
         <?php else : ?>
             <?= Html::textInput('nsips', '', [
@@ -127,6 +133,7 @@ $(document).on('pjax:complete', function(event) {
                                             'inputOptions' => [
                                                 'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
                                                 'data-attribute' => 'ip',
+                                                'readonly' => $model->state !== $model::STATE_OK,
                                             ],
                                             'data' => $nsModel->ip ? array_combine($nsModel->ip, $nsModel->ip) : [],
                                             'multiple' => true,

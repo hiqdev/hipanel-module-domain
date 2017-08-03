@@ -286,7 +286,7 @@ class DomainController extends \hipanel\base\CrudController
                     /** @var \hipanel\actions\SearchAction $action */
                     $action = $event->sender;
                     $dataProvider = $action->getDataProvider();
-                    $dataProvider->query->andWhere(['with_nsips' => 1]);
+                    $dataProvider->query->addSelect(['nsips']);
                 },
                 'on beforeSave' => function (Event $event) {
                     /** @var \hipanel\actions\Action $action */
@@ -316,6 +316,11 @@ class DomainController extends \hipanel\base\CrudController
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],
             'reject-transfer' => [
+                'class' => SmartPerformAction::class,
+                'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
+                'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
+            ],
+            'force-reject-preincoming' => [
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),

@@ -53,7 +53,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                     ],
                 ],
                 'encode' => false,
-                'visible' => $this->model->state === Domain::STATE_PREINCOMING,
+                'visible' => $this->model->state === Domain::STATE_PREINCOMING && !$this->model->isRussianZones(),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'approve-preincoming'),
@@ -71,7 +71,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Approve transfer'),
                 'icon' => 'fa-exclamation-circle',
                 'url' => ['@domain/approve-transfer'],
-                'visible' => ($this->model->state === Domain::STATE_OUTGOING && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => ($this->model->state === Domain::STATE_OUTGOING && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)) && !$this->model->isRussianZones(),
                 'encode' => false,
                 'linkOptions' => [
                     'data' => [
@@ -89,7 +89,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Reject transfer'),
                 'icon' => 'fa-anchor',
                 'url' => ['reject-transfer', 'id' => $this->model->id],
-                'visible' => $this->model->state === Domain::STATE_OUTGOING,
+                'visible' => $this->model->state === Domain::STATE_OUTGOING && !$this->model->isRussianZones(),
                 'encode' => false,
             ],
             [
@@ -107,8 +107,21 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         ],
                     ],
                 ],
-                'visible' => $this->model->state === Domain::STATE_INCOMING,
+                'visible' => $this->model->state === Domain::STATE_INCOMING && !$this->model->isRussianZones(),
                 'encode' => false,
+            ],
+            [
+                'label' => Yii::t('hipanel:domain', 'Cancel preincoming transfer'),
+                'icon' => 'fa-trash',
+                'url' => ['@domain/force-reject-preincoming', 'id' => $this->model->id],
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel domain {domain} transfer?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'pjax' => '0',
+                    ],
+                ],
+                'visible' => !$this->model->isRussianZones() && $this->model->state === Domain::STATE_PREINCOMING && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
@@ -130,15 +143,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'Domain[id]' => $this->model->id,
                     ],
                 ],
-                'visible' => Yii::$app->user->can('manage')
-                    &&
-                    in_array($this->model->state, [Domain::STATE_OK], true)
-                    &&
-                    time() <= strtotime('+5 days', strtotime($this->model->created_date))
-                    &&
-                    strtotime('+1 year', time()) > strtotime($this->model->expires)
-                    &&
-                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true),
+                'visible' => $this->model->isDeletebleAGP(),
                 'encode' => false,
             ],
             [
@@ -187,7 +192,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         ],
                     ],
                 ],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
+                'visible' => !$this->model->isRussianZones() && Domain::notDomainOwner($this->model) && in_array($this->model->state,[Domain::STATE_OK, Domain::STATE_EXPIRED], true),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Manage DNS'),
