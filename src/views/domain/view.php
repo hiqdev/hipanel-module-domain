@@ -117,22 +117,6 @@ CSS
 
                 <!-- NS records -->
                 <div class=" tab-pane" id="ns-records">
-                    <?php /*
-                    <?= Html::tag('b', $model->getAttributeLabel('nameservers') . ': '); ?>
-                    <?= XEditable::widget([
-                        'model' => $model,
-                        'attribute' => 'nameservers',
-                        'pluginOptions' => [
-                            'placement' => 'bottom',
-                            'type' => 'textarea',
-                            'emptytext' => Yii::t('hipanel:domain', 'There are no NS. Domain may not work properly'),
-                            'url' => Url::to('set-nss'),
-                        ],
-                    ]); ?>
-
-
-                    */
-                    ?>
                     <?= NsWidget::widget([
                         'model' => $model,
                         'attribute' => 'nsips',
