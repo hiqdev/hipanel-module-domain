@@ -54,11 +54,11 @@ class DomainGridView extends BoxedGridView
                 'value' => function ($model) {
                     $out = State::widget(compact('model'));
                     $status = [];
-                    if ($model->is_freezed || $model->is_holded || $model->wp_freezed) {
+                    if ($model->isFreezed() || $model->isHolded() || $model->isWPFreezed()) {
                         $out .= '<br>';
-                        $status[] = $model->is_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
-                        $status[] = $model->wp_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
-                        $status[] = $model->is_holded ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
+                        $status[] = $model->isFreezed() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
+                        $status[] = $model->isWPFreezed() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
+                        $status[] = $model->isHolded() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
                     }
                     return $out . implode('&nbsp;', $status);
                 },
@@ -260,7 +260,7 @@ class DomainGridView extends BoxedGridView
                     'reject-preincoming' => function ($url, $model, $key) {
                     },
                     'approve-transfer' => function ($url, $model, $key) {
-                        return ($model->state === 'outgoing' && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return ($model->isOutgoing() && Yii::$app->user->can('support') && $model->notDomainOwner())
                             ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('hipanel:domain', 'Approve transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
@@ -290,7 +290,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'sync' => function ($url, $model, $key) {
-                        return (in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return ($model->isActive() && Yii::$app->user->can('support') && $model->notDomainOwner())
                             ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel:domain', 'Synchronize contacts'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -299,7 +299,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'delete' => function ($url, $model, $key) {
-                        return $model->isDeleteble() ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
+                        return $model->canDelete() ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
                             'title' => Yii::t('hipanel', 'Delete'),
                             'aria-label' => Yii::t('hipanel', 'Delete'),
                             'data' => [
@@ -332,7 +332,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'enable-freeze' => function ($url, $model, $key) {
-                        return (!$model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return (!$model->isFreezed() && Yii::$app->user->can('support') && $model->notDomainOwner())
                             ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel:domain', 'Freeze domain'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -341,7 +341,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'disable-freeze' => function ($url, $model, $key) {
-                        return ($model->is_freezed && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return ($model->isFreezed() && Yii::$app->user->can('support') && $model->notDomainOwner())
                             ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('hipanel:domain', 'Unfreeze domain'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -350,7 +350,7 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'enable-hold' => function ($url, $model, $key) {
-                        if ($model->is_holded) {
+                        if ($model->isHolded()) {
                             return '';
                         }
 
@@ -361,7 +361,7 @@ class DomainGridView extends BoxedGridView
                         return '';
                     },
                     'disable-hold' => function ($url, $model, $key) {
-                        return ($model->is_holded && in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return ($model->isHolded() && $model->isActive() && Yii::$app->user->can('support') && $model->notDomainOwner())
                             ? Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel:domain', 'Disable Hold'), $url, [
                                 'data' => [
                                     'method' => 'post',

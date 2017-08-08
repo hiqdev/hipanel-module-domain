@@ -45,7 +45,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                 'visible' => $this->model->isPushable(),
             ],
             [
-                'visible' => $this->model->canRenew() && $this->model->isRenewable(),
+                'visible' => $this->model->canRenew(),
                 'label' => Yii::t('hipanel:domain', 'Renew domain'),
                 'icon' => 'fa-forward',
                 'url' => ['add-to-cart-renewal', 'model_id' => $this->model->id],
@@ -64,7 +64,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                         'pjax' => '0',
                     ],
                 ],
-                'visible' => $this->model->isDeletable(),
+                'visible' => $this->model->canDelete(),
             ],
         ]);
 

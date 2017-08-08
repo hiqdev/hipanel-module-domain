@@ -57,7 +57,7 @@ class Domain extends \hipanel\base\Model
             self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Outgoing transfer domains'),
             self::STATE_EXPIRED => Yii::t('hipanel:domain', 'Expired domains'),
         ];
-        if (Yii::$app->user->can('support')) {
+        if ($this->can('support')) {
             $out = array_merge($out, [
                 self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
                 self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
@@ -254,7 +254,12 @@ class Domain extends \hipanel\base\Model
         return $this->hasOne(Contact::class, ['domain_id' => 'id']);
     }
 
-    public static function getZone($domain)
+    public function getZone()
+    {
+        return static::findZone($this->domain);
+    }
+
+    public static function findZone($domain)
     {
         return substr($domain, strpos($domain, '.') + 1);
     }
@@ -274,6 +279,36 @@ class Domain extends \hipanel\base\Model
         return (bool) $this->is_holded;
     }
 
+    public function isOk()
+    {
+        return $this->state === static::STATE_OK;
+    }
+
+    public function isExpired()
+    {
+        return $this->state === static::STATE_EXPIRED;
+    }
+
+    public function isDeleting()
+    {
+        return $this->state === static::STATE_DELETING;
+    }
+
+    public function isOutgoing()
+    {
+        return $this->state === static::STATE_OUTGOING;
+    }
+
+    public function isPreincoming()
+    {
+        return $this->state === static::STATE_PREINCOMING;
+    }
+
+    public function isActive()
+    {
+        return $this->isOk() || $this->isExpired();
+    }
+
     public function scenarioActions()
     {
         return [
@@ -282,15 +317,17 @@ class Domain extends \hipanel\base\Model
         ];
     }
 
-    public static function isDomainOwner($model)
+    public function isDomainOwner()
     {
-        return Yii::$app->user->is($model->client_id)
-        || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
+        return Yii::$app->user->is($this->client_id) || (!$this->can('resell') && $this->can('support') && Yii::$app->user->identity->seller_id === $this->client_id);
     }
 
-    public static function notDomainOwner($model)
+    public function notDomainOwner()
     {
-        return Yii::$app->user->not($model->client_id) && (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id !== $model->client_id);
+        return Yii::$app->user->not($this->client_id)
+            && !$this->can('resell')
+            && $this->can('support')
+            && Yii::$app->user->identity->seller_id !== $this->client_id;
     }
 
     public function getDnsRecords()
@@ -514,19 +551,14 @@ class Domain extends \hipanel\base\Model
         return $i;
     }
 
-    public function canRenew()
-    {
-        return in_array($this->state, [static::STATE_OK, static::STATE_EXPIRED], true) && Yii::$app->user->can('domain.pay');
-    }
-
     public function isContactChangeable()
     {
         return !$this->isRussianZones();
     }
 
-    public function isRenewable()
+    public function isRussianRenewable()
     {
-        return !$this->isRussianZones() || ($this->isRussianZones() && strtotime('+56 days', time()) > strtotime($this->expires));
+        return strtotime('+56 days', time()) > strtotime($this->expires);
     }
 
     public function isSynchronizable()
@@ -537,28 +569,78 @@ class Domain extends \hipanel\base\Model
     public function isPushable()
     {
         return !$this->isRussianZones() && (
-            ($this->state === self::STATE_OK)
+            ($this->isOk() && $this->can('domain.push'))
             ||
-            (in_array($this->state, [self::STATE_EXPIRED, self::STATE_DELETING], true) && Yii::$app->user->can('domain.force-push'))
+            (($this->isExpired() || $this->isDeleting()) && $this->can('domain.force-push'))
         );
     }
 
-    public function isDeletable()
+    public function canDelete()
     {
-        return in_array($this->state, [self::STATE_OK, self::STATE_EXPIRED], true) && Yii::$app->user->can('domain.delete') && !$this->isRussianZones();
+        return $this->isActive() && $this->can('domain.delete') && !$this->isRussianZones();
     }
 
-    public function isDeletebleAGP()
+    public function canDeleteAGP()
     {
-        return in_array(self::getZone($this->domain), ['com','net'], true)
+        return $this->isZone(['com', 'net'])
             && $this->state === self::STATE_OK
             && strtotime($this->created_date) > strtotime('-5 days', time())
             && strtotime($this->expires) < strtotime('+1 year', time())
-            &&  Yii::$app->user->can('manage');
+            && $this->can('manage');
     }
 
     public function isRussianZones()
     {
-        return in_array(self::getZone($this->domain), ['ru', 'su', 'рф'], true);
+        return $this->isZone(['ru', 'su', 'рф']);
+    }
+
+    /**
+     * Returns true if the zone is among given list of zones.
+     * @param array|string $zones zone or list of zones
+     * @return bool
+     */
+    public function isZone($zones)
+    {
+        $zone = $this->getZone();
+
+        return is_array($zones) ? in_array($this->getZone(), $zones, true) : $zone === $zones;
+    }
+
+    public function can($permission)
+    {
+        return Yii::$app->user->can($permission);
+    }
+
+    public function canRenew()
+    {
+        return $this->isActive() && $this->can('domain.pay')
+            && (!$this->isRussianZones() || $this->isRussianRenewable());
+    }
+
+    public function canRegenPassword()
+    {
+        return $this->isActive() && !$this->isRussianZones();
+    }
+
+    public function canApproveTransfer()
+    {
+        return $this->isOutgoing()
+            && $this->can('support')
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
+    }
+
+    public function canFreezeUnfreeze()
+    {
+        return $this->can($this->isFreezed() ? 'domain.unfreeze' : 'domain.freeze')
+            && $this->model->notDomainOwner()
+            && !$this->model->isRussianZones();
+    }
+
+    public function canWPFreezeUnfreeze()
+    {
+        return $this->can($this->isWPFreezed() ? 'domain.unfreeze' : 'domain.freeze')
+            && $this->model->notDomainOwner()
+            && !$this->model->isRussianZones();
     }
 }

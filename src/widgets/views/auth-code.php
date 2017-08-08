@@ -35,7 +35,7 @@ use yii\web\View;
                     'data-error-message' => Yii::t('hipanel', 'An error occurred. Try again please.'),
                     'data-ask-pincode' => (int) $askPincode
                 ]); ?>
-                <?php if ($model->canRenew()) : ?>
+                <?php if ($model->canRegenPassword()) : ?>
                     <?= Html::button(Yii::t('hipanel:domain', 'Generate new'), [
                         'id' => 'change-password-button',
                         'class' => 'btn btn-default',
@@ -45,7 +45,6 @@ use yii\web\View;
                         'data-success-message' => Yii::t('hipanel:domain', 'The password has been changed')
                     ]) ?>
                 <?php endif ?>
-                ?>
             </span>
             <p class="help-block"></p>
         </div>
