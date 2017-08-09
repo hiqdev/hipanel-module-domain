@@ -71,7 +71,7 @@ class Domain extends \hipanel\base\Model
             self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Outgoing transfer domains'),
             self::STATE_EXPIRED => Yii::t('hipanel:domain', 'Expired domains'),
         ];
-        if ($this->can('support')) {
+        if (self::can('support')) {
             $out = array_merge($out, [
                 self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
                 self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
@@ -126,6 +126,7 @@ class Domain extends \hipanel\base\Model
                 'disable-w-p-freeze',
                 'notify-transfer-in',
                 'delete',
+                'force-reject-preincoming',
             ]],
 
             // Check domain
@@ -343,10 +344,12 @@ class Domain extends \hipanel\base\Model
 
     public function notDomainOwner()
     {
-        return Yii::$app->user->not($this->client_id)
-            && !$this->can('resell')
-            && $this->can('support')
-            && Yii::$app->user->identity->seller_id !== $this->client_id;
+        return Yii::$app->user->not($this->client_id) && (
+            $this->can('resell') || (
+                    $this->can('support')
+                &&  Yii::$app->user->identity->seller_id !== $this->client_id
+            )
+        );
     }
 
     public function getDnsRecords()
@@ -656,7 +659,7 @@ class Domain extends \hipanel\base\Model
         return is_array($zones) ? in_array($this->getZone(), $zones, true) : $zone === $zones;
     }
 
-    public function can($permission)
+    public static function can($permission)
     {
         return Yii::$app->user->can($permission);
     }

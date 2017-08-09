@@ -119,6 +119,12 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel domain {domain} transfer?', ['domain' => $this->model->domain]),
                         'method' => 'post',
                         'pjax' => '0',
+                        'form' => 'force-reject-preincoming',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                            'Domain[domain]' => $this->model->domain,
+                        ],
+
                     ],
                 ],
                 'visible' => $this->model->canCancelPreincoming(),
@@ -127,7 +133,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
                 'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
-                'visible' => ($this->model->canSynchronizeContacts(),
+                'visible' => $this->model->canSynchronizeContacts(),
                 'encode' => false,
             ],
             [
