@@ -304,6 +304,11 @@ class Domain extends \hipanel\base\Model
         return $this->state === static::STATE_PREINCOMING;
     }
 
+    public function isIncoming()
+    {
+        return $this->state === static::STATE_INCOMING;
+    }
+
     public function isActive()
     {
         return $this->isOk() || $this->isExpired();
@@ -563,15 +568,24 @@ class Domain extends \hipanel\base\Model
 
     public function isSynchronizable()
     {
-        return !$this->isRussianZones();
+        return $this->isActive() && !$this->isRussianZones();
     }
 
     public function isPushable()
     {
+        return $this->isOk();
+    }
+
+    public function isForcePushable()
+    {
+        return $this->isExpired() || $this->isDeleting();
+    }
+
+    public function canPush()
+    {
         return !$this->isRussianZones() && (
-            ($this->isOk() && $this->can('domain.push'))
-            ||
-            (($this->isExpired() || $this->isDeleting()) && $this->can('domain.force-push'))
+                ($this->isPushable() && $this->can('domain.push'))
+            ||  ($this->isForcePushable() && $this->can('domain.push'))
         );
     }
 
@@ -583,7 +597,7 @@ class Domain extends \hipanel\base\Model
     public function canDeleteAGP()
     {
         return $this->isZone(['com', 'net'])
-            && $this->state === self::STATE_OK
+            && $this->isOk()
             && strtotime($this->created_date) > strtotime('-5 days', time())
             && strtotime($this->expires) < strtotime('+1 year', time())
             && $this->can('manage');
@@ -622,6 +636,11 @@ class Domain extends \hipanel\base\Model
         return $this->isActive() && !$this->isRussianZones();
     }
 
+    public function canSendFOA()
+    {
+        return $this->isPreincoming() && !$this->isRussianZones();
+    }
+
     public function canApproveTransfer()
     {
         return $this->isOutgoing()
@@ -630,17 +649,50 @@ class Domain extends \hipanel\base\Model
             && !$this->isRussianZones();
     }
 
+    public function canCancelPreincoming()
+    {
+        return $this->isPreincoming()
+            && $this->notDomainOwner()
+            && $this->can('support')
+            && !$this->isRussianZones();
+    }
+
+    public function canRejectTransfer()
+    {
+        return $this->isOutgoing() && !$this->isRussianZones();
+    }
+
+    public function canCancelTransfer()
+    {
+        return $this->isIncoming() && !$this->isRussianZones();
+    }
+
+    public function canSynchronizeContacts()
+    {
+        return $this->isSynchronizable()
+            && $this->notDomainOwner()
+            && $this->can('support');
+    }
+
     public function canFreezeUnfreeze()
     {
         return $this->can($this->isFreezed() ? 'domain.unfreeze' : 'domain.freeze')
-            && $this->model->notDomainOwner()
-            && !$this->model->isRussianZones();
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
     }
 
     public function canWPFreezeUnfreeze()
     {
         return $this->can($this->isWPFreezed() ? 'domain.unfreeze' : 'domain.freeze')
-            && $this->model->notDomainOwner()
-            && !$this->model->isRussianZones();
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
+    }
+
+    public function canHoldUnhold()
+    {
+        return $this->isActive()
+            && $this->can($this->isHolded() ? 'domain.hold' : 'domain.unhold')
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
     }
 }
