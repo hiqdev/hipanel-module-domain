@@ -39,6 +39,20 @@ class Domain extends \hipanel\base\Model
 
     public static $contactTypes = ['registrant', 'admin', 'tech', 'billing'];
 
+    public static $maxDeligationPeriods = [
+        'ru' => 2,
+        'su' => 2,
+        'рф' => 2,
+        '*' => 10,
+    ];
+
+    public static $maxDeligations = [
+        'ru' => 1,
+        'su' => 1,
+        'рф' => 1,
+        '*' => 10,
+    ];
+
     public static function contactTypesWithLabels()
     {
         return [
@@ -566,6 +580,28 @@ class Domain extends \hipanel\base\Model
         return strtotime('+56 days', time()) > strtotime($this->expires);
     }
 
+    public function isRenewable()
+    {
+        if ($this->isExpired()) {
+            return true;
+        }
+
+        if (!$this->isActive()) {
+            return false;
+        }
+
+        $zone = $this->getZone();
+        $zonePresentInMaxDeligationPeriods = array_key_exists($zone, static::$maxDeligationPeriods, true);
+        $maxDeligationPeriod = static::$maxDeligationPeriods[$zonePresentInMaxDeligationPeriods ? $zone : '*'];
+
+        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDeligationPeriod}", time())) {
+            return false;
+        }
+
+        return $this->isRussianRenewable() || !$this->isRussianZones();
+
+    }
+
     public function isSynchronizable()
     {
         return $this->isActive() && !$this->isRussianZones();
@@ -608,7 +644,7 @@ class Domain extends \hipanel\base\Model
         return $this->isZone(['ru', 'su', 'рф']);
     }
 
-    /**
+    /**a
      * Returns true if the zone is among given list of zones.
      * @param array|string $zones zone or list of zones
      * @return bool
@@ -627,8 +663,7 @@ class Domain extends \hipanel\base\Model
 
     public function canRenew()
     {
-        return $this->isActive() && $this->can('domain.pay')
-            && (!$this->isRussianZones() || $this->isRussianRenewable());
+        return $this->can('domain.pay') && $this->isRenewable();
     }
 
     public function canRegenPassword()
