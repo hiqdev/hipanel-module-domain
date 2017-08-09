@@ -30,9 +30,9 @@ use yii\helpers\Url;
 
 class DomainGridView extends BoxedGridView
 {
-    public static function defaultColumns()
+    public function columns()
     {
-        return [
+        return array_merge(parent::columns(), [
             'domain' => [
                 'class' => MainColumn::class,
                 'attribute' => 'domain',
@@ -378,6 +378,6 @@ class DomainGridView extends BoxedGridView
                     },
                 ],
             ],
-        ];
+        ]);
     }
 }
