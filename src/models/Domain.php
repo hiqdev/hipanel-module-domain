@@ -602,7 +602,6 @@ class Domain extends \hipanel\base\Model
         }
 
         return $this->isRussianRenewable() || !$this->isRussianZones();
-
     }
 
     public function isSynchronizable()
