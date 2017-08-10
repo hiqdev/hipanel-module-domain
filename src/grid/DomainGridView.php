@@ -53,8 +53,9 @@ class DomainGridView extends BoxedGridView
                 'enableSorting' => false,
                 'value' => function ($model) {
                     $out[] = State::widget(compact('model'));
-
                     if ($model->isFreezed() || $model->isHolded() || $model->isWPFreezed()) {
+                        $status = [];
+
                         if ($model->isFreezed()) {
                             $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']);
                         }
@@ -69,6 +70,7 @@ class DomainGridView extends BoxedGridView
 
                         $out[] = implode('&nbsp;', $status);
                     }
+
                     return implode('<br>', $out);
                 },
             ],
