@@ -19,6 +19,7 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
+use hipanel\widgets\Label;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\bootstrap_switch\LabeledAjaxSwitch;
 use hiqdev\combo\StaticCombo;
@@ -74,9 +75,7 @@ class DomainGridView extends BoxedGridView
                 }
             ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'whois_protected',
-                'url' => Url::toRoute('set-whois-protect'),
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
@@ -86,9 +85,10 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'pluginOptions' => [
-                    'offColor' => 'warning',
-                ],
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->whois_protected);
+                },
             ],
             'whois_protected_with_label' => [ // don't forget to update `whois_protected` column as well
                 'class' => BootstrapSwitchColumn::class,
@@ -123,18 +123,20 @@ class DomainGridView extends BoxedGridView
                 ],
             ],
             'is_secured' => [ // don't forget to update `is_secured_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
                 'encodeLabel' => false,
                 'filter' => false,
                 'enableSorting' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
-                'url' => Url::toRoute('set-lock'),
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
                 'popoverOptions' => [
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->is_secured);
+                },
             ],
             'is_secured_with_label' => [ // don't forget to update `is_secured` column as well
                 'class' => BootstrapSwitchColumn::class,
@@ -189,11 +191,13 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
-                'filter' => false,
-                'url' => Url::toRoute('set-autorenewal'),
-                'attribute' => 'autorenewal',
                 'label' => Html::tag('span', Yii::t('hipanel', 'Autorenew')),
+                'attribute' => 'autorenewal',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->autorenewal);
+                },
+                'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
                 'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
@@ -378,6 +382,14 @@ class DomainGridView extends BoxedGridView
                     },
                 ],
             ],
+        ]);
+    }
+
+    protected function getStateLabel($value)
+    {
+        return Label::widget([
+            'label' => $value ? Yii::t('hipanel', 'Enabled') : Yii::t('hipanel', 'Disabled'),
+            '_color' => $value ? 'success' : null,
         ]);
     }
 }
