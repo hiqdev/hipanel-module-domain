@@ -265,7 +265,7 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => RedirectAction::class,
                         'url' => function ($action) {
-                            return $action->controller->redirect(Yii::$app->request->referrer);
+                            return Yii::$app->request->referrer;
                         },
                     ],
                 ],
