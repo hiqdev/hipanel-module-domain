@@ -13,6 +13,7 @@ return [
         '@domain' => '/domain/domain',
         '@host'   => '/domain/host',
         '@domain-check' => '/domain/check',
+        '@domain-contact' => '/domain/contact',
     ],
     'modules' => [
         'domain' => [
