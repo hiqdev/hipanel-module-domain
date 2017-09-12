@@ -12,6 +12,10 @@ namespace hipanel\modules\domain\cart;
 
 /**
  * Abstract class AbstractDomainPurchase.
+ * Holds data to perform domain purchase:
+ * - domain
+ * - zone
+ * - period - how many years
  */
 abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\AbstractPurchase
 {
