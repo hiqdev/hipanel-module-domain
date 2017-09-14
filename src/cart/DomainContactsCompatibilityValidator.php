@@ -4,6 +4,7 @@ namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
+use hipanel\modules\finance\cart\AbstractPurchase;
 use hipanel\modules\finance\cart\NotPurchasablePositionException;
 use hipanel\modules\finance\cart\PositionPurchasabilityValidatorInterface;
 use hiqdev\hiart\ResponseErrorException;
@@ -28,7 +29,11 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
         $this->ensureContactsAreCompatibleForPurchases($purchases);
     }
 
-
+    /**
+     * @param AbstractPurchase[] $purchases
+     * @throws ContactIsIncompatibleException
+     * @throws NotPurchasablePositionException
+     */
     private function ensureContactsAreCompatibleForPurchases($purchases)
     {
         $data = array_map(function ($purchase) {
@@ -40,10 +45,14 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
             $result = Domain::perform('check-contacts-compatible', $data, ['batch' => true]);
         } catch (ResponseErrorException $e) {
             $error = $e->getMessage();
+            $responseData = $e->getResponse()->getData();
 
             if (strpos($error, 'contact not filled properly') !== false) {
-                if (strpos($error, 'RU zone') !== false) {
-                    throw ContactIsIncompatibleException::passportRequired();
+                foreach ($purchases as $purchase) {
+                    $id = $purchase->position->getId();
+                    if (isset($responseData[$id]['_error_ops']['for']) && $responseData[$id]['_error_ops']['for'] === 'RU') {
+                        throw ContactIsIncompatibleException::passportRequired();
+                    }
                 }
 
                 throw ContactIsIncompatibleException::generalDataRequired();
