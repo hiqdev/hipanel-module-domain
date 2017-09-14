@@ -10,9 +10,11 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
+use hipanel\modules\finance\cart\BatchPurchaseStrategy;
 use Yii;
 
-class DomainRegistrationProduct extends AbstractDomainProduct
+class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
 {
     /** {@inheritdoc} */
     protected $_purchaseModel = DomainRegistrationPurchase::class;
@@ -46,5 +48,10 @@ class DomainRegistrationProduct extends AbstractDomainProduct
         }
 
         return $result;
+    }
+
+    public function getBatchPurchaseStrategyClass()
+    {
+        return BatchPurchaseStrategy::class;
     }
 }
