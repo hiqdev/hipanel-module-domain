@@ -18,7 +18,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
     public function validate($positions)
     {
         $positions = array_filter($positions, function ($position) {
-            return $position instanceof DomainRegistrationProduct;
+            return ($position instanceof DomainRegistrationProduct) || ($position instanceof DomainTransferProduct);
         });
 
         $purchases = array_map(function ($position) {
