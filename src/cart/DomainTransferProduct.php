@@ -21,6 +21,11 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     protected $_purchaseModel = DomainTransferPurchase::class;
 
+    /**
+     * @var string
+     */
+    public $registrant;
+
     /** {@inheritdoc} */
     public function init()
     {
@@ -44,6 +49,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     {
         return ArrayHelper::merge(parent::rules(), [
             [['password'], 'required'],
+            ['registrant', 'integer'],
         ]);
     }
 
