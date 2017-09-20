@@ -21,7 +21,7 @@ abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\Abst
 {
     use \hipanel\base\ModelTrait;
 
-    protected ruZones = [
+    protected $ruZones = [
         'ru' => 1,
         'su' => 1,
         'рф' => 1,
