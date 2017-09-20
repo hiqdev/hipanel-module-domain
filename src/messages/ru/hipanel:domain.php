@@ -69,6 +69,7 @@ return [
     'Bulk domain transfer' => 'Массовый трансфер',
     'Protection from transfer' => 'Защита от трансфера',
     'Transfer confirmation email was sent to:' => 'Письмо для подтверждения трансфера было отправлено по адресу:',
+    'Transfer confirmation email would be send to domain owner after comparing and checking contact data from our partner ARDIS-RU' => 'Письмо для подтверждения трансфера будет отправлено владельцу домена после проверки контактных данных нашими партнерами ARDIS-RU',
     'Approve transfer' => 'Подтвердить трансфер',
     'Reject transfer' => 'Отклонить трансфер',
     'Cancel transfer' => 'Отменить трансфер',

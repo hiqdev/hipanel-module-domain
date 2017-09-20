@@ -36,6 +36,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         'ru' => 1,
         'su' => 1,
         'рф' => 1,
+        'xn--p1ai' => 1,
         '*' => 10,
     ];
 

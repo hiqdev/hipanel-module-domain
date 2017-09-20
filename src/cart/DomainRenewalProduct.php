@@ -37,6 +37,7 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
         'ru' => 56,
         'su' => 56,
         'рф' => 56,
+        'xn--p1ai' => 56,
     ];
 
     /** {@inheritdoc} */
