@@ -21,6 +21,13 @@ abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\Abst
 {
     use \hipanel\base\ModelTrait;
 
+    protected ruZones = [
+        'ru' => 1,
+        'su' => 1,
+        'рф' => 1,
+        'xn--p1ai' => 1,
+    ];
+
     /** {@inheritdoc} */
     public static function tableName()
     {
@@ -31,10 +38,14 @@ abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\Abst
     public function init()
     {
         parent::init();
-
         $this->domain = $this->position->name;
         $this->period = $this->position->getQuantity();
         $this->zone = $this->position->getZone();
+    }
+
+    public function isRuZone()
+    {
+        return isset($this->ruZones[$this->zone]);
     }
 
     /** {@inheritdoc} */

@@ -14,6 +14,14 @@ use Yii;
 
 class DomainTransferPurchase extends AbstractDomainPurchase
 {
+    public $registrant;
+
+    public function init()
+    {
+        parent::init();
+        $this->registrant = $this->position->registrant;
+    }
+
     /** {@inheritdoc} */
     public static function operation()
     {
@@ -29,12 +37,22 @@ class DomainTransferPurchase extends AbstractDomainPurchase
     {
         return array_merge(parent::rules(), [
             [['password'], 'required'],
+            [['registrant'], 'integer'],
         ]);
     }
 
     public function renderNotes()
     {
-        return Yii::t('hipanel:domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
+        return $this->isRuZone()
+            ? Yii::t('hipanel:domain', 'Transfer confirmation email would be send to domain owner after comparing and checking contact data from our partner ARDIS-RU:');
+            : Yii::t('hipanel:domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
+    }
+
+    public function getPurchasabilityRules()
+    {
+        return [
+            DomainContactsCompatibilityValidator::class,
+        ];
     }
 
     public function execute()
