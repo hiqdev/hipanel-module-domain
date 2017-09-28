@@ -54,4 +54,11 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
     {
         return BatchPurchaseStrategy::class;
     }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['registrant'] = $this->registrant;
+        return $parent;
+    }
 }

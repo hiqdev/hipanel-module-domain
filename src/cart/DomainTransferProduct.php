@@ -66,4 +66,11 @@ class DomainTransferProduct extends AbstractDomainProduct
     {
         return parent::getPurchaseModel(array_merge(['password' => $this->password], $options));
     }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['registrant'] = $this->registrant;
+        return $parent;
+    }
 }

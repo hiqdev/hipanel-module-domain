@@ -4,6 +4,11 @@ namespace hipanel\modules\domain\cart;
 
 use hiqdev\yii2\cart\ShoppingCart;
 
+/**
+ * Class RegistrantModifier
+ *
+ * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ */
 class RegistrantModifier
 {
     /**
@@ -19,7 +24,7 @@ class RegistrantModifier
     public function setRegistrantId($id)
     {
         foreach ($this->cart->getPositions() as $position) {
-            if (!$position instanceof DomainRegistrationProduct) {
+            if (!$position instanceof DomainRegistrationProduct && !$position instanceof DomainTransferProduct) {
                 continue;
             }
 

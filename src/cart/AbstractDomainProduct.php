@@ -92,4 +92,12 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
             'zone' => $this->getZone(),
         ], $options));
     }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['_operation'] = $this->_operation;
+        $parent['_model'] = $this->_model;
+        return $parent;
+    }
 }
