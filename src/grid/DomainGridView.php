@@ -389,7 +389,7 @@ class DomainGridView extends BoxedGridView
     {
         return Label::widget([
             'label' => $value ? Yii::t('hipanel', 'Enabled') : Yii::t('hipanel', 'Disabled'),
-            '_color' => $value ? 'success' : null,
+            'color' => $value ? 'success' : null,
         ]);
     }
 }
