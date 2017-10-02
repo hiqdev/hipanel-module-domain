@@ -18,15 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $page = IndexPage::begin(compact('model', 'dataProvider')) ?>
     <?= $page->setSearchFormData() ?>
 
-    <?php $page->beginContent('show-actions') ?>
-        <?= $page->renderLayoutSwitcher() ?>
+    <?php $page->beginContent('sorter-actions') ?>
         <?= $page->renderSorter([
             'attributes' => [
                 'domain', 'note', 'client', 'seller',
                 'created_date', 'expires', 'id',
             ],
         ]) ?>
-        <?= $page->renderPerPage() ?>
     <?php $page->endContent() ?>
 
     <?php $page->beginContent('bulk-actions') ?>
