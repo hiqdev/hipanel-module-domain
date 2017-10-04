@@ -75,9 +75,10 @@ class Domain extends \hipanel\base\Model
             self::STATE_INCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is in progress. It may take up 5 days, so keep patience.'),
             self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Domain name transfer to another registrar is in progress. It may take up 5 days, so keep patience.'),
             self::STATE_EXPIRED => Yii::t('hipanel:domain', 'This domain has been expired. You have a month from the date of its expiration to renew it, otherwise it will be deleted and may be registered by someone else.'),
-            self::STATE_DELETED => Yii::t('hipanel:domain', 'This domain has expired. You need to re-register this domain.'),
+            self::STATE_DELETED => Yii::t('hipanel:domain', 'The domain name has been deleted because it was not renewed during the month after the expiration date. If you want to get your domain back, you should register it again.'),
             self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.'),
             self::STATE_GONE => Yii::t('hipanel:domain', 'Domain name has been transferred to another registrar.'),
+            self::STATE_DELETING => Yii::t('hipanel:domain', 'The domain name has been expired and you have not renewed it during the month after the expiration date. Domain name will be dropped in 2 months after the expiration date, after that it may be occupied by someone else. Domain names usually got occupied by bots in minutes after dropping, then sold for many times higher price on auctions. If you don\'t want to miss your domain name, contact support to restore it.'),
         ];
 
         return isset($options[$this->state]) ? $options[$this->state] : null;
