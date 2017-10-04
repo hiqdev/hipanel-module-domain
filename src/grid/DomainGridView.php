@@ -53,7 +53,8 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'enableSorting' => false,
                 'value' => function ($model) {
-                    $out = State::widget(compact('model'));
+                    $labelOptions = $model->labelTitle ? ['title' => $model->labelTitle] : [];
+                    $out = State::widget(compact('model', 'labelOptions'));
                     $status = [];
                     if ($model->is_freezed || $model->is_holded || $model->wp_freezed) {
                         $out .= '<br>';

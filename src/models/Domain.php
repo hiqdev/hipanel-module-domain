@@ -69,6 +69,20 @@ class Domain extends \hipanel\base\Model
         return $out;
     }
 
+    public function getLabelTitle()
+    {
+        $options = [
+            self::STATE_INCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is in progress. It may take up 5 days, so keep patience.'),
+            self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Domain name transfer to another registrar is in progress. It may take up 5 days, so keep patience.'),
+            self::STATE_EXPIRED => Yii::t('hipanel:domain', 'This domain has been expired. You have a month from the date of its expiration to renew it, otherwise it will be deleted and may be registered by someone else.'),
+            self::STATE_DELETED => Yii::t('hipanel:domain', 'This domain has expired. You need to re-register this domain.'),
+            self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.'),
+            self::STATE_GONE => Yii::t('hipanel:domain', 'Domain name has been transferred to another registrar.'),
+        ];
+
+        return isset($options[$this->state]) ? $options[$this->state] : null;
+    }
+
     use \hipanel\base\ModelTrait;
 
     /** {@inheritdoc} */
@@ -261,17 +275,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return (bool) $this->is_freezed;
+        return (bool)$this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return (bool) $this->wp_freezed;
+        return (bool)$this->wp_freezed;
     }
 
     public function isHolded()
     {
-        return (bool) $this->is_holded;
+        return (bool)$this->is_holded;
     }
 
     public function scenarioActions()
@@ -285,7 +299,7 @@ class Domain extends \hipanel\base\Model
     public static function isDomainOwner($model)
     {
         return Yii::$app->user->is($model->client_id)
-        || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
+            || (!Yii::$app->user->can('resell') && Yii::$app->user->can('support') && Yii::$app->user->identity->seller_id === $model->client_id);
     }
 
     public static function notDomainOwner($model)

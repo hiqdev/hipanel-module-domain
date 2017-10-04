@@ -261,4 +261,11 @@ return [
     'Zones' => 'Зоны',
 
     'You can search by multiple domains for availability. Use a space, comma, semicolon or newline for word separation.' => 'Вы можете выполнить поиск по нескольким доменам. Используйте пробел, запятую, точку с запятой или новую строку для разделения слов.',
+
+    'Domain name transfer from another registrar is in progress. It may take up 5 days, so keep patience.' => 'Выполняется передача домена от другого регистратора. Это может занять 5 дней.',
+    'Domain name transfer to another registrar is in progress. It may take up 5 days, so keep patience.' => 'Выполняется передача домена другому регистратору. Это может занять 5 дней.',
+    'This domain has been expired. You have a month from the date of its expiration to renew it, otherwise it will be deleted and may be registered by someone else.' => 'Срок действия этого домена истек. У вас есть месяц с даты его истечения, чтобы продлить его, иначе он будет удален и может быть зарегистрирован кем-то другим.',
+    'This domain has expired. You need to re-register this domain.' => 'Срок действия этого домена истек. Вам необходимо перерегистрировать этот домен.',
+    'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.' => 'Требуется передача имени домена от другого регистратора. Проверьте свою электронную почту и подтвердите перевод, затем дождитесь изменения статуса.',
+    'Domain name has been transferred to another registrar.' => 'Доменное имя было передано другому регистратору.',
 ];
