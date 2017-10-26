@@ -149,22 +149,10 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'required', 'when' => function ($model) {
                 return empty($model->domains);
             }, 'on' => ['transfer']],
-//            [['password'], 'required', 'when' => function ($model) {
-//                return empty($model->domains) && $model->domain;
-//            }, 'on' => ['transfer']],
             [['domains'], 'required', 'when' => function ($model) {
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::class, 'on' => ['transfer']],
-//            [['password'], function ($attribute) {
-//                try {
-//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-//                } catch (Exception $e) {
-//                    $this->addError($attribute, Yii::t('hipanel:domain', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-//                }
-//            }, 'when' => function ($model) {
-//                return $model->domain;
-//            }, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
