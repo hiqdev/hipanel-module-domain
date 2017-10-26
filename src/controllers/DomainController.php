@@ -166,10 +166,6 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => RedirectAction::class,
                         'url' => function ($action) {
-                            if (Yii::$app->user->can('support')) {
-                                return null;
-                            }
-
                             return ['@domain'];
                         },
                     ],
