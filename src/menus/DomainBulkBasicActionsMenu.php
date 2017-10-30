@@ -61,7 +61,7 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
             [
                 'label' => '<i class="fa fa-toggle-off"></i> ' . Yii::t('hipanel:domain', 'Disable WHOIS protect'),
                 'url' => '#',
-                'linkOptions' => ['data-action' => Url::to(['@domain/enable-whois-protect'])],
+                'linkOptions' => ['data-action' => Url::to(['@domain/disable-whois-protect'])],
             ],
             // Lock
             '<li role="presentation" class="divider"></li>',
