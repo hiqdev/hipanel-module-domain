@@ -512,7 +512,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionTransferOut($id)
     {
-        $apiData = Domain::perform('GetInfo', compact('id'));
+        $apiData = Domain::perform('get-info', compact('id'));
         $model = Domain::find()->populate([$apiData])[0];
         if ($model->state !== 'outgoing')
             throw new Exception('Domain does not pending transfer.');
