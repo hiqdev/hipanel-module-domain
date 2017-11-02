@@ -34,19 +34,17 @@ class DomainGridView extends BoxedGridView
     public function columns()
     {
         return array_merge(parent::columns(), [
-            'transfer_domain' => [
-                'attribute' => 'domain',
-                'label' => Yii::t('hipanel:domain', 'Domain name transfer'),
-            ],
             'transfer_attention' => [
-                'attribute' => 'name',
                 'label' => Yii::t('hipanel:domain', 'Attention'),
+                'value' => function ($model) {
+                    return $model->client_name;
+                },
             ],
             'transfer_re' => [
                 'attribute' => 'domain',
                 'label' => Yii::t('hipanel:domain', 'Re'),
                 'value' => function ($model) {
-                    return Yii::t('hipanel:domain', 'Transfer of {domain}', ['domain' => $model->domain]);
+                    return Yii::t('hipanel:domain', 'Transfer of {domain}', ['domain' => strtoupper($model->domain)]);
                 }
             ],
             'domain' => [

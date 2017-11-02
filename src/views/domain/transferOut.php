@@ -5,18 +5,16 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('hipanel:domain', 'Domain transfer');
+$this->title = Yii::t('hipanel:domain', 'Domain transfer: {domain}', ['domain' => strtoupper($model->domain)]);
+$this->params['subtitle'] = Yii::t('hipanel:domain', 'outgoing transfer confirmation');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<div class="row">
-    <div class="col-md-6">
+<div class="row" style="font-size:110%">
+    <div class="col-md-8">
         <div class="box box-widget">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= $model->domain ?></h3>
-            </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -24,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'boxed' => false,
                             'model' => $model,
                             'columns' => [
-                                'transfer_domain',
                                 'transfer_attention',
                                 'transfer_re',
                             ],
@@ -45,21 +42,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             'action' => Url::to('@domain/reject-transfer'),
                         ]) ?>
                         <?= Html::activeHiddenInput($model, 'id') ?>
-                        <?= Html::submitButton(Yii::t('hipanel:domain', 'I reject. Please cancel the transfer my domain: {domain}', ['domain' => $model->domain]), ['class' => 'btn btn-danger btn-block btn-lg']) ?>
-                        <p class="text-muted text-center">
-                            <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
-                            <br>
-                            <?= Yii::t('hipanel:domain', 'If you wish to proceed, please back to domain info. Transfer will be approved automatically.') ?>
-                        </p>
+                        <?= Html::submitButton(
+                            Yii::t('hipanel:domain', 'I REJECT.') .  ' ' .
+                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain]) . ' ' .
+                            Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
+                        , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
                         <?php ActiveForm::end() ?>
                     </div>
                 </div>
             </div>
             <div class="box-footer">
-                <?= Html::a(Yii::t('hipanel:domain', 'I approve. Back to domain info'), [
+                <p class="text-muted text-center">
+                    <?= Yii::t('hipanel:domain', 'If you wish to proceed, please back to domain info.') ?>
+                    <br/>
+                    <?= Yii::t('hipanel:domain', 'Transfer will be approved automatically.') ?>
+                </p>
+                <?= Html::a(Yii::t('hipanel:domain', 'I APPROVE. Back to domain info'), [
                     '@domain/view',
                     'id' => $model->id,
                 ], ['class' => 'btn btn-success btn-block']) ?>
+            </div>
+            <div class="box-footer">
                 <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>
             </div>
         </div>
