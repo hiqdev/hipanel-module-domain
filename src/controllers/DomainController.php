@@ -514,10 +514,19 @@ class DomainController extends \hipanel\base\CrudController
     {
         $apiData = Domain::perform('get-info', compact('id'));
         $model = Domain::find()->populate([$apiData])[0];
-        if ($model->state !== 'outgoing')
-            throw new Exception('Domain does not pending transfer.');
+        if ($model->state !== 'outgoing') {
+            throw new Exception('Domain is not pending transfer');
+        }
 
         return $this->render('transferOut', ['model' => $model]);
+    }
+
+    public function actionTransferIn($domains, $till_date)
+    {
+        return $this->render('transferIn', [
+            'domains' => $domains,
+            'till_date' => $till_date,
+        ]);
     }
 
     public function actionRenew()
