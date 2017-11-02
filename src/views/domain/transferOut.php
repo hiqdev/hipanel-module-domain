@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ]) ?>
                     </div>
-                    <div class="col-md-12">
-                        <p class="bg-warning" style="padding: 1em;">
+                    <div class="col-md-12" style="margin: 1em 0;">
+                        <p class="bg-warning" style="padding:1em;">
                             <?= Yii::t('hipanel:domain', 'We have received notification on {request_date} that you have requested a transfer to another domain name registrar.', [
                                 'request_date' => Yii::$app->formatter->asDate($model->request_date),
                             ]) ?>
@@ -43,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]) ?>
                         <?= Html::activeHiddenInput($model, 'id') ?>
                         <?= Html::submitButton(
-                            Yii::t('hipanel:domain', 'I REJECT.') .  ' ' .
-                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain]) . ' ' .
+                            Yii::t('hipanel:domain', '<b>I REJECT</b>.') .  '<br>' .
+                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain]) . '<br>' .
                             Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
                         , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
                         <?php ActiveForm::end() ?>
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <br/>
                     <?= Yii::t('hipanel:domain', 'Transfer will be approved automatically.') ?>
                 </p>
-                <?= Html::a(Yii::t('hipanel:domain', 'I APPROVE. Back to domain info'), [
+                <?= Html::a(Yii::t('hipanel:domain', '<b>I APPROVE</b>.<br>Back to domain info'), [
                     '@domain/view',
                     'id' => $model->id,
                 ], ['class' => 'btn btn-success btn-block']) ?>
