@@ -35,6 +35,7 @@ use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Response;
 
@@ -120,6 +121,7 @@ class DomainController extends \hipanel\base\CrudController
                     $id = Yii::$app->request->get('id', false);
                     if ($id) {
                         $domainContacts = Domain::perform('get-contacts', ['ids' => [$id]], ['batch' => true]);
+
                         return [
                             'domainContact' => reset($domainContacts),
                         ];
@@ -199,7 +201,7 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
-                        'hasPincode' => $this->checkUserHasPincode()
+                        'hasPincode' => $this->checkUserHasPincode(),
                     ];
                 },
             ],
@@ -217,10 +219,12 @@ class DomainController extends \hipanel\base\CrudController
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $request = Yii::$app->request;
-                    $action->collection->load([[
-                        'pincode' => $request->post('pincode'),
-                        'receiver' => $request->post('receiver'),
-                    ]]);
+                    $action->collection->load([
+                        [
+                            'pincode' => $request->post('pincode'),
+                            'receiver' => $request->post('receiver'),
+                        ],
+                    ]);
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'push-' . $attribute;
@@ -503,6 +507,16 @@ class DomainController extends \hipanel\base\CrudController
         ];
     }
 
+    public function actionTransferOut($id)
+    {
+        $apiData = Domain::perform('GetInfo', compact('id'));
+        $model = Domain::find()->populate([$apiData])[0];
+        if ($model->state !== 'outgoing')
+            throw new Exception('Domain does not pending transfer.');
+
+        return $this->render('transferOut', ['model' => $model]);
+    }
+
     public function actionRenew()
     {
         return $this->redirect(Yii::$app->request->referrer);
@@ -554,6 +568,7 @@ class DomainController extends \hipanel\base\CrudController
     {
         return Yii::$app->cache->getOrSet(['user-pincode-enabled', Yii::$app->user->id], function () {
             $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
+
             return $pincodeData['pincode_enabled'];
         }, 3600);
     }

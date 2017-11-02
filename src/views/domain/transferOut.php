@@ -1,0 +1,67 @@
+<?php
+
+use hipanel\modules\domain\grid\DomainGridView;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$this->title = Yii::t('hipanel:domain', 'Domain transfer');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= $model->domain ?></h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= DomainGridView::detailView([
+                            'boxed' => false,
+                            'model' => $model,
+                            'columns' => [
+                                'transfer_domain',
+                                'transfer_attention',
+                                'transfer_re',
+                            ],
+                        ]) ?>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="bg-warning" style="padding: 1em;">
+                            <?= Yii::t('hipanel:domain', 'We have received notification on {request_date} that you have requested a transfer to another domain name registrar.', [
+                                'request_date' => Yii::$app->formatter->asDate($model->request_date),
+                            ]) ?>
+                            <?= Yii::t('hipanel:domain', 'If you wish to cancel the transfer, please press the button below.') ?>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'reject-transfer-form',
+                            'method' => 'POST',
+                            'action' => Url::to('@domain/reject-transfer'),
+                        ]) ?>
+                        <?= Html::activeHiddenInput($model, 'id') ?>
+                        <?= Html::submitButton(Yii::t('hipanel:domain', 'I reject. Please cancel the transfer my domain: {domain}', ['domain' => $model->domain]), ['class' => 'btn btn-danger btn-block btn-lg']) ?>
+                        <p class="text-muted text-center">
+                            <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
+                            <br>
+                            <?= Yii::t('hipanel:domain', 'If you wish to proceed, please back to domain info. Transfer will be approved automatically.') ?>
+                        </p>
+                        <?php ActiveForm::end() ?>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <?= Html::a(Yii::t('hipanel:domain', 'I approve. Back to domain info'), [
+                    '@domain/view',
+                    'id' => $model->id,
+                ], ['class' => 'btn btn-success btn-block']) ?>
+                <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>
+            </div>
+        </div>
+    </div>
+</div>

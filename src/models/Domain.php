@@ -99,7 +99,7 @@ class Domain extends \hipanel\base\Model
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
-            [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
+            [['block', 'epp_client_id', 'nameservers', 'nsips', 'request_date', 'name'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
 
             // Contacts
