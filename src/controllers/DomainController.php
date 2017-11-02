@@ -80,6 +80,9 @@ class DomainController extends \hipanel\base\CrudController
     public function actions()
     {
         return [
+            'test' => [
+                'class' => RenderAction::class,
+            ],
             'add-to-cart-renewal' => [
                 'class' => AddToCartAction::class,
                 'productClass' => DomainRenewalProduct::class,
