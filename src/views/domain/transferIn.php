@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p><?= Yii::t('hipanel:domain', 'Please read the following important information about transferring your domain name:') ?></p>
                 <ul>
                     <li>
-                        <?= Yii::t('hipanel:domain', 'By approving the transfer you enter into a new Registration Agreement with us. Please {review}.', ['review' => Html::a(Yii::t('hipanel:domain', 'review the full terms and conditions of the Agreement'), '#', ['target' => '_blank'])]) ?>
+                        <?= Yii::t('hipanel:domain', 'By approving the transfer you enter into a new Registration Agreement with us. Please {review}.', ['review' => Html::a(Yii::t('hipanel:domain', 'review the full terms and conditions of the Agreement'), 'https://ahnames.com/rules', ['target' => '_blank'])]) ?>
                     </li>
                     <li>
                         <?= Yii::t('hipanel:domain', 'Once you approved the transfer, the transfer will take place within six (6) calendar days unless the current registrar of record denies the request.') ?>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p>
                     <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ican} site and especially in {pilicy_on_transfer_of_registrations}.', [
                         'ican' => Html::a('ICAN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
-                        'pilicy_on_transfer_of_registrations' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), '#', ['target' => '_blank']),
+                        'pilicy_on_transfer_of_registrations' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), 'http://www.icann.org/ru/resources/registrars/transfers/policy', ['target' => '_blank']),
                     ]) ?>
                 </p>
             </div>
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
                 <?= Html::submitButton(
                     '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
-                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $domains])
+                    Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
                     , ['class' => 'btn btn-danger btn-block']) ?>
                 <?php ActiveForm::end() ?>
                 <p class="text-center bg-danger text-muted" style="padding: 1em;">
