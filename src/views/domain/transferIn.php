@@ -1,11 +1,14 @@
 <?php
 
-use hipanel\modules\domain\grid\DomainGridView;
+/** @var string $domains */
+
+/** @var string $till_date */
+
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('hipanel:domain', 'Domain transfer: {domains}', ['domains' => strtoupper($domains)]);
+$this->title = Yii::t('hipanel:domain', 'Domain transfer approval');
 $this->params['subtitle'] = Yii::t('hipanel:domain', 'incoming transfer confirmation');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,41 +19,64 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-8">
         <div class="box box-widget">
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                    </div>
-                    <div class="col-md-12">
-                        <p class="bg-warning" style="padding: 1em;">
-                            <?= Yii::t('hipanel:domain', 'We have received notification on {till_date} that you have requested a transfer to another domain name registrar.', [
-                                'till_date' => Yii::$app->formatter->asDate($till_date),
-                            ]) ?>
-                            <?= Yii::t('hipanel:domain', 'If you wish to cancel the transfer, please press the button below.') ?>
-                        </p>
-                    </div>
-                    <div class="col-md-12">
-                        <?php $form = ActiveForm::begin([
-                            'id' => 'reject-transfer-form',
-                            'method' => 'POST',
-                            'action' => Url::to('@domain/reject-transfer'),
-                        ]) ?>
-                        <?= Html::submitButton(
-                            Yii::t('hipanel:domain', 'I REJECT.') .  ' ' .
-                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domains}.', ['domains' => $domains]) . ' ' .
-                            Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
-                        , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
-                        <?php ActiveForm::end() ?>
-                    </div>
-                </div>
+                <p class="text-bold">
+                    <?= Html::encode(strtoupper($domains)) ?>
+                </p>
+                <p><?= Yii::t('hipanel:domain', 'Please read the following important information about transferring your domain name:') ?></p>
+                <ul>
+                    <li>
+                        <?= Yii::t('hipanel:domain', 'By approving the transfer you enter into a new Registration Agreement with us. Please {review}.', ['review' => Html::a(Yii::t('hipanel:domain', 'review the full terms and conditions of the Agreement'), '#', ['target' => '_blank'])]) ?>
+                    </li>
+                    <li>
+                        <?= Yii::t('hipanel:domain', 'Once you approved the transfer, the transfer will take place within six (6) calendar days unless the current registrar of record denies the request.') ?>
+                    </li>
+                    <li>
+                        <?= Yii::t('hipanel:domain', 'Once a transfer takes place, you will not be able to transfer to another registrar for 60 days, apart from a transfer back to the original registrar, in cases where both registrars so agree or where a decision in the dispute resolution process so directs.') ?>
+                    </li>
+                </ul>
+                <p>
+                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ican} site and especially in {pilicy_on_transfer_of_registrations}.', [
+                        'ican' => Html::a('ICAN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
+                        'pilicy_on_transfer_of_registrations' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), '#', ['target' => '_blank']),
+                    ]) ?>
+                </p>
+            </div>
+            <div class="box-footer text-center">
+                <?= Html::tag('h3', Yii::t('hipanel:domain', 'To proceed with the transfer you must respond with one of the following:')) ?>
             </div>
             <div class="box-footer">
-                <p class="text-muted text-center">
-                    <?= Yii::t('hipanel:domain', 'If you wish to proceed, please back to domain info.') ?>
-                    <br/>
-                    <?= Yii::t('hipanel:domain', 'Transfer will be approved automatically.') ?>
+                <?php $form = ActiveForm::begin([
+                    'id' => 'reject-transfer-form',
+                    'method' => 'POST',
+                    'action' => Url::to('@domain/approve-transfer'),
+                ]) ?>
+                <?= Html::submitButton(
+                    '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '</b><br>' .
+                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $domains])
+                    , ['class' => 'btn btn-success btn-block btn-lg']) ?>
+                <?php ActiveForm::end() ?>
+                <p class="text-muted text-center bg-success" style="padding: 1em;">
+                    <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to approve this request.') ?>
+                    <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), '#')]) ?>
                 </p>
-                <?= Html::a(Yii::t('hipanel:domain', 'I APPROVE. Back to domain info'), [
-                    '@domain/view',
-                ], ['class' => 'btn btn-success btn-block']) ?>
+            </div>
+            <div class="box-footer">
+                <?php $form = ActiveForm::begin([
+                    'id' => 'reject-transfer-form',
+                    'method' => 'POST',
+                    'action' => Url::to('@domain/approve-transfer'),
+                ]) ?>
+                <?= Html::submitButton(
+                    '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
+                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $domains])
+                    , ['class' => 'btn btn-danger btn-block']) ?>
+                <?php ActiveForm::end() ?>
+                <p class="text-center bg-danger text-muted" style="padding: 1em;">
+                    <?= Yii::t('hipanel:domain', 'ATTENTION: If you do not respond by {till_date}, domains: {domains} will not be transferred to us.', [
+                        'till_date' => Yii::$app->formatter->asDate($till_date),
+                        'domains' => strtoupper($domains),
+                    ]) ?>
+                </p>
             </div>
             <div class="box-footer">
                 <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>

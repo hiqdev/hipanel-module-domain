@@ -43,21 +43,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]) ?>
                         <?= Html::activeHiddenInput($model, 'id') ?>
                         <?= Html::submitButton(
-                            Yii::t('hipanel:domain', '<b>I REJECT</b>.') .  '<br>' .
-                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain]) . '<br>' .
-                            Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
-                        , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
+                            '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
+                            Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain])
+                            , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
                         <?php ActiveForm::end() ?>
+                        <p class="text-muted text-center bg-danger" style="padding: 1em;">
+                            <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="box-footer">
-                <p class="text-muted text-center">
+                <p class="text-muted text-center bg-success" style="padding: 1em; margin-bottom: 0;">
                     <?= Yii::t('hipanel:domain', 'If you wish to proceed, please back to domain info.') ?>
                     <br/>
                     <?= Yii::t('hipanel:domain', 'Transfer will be approved automatically.') ?>
                 </p>
-                <?= Html::a(Yii::t('hipanel:domain', '<b>I APPROVE</b>.<br>Back to domain info'), [
+                <?= Html::a('<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '</b><br>' . Yii::t('hipanel:domain', 'Back to domain info'), [
                     '@domain/view',
                     'id' => $model->id,
                 ], ['class' => 'btn btn-success btn-block']) ?>

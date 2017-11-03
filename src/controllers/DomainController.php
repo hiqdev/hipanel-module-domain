@@ -523,10 +523,15 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionTransferIn($domains, $till_date)
     {
-        return $this->render('transferIn', [
-            'domains' => $domains,
-            'till_date' => $till_date,
+        $model = DynamicModel::validateData(compact('domains', 'till_date'), [
+            [['domains'], 'string'],
+            ['till_date', 'date', 'format' => 'php:Y-m-d'],
         ]);
+        if ($model->hasErrors()) {
+            throw new Exception('Params validation has errors.');
+        }
+
+        return $this->render('transferIn', compact('domains', 'till_date'));
     }
 
     public function actionRenew()
