@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </li>
                 </ul>
                 <p>
-                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ICANN} site and especially in {pilicy_on_transfer_of_registrations}.', [
+                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ICANN} site and especially in {policy}.', [
                         'ICANN' => Html::a('ICANN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
-                        'pilicy_on_transfer_of_registrations' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), '#', ['target' => '_blank']),
+                        'policy' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), 'http://www.icann.org/ru/resources/registrars/transfers/policy', ['target' => '_blank']),
                     ]) ?>
                 </p>
             </div>
