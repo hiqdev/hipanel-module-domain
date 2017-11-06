@@ -513,6 +513,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartPerformAction::class,
                 'scenario' => 'approve-preincoming',
                 'success' => Yii::t('hipanel:domain', ''),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
                     $action = $event->sender;
@@ -525,6 +528,9 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartPerformAction::class,
                 'scenario' => 'reject-preincoming',
                 'success' => Yii::t('hipanel:domain', ''),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
                     $action = $event->sender;
