@@ -1,9 +1,10 @@
 <?php
 
-/** @var string $domains */
+/** @var Domain $model */
 
-/** @var string $till_date */
+/** @var string $userIP */
 
+use hipanel\modules\domain\models\Domain;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box box-widget">
             <div class="box-body">
                 <p class="text-bold">
-                    <?= Html::encode(strtoupper($domains)) ?>
+                    <?= Html::encode(strtoupper($model->domains)) ?>
                 </p>
                 <p><?= Yii::t('hipanel:domain', 'Please read the following important information about transferring your domain name:') ?></p>
                 <ul>
@@ -46,26 +47,29 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="box-footer">
                 <?php $form = ActiveForm::begin([
-                    'id' => 'reject-transfer-form',
                     'method' => 'POST',
-                    'action' => Url::to('@domain/approve-transfer'),
+                    'action' => Url::to('@domain/approve-preincoming'),
                 ]) ?>
+                <?= Html::activeHiddenInput($model, 'domains') ?>
+                <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                 <?= Html::submitButton(
                     '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '</b><br>' .
-                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $domains])
+                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $model->domains])
                     , ['class' => 'btn btn-success btn-block btn-lg']) ?>
                 <?php ActiveForm::end() ?>
                 <p class="text-muted text-center bg-success" style="padding: 1em;">
                     <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to approve this request.') ?>
                     <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), '#')]) ?>
                 </p>
+                <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.', ['ip' => $userIP]) ?></p>
             </div>
             <div class="box-footer">
                 <?php $form = ActiveForm::begin([
-                    'id' => 'reject-transfer-form',
                     'method' => 'POST',
-                    'action' => Url::to('@domain/approve-transfer'),
+                    'action' => Url::to('@domain/reject-preincoming'),
                 ]) ?>
+                <?= Html::activeHiddenInput($model, 'domains') ?>
+                <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                 <?= Html::submitButton(
                     '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
                     Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
@@ -73,8 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php ActiveForm::end() ?>
                 <p class="text-center bg-danger text-muted" style="padding: 1em;">
                     <?= Yii::t('hipanel:domain', 'ATTENTION: If you do not respond by {till_date}, domains: {domains} will not be transferred to us.', [
-                        'till_date' => Yii::$app->formatter->asDate($till_date),
-                        'domains' => strtoupper($domains),
+                        'till_date' => Yii::$app->formatter->asDate($model->till_date),
+                        'domains' => Html::tag('b', strtoupper($model->domains)),
                     ]) ?>
                 </p>
             </div>

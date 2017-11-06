@@ -32,11 +32,13 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Ns;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
+use hiqdev\yii2\export\actions\ExportAction;
 use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\Response;
 
 class DomainController extends \hipanel\base\CrudController
@@ -507,6 +509,30 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => RedirectAction::class,
                 'url' => Yii::$app->params['orgUrl'],
             ],
+            'approve-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'approve-preincoming',
+                'success' => Yii::t('hipanel:domain', ''),
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
+                    foreach ($action->collection->models as $model) {
+                        $model->confirm_data = JSON::decode($model->confirm_data);
+                    }
+                },
+            ],
+            'reject-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'reject-preincoming',
+                'success' => Yii::t('hipanel:domain', ''),
+                'on beforeSave' => function (Event $event) {
+                    /** @var Action $action */
+                    $action = $event->sender;
+                    foreach ($action->collection->models as $model) {
+                        $model->confirm_data = JSON::decode($model->confirm_data);
+                    }
+                },
+            ],
         ];
     }
 
@@ -521,17 +547,17 @@ class DomainController extends \hipanel\base\CrudController
         return $this->render('transferOut', ['model' => $model]);
     }
 
-    public function actionTransferIn($domains, $till_date)
+    public function actionTransferIn($domains, $till_date, $what, $salt, $hash)
     {
-        $model = DynamicModel::validateData(compact('domains', 'till_date'), [
-            [['domains'], 'string'],
-            ['till_date', 'date', 'format' => 'php:Y-m-d'],
-        ]);
+        $data = compact('domains', 'till_date', 'what', 'salt', 'hash');
+        $userIP = Yii::$app->request->userIP;
+        $model = new Domain($data);
+        $model->confirm_data = JSON::encode($data);
         if ($model->hasErrors()) {
             throw new Exception('Params validation has errors.');
         }
 
-        return $this->render('transferIn', compact('domains', 'till_date'));
+        return $this->render('transferIn', compact('model', 'userIP'));
     }
 
     public function actionRenew()

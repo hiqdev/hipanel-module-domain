@@ -180,6 +180,15 @@ class Domain extends \hipanel\base\Model
 
             // Bulk set contacts
             [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],
+
+            [[
+                'confirm_data',
+                'domains',
+                'till_date',
+                'what',
+                'salt',
+                'hash',
+            ], 'safe', 'on' => ['approve-preincoming', 'reject-preincoming']],
         ];
     }
 
