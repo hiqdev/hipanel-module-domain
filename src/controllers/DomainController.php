@@ -507,7 +507,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'buy' => [
                 'class' => RedirectAction::class,
-                'url' => Yii::$app->params['orgUrl'],
+                'url' => Yii::$app->params['organization.url'],
             ],
             'approve-preincoming' => [
                 'class' => SmartPerformAction::class,
