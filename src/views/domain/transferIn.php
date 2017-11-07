@@ -14,7 +14,7 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'incoming transfer confirma
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$rulesUrl = Url::to(Yii::$app->params['organization.url'] . 'pages/rules', 'https');
+$rulesUrl = Url::to('@organization/pages/rules');
 
 ?>
 
