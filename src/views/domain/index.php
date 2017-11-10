@@ -42,12 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'boxed' => false,
                 'dataProvider' => $dataProvider,
                 'filterModel'  => $model,
-                'columns'      => [
-                    'checkbox',
-                    'domain', 'actions', 'client_like', 'seller',
-                    'state', 'whois_protected', 'is_secured',
-                    'created_date', 'expires', 'autorenewal',
-                ],
+                'columns' => $representationCollection->getByName($uiModel->representation)->getColumns(),
             ]) ?>
         <?php $page->endBulkForm() ?>
     <?php $page->endContent() ?>
