@@ -14,6 +14,8 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'incoming transfer confirma
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$rulesUrl = Url::to('@organization/pages/rules');
+
 ?>
 
 <div class="row" style="font-size:110%">
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p><?= Yii::t('hipanel:domain', 'Please read the following important information about transferring your domain name:') ?></p>
                 <ul>
                     <li>
-                        <?= Yii::t('hipanel:domain', 'By approving the transfer you enter into a new Registration Agreement with us. Please {review}.', ['review' => Html::a(Yii::t('hipanel:domain', 'review the full terms and conditions of the Agreement'), 'https://ahnames.com/rules', ['target' => '_blank'])]) ?>
+                        <?= Yii::t('hipanel:domain', 'By approving the transfer you enter into a new Registration Agreement with us. Please {review}.', ['review' => Html::a(Yii::t('hipanel:domain', 'review the full terms and conditions of the Agreement'), $rulesUrl, ['target' => '_blank'])]) ?>
                     </li>
                     <li>
                         <?= Yii::t('hipanel:domain', 'Once you approved the transfer, the transfer will take place within six (6) calendar days unless the current registrar of record denies the request.') ?>
@@ -36,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </li>
                 </ul>
                 <p>
-                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ican} site and especially in {pilicy_on_transfer_of_registrations}.', [
-                        'ican' => Html::a('ICAN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
-                        'pilicy_on_transfer_of_registrations' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), 'http://www.icann.org/ru/resources/registrars/transfers/policy', ['target' => '_blank']),
+                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ICANN} site and especially in {policy}.', [
+                        'ICANN' => Html::a('ICANN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
+                        'policy' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), 'http://www.icann.org/ru/resources/registrars/transfers/policy', ['target' => '_blank']),
                     ]) ?>
                 </p>
             </div>
@@ -59,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php ActiveForm::end() ?>
                 <p class="text-muted text-center bg-success" style="padding: 1em;">
                     <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to approve this request.') ?>
-                    <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), '#')]) ?>
+                    <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), $rulesUrl)]) ?>
                 </p>
                 <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.', ['ip' => $userIP]) ?></p>
             </div>

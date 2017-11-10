@@ -506,7 +506,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'buy' => [
                 'class' => RedirectAction::class,
-                'url' => Yii::$app->params['orgUrl'],
+                'url' => Yii::$app->params['organization.url'],
             ],
             'approve-preincoming' => [
                 'class' => SmartPerformAction::class,
@@ -554,6 +554,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actionTransferIn($domains, $till_date, $what, $salt, $hash)
     {
+        Yii::$app->get('hiart')->disableAuth();
         $data = compact('domains', 'till_date', 'what', 'salt', 'hash');
         $userIP = Yii::$app->request->userIP;
         $model = new Domain($data);
