@@ -32,7 +32,6 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Ns;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
-use hiqdev\yii2\export\actions\ExportAction;
 use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
