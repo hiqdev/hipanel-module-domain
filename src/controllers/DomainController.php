@@ -80,7 +80,7 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actions()
     {
-        return [
+        return array_merge(parent::actions(), [
             'test' => [
                 'class' => RenderAction::class,
             ],
@@ -136,7 +136,6 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
-//                'scenario' => 'set-contacts',
                 'success' => Yii::t('hipanel:domain', 'Contacts is changed'),
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
@@ -538,7 +537,7 @@ class DomainController extends \hipanel\base\CrudController
                     }
                 },
             ],
-        ];
+        ]);
     }
 
     public function actionTransferOut($id)
