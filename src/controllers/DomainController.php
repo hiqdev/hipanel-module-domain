@@ -511,7 +511,7 @@ class DomainController extends \hipanel\base\CrudController
             'approve-preincoming' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'approve-preincoming',
-                'success' => Yii::t('hipanel:domain', ''),
+                'success' => Yii::t('hipanel:domain', 'Successfully approved'),
                 'queryOptions' => [
                     'batch' => false,
                 ],
@@ -526,7 +526,7 @@ class DomainController extends \hipanel\base\CrudController
             'reject-preincoming' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'reject-preincoming',
-                'success' => Yii::t('hipanel:domain', ''),
+                'success' => Yii::t('hipanel:domain', 'Successfully rejected'),
                 'queryOptions' => [
                     'batch' => false,
                 ],

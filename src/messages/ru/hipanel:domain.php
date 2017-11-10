@@ -321,5 +321,7 @@ return [
     'transfer_attention_5' => 'Более подробную информацию о процессе трансфера доменов вы можете получить на <a href="http://www.icann.org/ru/resources/registrars/transfers">сайте ICANN</a> и особенно в соответствующем документе: "<a href="http://www.icann.org/ru/resources/registrars/transfers/policy">Политика передачи регистраций между регистраторами</a>"',
     'year' => 'год',
     '{0, plural, one{# year} other{# years}}' => '{0, plural, one{# год} few{# года} other{# лет}}',
-    'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.' => 'Внимание: IP адрес вашего компьютера: {ip}, будет записан как часть вашего ответа.'
+    'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.' => 'Внимание: IP адрес вашего компьютера: {ip}, будет записан как часть вашего ответа.',
+    'Successfully approved' => 'Успешно одобрен',
+    'Successfully rejected' => 'Успешно отклонен',
 ];
