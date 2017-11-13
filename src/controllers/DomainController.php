@@ -515,6 +515,7 @@ class DomainController extends \hipanel\base\CrudController
                     'batch' => false,
                 ],
                 'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
                     /** @var Action $action */
                     $action = $event->sender;
                     foreach ($action->collection->models as $model) {
@@ -530,6 +531,7 @@ class DomainController extends \hipanel\base\CrudController
                     'batch' => false,
                 ],
                 'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
                     /** @var Action $action */
                     $action = $event->sender;
                     foreach ($action->collection->models as $model) {
