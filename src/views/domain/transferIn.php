@@ -38,8 +38,8 @@ $rulesUrl = Url::to('@organization/pages/rules');
                     </li>
                 </ul>
                 <p>
-                    <?= Yii::t('hipanel:domain', 'More information on domain transfer process can be found on {ICANN} site and especially in {policy}.', [
-                        'ICANN' => Html::a('ICANN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
+                    <?= Yii::t('hipanel:domain', 'More iniformation on domain transfer process can be found on {icann} site and especially in {policy}', [
+                        'icann' => Html::a('ICANN', 'https://www.icann.org/resources/pages/registrars/transfers-en', ['target' => '_blank']),
                         'policy' => Html::a(Yii::t('hipanel:domain', 'Policy on Transfer of Registrations between Registrars'), 'http://www.icann.org/ru/resources/registrars/transfers/policy', ['target' => '_blank']),
                     ]) ?>
                 </p>
@@ -55,15 +55,16 @@ $rulesUrl = Url::to('@organization/pages/rules');
                 <?= Html::activeHiddenInput($model, 'domains') ?>
                 <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                 <?= Html::submitButton(
-                    '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '</b><br>' .
-                    Yii::t('hipanel:domain', 'Please cancel the transfer my domain(s): {domains}.', ['domains' => '<br>' . $model->domains])
+                    '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . ' ' .
+                    Yii::t('hipanel:domain', 'Please transfer my domain: {domain}', ['domain' => $model->domains])
                     , ['class' => 'btn btn-success btn-block btn-lg']) ?>
                 <?php ActiveForm::end() ?>
-                <p class="text-muted text-center bg-success" style="padding: 1em;">
+                <p class="text-muted bg-success" style="padding: 1em;">
                     <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to approve this request.') ?>
-                    <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), $rulesUrl)]) ?>
+                    <?= Yii::t('hipanel:domain', 'By approving I agree to {rules}.', ['rules' => Html::a(Yii::t('hipanel:domain', 'the terms and conditions'), $rulesUrl, ['style' => 'font-weight: bold;'])]) ?>
+                    (<?= Yii::t('hipanel:domain', 'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.', ['ip' => $userIP]) ?>
+                    )
                 </p>
-                <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.', ['ip' => $userIP]) ?></p>
             </div>
             <div class="box-footer">
                 <?php $form = ActiveForm::begin([
@@ -73,19 +74,23 @@ $rulesUrl = Url::to('@organization/pages/rules');
                 <?= Html::activeHiddenInput($model, 'domains') ?>
                 <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                 <?= Html::submitButton(
-                    '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
-                    Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.')
-                    , ['class' => 'btn btn-danger btn-block']) ?>
+                    '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . ' ' . Yii::t('hipanel:domain', 'Please cancel the transfer.') . '</b><br>', ['class' => 'btn btn-danger btn-block']) ?>
                 <?php ActiveForm::end() ?>
-                <p class="text-center bg-danger text-muted" style="padding: 1em;">
+                <p class="bg-danger text-muted" style="padding: 1em;">
+                    <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
+                    <br>
+                    (<?= Yii::t('hipanel:domain', 'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.', ['ip' => $userIP]) ?>
+                    )
+                </p>
+                <p>
                     <?= Yii::t('hipanel:domain', 'ATTENTION: If you do not respond by {till_date}, domains: {domains} will not be transferred to us.', [
                         'till_date' => Yii::$app->formatter->asDate($model->till_date),
-                        'domains' => Html::tag('b', strtoupper($model->domains)),
+                        'domains' => strtoupper($model->domains),
                     ]) ?>
                 </p>
             </div>
             <div class="box-footer">
-                <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>
+                <p class="text-muted"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>
             </div>
         </div>
     </div>
