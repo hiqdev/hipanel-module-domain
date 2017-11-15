@@ -10,6 +10,8 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'outgoing transfer confirma
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$this->registerCss('.hover-item:hover { filter: brightness(95%); }');
+
 ?>
 
 <div class="shared-table">
@@ -46,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= Html::submitButton(
                                 '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '</b><br>' .
                                 Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain])
-                                , ['class' => 'btn btn-danger btn-block btn-lg']) ?>
+                                , ['class' => 'btn btn-danger btn-block btn-lg hover-item']) ?>
                             <?php ActiveForm::end() ?>
                             <p class="text-muted text-center bg-danger" style="padding: 1em;">
                                 <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
@@ -63,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a('<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '</b><br>' . Yii::t('hipanel:domain', 'Back to domain info'), [
                         '@domain/view',
                         'id' => $model->id,
-                    ], ['class' => 'btn btn-success btn-block']) ?>
+                    ], ['class' => 'btn btn-success btn-block hover-item']) ?>
                 </div>
                 <div class="box-footer">
                     <p class="text-muted text-center"><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>

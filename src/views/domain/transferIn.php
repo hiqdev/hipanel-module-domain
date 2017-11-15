@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $rulesUrl = Url::to('@organization/pages/rules');
 
+$this->registerCss('.hover-item:hover { filter: brightness(95%); }');
+
 ?>
 <div class="shared-table">
     <div class="row" style="font-size:110%">
@@ -57,7 +59,7 @@ $rulesUrl = Url::to('@organization/pages/rules');
                     <?= Html::submitButton(
                         '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . ' ' .
                         Yii::t('hipanel:domain', 'Please transfer my domain: {domain}', ['domain' => $model->domains])
-                        , ['class' => 'btn btn-success btn-block btn-lg']) ?>
+                        , ['class' => 'btn btn-success btn-block btn-lg hover-item']) ?>
                     <?php ActiveForm::end() ?>
                     <p class="text-muted bg-success" style="padding: 1em;">
                         <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to approve this request.') ?>
@@ -74,7 +76,7 @@ $rulesUrl = Url::to('@organization/pages/rules');
                     <?= Html::activeHiddenInput($model, 'domains') ?>
                     <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                     <?= Html::submitButton(
-                        '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . ' ' . Yii::t('hipanel:domain', 'Please cancel the transfer.') . '</b><br>', ['class' => 'btn btn-danger btn-block']) ?>
+                        '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . ' ' . Yii::t('hipanel:domain', 'Please cancel the transfer.') . '</b><br>', ['class' => 'btn btn-danger btn-block hover-item']) ?>
                     <?php ActiveForm::end() ?>
                     <p class="bg-danger text-muted" style="padding: 1em;">
                         <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
