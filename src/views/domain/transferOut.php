@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php $form = ActiveForm::begin([
                             'id' => 'reject-transfer-form',
                             'method' => 'POST',
-                            'action' => Url::to('@domain/reject-transfer'),
+                            'action' => Url::to(['@domain/reject-transfer']),
                         ]) ?>
                         <?= Html::activeHiddenInput($model, 'id') ?>
                         <?= Html::submitButton(

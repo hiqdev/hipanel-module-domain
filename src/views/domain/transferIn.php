@@ -50,7 +50,7 @@ $rulesUrl = Url::to('@organization/pages/rules');
             <div class="box-footer">
                 <?php $form = ActiveForm::begin([
                     'method' => 'POST',
-                    'action' => Url::to('@domain/approve-preincoming'),
+                    'action' => Url::to(['@domain/approve-preincoming']),
                 ]) ?>
                 <?= Html::activeHiddenInput($model, 'domains') ?>
                 <?= Html::activeHiddenInput($model, 'confirm_data') ?>
@@ -69,7 +69,7 @@ $rulesUrl = Url::to('@organization/pages/rules');
             <div class="box-footer">
                 <?php $form = ActiveForm::begin([
                     'method' => 'POST',
-                    'action' => Url::to('@domain/reject-preincoming'),
+                    'action' => Url::to(['@domain/reject-preincoming']),
                 ]) ?>
                 <?= Html::activeHiddenInput($model, 'domains') ?>
                 <?= Html::activeHiddenInput($model, 'confirm_data') ?>
