@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -100,16 +100,16 @@ return [
     'reject-preincoming' => '',
     'review the full terms and conditions of the Agreement' => 'ознакомьтесь с подробными условиями Соглашения',
     'the terms and conditions' => 'правила и условия',
-    'Change IP' => '@@Сменить IP@@',
-    'Domain search' => '@@Поиск доменов@@',
-    'Enable premium' => '@@Включить премиум@@',
-    'Premium autorenewal has been disabled' => '@@Автоматическое продление премиума было отключено@@',
-    'Premium autorenewal has been enabled' => '@@Автоматическое продление премиума было включено@@',
-    'Premium package' => '@@Премиум пакет@@',
-    'Premium package autorenewal' => '@@Автоматическое продление премиум пакета@@',
-    'Single domain transfer' => '@@Трансфер домена@@',
-    'What is a NS-server and how it works' => '@@Что такое NS-сервер и как он работает@@',
-    'Wrong code: {message}' => '@@Неправильный код: {message}@@',
+    'Change IP' => 'Сменить IP',
+    'Domain search' => 'Поиск доменов',
+    'Enable premium' => 'Включить премиум',
+    'Premium autorenewal has been disabled' => 'Автоматическое продление премиума было отключено',
+    'Premium autorenewal has been enabled' => 'Автоматическое продление премиума было включено',
+    'Premium package' => 'Премиум пакет',
+    'Premium package autorenewal' => 'Автоматическое продление премиум пакета',
+    'Single domain transfer' => 'Трансфер домена',
+    'What is a NS-server and how it works' => 'Что такое NS-сервер и как он работает',
+    'Wrong code: {message}' => 'Неправильный код: {message}',
     '\'{value}\' is not valid domain name' => '\'{value}\' не является правильным доменным именем',
     'ATTENTION: If you do not respond by {till_date}, domains: {domains} will not be transferred to us.' => 'ВНИМАНИЕ: Если вы не ответите до {till_date}, домены: {domains} не будут перенесены к нам.',
     'According to the rules of domain registration in .RU zone ({link}), you have to fill in your passport data.' => 'Согласно правилам регистрации доменов в зоне .RU ({link}) необходимо указать паспортные данные текущего контакта.',
