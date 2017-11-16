@@ -46,7 +46,7 @@ $this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { fi
                             ]) ?>
                             <?= Html::activeHiddenInput($model, 'id') ?>
                             <?= Html::submitButton(
-                                '<b>' . Yii::t('hipanel:domain', 'I REJECT.') .
+                                '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . ' ' .
                                 Yii::t('hipanel:domain', 'Please cancel the transfer my domain: {domain}.', ['domain' => $model->domain])
                                 , ['class' => 'btn btn-danger btn-block btn-lg hover-item']) ?>
                             <?php ActiveForm::end() ?>
@@ -62,7 +62,7 @@ $this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { fi
                         <br/>
                         <?= Yii::t('hipanel:domain', 'Transfer will be approved automatically.') ?>
                     </p>
-                    <?= Html::a('<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . Yii::t('hipanel:domain', 'Back to domain info'), [
+                    <?= Html::a('<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . ' ' . Yii::t('hipanel:domain', 'Back to domain info'), [
                         '@domain/view',
                         'id' => $model->id,
                     ], ['class' => 'btn btn-success btn-block hover-item']) ?>
