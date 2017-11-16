@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $rulesUrl = Url::to('@organization/pages/rules');
 
-$this->registerCss('.hover-item:hover { filter: brightness(95%); }');
+$this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { filter: brightness(95%);}');
 
 ?>
 <div class="shared-table">
@@ -57,7 +57,7 @@ $this->registerCss('.hover-item:hover { filter: brightness(95%); }');
                     <?= Html::activeHiddenInput($model, 'domains') ?>
                     <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                     <?= Html::submitButton(
-                        '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . '<br>' .
+                        '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . ' ' .
                         Yii::t('hipanel:domain', 'Please transfer my domain: {domain}', ['domain' => strtoupper($model->domains)])
                         , ['class' => 'btn btn-success btn-block btn-lg hover-item']) ?>
                     <?php ActiveForm::end() ?>
@@ -76,8 +76,8 @@ $this->registerCss('.hover-item:hover { filter: brightness(95%); }');
                     <?= Html::activeHiddenInput($model, 'domains') ?>
                     <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                     <?= Html::submitButton(
-                        '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . '<br>' .
-                        Yii::t('hipanel:domain', 'Please cancel the transfer.') . '</b><br>', ['class' => 'btn btn-danger btn-block hover-item']) ?>
+                        '<b>' . Yii::t('hipanel:domain', 'I REJECT.') . ' ' .
+                        Yii::t('hipanel:domain', 'Please cancel the transfer.'), ['class' => 'btn btn-danger btn-block hover-item']) ?>
                     <?php ActiveForm::end() ?>
                     <p class="bg-danger text-muted" style="padding: 1em;">
                         <?= Yii::t('hipanel:domain', 'I am one of the contacts currently listed for the domain and I have the authority to reject this request.') ?>
