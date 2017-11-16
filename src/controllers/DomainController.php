@@ -321,6 +321,17 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domain = Yii::$app->request->post('Domain');
+
+                            return ['@domain/transfer-cenceled', 'id' => $domain['id']];
+                        },
+                    ],
+                ],
             ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
@@ -522,6 +533,17 @@ class DomainController extends \hipanel\base\CrudController
                         $model->confirm_data = JSON::decode($model->confirm_data);
                     }
                 },
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domains = Yii::$app->request->post('Domain')['domains'];
+
+                            return ['@domain/preincoming-started', 'domains' => $domains];
+                        },
+                    ],
+                ],
             ],
             'reject-preincoming' => [
                 'class' => SmartPerformAction::class,
@@ -538,7 +560,36 @@ class DomainController extends \hipanel\base\CrudController
                         $model->confirm_data = JSON::decode($model->confirm_data);
                     }
                 },
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domains = Yii::$app->request->post('Domain')['domains'];
+
+                            return ['@domain/preincoming-canceled', 'domains' => $domains];
+                        },
+                    ],
+                ],
             ],
+            'preincoming-started' => [
+                'class' => RenderAction::class,
+                'view' => 'preincomingStarted',
+                'data' => function ($action) {
+                    return ['domains' => Yii::$app->request->get('domains')];
+                },
+            ],
+            'preincoming-canceled' => [
+                'class' => RenderAction::class,
+                'view' => 'preincomingCanseled',
+                'data' => function ($action) {
+                    return ['domains' => Yii::$app->request->get('domains')];
+                },
+            ],
+            'transfer-canceled' => [
+                'class' => ViewAction::class,
+                'view' => 'transferCanceled',
+            ]
         ]);
     }
 
