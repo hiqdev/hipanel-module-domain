@@ -189,6 +189,10 @@ class Domain extends \hipanel\base\Model
                 'salt',
                 'hash',
             ], 'safe', 'on' => ['approve-preincoming', 'reject-preincoming']],
+
+            // Premium package
+            [['url_fw', 'mail', 'park', 'dnspremium'], 'integer'],
+            ['premium_autorenewal', 'boolean'],
         ];
     }
 
@@ -196,6 +200,13 @@ class Domain extends \hipanel\base\Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
+            'url_fw' => Yii::t('hipanel:domain', ''),
+            'mail' => Yii::t('hipanel:domain', ''),
+            'park' => Yii::t('hipanel:domain', ''),
+            'dnspremium' => Yii::t('hipanel:domain', ''),
+            'premium_autorenewal' => Yii::t('hipanel:domain', ''),
+
+
             'epp_client_id' => Yii::t('hipanel:domain', 'EPP client ID'),
             'remoteid' => Yii::t('hipanel', 'Remote ID'),
             'domain' => Yii::t('hipanel', 'Domain name'),
@@ -249,6 +260,21 @@ class Domain extends \hipanel\base\Model
     public function getRegistrant()
     {
         return $this->hasOne(Contact::class, ['domain_id' => 'id']);
+    }
+
+    public function getMailfws()
+    {
+        return $this->hasMany(Mailfw::class, ['domain_id' => 'id']);
+    }
+
+    public function getUrlfws()
+    {
+        return $this->hasMany(Urlfw::class, ['domain_id' => 'id']);
+    }
+
+    public function getParks()
+    {
+        return $this->hasMany(Park::class, ['domain_id' => 'id']);
     }
 
     public function getAdmin()

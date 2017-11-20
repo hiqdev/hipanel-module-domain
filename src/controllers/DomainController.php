@@ -192,10 +192,16 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'view' => [
                 'class' => ViewAction::class,
+                'findOptions' => [
+                    'show_fw_park' => true,
+                ],
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
                     $action->getDataProvider()->query
-                        ->addSelect(['nsips', 'contacts', 'foa_sent_to'])
+                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parks'])
+                        ->joinWith('mailfws')
+                        ->joinWith('urlfws')
+                        ->joinWith('parks')
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')
@@ -593,6 +599,14 @@ class DomainController extends \hipanel\base\CrudController
         ]);
     }
 
+    public function actionPremiumDetail($id)
+    {
+        $apiData = Domain::perform('get-info', ['id' => $id, 'with_seo' => 1, 'with_dns' => 1]);
+        $model = Domain::find()->populate([$apiData])[0];
+
+        return $this->renderAjax('_prmiumPackageDetail', ['model' => $model]);
+    }
+
     public function actionTransferOut($id)
     {
         $apiData = Domain::perform('get-info', compact('id'));
@@ -672,5 +686,10 @@ class DomainController extends \hipanel\base\CrudController
 
             return $pincodeData['pincode_enabled'];
         }, 3600);
+    }
+
+    public function getRecordForwardingTypes()
+    {
+        return $this->getRefs('type,forwarding', 'hipanel:domain');
     }
 }
