@@ -93,6 +93,7 @@ class Domain extends \hipanel\base\Model
             [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'], 'integer'],
             [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'], 'safe'],
             [['seller', 'seller_name', 'client', 'client_name'], 'safe'],
+            [['premium_expires', 'premium_days_left'], 'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date'],
             [['registered', 'operated'], 'date'],
             [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'], 'boolean'],
@@ -204,7 +205,6 @@ class Domain extends \hipanel\base\Model
             'mail' => Yii::t('hipanel:domain', ''),
             'park' => Yii::t('hipanel:domain', ''),
             'dnspremium' => Yii::t('hipanel:domain', ''),
-            'premium_autorenewal' => Yii::t('hipanel:domain', ''),
 
 
             'epp_client_id' => Yii::t('hipanel:domain', 'EPP client ID'),
@@ -224,10 +224,9 @@ class Domain extends \hipanel\base\Model
             'is_holded' => Yii::t('hipanel:domain', 'On hold'),
             'is_freezed' => Yii::t('hipanel:domain', 'Domain changes freezed'),
             'wp_freezed' => Yii::t('hipanel:domain', 'Domain WHOIS freezed'),
-            'foa_sent_to' => Yii::t('hipanel:domain', 'FOA was sent to'),
-            'is_premium' => Yii::t('hipanel:domain', 'Is premium'),
             'prem_expires' => Yii::t('hipanel:domain', 'Premium expires'),
             'prem_daysleft' => Yii::t('hipanel:domain', 'Premium days left'),
+            'is_premium' => Yii::t('hipanel:domain', 'Premium package'),
             'premium_autorenewal' => Yii::t('hipanel:domain', 'Premium autorenewal'),
             'url_fwval' => Yii::t('hipanel:domain', 'Url forwarding'),
             'mailval' => Yii::t('hipanel:domain', 'Mail'),

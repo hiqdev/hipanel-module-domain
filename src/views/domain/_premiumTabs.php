@@ -2,9 +2,9 @@
 
 /** @var \hipanel\modules\domain\models\Domain $model */
 
-use hipanel\modules\domain\grid\ForwardMailGridView;
-use hipanel\modules\domain\grid\ForwardUrlGridView;
-use hipanel\modules\domain\grid\ParkGridView;
+use hipanel\modules\domain\grid\DomainGridView;
+use hipanel\modules\domain\grid\MailfwGridView;
+use hipanel\modules\domain\grid\UrlfwGridView;
 use yii\bootstrap\Html;
 use yii\data\ArrayDataProvider;
 
@@ -23,7 +23,14 @@ $this->registerCss('
 ?>
 
 <div id="premium" class="tab-pane fade">
-    premium manage ...
+    <?= DomainGridView::detailView([
+        'boxed' => false,
+        'model' => $model,
+        'columns' => [
+            'is_premium',
+            'premium_autorenewal',
+        ],
+    ]) ?>
 </div>
 
 <div id="email-forwarding" class="tab-pane fade">
@@ -35,7 +42,7 @@ $this->registerCss('
             <?= Html::a(Yii::t('hipanel', 'Change'), '#', ['class' => 'btn btn-primary btn-sm']) ?>
         </div>
         <div class="panel-body">
-            <?= ForwardUrlGridView::widget([
+            <?= UrlfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->urlfws,
                     'modelClass' => \hipanel\modules\domain\models\Urlfw::class,
@@ -57,7 +64,7 @@ $this->registerCss('
             <?= Html::a(Yii::t('hipanel', 'Change'), '#', ['class' => 'btn btn-primary btn-sm']) ?>
         </div>
         <div class="panel-body">
-            <?= ForwardMailGridView::widget([
+            <?= MailfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->mailfws,
                     'modelClass' => \hipanel\modules\domain\models\Mailfw::class,
@@ -76,7 +83,10 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Parking') ?>
             </h3>
-            <?= Html::a(Yii::t('hipanel', 'Change'), '#premium', ['data-toggle' => 'tab', 'class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('hipanel', 'Change'), '#premium', [
+                'data-toggle' => 'tab',
+                'class' => 'btn btn-primary btn-sm',
+            ]) ?>
         </div>
         <div class="panel-body">
             parking

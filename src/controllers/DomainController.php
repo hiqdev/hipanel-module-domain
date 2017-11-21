@@ -25,6 +25,7 @@ use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\client\models\Client;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
+use hipanel\modules\domain\cart\Calculation;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
@@ -595,7 +596,7 @@ class DomainController extends \hipanel\base\CrudController
             'transfer-canceled' => [
                 'class' => ViewAction::class,
                 'view' => 'transferCanceled',
-            ]
+            ],
         ]);
     }
 
@@ -690,6 +691,26 @@ class DomainController extends \hipanel\base\CrudController
 
     public function getRecordForwardingTypes()
     {
+        // todo exclude permanent redirect, remain temporary only
         return $this->getRefs('type,forwarding', 'hipanel:domain');
+    }
+
+    public function actionGetPremiumPrice($id, $type, $domain)
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = [
+                'id' => $id,
+                'type' => $type,
+                'object' => 'feature',
+                'domain' => $domain,
+                'expires' => (new \DateTime())->modify('+1 year')->format('c'),
+                'amount' => 1,
+            ];
+
+            $response = Calculation::perform('calc-value', $data, ['batch' => false]);
+            $price = Yii::$app->formatter->asCurrency($response['value']['usd']['value'], 'usd');
+
+            return $price;
+        }
     }
 }

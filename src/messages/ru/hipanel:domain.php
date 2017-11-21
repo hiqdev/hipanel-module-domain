@@ -72,7 +72,7 @@ return [
     'Please cancel the transfer.' => 'Пожалуйста, отмените трансфер.',
     'Please cancel the transfer my domain: {domain}.' => 'Пожалуйста, отменить трансфер моего домена: {domain}.',
     'Please read the following important information about transferring your domain name:' => 'Пожалуйста, прочитайте следующую важную информацию о трансфере вашего домена:',
-    'Premium autorenewal' => '',
+    'Premium autorenewal' => 'Автопродление премиум-пакета',
     'Premium days left' => '',
     'Premium expires' => '',
     'Re' => '',

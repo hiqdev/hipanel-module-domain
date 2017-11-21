@@ -4,7 +4,7 @@ namespace hipanel\modules\domain\grid;
 
 use hiqdev\higrid\GridView;
 
-class ForwardUrlGridView extends GridView
+class UrlfwGridView extends GridView
 {
     public $domain;
 

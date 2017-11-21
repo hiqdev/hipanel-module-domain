@@ -16,6 +16,7 @@ use hipanel\grid\MainColumn;
 use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\menus\DomainActionsMenu;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\widgets\BuyPremiumButton;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
@@ -34,6 +35,52 @@ class DomainGridView extends BoxedGridView
     public function columns()
     {
         return array_merge(parent::columns(), [
+            'is_premium' => [
+                'format' => 'html',
+                'value' => function ($model) {
+                    $state = ($model->is_premium) ? Yii::t('hipanel:domain', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
+                        'expires' => strtotime($model->premium_expires),
+                        'days_left' => $model->premium_days_left,
+                    ]) : Html::tag('span', Yii::t('hipanel:domain', 'Not activated'), ['class' => 'text-danger']);
+                    $button = BuyPremiumButton::widget(['model' => $model]);
+
+                    return $state . $button;
+                },
+                'contentOptions' => [
+                    'style' => 'display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;',
+                ],
+            ],
+            'premium_autorenewal' => [
+                'class' => BootstrapSwitchColumn::class,
+                'attribute' => 'premium_autorenewal',
+                'url' => '#', // Url::toRoute('set-whois-protect'),
+                'filter' => false,
+                'enableSorting' => false,
+                'encodeLabel' => false,
+                'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium autorenewal')),
+                'pluginOptions' => [
+                    'offColor' => 'warning',
+                    'readonly' => function ($model) {
+                        return (bool)$model->is_premium;
+                    },
+                ],
+                'switchOptions' => [
+                    'class' => LabeledAjaxSwitch::class,
+                    'labels' => [
+                        0 => [
+                            'style' => 'display: none;',
+                            'class' => 'text-danger md-pl-10',
+                            'content' => Yii::t('hipanel:domain', 'Тут будет текст подсказка'),
+                        ],
+                        1 => [
+                            'style' => 'display: none;',
+                            'class' => 'small text-muted font-normal md-pl-10',
+                            'content' => Yii::t('hipanel:domain', 'Тут тоже будет текст подсказка'),
+                        ],
+                    ],
+                ],
+
+            ],
             'transfer_attention' => [
                 'label' => Yii::t('hipanel:domain', 'Attention'),
                 'value' => function ($model) {
@@ -45,7 +92,7 @@ class DomainGridView extends BoxedGridView
                 'label' => Yii::t('hipanel:domain', 'Re'),
                 'value' => function ($model) {
                     return Yii::t('hipanel:domain', 'Transfer of {domain}', ['domain' => strtoupper($model->domain)]);
-                }
+                },
             ],
             'domain' => [
                 'class' => MainColumn::class,
@@ -75,6 +122,7 @@ class DomainGridView extends BoxedGridView
                         $status[] = $model->wp_freezed ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
                         $status[] = $model->is_holded ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
                     }
+
                     return $out . implode('&nbsp;', $status);
                 },
             ],
@@ -86,7 +134,7 @@ class DomainGridView extends BoxedGridView
                 },
                 'value' => function ($model) {
                     return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
-                }
+                },
             ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
                 'attribute' => 'whois_protected',
@@ -261,7 +309,8 @@ class DomainGridView extends BoxedGridView
             ],
             'old_actions' => [
                 'class' => ActionColumn::class,
-                'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
+                'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}',
+                // {state}
                 'header' => Yii::t('hipanel', 'Actions'),
                 'buttons' => [
                     'notify-transfer-in' => function ($url, $model, $key) {
@@ -308,7 +357,10 @@ class DomainGridView extends BoxedGridView
                             ]) : '';
                     },
                     'sync' => function ($url, $model, $key) {
-                        return (in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return (in_array($model->state, [
+                                'ok',
+                                'expired',
+                            ], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel:domain', 'Synchronize contacts'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -379,7 +431,10 @@ class DomainGridView extends BoxedGridView
                         return '';
                     },
                     'disable-hold' => function ($url, $model, $key) {
-                        return ($model->is_holded && in_array($model->state, ['ok', 'expired'], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
+                        return ($model->is_holded && in_array($model->state, [
+                                'ok',
+                                'expired',
+                            ], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($model))
                             ? Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel:domain', 'Disable Hold'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -389,7 +444,10 @@ class DomainGridView extends BoxedGridView
                     },
                     'manage-dns' => function ($url, $model, $key) {
                         if (Yii::getAlias('@dns', false)) {
-                            return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel:domain', 'Manage DNS'), ['@dns/zone/view', 'id' => $model->id]);
+                            return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel:domain', 'Manage DNS'), [
+                                '@dns/zone/view',
+                                'id' => $model->id,
+                            ]);
                         }
 
                         return '';
