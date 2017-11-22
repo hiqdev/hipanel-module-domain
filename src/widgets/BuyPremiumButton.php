@@ -30,7 +30,7 @@ class BuyPremiumButton extends Widget
         } else {
             $this->getClientScript();
 
-            return Html::a(Yii::t('hipanel:domain', 'Active premium package only for '), [
+            return Html::a(Yii::t('hipanel:domain', 'Buy premium package for '), [
                 '@domain/add-to-cart-premium',
                 'name' => $this->model->domain,
             ], [

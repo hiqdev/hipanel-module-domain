@@ -338,4 +338,6 @@ return [
     'Parking is not configured' => 'Парковка не настроена',
     'URL forwarding is not configured' => 'Перенаправление URL не настроено',
     'E-mail forwarding is not configured' => 'Перенаправление почты не настроено',
+    'Purchase premium package' => 'Покупка премиального пакета',
+    'Buy premium package for ' => 'Купить премиум пакет за ',
 ];
