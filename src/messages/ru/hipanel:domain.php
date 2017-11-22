@@ -340,4 +340,5 @@ return [
     'E-mail forwarding is not configured' => 'Перенаправление почты не настроено',
     'Purchase premium package' => 'Покупка премиального пакета',
     'Buy premium package for ' => 'Купить премиум пакет за ',
+    'Renew premium package for ' => 'Продлить премиум пакет за ',
 ];

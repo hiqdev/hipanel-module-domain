@@ -17,19 +17,18 @@ class BuyPremiumButton extends Widget
 
     public function run()
     {
+        $this->getClientScript();
         if ($this->model->is_premium) {
-            return Html::a(Yii::t('hipanel:domain', 'Renew premium package'), [
+            return Html::a(Yii::t('hipanel:domain', 'Renew premium package for '), [
                 '@domain/add-to-cart-premium-renewal',
                 'name' => $this->model->domain,
             ], [
-                'class' => 'btn btn-success btn-xs',
+                'class' => 'btn btn-success btn-xs fetch-premium-price',
                 'data' => [
                     'pjax' => 0,
                 ],
             ]);
         } else {
-            $this->getClientScript();
-
             return Html::a(Yii::t('hipanel:domain', 'Buy premium package for '), [
                 '@domain/add-to-cart-premium',
                 'name' => $this->model->domain,
