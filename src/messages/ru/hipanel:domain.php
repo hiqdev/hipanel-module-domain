@@ -66,7 +66,6 @@ return [
     'On hold' => '',
     'Once a transfer takes place, you will not be able to transfer to another registrar for 60 days, apart from a transfer back to the original registrar, in cases where both registrars so agree or where a decision in the dispute resolution process so directs.' => 'После окончания трансфера вы не сможете перенести домен к другому регистратору в течение 60 дней, кроме случая возврата к исходному регистратору с согласия обоих регистраторов или по решению в процессе разрешения споров.',
     'Once you approved the transfer, the transfer will take place within six (6) calendar days unless the current registrar of record denies the request.' => 'Когда вы подтвердите трансфер, перенос закончится в течение шести (6) календарных дней если текущий регистратор записи не отменит запрос.',
-    'Parking' => '',
     'Pin code' => '',
     'Please transfer my domain: {domain}' => 'Пожалуйста, перенесите мой домен: {domain}',
     'Please cancel the transfer.' => 'Пожалуйста, отмените трансфер.',
@@ -332,4 +331,9 @@ return [
     'Attention: Your computer\'s IP: {ip}, will be recorded as part of your response.' => 'Внимание: IP адрес вашего компьютера: {ip}, будет записан как часть вашего ответа.',
     'Successfully approved' => 'Успешно одобрен',
     'Successfully rejected' => 'Успешно отклонен',
+    'Manage Premium' => 'Управление пемиумом',
+    'URL forwarding' => 'Перенаправление URL',
+    'Email forwarding' => 'Перенаправление почты',
+    'Parking' => 'Парковка',
+    'Parking is not configured' => 'Парковка не настроена',
 ];
