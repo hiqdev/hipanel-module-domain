@@ -16,8 +16,8 @@ use hipanel\grid\MainColumn;
 use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\menus\DomainActionsMenu;
 use hipanel\modules\domain\models\Domain;
-use hipanel\modules\domain\widgets\BuyPremiumButton;
 use hipanel\modules\domain\widgets\Expires;
+use hipanel\modules\domain\widgets\GetPremiumButton;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
 use hipanel\widgets\Label;
@@ -42,9 +42,8 @@ class DomainGridView extends BoxedGridView
                         'expires' => strtotime($model->premium_expires),
                         'days_left' => $model->premium_days_left,
                     ]) : Html::tag('span', Yii::t('hipanel:domain', 'Not activated'), ['class' => 'text-danger']);
-                    $button = BuyPremiumButton::widget(['model' => $model]);
 
-                    return $state . $button;
+                    return $state . GetPremiumButton::widget(['model' => $model]);
                 },
                 'contentOptions' => [
                     'style' => 'display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;',
@@ -60,8 +59,7 @@ class DomainGridView extends BoxedGridView
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium autorenewal')),
                 'pluginOptions' => function ($model) {
                     return [
-                        'offColor' => 'warning',
-                        'readonly' => (bool)$model->is_premium,
+                        'readonly' => !(bool)$model->is_premium,
                     ];
                 },
                 'switchOptions' => [
@@ -70,12 +68,12 @@ class DomainGridView extends BoxedGridView
                         0 => [
                             'style' => 'display: none;',
                             'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'Тут будет текст подсказка'),
+                            'content' => Yii::t('hipanel:domain', 'help text'),
                         ],
                         1 => [
                             'style' => 'display: none;',
                             'class' => 'small text-muted font-normal md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'Тут тоже будет текст подсказка'),
+                            'content' => Yii::t('hipanel:domain', 'help text'),
                         ],
                     ],
                 ],

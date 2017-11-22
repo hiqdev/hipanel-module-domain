@@ -6,16 +6,19 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\grid\MailfwGridView;
 use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
+use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
 use yii\bootstrap\Html;
 use yii\data\ArrayDataProvider;
 
 $this->registerCss('
+
 .premium-panels-heading {  
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
 .premium-panels-heading .panel-title {
     line-height: 25px;
 }
@@ -40,7 +43,12 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
             </h3>
-            <?= Html::a(Yii::t('hipanel', 'Change'), '#', ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= UsePremiumFeaturesButton::widget([
+                'icon' => 'fa-plus',
+                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'url' => '#',
+                'options' => ['class' => 'btn btn-success btn-sm'],
+            ]) ?>
         </div>
         <div class="panel-body">
             <?= UrlfwGridView::widget([
@@ -52,7 +60,7 @@ $this->registerCss('
                 'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
                 'domain' => $model->domain,
                 'columns' => ['name', 'type_label', 'value'],
-            ]); ?>
+            ]) ?>
         </div>
     </div>
 </div>
@@ -63,7 +71,12 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
             </h3>
-            <?= Html::a(Yii::t('hipanel', 'Change'), '#', ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= UsePremiumFeaturesButton::widget([
+                'icon' => 'fa-plus',
+                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'url' => '#',
+                'options' => ['class' => 'btn btn-success btn-sm'],
+            ]) ?>
         </div>
         <div class="panel-body">
             <?= MailfwGridView::widget([
@@ -75,7 +88,7 @@ $this->registerCss('
                 'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),
                 'domain' => $model->domain,
                 'columns' => ['name', 'value'],
-            ]); ?>
+            ]) ?>
         </div>
     </div>
 </div>
@@ -86,9 +99,11 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Parking') ?>
             </h3>
-            <?= Html::a(Yii::t('hipanel', 'Change'), '#premium', [
-                'data-toggle' => 'tab',
-                'class' => 'btn btn-primary btn-sm',
+            <?= UsePremiumFeaturesButton::widget([
+                'icon' => 'fa-plus',
+                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'url' => '#',
+                'options' => ['class' => 'btn btn-success btn-sm'],
             ]) ?>
         </div>
         <div class="panel-body">
@@ -101,7 +116,7 @@ $this->registerCss('
                 'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),
                 'domain' => $model->domain,
                 'columns' => ['title', 'siteheader', 'sitetext'],
-            ]); ?>
+            ]) ?>
         </div>
     </div>
 </div>

@@ -341,4 +341,9 @@ return [
     'Purchase premium package' => 'Покупка премиального пакета',
     'Buy premium package for ' => 'Купить премиум пакет за ',
     'Renew premium package for ' => 'Продлить премиум пакет за ',
+    'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)' => 'Активирован до {expires,date} ({days_left,plural,=0{# дней} =1{# день} other{# дней}} осталось)',
+    'The premium package is to be activated to enable this action.' => 'Для использования этой возможности требуется активировать премиум пакет.',
+    'The premium package not activated' => 'Премиум-пакет не активирован',
+    'Active premium package' => 'Активировать премиум пакет',
+    'Not activated' => 'Не активирован',
 ];

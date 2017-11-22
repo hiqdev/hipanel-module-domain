@@ -77,7 +77,7 @@ CSS
     <div class="col-md-9">
         <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
-            <ul class="nav nav-tabs">
+            <ul id="domain-details-tab" class="nav nav-tabs">
                 <li class="active">
                     <a href="#domain-details" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Domain details') ?></a>
                 </li>

@@ -7,7 +7,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-class BuyPremiumButton extends Widget
+class GetPremiumButton extends Widget
 {
     const PURCHASE = 'premium_dns_purchase';
 
@@ -56,7 +56,7 @@ class BuyPremiumButton extends Widget
         $url = $this->buildUrl();
         $loader = '<i class="fa fa-refresh fa-spin fa-fw"></i>';
         $this->view->registerJs("
-            $('a[href=\"#premium\"][data-toggle=\"tab\"]').one('shown.bs.tab', function (e) {
+            $(document).one('click', 'a[href=\"#premium\"][data-toggle=\"tab\"]', function (e) {
                 var waitingForPrice = $('#premium').find('.fetch-premium-price');
                 $.ajax({
                     url: '{$url}',
