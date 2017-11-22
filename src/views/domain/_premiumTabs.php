@@ -37,13 +37,14 @@ $this->registerCss('
     ]) ?>
 </div>
 
-<div id="email-forwarding" class="tab-pane fade">
+<div id="url-forwarding" class="tab-pane fade">
     <div class="panel panel-default">
         <div class="panel-heading premium-panels-heading">
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
+                'model' => $model,
                 'icon' => 'fa-plus',
                 'text' => Yii::t('hipanel:domain', 'Add new item'),
                 'url' => '#',
@@ -59,19 +60,20 @@ $this->registerCss('
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
                 'domain' => $model->domain,
-                'columns' => ['name', 'type_label', 'value'],
+                'columns' => ['name', 'type_label', 'value', 'actions'],
             ]) ?>
         </div>
     </div>
 </div>
 
-<div id="url-forwarding" class="tab-pane fade">
+<div id="email-forwarding" class="tab-pane fade">
     <div class="panel panel-default">
         <div class="panel-heading premium-panels-heading">
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
+                'model' => $model,
                 'icon' => 'fa-plus',
                 'text' => Yii::t('hipanel:domain', 'Add new item'),
                 'url' => '#',
@@ -100,6 +102,7 @@ $this->registerCss('
                 <?= Yii::t('hipanel:domain', 'Parking') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
+                'model' => $model,
                 'icon' => 'fa-plus',
                 'text' => Yii::t('hipanel:domain', 'Add new item'),
                 'url' => '#',

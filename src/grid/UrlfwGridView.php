@@ -20,6 +20,9 @@ class UrlfwGridView extends GridView
                     return ltrim(join('.', [$model->name, $this->domain]), '.');
                 },
             ],
+            'actions' => [
+                'class' => PremiumActionColumn::class,
+            ],
         ]);
     }
 }
