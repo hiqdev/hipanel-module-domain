@@ -58,12 +58,12 @@ class DomainGridView extends BoxedGridView
                 'enableSorting' => false,
                 'encodeLabel' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium autorenewal')),
-                'pluginOptions' => [
-                    'offColor' => 'warning',
-                    'readonly' => function ($model) {
-                        return (bool)$model->is_premium;
-                    },
-                ],
+                'pluginOptions' => function ($model) {
+                    return [
+                        'offColor' => 'warning',
+                        'readonly' => (bool)$model->is_premium,
+                    ];
+                },
                 'switchOptions' => [
                     'class' => LabeledAjaxSwitch::class,
                     'labels' => [
