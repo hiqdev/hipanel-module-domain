@@ -4,6 +4,7 @@
 
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\grid\MailfwGridView;
+use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
 use yii\bootstrap\Html;
 use yii\data\ArrayDataProvider;
@@ -89,7 +90,16 @@ $this->registerCss('
             ]) ?>
         </div>
         <div class="panel-body">
-            parking
+            <?= ParkGridView::widget([
+                'dataProvider' => new ArrayDataProvider([
+                    'allModels' => $model->parks,
+                    'modelClass' => \hipanel\modules\domain\models\Park::class,
+                    'pagination' => ['pageSize' => count($model->mailfws)],
+                ]),
+                'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),
+                'domain' => $model->domain,
+                'columns' => ['title'],
+            ]); ?>
         </div>
     </div>
 </div>

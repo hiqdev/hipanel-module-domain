@@ -92,6 +92,7 @@ CSS
                                     <?= Yii::t('hipanel:domain', 'Manage Premium') ?>
                                 </a>
                             </li>
+                            <li role="separator" class="divider"></li>
                             <li>
                                 <a href="#url-forwarding" role="tab" data-toggle="tab">
                                     <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
