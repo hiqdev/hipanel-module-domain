@@ -9,20 +9,36 @@ use yii\helpers\Url;
 
 class BuyPremiumButton extends Widget
 {
-    const RENEW = 'premium_dns_renew';
-
     const PURCHASE = 'premium_dns_purchase';
+
+    const RENEW = 'premium_dns_renew';
 
     public $model;
 
     public function run()
     {
         if ($this->model->is_premium) {
-            return Html::a(Yii::t('hipanel:domain', 'Renew premium package'), '#', ['class' => 'btn btn-success btn-xs']);
+            return Html::a(Yii::t('hipanel:domain', 'Renew premium package'), [
+                '@domain/add-to-cart-premium-renewal',
+                'name' => $this->model->domain,
+            ], [
+                'class' => 'btn btn-success btn-xs',
+                'data' => [
+                    'pjax' => 0,
+                ],
+            ]);
         } else {
             $this->getClientScript();
 
-            return Html::a(Yii::t('hipanel:domain', 'Active premium package only for '), '#', ['class' => 'btn btn-success btn-xs fetch-premium-price']);
+            return Html::a(Yii::t('hipanel:domain', 'Active premium package only for '), [
+                '@domain/add-to-cart-premium',
+                'name' => $this->model->domain,
+            ], [
+                'class' => 'btn btn-success btn-xs fetch-premium-price',
+                'data' => [
+                    'pjax' => 0,
+                ],
+            ]);
         }
     }
 
@@ -39,15 +55,22 @@ class BuyPremiumButton extends Widget
     protected function getClientScript()
     {
         $url = $this->buildUrl();
+        $loader = '<i class="fa fa-refresh fa-spin fa-fw"></i>';
         $this->view->registerJs("
             $('a[href=\"#premium\"][data-toggle=\"tab\"]').one('shown.bs.tab', function (e) {
+                var waitingForPrice = $('#premium').find('.fetch-premium-price');
                 $.ajax({
                     url: '{$url}',
                     type : 'POST',
+                    beforeSend: function () {
+                        waitingForPrice.each(function() {
+                            $(this).append('{$loader}');
+                        });
+                    },
                     success: function(price) {
-                        $('#premium').find('.fetch-premium-price').each(function() {
-                            var old = $(this).text(); 
-                            $(this).html(old + ' ' + price);
+                        waitingForPrice.each(function() {
+                            var oldText = $(this).text(); 
+                            $(this).html(oldText + ' ' + price);
                         });
                     }
                 });
