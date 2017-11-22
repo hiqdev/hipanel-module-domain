@@ -49,6 +49,7 @@ $this->registerCss('
                     'modelClass' => \hipanel\modules\domain\models\Urlfw::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),
+                'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
                 'domain' => $model->domain,
                 'columns' => ['name', 'type_label', 'value'],
             ]); ?>
@@ -71,6 +72,7 @@ $this->registerCss('
                     'modelClass' => \hipanel\modules\domain\models\Mailfw::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),
+                'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),
                 'domain' => $model->domain,
                 'columns' => ['name', 'value'],
             ]); ?>
@@ -98,7 +100,7 @@ $this->registerCss('
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),
                 'domain' => $model->domain,
-                'columns' => ['title'],
+                'columns' => ['title', 'siteheader', 'sitetext'],
             ]); ?>
         </div>
     </div>

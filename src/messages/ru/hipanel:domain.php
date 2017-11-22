@@ -336,4 +336,6 @@ return [
     'Email forwarding' => 'Перенаправление почты',
     'Parking' => 'Парковка',
     'Parking is not configured' => 'Парковка не настроена',
+    'URL forwarding is not configured' => 'Перенаправление URL не настроено',
+    'E-mail forwarding is not configured' => 'Перенаправление почты не настроено',
 ];
