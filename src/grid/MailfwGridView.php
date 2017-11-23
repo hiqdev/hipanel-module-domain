@@ -2,16 +2,8 @@
 
 namespace hipanel\modules\domain\grid;
 
-use hiqdev\higrid\GridView;
-
-class MailfwGridView extends GridView
+class MailfwGridView extends AbstractPremiumGrid
 {
-    public $domain;
-
-    public $layout = "<div class=\"table-responsive\">{items}</div>";
-
-    public $tableOptions = ['class' => 'table'];
-
     public function columns()
     {
         return array_merge(parent::columns(), [

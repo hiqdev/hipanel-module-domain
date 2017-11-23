@@ -2,7 +2,6 @@
 
 namespace hipanel\modules\domain\widgets;
 
-use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\base\Widget;
 use yii\bootstrap\Html;
@@ -12,9 +11,9 @@ use yii\web\View;
 class UsePremiumFeaturesButton extends Widget
 {
     /**
-     * @var Domain
+     * @var boolean
      */
-    public $model;
+    public $is_premium;
 
     /**
      * @var string font-awesome icon
@@ -68,7 +67,7 @@ class UsePremiumFeaturesButton extends Widget
 
     public function run()
     {
-        return $this->model->is_premium ? $this->buildPremiumLink() : $this->buildPopUp();
+        return $this->is_premium ? $this->buildPremiumLink() : $this->buildPopUp();
     }
 
     private function buildPremiumLink()

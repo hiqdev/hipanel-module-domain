@@ -44,9 +44,9 @@ $this->registerCss('
                 <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
-                'model' => $model,
+                'is_premium' => $model->is_premium,
                 'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'text' => Yii::t('hipanel:domain', 'Add record'),
                 'url' => '#',
                 'options' => ['class' => 'btn btn-success btn-sm'],
             ]) ?>
@@ -60,6 +60,7 @@ $this->registerCss('
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
                 'domain' => $model->domain,
+                'is_premium' => $model->is_premium,
                 'columns' => ['name', 'type_label', 'value', 'actions'],
             ]) ?>
         </div>
@@ -73,9 +74,9 @@ $this->registerCss('
                 <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
-                'model' => $model,
+                'is_premium' => $model->is_premium,
                 'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'text' => Yii::t('hipanel:domain', 'Add record'),
                 'url' => '#',
                 'options' => ['class' => 'btn btn-success btn-sm'],
             ]) ?>
@@ -89,7 +90,8 @@ $this->registerCss('
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),
                 'domain' => $model->domain,
-                'columns' => ['name', 'value'],
+                'is_premium' => $model->is_premium,
+                'columns' => ['name', 'value', 'actions'],
             ]) ?>
         </div>
     </div>
@@ -102,9 +104,9 @@ $this->registerCss('
                 <?= Yii::t('hipanel:domain', 'Parking') ?>
             </h3>
             <?= UsePremiumFeaturesButton::widget([
-                'model' => $model,
+                'is_premium' => $model->is_premium,
                 'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add new item'),
+                'text' => Yii::t('hipanel:domain', 'Add record'),
                 'url' => '#',
                 'options' => ['class' => 'btn btn-success btn-sm'],
             ]) ?>
@@ -118,7 +120,8 @@ $this->registerCss('
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),
                 'domain' => $model->domain,
-                'columns' => ['title', 'siteheader', 'sitetext'],
+                'is_premium' => $model->is_premium,
+                'columns' => ['title', 'siteheader', 'sitetext', 'actions'],
             ]) ?>
         </div>
     </div>

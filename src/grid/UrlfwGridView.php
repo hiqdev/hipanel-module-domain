@@ -2,16 +2,8 @@
 
 namespace hipanel\modules\domain\grid;
 
-use hiqdev\higrid\GridView;
-
-class UrlfwGridView extends GridView
+class UrlfwGridView extends AbstractPremiumGrid
 {
-    public $domain;
-
-    public $layout = "<div class=\"table-responsive\">{items}</div>";
-
-    public $tableOptions = ['class' => 'table'];
-
     public function columns()
     {
         return array_merge(parent::columns(), [
@@ -19,9 +11,6 @@ class UrlfwGridView extends GridView
                 'value' => function ($model) {
                     return ltrim(join('.', [$model->name, $this->domain]), '.');
                 },
-            ],
-            'actions' => [
-                'class' => PremiumActionColumn::class,
             ],
         ]);
     }
