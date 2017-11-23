@@ -7,6 +7,7 @@ use hipanel\modules\domain\grid\MailfwGridView;
 use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
 use hipanel\modules\domain\models\MailFw;
+use hipanel\modules\domain\models\Park;
 use hipanel\modules\domain\models\UrlFw;
 use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
 use yii\bootstrap\Html;
@@ -95,19 +96,14 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Parking') ?>
             </h3>
-            <?= UsePremiumFeaturesButton::widget([
-                'is_premium' => $model->is_premium,
-                'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add record'),
-                'url' => '#',
-                'options' => ['class' => 'btn btn-success btn-sm'],
-            ]) ?>
         </div>
         <div class="panel-body">
+            <?= $this->render('_formPark', ['model' => new Park(), 'domain' => $model]) ?>
+            <hr>
             <?= ParkGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->parks,
-                    'modelClass' => \hipanel\modules\domain\models\Park::class,
+                    'modelClass' => Park::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),

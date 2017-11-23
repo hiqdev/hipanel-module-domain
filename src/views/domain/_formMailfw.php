@@ -7,9 +7,7 @@ use yii\helpers\Url;
 
 ?>
 
-<?php
-
-$form = ActiveForm::begin([
+<?php $form = ActiveForm::begin([
     'id' => 'mailfw-form-' . ($model->id ?: time()),
     'action' => '@dns/record/' . $model->scenario,
     'enableAjaxValidation' => true,
