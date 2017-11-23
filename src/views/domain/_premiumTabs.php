@@ -102,7 +102,7 @@ $this->registerCss('
             <hr>
             <?= ParkGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
-                    'allModels' => $model->parks,
+                    'allModels' => $model->park,
                     'modelClass' => Park::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),

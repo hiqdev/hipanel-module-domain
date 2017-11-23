@@ -199,16 +199,14 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'view' => [
                 'class' => ViewAction::class,
-                'findOptions' => [
-                    'show_fw_park' => true,
-                ],
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
                     $action->getDataProvider()->query
-                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parks'])
+                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'park', 'premium'])
                         ->joinWith('mailfws')
                         ->joinWith('urlfws')
-                        ->joinWith('parks')
+                        ->joinWith('park')
+                        ->joinWith('premium')
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')

@@ -271,9 +271,14 @@ class Domain extends \hipanel\base\Model
         return $this->hasMany(Urlfw::class, ['domain_id' => 'id']);
     }
 
-    public function getParks()
+    public function getPremium()
     {
-        return $this->hasMany(Park::class, ['domain_id' => 'id']);
+        return $this->hasOne(Premium::class, ['domain_id' => 'id']);
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(Park::class, ['domain_id' => 'id']);
     }
 
     public function getAdmin()
