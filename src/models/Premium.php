@@ -8,7 +8,7 @@ class Premium extends \hipanel\base\Model
     {
         return [
             [['id', 'domain_id', 'days_left'], 'integer'],
-            [['is_premium', 'is_autorenewal'], 'boolean'],
+            [['is_active', 'is_autorenewal'], 'boolean'],
             [['expires'], 'datetime'],
         ];
     }

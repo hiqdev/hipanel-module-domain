@@ -99,18 +99,13 @@ $this->registerCss('
         </div>
         <div class="panel-body">
             <?= $this->render('_formPark', ['model' => new Park(), 'domain' => $model]) ?>
-            <hr>
-            <?= ParkGridView::widget([
-                'dataProvider' => new ArrayDataProvider([
-                    'allModels' => $model->park,
-                    'modelClass' => Park::class,
-                    'pagination' => ['pageSize' => count($model->mailfws)],
-                ]),
-                'emptyText' => Yii::t('hipanel:domain', 'Parking is not configured'),
-                'domain' => $model->domain,
-                'is_premium' => $model->is_premium,
-                'columns' => ['title', 'siteheader', 'sitetext', 'actions'],
-            ]) ?>
+            <?php if ($model->park) : ?>
+                <hr>
+                <?= \yii\widgets\DetailView::widget([
+                    'model' => $model->park,
+                    'attributes' => ['title', 'siteheader', 'sitetext'],
+                ]) ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

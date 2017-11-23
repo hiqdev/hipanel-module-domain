@@ -38,9 +38,9 @@ class DomainGridView extends BoxedGridView
             'is_premium' => [
                 'format' => 'html',
                 'value' => function ($model) {
-                    $state = ($model->is_premium) ? Yii::t('hipanel:domain', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
-                        'expires' => strtotime($model->premium_expires),
-                        'days_left' => $model->premium_days_left,
+                    $state = ($model->premium->is_active) ? Yii::t('hipanel:domain', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
+                        'expires' => strtotime($model->premium->expires),
+                        'days_left' => $model->premium->days_left,
                     ]) : Html::tag('span', Yii::t('hipanel:domain', 'Not activated'), ['class' => 'text-danger']);
 
                     return $state . GetPremiumButton::widget(['model' => $model]);
@@ -52,14 +52,14 @@ class DomainGridView extends BoxedGridView
             'premium_autorenewal' => [
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'premium_autorenewal',
-                'url' => '#', // Url::toRoute('set-whois-protect'),
+                'url' => '#', // Url::toRoute(''),
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium autorenewal')),
                 'pluginOptions' => function ($model) {
                     return [
-                        'readonly' => !(bool)$model->is_premium,
+                        'readonly' => !(bool)$model->premium->is_active,
                     ];
                 },
                 'switchOptions' => [
