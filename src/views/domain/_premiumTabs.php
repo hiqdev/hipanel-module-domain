@@ -6,6 +6,7 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\grid\MailfwGridView;
 use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
+use hipanel\modules\domain\models\MailFw;
 use hipanel\modules\domain\models\UrlFw;
 use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
 use yii\bootstrap\Html;
@@ -69,19 +70,14 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
             </h3>
-            <?= UsePremiumFeaturesButton::widget([
-                'is_premium' => $model->is_premium,
-                'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add record'),
-                'url' => '#',
-                'options' => ['class' => 'btn btn-success btn-sm'],
-            ]) ?>
         </div>
         <div class="panel-body">
+            <?= $this->render('_formMailfw', ['model' => new MailFw(), 'domain' => $model]) ?>
+            <hr>
             <?= MailfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->mailfws,
-                    'modelClass' => \hipanel\modules\domain\models\Mailfw::class,
+                    'modelClass' => Mailfw::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),

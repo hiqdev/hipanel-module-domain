@@ -11,6 +11,8 @@ class MailFw extends \hipanel\base\Model
         return [
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
             [['name', 'value', 'type', 'type_label'], 'string'],
+            [['name', 'value'], 'required'],
+            [['value'], 'email']
         ];
     }
 
