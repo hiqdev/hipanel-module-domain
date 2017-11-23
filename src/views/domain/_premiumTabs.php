@@ -6,6 +6,7 @@ use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\grid\MailfwGridView;
 use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
+use hipanel\modules\domain\models\UrlFw;
 use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
 use yii\bootstrap\Html;
 use yii\data\ArrayDataProvider;
@@ -43,15 +44,10 @@ $this->registerCss('
             <h3 class="panel-title">
                 <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
             </h3>
-            <?= UsePremiumFeaturesButton::widget([
-                'is_premium' => $model->is_premium,
-                'icon' => 'fa-plus',
-                'text' => Yii::t('hipanel:domain', 'Add record'),
-                'url' => '#',
-                'options' => ['class' => 'btn btn-success btn-sm'],
-            ]) ?>
         </div>
         <div class="panel-body">
+            <?= $this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model]) ?>
+            <hr>
             <?= UrlfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->urlfws,
