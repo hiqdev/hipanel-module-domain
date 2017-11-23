@@ -11,6 +11,7 @@ class Park extends \hipanel\base\Model
         return [
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
             [['title', 'siteheader', 'sitetext'], 'string'],
+            [['title', 'siteheader', 'sitetext', 'type_id'], 'required'],
         ];
     }
 

@@ -33,11 +33,11 @@ use yii\helpers\Url;
         <div class="col-md-12">
             <?php if ((bool)$domain->is_premium === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
-                    'text' => Yii::t('hipanel:domain', 'Add record'),
+                    'text' => Yii::t('hipanel:domain', 'Save'),
                     'options' => ['class' => 'btn btn-success btn-sm'],
                 ]) ?>
             <?php else : ?>
-                <?= Html::submitButton(Yii::t('hipanel:domain', 'Add record'), ['class' => 'btn btn-success btn-sm']) ?>
+                <?= Html::submitButton(Yii::t('hipanel:domain', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>
             <?php endif; ?>
         </div>
     </div>
