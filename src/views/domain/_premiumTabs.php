@@ -3,26 +3,6 @@
 /** @var \hipanel\modules\domain\models\Domain $model */
 
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\grid\MailfwGridView;
-use hipanel\modules\domain\grid\UrlfwGridView;
-use hipanel\modules\domain\models\Mailfw;
-use hipanel\modules\domain\models\Park;
-use hipanel\modules\domain\models\Urlfw;
-use yii\data\ArrayDataProvider;
-
-$this->registerCss('
-
-.premium-panels-heading {  
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.premium-panels-heading .panel-title {
-    line-height: 25px;
-}
-');
 
 ?>
 
@@ -45,19 +25,7 @@ $this->registerCss('
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model]) ?>
-            <hr>
-            <?= UrlfwGridView::widget([
-                'dataProvider' => new ArrayDataProvider([
-                    'allModels' => $model->urlfws,
-                    'modelClass' => Urlfw::class,
-                    'pagination' => ['pageSize' => count($model->mailfws)],
-                ]),
-                'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
-                'domain' => $model->domain,
-                'is_premium' => $model->is_premium,
-                'columns' => ['name', 'type_label', 'value', 'actions'],
-            ]) ?>
+            <?= $this->render('premium/urlfw', ['model' => $model]) ?>
         </div>
     </div>
 </div>
@@ -70,19 +38,7 @@ $this->registerCss('
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('_formMailfw', ['model' => new Mailfw, 'domain' => $model]) ?>
-            <hr>
-            <?= MailfwGridView::widget([
-                'dataProvider' => new ArrayDataProvider([
-                    'allModels' => $model->mailfws,
-                    'modelClass' => Mailfw::class,
-                    'pagination' => ['pageSize' => count($model->mailfws)],
-                ]),
-                'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),
-                'domain' => $model->domain,
-                'is_premium' => $model->is_premium,
-                'columns' => ['name', 'value', 'actions'],
-            ]) ?>
+            <?= $this->render('premium/mailfw', ['model' => $model]) ?>
         </div>
     </div>
 </div>
@@ -95,14 +51,7 @@ $this->registerCss('
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('_formPark', ['model' => new Park(), 'domain' => $model]) ?>
-            <?php if ($model->park) : ?>
-                <hr>
-                <?= \yii\widgets\DetailView::widget([
-                    'model' => $model->park,
-                    'attributes' => ['title', 'siteheader', 'sitetext'],
-                ]) ?>
-            <?php endif; ?>
+            <?= $this->render('premium/park', ['model' => $model]) ?>
         </div>
     </div>
 </div>
