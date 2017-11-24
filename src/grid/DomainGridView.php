@@ -52,7 +52,7 @@ class DomainGridView extends BoxedGridView
             'premium_autorenewal' => [
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'premium_autorenewal',
-                'url' => '#', // Url::toRoute(''),
+                'url' => Url::toRoute('@hdomain/set-premium-autorenewal'),
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
@@ -68,12 +68,12 @@ class DomainGridView extends BoxedGridView
                         0 => [
                             'style' => 'display: none;',
                             'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'help text'),
+                            'content' => Yii::t('hipanel:domain', 'You can enable the automatic renewal of the premium package for this domain.'),
                         ],
                         1 => [
                             'style' => 'display: none;',
                             'class' => 'small text-muted font-normal md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'help text'),
+                            'content' => Yii::t('hipanel:domain', 'Automatic renewal of premium package for this domain is enabled.'),
                         ],
                     ],
                 ],
