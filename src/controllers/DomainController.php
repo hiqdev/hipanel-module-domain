@@ -31,7 +31,10 @@ use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\cart\PremiumProduct;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
+use hipanel\modules\domain\models\Park;
+use hipanel\modules\domain\models\Urlfw;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
@@ -221,6 +224,18 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'validate-form' => [
                 'class' => ValidateFormAction::class,
+            ],
+            'validate-urlfw-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Urlfw::class,
+            ],
+            'validate-mailfw-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Mailfw::class,
+            ],
+            'validate-park-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Park::class,
             ],
             'validate-nss' => [
                 'class' => ValidateFormAction::class,

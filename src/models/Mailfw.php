@@ -4,7 +4,7 @@ namespace hipanel\modules\domain\models;
 
 use Yii;
 
-class MailFw extends \hipanel\base\Model
+class Mailfw extends \hipanel\base\Model
 {
     public function rules()
     {

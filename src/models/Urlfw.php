@@ -4,7 +4,7 @@ namespace hipanel\modules\domain\models;
 
 use Yii;
 
-class UrlFw extends \hipanel\base\Model
+class Urlfw extends \hipanel\base\Model
 {
     public function rules()
     {

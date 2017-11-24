@@ -4,13 +4,10 @@
 
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\grid\MailfwGridView;
-use hipanel\modules\domain\grid\ParkGridView;
 use hipanel\modules\domain\grid\UrlfwGridView;
-use hipanel\modules\domain\models\MailFw;
+use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Park;
-use hipanel\modules\domain\models\UrlFw;
-use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
-use yii\bootstrap\Html;
+use hipanel\modules\domain\models\Urlfw;
 use yii\data\ArrayDataProvider;
 
 $this->registerCss('
@@ -53,7 +50,7 @@ $this->registerCss('
             <?= UrlfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $model->urlfws,
-                    'modelClass' => \hipanel\modules\domain\models\Urlfw::class,
+                    'modelClass' => Urlfw::class,
                     'pagination' => ['pageSize' => count($model->mailfws)],
                 ]),
                 'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
@@ -73,7 +70,7 @@ $this->registerCss('
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('_formMailfw', ['model' => new MailFw(), 'domain' => $model]) ?>
+            <?= $this->render('_formMailfw', ['model' => new Mailfw, 'domain' => $model]) ?>
             <hr>
             <?= MailfwGridView::widget([
                 'dataProvider' => new ArrayDataProvider([
