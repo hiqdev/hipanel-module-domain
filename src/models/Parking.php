@@ -4,12 +4,14 @@ namespace hipanel\modules\domain\models;
 
 use Yii;
 
-class Park extends \hipanel\base\Model
+class Parking extends \hipanel\base\Model
 {
+    use PaidFeatureForwardingTrait;
+
     public function rules()
     {
         return [
-            [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
+            [['id', 'domain_id', 'dns_id', 'type_id', 'park_id'], 'integer'],
             [['title', 'siteheader', 'sitetext'], 'string'],
             [['title', 'siteheader', 'sitetext', 'type_id'], 'required'],
         ];
@@ -24,4 +26,15 @@ class Park extends \hipanel\base\Model
             'type_id' => Yii::t('hipanel:domain', 'Page skin'),
         ];
     }
+
+    public function skinOptions()
+    {
+        return [
+            0 => Yii::t('hipanel:domain', 'Turn off'),
+            1 => Yii::t('hipanel:domain', 'Design 1'),
+            2 => Yii::t('hipanel:domain', 'Design 2'),
+            3 => Yii::t('hipanel:domain', 'Design 3'),
+        ];
+    }
 }
+

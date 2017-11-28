@@ -10,11 +10,11 @@ use yii\widgets\DetailView;
     'enablePushState' => false,
 ]) ?>
 
-<?= $this->render('_formPark', ['model' => new Park(), 'domain' => $model]) ?>
+<?= $this->render('_formParking', ['model' => $model->parking ? : new Park(), 'domain' => $model]) ?>
 <?php if ($model->park) : ?>
     <hr>
     <?= DetailView::widget([
-        'model' => $model->park,
+        'model' => $model->parking,
         'attributes' => ['title', 'siteheader', 'sitetext'],
     ]) ?>
 <?php endif; ?>

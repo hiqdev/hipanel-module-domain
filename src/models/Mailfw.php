@@ -12,11 +12,6 @@ class Mailfw extends \hipanel\base\Model
 
     public $typename = 'email';
 
-    public static function tableName()
-    {
-        return 'domain';
-    }
-
     public function rules()
     {
         return [

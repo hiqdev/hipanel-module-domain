@@ -34,7 +34,7 @@ use hipanel\modules\domain\cart\PremiumProduct;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
-use hipanel\modules\domain\models\Park;
+use hipanel\modules\domain\models\Parking;
 use hipanel\modules\domain\models\Urlfw;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
@@ -209,10 +209,10 @@ class DomainController extends \hipanel\base\CrudController
                     $accessToPremiumTab = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire']);
                     if ($accessToPremiumTab) {
                         $action->getDataProvider()->query
-                            ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'park', 'premium'])
+                            ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parking', 'premium'])
                             ->joinWith('mailfws')
                             ->joinWith('urlfws')
-                            ->joinWith('park')
+                            ->joinWith('parking')
                             ->joinWith('premium')
                             ->joinWith('registrant')
                             ->joinWith('admin')
@@ -248,7 +248,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'validate-park-form' => [
                 'class' => ValidateFormAction::class,
-                'model' => Park::class,
+                'model' => Parking::class,
             ],
             'validate-nss' => [
                 'class' => ValidateFormAction::class,
@@ -783,8 +783,8 @@ class DomainController extends \hipanel\base\CrudController
     protected function renderPaidFeatureTab($domainId, $for)
     {
         if (($model = (new Domain())->find()
-                ->addSelect(['mailfws', 'urlfws', 'park', 'premium'])
-                ->joinWith(['premium', 'urlfws', 'mailfws', 'park'])
+                ->addSelect(['mailfws', 'urlfws', 'parking', 'premium'])
+                ->joinWith(['premium', 'urlfws', 'mailfws', 'parking'])
                 ->where(['id' => $domainId])->one()) === null) {
 
             throw new NotFoundHttpException('Domain does not exist');

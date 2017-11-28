@@ -58,7 +58,7 @@ $(document).on('click', '.pf-update-form-close', function () {
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('premium/park', ['model' => $model]) ?>
+            <?= $this->render('premium/parking', ['model' => $model]) ?>
         </div>
     </div>
 </div>

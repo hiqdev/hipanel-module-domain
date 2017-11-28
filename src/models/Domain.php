@@ -276,9 +276,9 @@ class Domain extends \hipanel\base\Model
         return $this->hasOne(Premium::class, ['domain_id' => 'id']);
     }
 
-    public function getPark()
+    public function getParking()
     {
-        return $this->hasOne(Park::class, ['domain_id' => 'id']);
+        return $this->hasOne(Parking::class, ['domain_id' => 'id']);
     }
 
     public function getAdmin()

@@ -10,11 +10,6 @@ class Urlfw extends \hipanel\base\Model
 
     public $status = 'not changed';
 
-    public static function tableName()
-    {
-        return 'domain';
-    }
-
     public function rules()
     {
         return [
