@@ -8,6 +8,8 @@ class Urlfw extends \hipanel\base\Model
 {
     use PaidFeatureForwardingTrait;
 
+    public $status = 'not changed';
+
     public static function tableName()
     {
         return 'domain';

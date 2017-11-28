@@ -5,11 +5,13 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$model->domain_id = $domain->id;
+
 ?>
 
 <?php $form = ActiveForm::begin([
     'id' => 'mailfw-form-' . ($model->id ?: time()),
-    'action' => '@dns/record/' . $model->scenario,
+    'action' => Url::to(['@domain/set-premium-feature', 'for' => 'mailfw']),
     'enableAjaxValidation' => true,
     'options' => [
         'data-pjax' => true,
@@ -17,6 +19,9 @@ use yii\helpers\Url;
     ],
     'validationUrl' => Url::toRoute(['@domain/validate-mailfw-form', 'scenario' => $model->scenario]),
 ]) ?>
+
+<?= Html::activeHiddenInput($model, "domain_id") ?>
+<?= Html::activeHiddenInput($model, "status") ?>
 
 <?php if (!$model->isNewRecord) : ?>
     <?= Html::activeHiddenInput($model, "id") ?>
@@ -29,13 +34,13 @@ use yii\helpers\Url;
             <?= $form->field($model, 'value') ?>
         </div>
         <div class="col-md-12">
-            <?php if ((bool)$domain->is_premium === false) : ?>
+            <?php if ((bool)$domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
                     'text' => Yii::t('hipanel:domain', 'Add record'),
                     'options' => ['class' => 'btn btn-success btn-sm'],
                 ]) ?>
             <?php else : ?>
-                <?= Html::submitButton(Yii::t('hipanel:domain', 'Add record'), ['class' => 'btn btn-success btn-sm']) ?>
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('hipanel:domain', 'Add record') : Yii::t('hipanel:domain', 'Update record'), ['class' => 'btn btn-success btn-sm']) ?>
             <?php endif; ?>
         </div>
     </div>

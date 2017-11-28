@@ -8,11 +8,20 @@ class Mailfw extends \hipanel\base\Model
 {
     use PaidFeatureForwardingTrait;
 
+    public $status = 'new';
+
+    public $typename = 'email';
+
+    public static function tableName()
+    {
+        return 'domain';
+    }
+
     public function rules()
     {
         return [
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
-            [['name', 'value', 'type', 'type_label', 'status'], 'string'],
+            [['name', 'value', 'type', 'type_label', 'status', 'typename'], 'string'],
             [['name', 'value'], 'required'],
             [['value'], 'email']
         ];

@@ -4,8 +4,6 @@ namespace hipanel\modules\domain\models;
 
 trait PaidFeatureForwardingTrait
 {
-    public $status = 'not changed';
-
     public function setFeature()
     {
         if ($this->isNewRecord) {
