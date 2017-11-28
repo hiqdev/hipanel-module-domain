@@ -36,5 +36,14 @@ class Parking extends \hipanel\base\Model
             3 => Yii::t('hipanel:domain', 'Design 3'),
         ];
     }
+
+    public function getSkinImage()
+    {
+        if ($this->type_id) {
+            return '//ahnames.com/www/img/parking/park' . $this->type_id . '.png';
+        }
+
+        return false;
+    }
 }
 

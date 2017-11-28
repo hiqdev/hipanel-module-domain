@@ -11,7 +11,7 @@ if (!$model->isNewRecord) {
 $model->domain_id = $domain->id;
 $this->registerJs(<<<JS
 $("#parking-type_id").select2({
-    allowClear: true,
+    allowClear: false,
     width: "100%",
     templateResult: function(option) {
         if (!option.id || option.id == 0) { 
