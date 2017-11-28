@@ -1,5 +1,7 @@
 <?php
 
+/** @var array $forwardingOptions */
+
 use hipanel\modules\domain\grid\UrlfwGridView;
 use hipanel\modules\domain\models\Urlfw;
 use hipanel\widgets\Pjax;
@@ -11,7 +13,8 @@ use yii\data\ArrayDataProvider;
     'enablePushState' => false,
 ]) ?>
 
-<?= $this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model]) ?>
+<?=
+$this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model, 'forwardingOptions' => $forwardingOptions]) ?>
 <hr>
 <?= UrlfwGridView::widget([
     'dataProvider' => new ArrayDataProvider([

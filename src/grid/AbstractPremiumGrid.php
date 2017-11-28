@@ -15,6 +15,8 @@ abstract class AbstractPremiumGrid extends GridView
 
     public $tableOptions = ['class' => 'table'];
 
+    public $options = [];
+
     public function init()
     {
         parent::init();

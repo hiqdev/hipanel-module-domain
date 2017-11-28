@@ -6,11 +6,13 @@ use Yii;
 
 class Mailfw extends \hipanel\base\Model
 {
+    use PaidFeatureForwardingTrait;
+
     public function rules()
     {
         return [
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
-            [['name', 'value', 'type', 'type_label'], 'string'],
+            [['name', 'value', 'type', 'type_label', 'status'], 'string'],
             [['name', 'value'], 'required'],
             [['value'], 'email']
         ];

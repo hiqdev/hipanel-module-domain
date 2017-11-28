@@ -6,12 +6,19 @@ use Yii;
 
 class Urlfw extends \hipanel\base\Model
 {
+    use PaidFeatureForwardingTrait;
+
+    public static function tableName()
+    {
+        return 'domain';
+    }
+
     public function rules()
     {
         return [
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
-            [['name', 'value', 'type', 'type_label'], 'string'],
-            [['name', 'type_id', 'value'], 'required'],
+            [['name', 'value', 'type', 'type_label', 'currentTab', 'status'], 'string'],
+            [['name', 'type', 'value'], 'required'],
             [['value'], 'url'],
         ];
     }
@@ -24,4 +31,5 @@ class Urlfw extends \hipanel\base\Model
             'value' => Yii::t('hipanel:domain', 'Forwarding address'),
         ];
     }
+
 }

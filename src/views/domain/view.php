@@ -4,11 +4,11 @@
  * @var \yii\web\View $this
  * @var \hipanel\modules\domain\models\Domain $model
  * @var boolean $hasPincode
+ * @var array $forwardingOptions
  */
 
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
-use hipanel\modules\domain\grid\PremiumPackageGridView;
 use hipanel\modules\domain\menus\DomainDetailMenu;
 use hipanel\modules\domain\widgets\AuthCode;
 use hipanel\modules\domain\widgets\NsWidget;
@@ -118,7 +118,7 @@ CSS
             <div class="tab-content">
 
                 <?php if ($accessToPremiumTab) : ?>
-                    <?= $this->render('_premiumTabs', ['model' => $model]) ?>
+                    <?= $this->render('_premiumTabs', compact('model', 'forwardingOptions')) ?>
                 <?php endif; ?>
 
                 <!-- Morris t - Sales -->

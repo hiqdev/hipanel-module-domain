@@ -1,8 +1,15 @@
 <?php
 
 /** @var \hipanel\modules\domain\models\Domain $model */
+/** @var array $forwardingOptions */
 
 use hipanel\modules\domain\grid\DomainGridView;
+
+$this->registerJs("
+$(document).on('click', '.pf-update-form-close', function () {
+    $(this).parents('tr').eq(0).remove();
+});
+");
 
 ?>
 
@@ -25,7 +32,7 @@ use hipanel\modules\domain\grid\DomainGridView;
             </h3>
         </div>
         <div class="panel-body">
-            <?= $this->render('premium/urlfw', ['model' => $model]) ?>
+            <?= $this->render('premium/urlfw', compact('model', 'forwardingOptions')) ?>
         </div>
     </div>
 </div>

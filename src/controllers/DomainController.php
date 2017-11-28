@@ -23,6 +23,7 @@ use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
+use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
 use hipanel\modules\domain\cart\Calculation;
@@ -43,6 +44,7 @@ use yii\base\Event;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class DomainController extends \hipanel\base\CrudController
@@ -204,21 +206,32 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => ViewAction::class,
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
-                    $action->getDataProvider()->query
-                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'park', 'premium'])
-                        ->joinWith('mailfws')
-                        ->joinWith('urlfws')
-                        ->joinWith('park')
-                        ->joinWith('premium')
-                        ->joinWith('registrant')
-                        ->joinWith('admin')
-                        ->joinWith('tech')
-                        ->joinWith('billing');
+                    $accessToPremiumTab = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire']);
+                    if ($accessToPremiumTab) {
+                        $action->getDataProvider()->query
+                            ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'park', 'premium'])
+                            ->joinWith('mailfws')
+                            ->joinWith('urlfws')
+                            ->joinWith('park')
+                            ->joinWith('premium')
+                            ->joinWith('registrant')
+                            ->joinWith('admin')
+                            ->joinWith('tech')
+                            ->joinWith('billing');
+                    } else {
+                        $action->getDataProvider()->query
+                            ->addSelect(['nsips', 'contacts'])
+                            ->joinWith('registrant')
+                            ->joinWith('admin')
+                            ->joinWith('tech')
+                            ->joinWith('billing');
+                    }
                 },
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
                         'hasPincode' => $this->checkUserHasPincode(),
+                        'forwardingOptions' => $action->controller->getForwardingOptions(),
                     ];
                 },
             ],
@@ -732,4 +745,60 @@ class DomainController extends \hipanel\base\CrudController
             return $price;
         }
     }
+
+    public function actionSetPremiumFeature($for)
+    {
+        $model = $this->getPaidFeatureModelByName($for);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setFeature();
+
+            Yii::$app->session->addFlash('success', Yii::t('hipanel:domain', 'Action was successful.'));
+
+            return $this->renderPaidFeatureTab($model->domain_id, $for);
+        }
+    }
+
+    public function actionInlinePremiumFeatureForm($domainId, $featureId, $for)
+    {
+        $model = $this->getPaidFeatureModelByName($for);
+        $model->loadFeatureByDomainId($domainId, $featureId);
+        $domain = Domain::find()->where(['id' => $domainId])->joinWith('premium')->addSelect('premium')->one();
+
+        return $this->renderAjax('premium' . DIRECTORY_SEPARATOR . '_updateForm', [
+            'formFileName' => '_form' . ucfirst($for),
+            'model' => $model,
+            'domain' => $domain,
+            'forwardingOptions' => $this->getForwardingOptions(),
+        ]);
+    }
+
+    private function getPaidFeatureModelByName($name)
+    {
+        $modelName = '\hipanel\modules\domain\models\\' . ucfirst($name);
+
+        return new $modelName;
+    }
+
+    protected function renderPaidFeatureTab($domainId, $for)
+    {
+        if (($model = (new Domain())->find()
+                ->addSelect(['mailfws', 'urlfws', 'park', 'premium'])
+                ->joinWith(['premium', 'urlfws', 'mailfws', 'park'])
+                ->where(['id' => $domainId])->one()) === null) {
+
+            throw new NotFoundHttpException('Domain does not exist');
+        }
+
+        return $this->render('premium' . DIRECTORY_SEPARATOR . $for, [
+            'model' => $model,
+            'forwardingOptions' => $this->getForwardingOptions(),
+        ]);
+    }
+
+    public function getForwardingOptions()
+    {
+        return Ref::findCached('type,forwarding', 'hipanel:domain', ['select' => 'full']);
+    }
+
 }

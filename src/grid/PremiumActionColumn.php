@@ -5,7 +5,9 @@ namespace hipanel\modules\domain\grid;
 use hipanel\grid\ActionColumn;
 use hipanel\widgets\ModalButton;
 use Yii;
+use yii\bootstrap\Progress;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 
 class PremiumActionColumn extends ActionColumn
@@ -14,6 +16,11 @@ class PremiumActionColumn extends ActionColumn
      * @var boolean
      */
     public $is_premium;
+
+    /**
+     * @var int
+     */
+    public $fieldsCount = 4;
 
     public function init()
     {
@@ -31,16 +38,54 @@ class PremiumActionColumn extends ActionColumn
                 }
 
                 $html = Html::button('<i class="fa fa-pencil"></i> ' . Yii::t('hipanel', 'Update'), [
-                    'class' => 'btn btn-default btn-xs edit-dns-toggle',
+                    'class' => 'btn btn-default btn-xs edit-premium-toggle',
                     'data' => [
                         'id' => $model->id,
                         'load-url' => Url::to([
-                            '@domain/premium-row-update',
-                            'id' => $model->id,
-                            'type' => '',
+                            '@domain/inline-premium-feature-form',
+                            'domainId' => $model->domain_id,
+                            'featureId' => $model->id,
+                            'for' => $this->getFeatureName($model),
                         ]),
                     ],
                 ]);
+
+                $progress = Json::htmlEncode("<tr><td class='pf-update-from-td' colspan='{$this->fieldsCount}' style='padding: 4px 0;'>" . Progress::widget([
+                        'id' => 'progress-bar',
+                        'percent' => 100,
+                        'barOptions' => ['class' => 'active progress-bar-striped', 'style' => 'width: 100%'],
+                    ]) . '</td></tr>');
+
+                Yii::$app->view->registerJs(/** @lang JavaScript */
+                    "
+                    $('.edit-premium-toggle').click(function () {
+                        var id = $(this).data('id');
+
+                        var currentRow = $(this).closest('tr');
+                        var newRow = $($progress);
+
+                        $(newRow).data({'id': id});
+                        $('tr').find('.pf-update-form-close').click();
+                        $(newRow).insertAfter(currentRow);
+
+                        jQuery.ajax({
+                            url: $(this).data('load-url'),
+                            type: 'GET',
+                            timeout: 0,
+                            error: function() {
+
+                            },
+                            success: function(data) {
+                                newRow.find('td').html(data);
+                                newRow.find('.btn-cancel').on('click', function (event) {
+                                    event.preventDefault();
+                                    newRow.remove();
+                                });
+                            }
+                        });
+
+                    });
+                ");
 
                 return $html;
 
@@ -57,7 +102,7 @@ class PremiumActionColumn extends ActionColumn
                     'scenario' => 'delete',
                     'submit' => ModalButton::SUBMIT_PJAX,
                     'form' => [
-                        'action' => '#', // Url::to('@domain/delete-urlfw'),
+                        'action' => Url::to(['@domain/set-premium-feature', 'for' => $this->getFeatureName($model)]),
                     ],
                     'button' => [
                         'class' => 'btn btn-default btn-xs',
@@ -73,11 +118,20 @@ class PremiumActionColumn extends ActionColumn
                         ],
                     ],
                     'body' => function ($model) {
-                        echo Html::activeHiddenInput($model, 'id');
-                        echo Yii::t('hipanel:dns', 'Are you sure, that you want to delete record?');
+                        $model->status = 'deleted';
+                        $model->type = $this->getFeatureName($model);
+                        echo Html::activeHiddenInput($model, 'domain_id');
+                        echo Html::activeHiddenInput($model, 'status');
+                        echo Html::activeHiddenInput($model, 'type');
+                        echo Yii::t('hipanel:domain', 'Are you sure, that you want to delete record?');
                     },
                 ]);
             },
         ];
+    }
+
+    private function getFeatureName($model)
+    {
+        return strtolower((new \ReflectionClass($model))->getShortName());
     }
 }
