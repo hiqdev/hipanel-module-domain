@@ -14,12 +14,10 @@ $("#parking-type_id").select2({
     allowClear: true,
     width: "100%",
     templateResult: function(option) {
-        console.log(option.id);
         if (!option.id || option.id == 0) { 
             return option.text; 
         }
-        var ob = '<img src="https://ahnames.com/www/img/parking/park'+ option.id + '.png" width="50" />&nbsp;&nbsp;' + option.text;
-        return ob;
+        return '<img src="https://ahnames.com/www/img/parking/park'+ option.id + '.png" width="50" />&nbsp;&nbsp;' + option.text;
     },
     templateSelection: function (option) {
         if (option.id.length > 0 ) {
