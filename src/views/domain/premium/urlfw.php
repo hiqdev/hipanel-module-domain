@@ -20,7 +20,7 @@ $this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model, 'forwardi
     'dataProvider' => new ArrayDataProvider([
         'allModels' => $model->urlfws,
         'modelClass' => Urlfw::class,
-        'pagination' => ['pageSize' => count($model->mailfws)],
+        'pagination' => ['pageSize' => count($model->urlfws)],
     ]),
     'emptyText' => Yii::t('hipanel:domain', 'URL forwarding is not configured'),
     'domain' => $model->domain,

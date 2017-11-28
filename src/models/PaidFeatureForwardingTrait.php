@@ -37,8 +37,13 @@ trait PaidFeatureForwardingTrait
 
     private function buildAction($opperation)
     {
-        $forwardObj = str_replace('fw', '', strtolower((new \ReflectionClass($this))->getShortName()));
+        $objName = strtolower((new \ReflectionClass($this))->getShortName());
+        if (strstr($objName, 'fw') !== false) {
+            $command = str_replace('fw', '', $objName) . '-forwarding';
+        } else {
+            $command = $objName;
+        }
 
-        return "$opperation-$forwardObj-forwarding";
+        return "$opperation-$command";
     }
 }
