@@ -5,6 +5,8 @@
 
 use hipanel\modules\domain\grid\DomainGridView;
 
+\hipanel\modules\domain\assets\PremiumFeatureAsset::register($this);
+
 $this->registerJs("
 $(document).on('click', '.pf-update-form-close', function () {
     $(this).parents('tr').eq(0).remove();
