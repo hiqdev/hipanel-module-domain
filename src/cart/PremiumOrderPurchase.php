@@ -4,12 +4,12 @@ namespace hipanel\modules\domain\cart;
 
 use Yii;
 
-class PremiumPurchase extends AbstractPremiumPurchase
+class PremiumOrderPurchase extends AbstractPremiumPurchase
 {
     /** {@inheritdoc} */
     public static function operation()
     {
-        return 'Purchase';
+        return 'pay-feature';
     }
 
     /** {@inheritdoc} */

@@ -4,10 +4,10 @@ namespace hipanel\modules\domain\cart;
 
 use Yii;
 
-class PremiumProduct extends AbstractPremiumProduct
+class PremiumOrderProduct extends AbstractPremiumProduct
 {
     /** {@inheritdoc} */
-    protected $_purchaseModel = PremiumPurchase::class;
+    protected $_purchaseModel = PremiumOrderPurchase::class;
 
     /** {@inheritdoc} */
     protected $_operation = 'premium_dns_purchase';
