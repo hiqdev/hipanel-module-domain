@@ -12,13 +12,17 @@ abstract class AbstractPremiumPurchase extends AbstractPurchase
         parent::init();
 
         $this->domain = $this->position->name;
-        $this->period = $this->position->getQuantity();
+        $this->amout = $this->position->getQuantity();
+        $this->type = 'premium_dns_renew';
+        $this->object = 'feature';
+        $this->expries = '';
+
     }
 
     /** {@inheritdoc} */
     public static function tableName()
     {
-        return 'domain';
+        return 'hdomain';
     }
 
     /** {@inheritdoc} */
@@ -26,7 +30,7 @@ abstract class AbstractPremiumPurchase extends AbstractPurchase
     {
         return array_merge(parent::rules(), [
             [['domain'], 'safe'],
-            [['period'], 'number'],
+            [['amount'], 'number'],
         ]);
     }
 }

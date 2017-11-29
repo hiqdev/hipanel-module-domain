@@ -31,6 +31,7 @@ use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\cart\PremiumOrderProduct;
+use hipanel\modules\domain\cart\PremiumRenewalProduct;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
@@ -96,9 +97,9 @@ class DomainController extends \hipanel\base\CrudController
                 'productClass' => PremiumOrderProduct::class,
                 'redirectToCart' => true,
             ],
-            'add-to-cart-renewal' => [
+            'add-to-cart-premium-renewal' => [
                 'class' => AddToCartAction::class,
-                'productClass' => DomainRenewalProduct::class,
+                'productClass' => PremiumRenewalProduct::class,
                 'redirectToCart' => true,
             ],
             'bulk-renewal' => [

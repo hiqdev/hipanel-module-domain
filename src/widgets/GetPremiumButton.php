@@ -18,10 +18,10 @@ class GetPremiumButton extends Widget
     public function run()
     {
         $this->getClientScript();
-        if ($this->model->is_premium) {
+        if ($this->model->premium->is_active) {
             return Html::a(Yii::t('hipanel:domain', 'Renew premium package for '), [
                 '@domain/add-to-cart-premium-renewal',
-                'name' => $this->model->domain,
+                'model_id' => $this->model->id,
             ], [
                 'class' => 'btn btn-success btn-xs fetch-premium-price',
                 'data' => [

@@ -49,9 +49,11 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition
     /** {@inheritdoc} */
     public function getCalculationModel($options = [])
     {
-        return parent::getCalculationModel(array_merge([
+        $localOptions = [
             'type' => $this->_operation,
             'domain' => $this->name,
-        ], $options));
+        ];
+
+        return parent::getCalculationModel(array_merge($localOptions, $options));
     }
 }
