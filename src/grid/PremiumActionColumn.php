@@ -50,7 +50,7 @@ class PremiumActionColumn extends ActionColumn
                     ],
                 ]);
 
-                $progress = Json::htmlEncode("<tr><td class='pf-update-from-td' colspan='{$this->fieldsCount}' style='padding: 4px 0;'>" . Progress::widget([
+                $progress = Json::htmlEncode("<tr><td class='pf-update-from-td' colspan='{$this->fieldsCount}' style='overflow:hidden; padding: 4px 0;'>" . Progress::widget([
                         'id' => 'progress-bar',
                         'percent' => 100,
                         'barOptions' => ['class' => 'active progress-bar-striped', 'style' => 'width: 100%'],
