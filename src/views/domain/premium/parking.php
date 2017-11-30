@@ -11,7 +11,14 @@ use yii\widgets\DetailView;
     'enablePushState' => false,
 ]) ?>
 
-<?= $this->render('_formParking', ['model' => $model->parking ?: new Parking(), 'domain' => $model]) ?>
+<?php if ($model->premium->is_active) : ?>
+    <?= $this->render('_formParking', ['model' => $model->parking ?: new Parking(), 'domain' => $model]) ?>
+<?php else : ?>
+    <div class="alert alert-info">
+        <?= Yii::t('hipanel:domain', 'You need to activate the premium package to change the settings for parking') ?>
+    </div>
+<?php endif; ?>
+
 <?php if ($model->park) : ?>
     <hr>
     <?= DetailView::widget([
