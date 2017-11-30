@@ -69,7 +69,7 @@ class GetPremiumButton extends Widget
                     success: function(price) {
                         waitingForPrice.each(function() {
                             var oldText = $(this).text(); 
-                            $(this).html(oldText + ' ' + price);
+                            $(this).text(oldText + ' ' + price);
                         });
                     }
                 });

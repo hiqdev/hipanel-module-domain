@@ -34,6 +34,6 @@ class PremiumRenewalProduct extends AbstractPremiumProduct
     {
         $this->_model = Domain::findOne(['id' => $this->model_id]);
         $this->name = $this->_model->domain;
-        $this->description = Yii::t('hipanel:domain', 'Renewal asdf');
+        $this->description = Yii::t('hipanel:domain', 'Purchase premium renewal');
     }
 }
