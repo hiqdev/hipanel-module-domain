@@ -7,9 +7,15 @@ use yii\base\InvalidConfigException;
 
 abstract class AbstractPremiumGrid extends GridView
 {
+    /**
+     * @var string
+     */
     public $domain;
 
-    public $is_premium = false;
+    /**
+     * @var boolean|null
+     */
+    public $is_premium;
 
     public $layout = "<div class=\"table-responsive\">{items}</div>";
 

@@ -13,7 +13,7 @@ use yii\helpers\Url;
 class PremiumActionColumn extends ActionColumn
 {
     /**
-     * @var boolean
+     * @var boolean|null
      */
     public $is_premium;
 
@@ -32,7 +32,7 @@ class PremiumActionColumn extends ActionColumn
         $this->buttons = [
             'update' => function ($url, $model, $key) {
                 if (!$this->is_premium) {
-                    $html = Html::button('<i class="fa fa-pencil"></i> ' . Yii::t('hipanel', 'Update'), [
+                    return Html::button('<i class="fa fa-pencil"></i> ' . Yii::t('hipanel', 'Update'), [
                         'class' => 'btn btn-default btn-xs disabled',
                     ]);
                 }

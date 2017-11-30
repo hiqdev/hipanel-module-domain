@@ -21,7 +21,7 @@ use yii\data\ArrayDataProvider;
     ]),
     'emptyText' => Yii::t('hipanel:domain', 'E-mail forwarding is not configured'),
     'domain' => $model->domain,
-    'is_premium' => $model->is_premium,
+    'is_premium' => $model->premium->is_active,
     'columns' => ['name', 'value', 'actions'],
 ]) ?>
 
