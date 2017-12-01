@@ -117,6 +117,11 @@ class DomainController extends \hipanel\base\CrudController
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad' => true,
             ],
+            'add-to-cart-renewal' => [
+                'class' => AddToCartAction::class,
+                'redirectToCart' => true,
+                'productClass' => DomainRenewalProduct::class,
+            ],
             'domain-push-modal' => [
                 'class' => PrepareBulkAction::class,
                 'view' => '_modalPush',
