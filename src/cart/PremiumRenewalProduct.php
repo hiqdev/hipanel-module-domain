@@ -14,9 +14,23 @@ class PremiumRenewalProduct extends AbstractPremiumProduct
     protected $_operation = 'premium_dns_renew';
 
     /** {@inheritdoc} */
+    public static function primaryKey()
+    {
+        return ['model_id'];
+    }
+
+    /** {@inheritdoc} */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['model_id'], 'integer'],
+        ]);
+    }
+
+    /** {@inheritdoc} */
     public function getId()
     {
-        return hash('crc32b', implode('_', ['premium', 'dns_renew', $this->name]));
+        return hash('crc32b', implode('_', ['premium', 'dns_renew', $this->model_id]));
     }
 
     /** {@inheritdoc} */
@@ -32,7 +46,7 @@ class PremiumRenewalProduct extends AbstractPremiumProduct
     /** {@inheritdoc} */
     private function ensureRelatedData()
     {
-        $this->_model = Domain::findOne(['id' => $this->model_id]);
+        $this->_model = Domain::findOne($this->model_id);
         $this->name = $this->_model->domain;
         $this->description = Yii::t('hipanel:domain', 'Purchase premium renewal');
     }

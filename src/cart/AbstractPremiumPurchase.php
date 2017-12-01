@@ -6,18 +6,13 @@ use hipanel\modules\finance\cart\AbstractPurchase;
 
 abstract class AbstractPremiumPurchase extends AbstractPurchase
 {
-    /** {@inheritdoc} */
-    public function init()
-    {
-        parent::init();
+    public $domain;
 
-        $this->domain = $this->position->name;
-        $this->amout = $this->position->getQuantity();
-        $this->type = 'premium_dns_renew';
-        $this->object = 'feature';
-        $this->expries = '';
+    public $type;
 
-    }
+    public $object;
+
+    public $amount;
 
     /** {@inheritdoc} */
     public static function tableName()
@@ -26,10 +21,20 @@ abstract class AbstractPremiumPurchase extends AbstractPurchase
     }
 
     /** {@inheritdoc} */
+    public function init()
+    {
+        parent::init();
+
+        $this->domain = $this->position->name;
+        $this->amount = $this->position->getQuantity();
+        $this->object = 'feature';
+    }
+
+    /** {@inheritdoc} */
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['domain'], 'safe'],
+            [['domain', 'type', 'object'], 'safe'],
             [['amount'], 'number'],
         ]);
     }

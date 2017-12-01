@@ -4,10 +4,7 @@ namespace hipanel\modules\domain\cart;
 
 class PremiumRenewalPurchase extends AbstractPremiumPurchase
 {
-    /**
-     * @var string premium expiration datetime
-     */
-    public $expires;
+    public $type = 'premium_dns_renew';
 
     /** {@inheritdoc} */
     public static function operation()
@@ -15,10 +12,18 @@ class PremiumRenewalPurchase extends AbstractPremiumPurchase
         return 'pay-feature';
     }
 
+    /** {@inheritdoc} */
+    public function init()
+    {
+        parent::init();
+
+        $this->amount = $this->position->getQuantity();
+    }
+
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['expires'], 'required'],
+            [['amount'], 'required'],
         ]);
     }
 }

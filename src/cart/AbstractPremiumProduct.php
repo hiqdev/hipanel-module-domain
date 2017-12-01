@@ -30,7 +30,7 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name'], 'safe'],
         ];
     }
 
