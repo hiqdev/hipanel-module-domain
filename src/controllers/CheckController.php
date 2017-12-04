@@ -77,16 +77,27 @@ class CheckController extends \hipanel\base\CrudController
     public function actionCheckDomain()
     {
         $results = [];
-        $availableZones = $this->getAvailableZonesList();
-        $bulkForm = new BulkCheckForm($availableZones);
+        $dropDownZonesOptions = $this->getAvailableZonesList();
+        $bulkForm = new BulkCheckForm($dropDownZonesOptions);
 
         if ($bulkForm->load(Yii::$app->request->get(), '') && $bulkForm->validate()) {
             $results = $bulkForm->variateAll();
+            $availableZones = $this->getAvailableZones();
+            foreach ($results as $model) {
+                if ($model->isAvailable) {
+                    foreach ($availableZones as $resource) {
+                        if ($resource->zone === $model->zone) {
+                            $model->resource = $resource;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         return $this->render('checkDomain', [
             'model' => $bulkForm,
-            'dropDownZonesOptions' => $availableZones,
+            'dropDownZonesOptions' => $dropDownZonesOptions,
             'results' => $results,
         ]);
     }

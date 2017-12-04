@@ -95,7 +95,11 @@ class DomainVariationsGenerator
         $results = [];
 
         foreach ($variations as $domain) {
-            $results[] = new CheckForm(array_keys($this->availableZones), ['fqdn' => $domain]);
+            if (is_array($domain)) {
+                $results[] = new CheckForm(array_keys($this->availableZones), $domain);
+            } else {
+                $results[] = new CheckForm(array_keys($this->availableZones), ['fqdn' => $domain]);
+            }
         }
 
         return $results;
@@ -126,7 +130,10 @@ class DomainVariationsGenerator
         if (isset($apiData['results'])) {
             foreach ($apiData['results'] as $row) {
                 if ($row['availability'] === 'available') {
-                    $variations[] = $row['name'];
+                    $variations[] = [
+                        'fqdn' => $row['name'],
+                        'isAvailable' => ($row['availability'] === 'available'),
+                    ];
                 }
             }
         }
