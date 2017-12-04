@@ -121,12 +121,17 @@ class DomainVariationsGenerator
 
     protected function generateSuggestions()
     {
+        $variations = [];
         $apiData = Domain::perform('get-suggestions', ['name' => $this->domain, 'zones' => $this->zone]);
         if (isset($apiData['results'])) {
-            return ArrayHelper::getColumn($apiData['results'], 'name');
+            foreach ($apiData['results'] as $row) {
+                if ($row['availability'] === 'available') {
+                    $variations[] = $row['name'];
+                }
+            }
         }
 
-        return [];
+        return $variations;
     }
 
     /**
