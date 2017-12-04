@@ -10,7 +10,10 @@
 
 namespace  hipanel\modules\domain\logic;
 
+use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\forms\CheckForm;
+use hipanel\modules\domain\models\Domain;
+use Yii;
 
 /**
  * Class DomainVariationsGenerator provides a simple API to generate domain name variations
@@ -74,6 +77,10 @@ class DomainVariationsGenerator
     public function run()
     {
         $domains = $this->generateVariations();
+        $access = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire', 'bladeroot', 'andre']);
+        if ($access) {
+            $domains = array_merge($domains, $this->generateSuggestions());
+        }
         $this->orderVariations($domains);
 
         return $this->buildModels($domains);
@@ -110,6 +117,16 @@ class DomainVariationsGenerator
         }
 
         return $variations;
+    }
+
+    protected function generateSuggestions()
+    {
+        $apiData = Domain::perform('get-suggestions', ['name' => $this->domain, 'zones' => $this->zone]);
+        if (isset($apiData['results'])) {
+            return ArrayHelper::getColumn($apiData['results'], 'name');
+        }
+
+        return [];
     }
 
     /**
