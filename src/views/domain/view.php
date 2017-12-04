@@ -24,7 +24,7 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'Domain detailed informatio
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$accessToPremiumTab = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire']);
+$accessToPremiumTab = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire', 'bladeroot']);
 
 $this->registerCss(<<<'CSS'
 .tab-pane {
