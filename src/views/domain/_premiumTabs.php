@@ -30,7 +30,7 @@ $(document).on('click', '.pf-update-form-close', function () {
     <div class="panel panel-default">
         <div class="panel-heading premium-panels-heading">
             <h3 class="panel-title">
-                <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
+                <?= Yii::t('hipanel.domain.premium', 'URL forwarding') ?>
             </h3>
         </div>
         <div class="panel-body">
@@ -43,7 +43,7 @@ $(document).on('click', '.pf-update-form-close', function () {
     <div class="panel panel-default">
         <div class="panel-heading premium-panels-heading">
             <h3 class="panel-title">
-                <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
+                <?= Yii::t('hipanel.domain.premium', 'Email forwarding') ?>
             </h3>
         </div>
         <div class="panel-body">
@@ -56,7 +56,7 @@ $(document).on('click', '.pf-update-form-close', function () {
     <div class="panel panel-default">
         <div class="panel-heading premium-panels-heading">
             <h3 class="panel-title">
-                <?= Yii::t('hipanel:domain', 'Parking') ?>
+                <?= Yii::t('hipanel.domain.premium', 'Parking') ?>
             </h3>
         </div>
         <div class="panel-body">

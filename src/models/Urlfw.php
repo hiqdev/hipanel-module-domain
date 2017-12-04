@@ -23,9 +23,10 @@ class Urlfw extends \hipanel\base\Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('hipanel:domain', 'Subdomain name'),
-            'type_label' => Yii::t('hipanel:domain', 'Record type'),
-            'value' => Yii::t('hipanel:domain', 'Forwarding address'),
+            'name' => Yii::t('hipanel.domain.premium', 'Subdomain name'),
+            'type_label' => Yii::t('hipanel.domain.premium', 'Record type'),
+            'type' => Yii::t('hipanel.domain.premium', 'Record type'),
+            'value' => Yii::t('hipanel.domain.premium', 'Forwarding address'),
         ];
     }
 

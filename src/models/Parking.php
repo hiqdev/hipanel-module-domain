@@ -20,20 +20,20 @@ class Parking extends \hipanel\base\Model
     public function attributeLabels()
     {
         return [
-            'tilte' => Yii::t('hipanel:domain', 'Page title'),
-            'siteheader' => Yii::t('hipanel:domain', 'Page header text'),
-            'sitetext' => Yii::t('hipanel:domain', 'Page text'),
-            'type_id' => Yii::t('hipanel:domain', 'Page skin'),
+            'title' => Yii::t('hipanel.domain.premium', 'Title'),
+            'siteheader' => Yii::t('hipanel.domain.premium', 'Page header text'),
+            'sitetext' => Yii::t('hipanel.domain.premium', 'Page text'),
+            'type_id' => Yii::t('hipanel.domain.premium', 'Page skin'),
         ];
     }
 
     public function skinOptions()
     {
         return [
-            0 => Yii::t('hipanel:domain', 'Turn off'),
-            1 => Yii::t('hipanel:domain', 'Design 1'),
-            2 => Yii::t('hipanel:domain', 'Design 2'),
-            3 => Yii::t('hipanel:domain', 'Design 3'),
+            0 => Yii::t('hipanel.domain.premium', 'Turn off'),
+            1 => Yii::t('hipanel.domain.premium', 'Design 1'),
+            2 => Yii::t('hipanel.domain.premium', 'Design 2'),
+            3 => Yii::t('hipanel.domain.premium', 'Design 3'),
         ];
     }
 

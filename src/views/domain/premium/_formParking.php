@@ -63,11 +63,11 @@ JS
         <div class="col-md-12">
             <?php if ((bool)$domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
-                    'text' => Yii::t('hipanel:domain', 'Save'),
+                    'text' => Yii::t('hipanel.domain.premium', 'Save'),
                     'options' => ['class' => 'btn btn-success btn-sm'],
                 ]) ?>
             <?php else : ?>
-                <?= Html::submitButton(Yii::t('hipanel:domain', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>
+                <?= Html::submitButton(Yii::t('hipanel.domain.premium', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>
             <?php endif; ?>
         </div>
     </div>

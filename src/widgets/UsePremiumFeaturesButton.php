@@ -48,9 +48,9 @@ class UsePremiumFeaturesButton extends Widget
         $this->view->on(View::EVENT_END_BODY, function () {
             Modal::begin([
                 'id' => $this->modalId,
-                'header' => Html::tag('h4', Yii::t('hipanel:domain', 'The premium package not activated'), ['class' => 'modal-title']),
+                'header' => Html::tag('h4', Yii::t('hipanel.domain.premium', 'The premium package not activated'), ['class' => 'modal-title']),
                 'toggleButton' => false,
-                'footer' => Html::a(Yii::t('hipanel:domain', 'Active premium package'), '#premium', [
+                'footer' => Html::a(Yii::t('hipanel.domain.premium', 'Active premium package'), '#premium', [
                     'class' => 'btn btn-success',
                     'data' => [
                         'toggle' => 'tab',
@@ -59,7 +59,7 @@ class UsePremiumFeaturesButton extends Widget
                 ]),
             ]);
 
-            echo $this->modalContent ?: Yii::t('hipanel:domain', 'The premium package is to be activated to enable this action.');
+            echo $this->modalContent ?: Yii::t('hipanel.domain.premium', 'The premium package is to be activated to enable this action.');
 
             Modal::end();
         });

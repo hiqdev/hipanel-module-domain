@@ -36,11 +36,11 @@ $model->domain_id = $domain->id;
         <div class="col-md-12">
             <?php if ((bool)$domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
-                    'text' => Yii::t('hipanel:domain', 'Add record'),
+                    'text' => Yii::t('hipanel.domain.premium', 'Add record'),
                     'options' => ['class' => 'btn btn-success btn-sm'],
                 ]) ?>
             <?php else : ?>
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('hipanel:domain', 'Add record') : Yii::t('hipanel:domain', 'Update record'), ['class' => 'btn btn-success btn-sm']) ?>
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('hipanel.domain.premium', 'Add record') : Yii::t('hipanel.domain.premium', 'Update record'), ['class' => 'btn btn-success btn-sm']) ?>
             <?php endif; ?>
         </div>
     </div>

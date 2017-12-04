@@ -19,7 +19,7 @@ class GetPremiumButton extends Widget
     {
         $this->getClientScript();
         if ($this->model->premium->is_active) {
-            return Html::a(Yii::t('hipanel:domain', 'Renew premium package for '), [
+            return Html::a(Yii::t('hipanel.domain.premium', 'Renew premium package for '), [
                 '@domain/add-to-cart-premium-renewal',
                 'model_id' => $this->model->id,
             ], [
@@ -29,7 +29,7 @@ class GetPremiumButton extends Widget
                 ],
             ]);
         } else {
-            return Html::a(Yii::t('hipanel:domain', 'Buy premium package for '), [
+            return Html::a(Yii::t('hipanel.domain.premium', 'Buy premium package for '), [
                 '@domain/add-to-cart-premium',
                 'name' => $this->model->domain,
             ], [

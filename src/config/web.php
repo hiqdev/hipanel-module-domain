@@ -33,6 +33,10 @@ return [
                     'forceTranslation' => true,
                     'basePath' => '@hipanel/modules/domain/messages',
                 ],
+                'hipanel.domain.premium' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@hipanel/modules/domain/messages',
+                ],
             ],
         ],
     ],

@@ -15,7 +15,7 @@ use yii\widgets\DetailView;
     <?= $this->render('_formParking', ['model' => $model->parking ?: new Parking(), 'domain' => $model]) ?>
 <?php else : ?>
     <div class="alert alert-info">
-        <?= Yii::t('hipanel:domain', 'You need to activate the premium package to change the settings for parking') ?>
+        <?= Yii::t('hipanel.domain.premium', 'You need to activate the premium package to change the settings for parking') ?>
     </div>
 <?php endif; ?>
 

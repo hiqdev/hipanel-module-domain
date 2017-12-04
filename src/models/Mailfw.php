@@ -25,8 +25,8 @@ class Mailfw extends \hipanel\base\Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('hipanel:domain', 'User name'),
-            'value' => Yii::t('hipanel:domain', 'Forwarding addresses'),
+            'name' => Yii::t('hipanel.domain.premium', 'User name'),
+            'value' => Yii::t('hipanel.domain.premium', 'Forwarding addresses comma or space separeted'),
         ];
     }
 }

@@ -38,10 +38,10 @@ class DomainGridView extends BoxedGridView
             'is_premium' => [
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $state = ($model->premium->is_active) ? Yii::t('hipanel:domain', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
+                    $state = ($model->premium->is_active) ? Yii::t('hipanel.domain.premium', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
                         'expires' => strtotime($model->premium->expires),
                         'days_left' => $model->premium->days_left,
-                    ]) : Html::tag('span', Yii::t('hipanel:domain', 'Not activated'), ['class' => 'text-danger']);
+                    ]) : Html::tag('span', Yii::t('hipanel.domain.premium', 'Not activated'), ['class' => 'text-danger']);
 
                     return $state . GetPremiumButton::widget(['model' => $model]);
                 },
@@ -56,7 +56,7 @@ class DomainGridView extends BoxedGridView
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
-                'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium autorenewal')),
+                'label' => Html::tag('span', Yii::t('hipanel.domain.premium', 'Premium autorenewal')),
                 'pluginOptions' => function ($model) {
                     return [
                         'readonly' => !(bool)$model->premium->is_active,
@@ -68,12 +68,12 @@ class DomainGridView extends BoxedGridView
                         0 => [
                             'style' => 'display: none;',
                             'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'You can enable the automatic renewal of the premium package for this domain.'),
+                            'content' => Yii::t('hipanel.domain.premium', 'You can enable the automatic renewal of the premium package for this domain.'),
                         ],
                         1 => [
                             'style' => 'display: none;',
                             'class' => 'small text-muted font-normal md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'Automatic renewal of premium package for this domain is enabled.'),
+                            'content' => Yii::t('hipanel.domain.premium', 'Automatic renewal of premium package for this domain is enabled.'),
                         ],
                     ],
                 ],
