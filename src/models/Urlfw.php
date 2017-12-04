@@ -2,6 +2,8 @@
 
 namespace hipanel\modules\domain\models;
 
+use hipanel\modules\dns\validators\DomainPartValidator;
+use hipanel\validators\DomainValidator;
 use Yii;
 
 class Urlfw extends \hipanel\base\Model
@@ -16,7 +18,8 @@ class Urlfw extends \hipanel\base\Model
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
             [['name', 'value', 'type', 'type_label', 'currentTab', 'status'], 'string'],
             [['name', 'type', 'value'], 'required'],
-            [['value'], 'url'],
+            [['value'], DomainValidator::class],
+            [['name'], DomainPartValidator::class],
         ];
     }
 

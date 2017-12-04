@@ -18,6 +18,7 @@ class Mailfw extends \hipanel\base\Model
             [['id', 'domain_id', 'dns_id', 'type_id'], 'integer'],
             [['name', 'value', 'type', 'type_label', 'status', 'typename'], 'string'],
             [['name', 'value'], 'required'],
+            [['name'], 'match', 'pattern' => '@^[a-zA-Z0-9._*]+$@'],
             [['value'], 'email']
         ];
     }
