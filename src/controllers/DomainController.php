@@ -25,6 +25,7 @@ use hipanel\actions\ViewAction;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
+use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
 use hipanel\modules\domain\cart\Calculation;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
@@ -37,6 +38,7 @@ use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
 use hipanel\modules\domain\models\Parking;
 use hipanel\modules\domain\models\Urlfw;
+use hipanel\modules\domain\widgets\GetPremiumButton;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
@@ -724,14 +726,24 @@ class DomainController extends \hipanel\base\CrudController
         return $this->getRefs('type,forwarding', 'hipanel:domain');
     }
 
-    public function actionGetPremiumPrice($id, $type, $domain)
+    public function actionGetPremiumPrice($id, $client_id, $type, $domain)
     {
         if (Yii::$app->request->isAjax) {
+            $model = DynamicModel::validateData(compact('id', 'client_id', 'type', 'domain'), [
+                [['id', 'client_id'], 'integer'],
+                ['type', 'in', 'range' => [GetPremiumButton::RENEW, GetPremiumButton::PURCHASE]],
+                ['domain', DomainPartValidator::class],
+            ]);
+            if ($model->hasErrors()) {
+                throw new \Exception(__METHOD__ . ' has validation errors');
+            }
             $data = [
-                'id' => $id,
+                'id' => (int)$id,
+                'client_id' => (int)$client_id,
                 'type' => $type,
-                'object' => 'feature',
                 'domain' => $domain,
+
+                'object' => 'feature',
                 'expires' => (new \DateTime())->modify('+1 year')->format('c'),
                 'amount' => 1,
             ];

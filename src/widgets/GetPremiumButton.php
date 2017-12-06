@@ -46,6 +46,7 @@ class GetPremiumButton extends Widget
         return Url::to([
             '@domain/get-premium-price',
             'id' => $this->model->id,
+            'client_id' => $this->model->client_id,
             'type' => $this->model->is_premium ? self::RENEW : self::PURCHASE,
             'domain' => $this->model->domain,
         ]);
