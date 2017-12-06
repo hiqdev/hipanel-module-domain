@@ -225,7 +225,7 @@ class DomainController extends \hipanel\base\CrudController
                             ->joinWith('billing');
                     } else {
                         $action->getDataProvider()->query
-                            ->addSelect(['nsips', 'contacts'])
+                            ->addSelect(['nsips', 'contacts', 'foa_sent_to'])
                             ->joinWith('registrant')
                             ->joinWith('admin')
                             ->joinWith('tech')
