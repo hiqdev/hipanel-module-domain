@@ -31,7 +31,7 @@ $model->domain_id = $domain->id;
             <?= $form->field($model, 'name', ['template' => '{label}<div class="input-group">{input}<div class="input-group-addon">@' . $domain->domain . '</div></div>{hint}{error}']) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'value') ?>
+            <?= $form->field($model, 'value')->hint(Yii::t('hipanel.domain.premium', 'Comma or space separeted')) ?>
         </div>
         <div class="col-md-12">
             <?php if ((bool)$domain->premium->is_active === false) : ?>
