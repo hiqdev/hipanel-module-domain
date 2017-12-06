@@ -638,14 +638,6 @@ class DomainController extends \hipanel\base\CrudController
         ]);
     }
 
-    public function actionPremiumDetail($id)
-    {
-        $apiData = Domain::perform('get-info', ['id' => $id, 'with_seo' => 1, 'with_dns' => 1]);
-        $model = Domain::find()->populate([$apiData])[0];
-
-        return $this->renderAjax('_prmiumPackageDetail', ['model' => $model]);
-    }
-
     public function actionTransferOut($id)
     {
         $apiData = Domain::perform('get-info', compact('id'));
