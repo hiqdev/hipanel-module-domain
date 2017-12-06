@@ -26,8 +26,8 @@ class PremiumActionColumn extends ActionColumn
     {
         $this->template = '{update} {delete}';
         $this->visibleButtonsCount = 2;
-        $this->options = [
-            'style' => 'width: 15%',
+        $this->contentOptions = [
+            'style' => 'white-space: nowrap; text-align: right;',
         ];
         $this->buttons = [
             'update' => function ($url, $model, $key) {
