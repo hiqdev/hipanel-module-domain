@@ -4,6 +4,7 @@
 
 use hipanel\modules\domain\grid\UrlfwGridView;
 use hipanel\modules\domain\models\Urlfw;
+use hipanel\modules\domain\widgets\PremiumAlert;
 use hipanel\widgets\Pjax;
 use yii\data\ArrayDataProvider;
 
@@ -13,8 +14,16 @@ use yii\data\ArrayDataProvider;
     'enablePushState' => false,
 ]) ?>
 
-<?=
-$this->render('_formUrlfw', ['model' => new Urlfw, 'domain' => $model, 'forwardingOptions' => $forwardingOptions]) ?>
+<?php if ($model->premium->is_active) : ?>
+    <?= $this->render('_formUrlfw', [
+        'model' => new Urlfw,
+        'domain' => $model,
+        'forwardingOptions' => $forwardingOptions,
+    ]) ?>
+<?php else : ?>
+    <?= PremiumAlert::widget() ?>
+<?php endif; ?>
+
 <hr>
 <?= UrlfwGridView::widget([
     'dataProvider' => new ArrayDataProvider([

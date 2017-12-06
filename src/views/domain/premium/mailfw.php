@@ -2,6 +2,7 @@
 
 use hipanel\modules\domain\grid\MailfwGridView;
 use hipanel\modules\domain\models\Mailfw;
+use hipanel\modules\domain\widgets\PremiumAlert;
 use hipanel\widgets\Pjax;
 use yii\data\ArrayDataProvider;
 
@@ -11,7 +12,11 @@ use yii\data\ArrayDataProvider;
     'enablePushState' => false,
 ]) ?>
 
-<?= $this->render('_formMailfw', ['model' => new Mailfw, 'domain' => $model]) ?>
+<?php if ($model->premium->is_active) : ?>
+    <?= $this->render('_formMailfw', ['model' => new Mailfw, 'domain' => $model]) ?>
+<?php else : ?>
+    <?= PremiumAlert::widget() ?>
+<?php endif; ?>
 <hr>
 <?= MailfwGridView::widget([
     'dataProvider' => new ArrayDataProvider([

@@ -7,7 +7,7 @@ return [
     'Forwarding addresses' => 'Адреса перенаправления',
     'Comma or space separeted' => 'Запятая и/или пробел как разделитель',
     'User name' => 'Имя пользователя',
-    'You need to activate the premium package to change the settings for parking' => 'Вам необходимо активировать премиальный пакет, чтобы изменить настройки парковки',
+    'You need to activate the premium package to change the settings' => 'Вам необходимо активировать премиальный пакет, чтобы изменить настройки',
     'Title' => 'Название страницы',
     'Page text' => 'Текст страницы',
     'Page header text' => 'Заголовок страницы',
