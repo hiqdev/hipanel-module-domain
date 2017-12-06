@@ -212,8 +212,7 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => ViewAction::class,
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
-                    $accessToPremiumTab = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire', 'bladeroot']);
-                    if ($accessToPremiumTab) {
+                    if (Yii::$app->user->can('test.beta')) {
                         $action->getDataProvider()->query
                             ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parking', 'premium'])
                             ->joinWith('mailfws')

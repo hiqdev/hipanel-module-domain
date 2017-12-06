@@ -77,8 +77,7 @@ class DomainVariationsGenerator
     public function run()
     {
         $domains = $this->generateVariations();
-        $access = in_array(Yii::$app->user->identity->username, ['solex', 'sol', 'tofid', 'rubbertire', 'sliverfire', 'bladeroot', 'andre']);
-        if ($access) {
+        if (Yii::$app->user->can('test.beta')) {
             $domains = array_merge($domains, $this->generateSuggestions());
         }
         $this->orderVariations($domains);
