@@ -738,11 +738,10 @@ class DomainController extends \hipanel\base\CrudController
                 throw new \Exception(__METHOD__ . ' has validation errors');
             }
             $data = [
-                'id' => (int)$id,
-                'client_id' => (int)$client_id,
+                'id' => $id,
+                'client_id' => $client_id,
                 'type' => $type,
                 'domain' => $domain,
-
                 'object' => 'feature',
                 'expires' => (new \DateTime())->modify('+1 year')->format('c'),
                 'amount' => 1,
