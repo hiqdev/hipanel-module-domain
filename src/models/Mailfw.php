@@ -3,6 +3,8 @@
 namespace hipanel\modules\domain\models;
 
 use Yii;
+use hipanel\helpers\StringHelper;
+use yii\validators\EmailValidator;
 
 class Mailfw extends \hipanel\base\Model
 {
@@ -19,7 +21,18 @@ class Mailfw extends \hipanel\base\Model
             [['name', 'value', 'type', 'type_label', 'status', 'typename'], 'string'],
             [['name', 'value'], 'required'],
             [['name'], 'match', 'pattern' => '@^[a-zA-Z0-9._*]+$@'],
-            [['value'], 'email']
+            [
+                ['value'],
+                function ($attribute, $params) {
+                    $validator = new EmailValidator();
+                    $emails = StringHelper::mexplode($this->{$attribute}, '/[\s,]+/', true, true);
+                    foreach ($emails as $email) {
+                        if (!$validator->validate($email, $error)) {
+                            $this->addError($attribute, $error);
+                        }
+                    }
+                },
+            ],
         ];
     }
 
@@ -27,7 +40,7 @@ class Mailfw extends \hipanel\base\Model
     {
         return [
             'name' => Yii::t('hipanel.domain.premium', 'User name'),
-            'value' => Yii::t('hipanel.domain.premium', 'Forwarding addresses comma or space separeted'),
+            'value' => Yii::t('hipanel.domain.premium', 'Forwarding addresses'),
         ];
     }
 }

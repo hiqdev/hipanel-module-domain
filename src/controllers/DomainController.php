@@ -252,6 +252,7 @@ class DomainController extends \hipanel\base\CrudController
             'validate-mailfw-form' => [
                 'class' => ValidateFormAction::class,
                 'model' => Mailfw::class,
+                'validatedInputId' => false,
             ],
             'validate-park-form' => [
                 'class' => ValidateFormAction::class,
