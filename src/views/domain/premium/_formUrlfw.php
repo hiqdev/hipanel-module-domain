@@ -37,7 +37,7 @@ $model->domain_id = $domain->id;
         <div class="col-md-2">
             <?= $form->field($model, 'type')->dropDownList(ArrayHelper::map(array_filter($forwardingOptions, function ($ref) {
                 return $ref->name === 'url_temporary';
-            }, ARRAY_FILTER_USE_BOTH), 'name', 'label'), ['prompt' => '--']) ?>
+            }, ARRAY_FILTER_USE_BOTH), 'name', 'label')) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'value') ?>
