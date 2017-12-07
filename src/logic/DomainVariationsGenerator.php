@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
  */
 
-namespace  hipanel\modules\domain\logic;
+namespace hipanel\modules\domain\logic;
 
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\forms\CheckForm;
@@ -78,7 +78,15 @@ class DomainVariationsGenerator
     {
         $domains = $this->generateVariations();
         if (Yii::$app->user->can('test.beta')) {
-            $domains = array_merge($domains, $this->generateSuggestions());
+            $suggestions = $this->generateSuggestions();
+            foreach ($suggestions as $suggestion) {
+                $key = array_search(strtolower($suggestion['fqdn']), $domains);
+                if ($key === false) {
+                    array_push($domains, $suggestion);
+                } else {
+                    $domains[$key] = array_map('strtolower', $suggestion);
+                }
+            }
         }
         $this->orderVariations($domains);
 
