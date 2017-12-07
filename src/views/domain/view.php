@@ -158,62 +158,14 @@ CSS
 
                 <!-- NS records -->
                 <div class=" tab-pane" id="ns-records">
-                    <?php /*
-                    <?= Html::tag('b', $model->getAttributeLabel('nameservers') . ': '); ?>
-                    <?= XEditable::widget([
-                        'model' => $model,
-                        'attribute' => 'nameservers',
-                        'pluginOptions' => [
-                            'placement' => 'bottom',
-                            'type' => 'textarea',
-                            'emptytext' => Yii::t('hipanel:domain', 'There are no NS. Domain may not work properly'),
-                            'url' => Url::to('set-nss'),
-                        ],
-                    ]); ?>
-
-
-                    */
-                    ?>
                     <?= NsWidget::widget([
                         'model' => $model,
                         'attribute' => 'nsips',
                     ]); ?>
-
                 </div>
-
-                <!-- Authorization code -->
-                <!--                    <div class=" tab-pane" id="authorization-code"></div>-->
 
                 <!-- DNS records -->
                 <div class="tab-pane" id="dns-records">
-                    <?php /* DomainGridView::detailView([
-                        'model' => $model,
-                        'boxed' => false,
-                        'dataProvider' => new ArrayDataProvider(['allModels' => [$config['model'], 'pagination' => false]]),
-                        'columns' => [
-                            'is_premium' => [
-                                'label' => Yii::t('hipanel:domain', 'Premium package'),
-                                'value' => function ($model) {
-                                    $enablePremiumLink = Html::a(Yii::t('hipanel:domain', 'Enable premium'), Url::toRoute(''), ['class' => 'btn btn-success btn-xs pull-right']);
-
-                                    return $model->is_premium === 't' ? Yii::t('hipanel', 'Activated to') . Yii::$app->formatter->asDatetime($model->prem_expires) : sprintf('%s %s', Yii::t('hipanel', 'Not enabled'), $enablePremiumLink);
-                                },
-                                'format' => 'raw',
-                            ],
-                            'premium_autorenewal' => [
-                                'class' => BootstrapSwitchColumn::class,
-                                'attribute' => 'premium_autorenewal',
-                                'label' => Yii::t('hipanel:domain', 'Premium package autorenewal'),
-                                'filter' => false,
-                                'url' => Url::toRoute(['@hdomain/set-paid-feature-autorenewal']),
-                                'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
-                                'visible' => $model->is_premium === 't' ? true : false,
-                                'pluginOptions' => [
-                                    'onColor' => 'info',
-                                ],
-                            ],
-                        ],
-                    ]); */ ?>
                     <?php if (Yii::$app->hasModule('dns')) {
                         echo DnsZoneEditWidget::widget([
                             'domainId' => $model->id,
