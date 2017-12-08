@@ -38,6 +38,11 @@ class CheckForm extends Model
     public $isAvailable;
 
     /**
+     * @var bool whether obj is suggestion
+     */
+    public $isSuggestion = false;
+
+    /**
      * @var resource
      */
     public $resource;

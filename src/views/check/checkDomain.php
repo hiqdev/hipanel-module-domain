@@ -4,6 +4,7 @@ use hipanel\assets\IsotopeAsset;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
+use hiqdev\assets\icheck\iCheckAsset;
 use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -13,6 +14,16 @@ use yii\helpers\Html;
 /** @var array $results */
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
+iCheckAsset::register($this);
+$this->registerJs("
+    $('.icheck input').iCheck({
+        labelHover: false,
+        cursor: true,
+        handle: 'checkbox',
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue'
+    });
+");
 
 $this->title = Yii::t('hipanel:domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
@@ -115,9 +126,47 @@ select2-container .select2-choice, .select2-container .select2-choices, .select2
 .domain-line .domain-zone.muted {
     color: #ccc;
 }
+
+
+.filter-suggestions li {
+    border: none;
+    text-align: left;
+    border-bottom: 1px solid #f4f4f4;
+    border-left: 3px solid transparent;
+    color: #444;
+    margin: 0;
+    position: relative;
+    display: block;
+    background-color: transparent;
+    padding: 10px 15px;
+    width: 100%;
+    outline: none;
+}
+
+.filter li b {
+
+}
+
+.filter-suggestions li span {
+    color: #777;
+    display: block;
+    font-size: smaller;
+    padding-top: 1rem;
+}
+
+.nav-tabs-custom > .tab-content {
+    padding: 10px 0;
+}
+
 ');
+
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
+    
+    $(document).on('click', 'checkbox', function() {
+        $('.suggestion').css({'display': 'block'});  
+    });
+
     $(document).on('click', 'a.add-to-cart-button', function(event) {
         event.preventDefault();
         var addToCartElem = $(this);
@@ -180,6 +229,9 @@ if (!empty($results)) {
             var $parentElem = $(element).find("div[data-domain='" + domain + "']").parents('div.domain-iso-line').eq(0);
             $elem.replaceWith($(data).find('.domain-line'));
             $parentElem.attr('class', $(data).attr('class'));
+            $('#domain-tabs a').on('shown.bs.tab', function (e) {
+                $('.filters .nav li.active a').click(); // FIX remove not filtred items
+            });
             $('.filters .nav li.active a').click(); // FIX remove not filtred items
 
             return this;
@@ -200,8 +252,9 @@ if (!empty($results)) {
                 layout: 'vertical',
                 // disable initial layout
                 isInitLayout: false
+                // filter: '.promotion'
             });
-            //grid.isotope({ filter: '.popular' });
+            // grid.isotope({ filter: '.popular' });
             // bind event
             grid.isotope('on', 'arrangeComplete', function () {
                 $('.domain-iso-line').css({'visibility': 'visible'});
@@ -223,7 +276,7 @@ if (!empty($results)) {
                 grid.isotope({filter: filterValue});
             });
             // change is-checked class on buttons
-            $('.nav').each(function(i, buttonGroup) {
+            $('.filters .nav').each(function(i, buttonGroup) {
                 $(buttonGroup).on( 'click', 'a', function(event) {
                     $(buttonGroup).find('.active').removeClass('active');
                     $(this).parents('li').addClass('active');
@@ -250,6 +303,7 @@ JS
 ?>
 
 <div class="row">
+
     <div class="col-md-3 filters">
 
         <div class="box box-solid">
@@ -401,12 +455,34 @@ JS
 
         <?php if (!empty($results)) : ?>
             <div class="box box-solid">
-                <!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <div class="domain-list">
-                        <?php foreach ($results as $model) : ?>
-                            <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
-                        <?php endforeach; ?>
+                <div class="box-body no-padding nav-tabs-custom">
+
+                    <ul id="domain-tabs" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#commons" aria-controls="home" role="tab" data-toggle="tab">Commons</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#suggestions" aria-controls="profile" role="tab" data-toggle="tab">Suggestions</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content domain-list">
+
+                        <div role="tabpanel" class="tab-pane active" id="commons">
+                            <?php foreach ($results as $model) : ?>
+                                <?php if (!$model->isSuggestion) : ?>
+                                    <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="suggestions">
+                            <?php foreach ($results as $model) : ?>
+                                <?php if ($model->isSuggestion) : ?>
+                                    <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+
                     </div>
                 </div>
             </div>

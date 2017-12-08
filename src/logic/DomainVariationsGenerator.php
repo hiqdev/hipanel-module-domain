@@ -84,6 +84,7 @@ class DomainVariationsGenerator
                 if ($key === false) {
                     array_push($domains, $suggestion);
                 } else {
+                    unset($suggestion['isSuggestion']);
                     $domains[$key] = array_map('strtolower', $suggestion);
                 }
             }
@@ -140,6 +141,7 @@ class DomainVariationsGenerator
                     $variations[] = [
                         'fqdn' => $row['name'],
                         'isAvailable' => ($row['availability'] === 'available'),
+                        'isSuggestion' => true,
                     ];
                 }
             }

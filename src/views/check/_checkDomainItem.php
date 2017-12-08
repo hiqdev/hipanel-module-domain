@@ -10,13 +10,13 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
 
 $canBuyDomain = Yii::$app->user->isGuest || Yii::$app->user->can('domain.pay');
 
+$isAvailableCssClass = $model->isAvailable ? 'available' : 'unavailable';
+$isSuggestionCssClass = $model->isSuggestion ? 'suggestion' : '';
+$isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
+
 ?>
 
-<div class="domain-iso-line
-    <?= Domain::setIsotopeFilterValue($model->zone) ?>
-    <?= $model->isAvailable ? 'available' : 'unavailable' ?>
-    <?//= $line['fqdn'] === $requestedDomain ? 'popular' : $requestedDomain ?>
-">
+<div class="domain-iso-line <?= $isAvailableCssClass ?> <?= $isotopeFilterCssClass ?> <?= $isSuggestionCssClass ?>">
     <div
         class="domain-line <?= $model->isAvailable ? 'checked' : '' ?>"
         data-domain="<?= $model->fqdn ?>">
