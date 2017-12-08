@@ -27,7 +27,7 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
                 <span class="domain-img"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
             <?php endif; ?>
 
-            <?php if ($model->isAvailable === true) : ?>
+            <?php if ($model->isAvailable) : ?>
                 <span class="domain-name"><?= $model->getDomain() ?></span><span
                     class="domain-zone">.<?= $model->getZone() ?></span>
             <?php else : ?>
