@@ -10,6 +10,11 @@ use yii\helpers\Url;
 
 $model->domain_id = $domain->id;
 
+/// XXX rather ugly better fix it later
+$urlFwOptions = array_reverse(array_filter($forwardingOptions, function ($ref) {
+    return in_array($ref->name, ['url_temporary', 'url_permanent'], true);
+}, ARRAY_FILTER_USE_BOTH));
+
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -35,9 +40,7 @@ $model->domain_id = $domain->id;
             <?= $form->field($model, 'name', ['template' => '{label}<div class="input-group">{input}<div class="input-group-addon">.' . ($domain->domain) . '</div></div>{hint}{error}']) ?>
         </div>
         <div class="col-md-2">
-            <?= $form->field($model, 'type')->dropDownList(ArrayHelper::map(array_filter($forwardingOptions, function ($ref) {
-                return $ref->name === 'url_temporary';
-            }, ARRAY_FILTER_USE_BOTH), 'name', 'label')) ?>
+            <?= $form->field($model, 'type')->dropDownList(ArrayHelper::map($urlFwOptions, 'name', 'label')) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'value') ?>
