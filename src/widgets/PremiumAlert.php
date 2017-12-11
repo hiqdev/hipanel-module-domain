@@ -14,7 +14,7 @@ class PremiumAlert extends Widget
         $html .= Html::beginTag('blockquote', ['class' => 'text-warning', 'style' => 'border-left-color: #e08e0b']);
         $html .= Html::tag('p', Yii::t('hipanel.domain.premium', 'You need to activate the premium package to change the settings'));
         $html .= Html::beginTag('p');
-        $html .= Html::a(Yii::t('hipanel.domain.premium', 'Active premium package'), '#premium', [
+        $html .= Html::a(Yii::t('hipanel.domain.premium', 'Activate premium package'), '#premium', [
             'class' => 'btn btn-warning',
             'data' => [
                 'toggle' => 'tab',

@@ -50,7 +50,7 @@ class UsePremiumFeaturesButton extends Widget
                 'id' => $this->modalId,
                 'header' => Html::tag('h4', Yii::t('hipanel.domain.premium', 'The premium package not activated'), ['class' => 'modal-title']),
                 'toggleButton' => false,
-                'footer' => Html::a(Yii::t('hipanel.domain.premium', 'Active premium package'), '#premium', [
+                'footer' => Html::a(Yii::t('hipanel.domain.premium', 'Activate premium package'), '#premium', [
                     'class' => 'btn btn-success',
                     'data' => [
                         'toggle' => 'tab',
