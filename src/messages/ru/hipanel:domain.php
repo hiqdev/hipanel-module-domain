@@ -337,4 +337,6 @@ return [
     'Parking is not configured' => 'Парковка не настроена',
     'URL forwarding is not configured' => 'Перенаправление URL не настроено',
     'E-mail forwarding is not configured' => 'Перенаправление почты не настроено',
+    'Exact search' => 'Точный поиск',
+    'Similar domains' => 'Похожие домены',
 ];

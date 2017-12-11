@@ -464,10 +464,10 @@ JS
 
                     <ul id="domain-tabs" class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#commons" aria-controls="home" role="tab" data-toggle="tab">Commons</a>
+                            <a href="#commons" aria-controls="home" role="tab" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Exact search') ?></a>
                         </li>
                         <li role="presentation">
-                            <a href="#suggestions" aria-controls="profile" role="tab" data-toggle="tab">Suggestions</a>
+                            <a href="#suggestions" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Similar domains') ?></a>
                         </li>
                     </ul>
 
