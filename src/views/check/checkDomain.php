@@ -345,23 +345,8 @@ JS
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel:domain', 'Adult') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel:domain', 'GEO') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('geo', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="#" data-filter=".general"><?= Yii::t('hipanel:domain', 'General') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('general', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel:domain', 'Nature') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('nature', $results) ?></span>
                         </a>
                     </li>
                     <li>
@@ -380,6 +365,16 @@ JS
                         </a>
                     </li>
                     <li>
+                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel:domain', 'GEO') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('geo', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel:domain', 'Nature') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('nature', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#" data-filter=".audio_music"><?= Yii::t('hipanel:domain', 'Audio&Music') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('audio_music', $results) ?></span>
                         </a>
@@ -387,6 +382,11 @@ JS
                     <li>
                         <a href="#" data-filter=".home_gifts"><?= Yii::t('hipanel:domain', 'Home&Gifts') ?>
                             <span class="label label-default pull-right"><?= Domain::getCategoriesCount('home_gifts', $results) ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel:domain', 'Adult') ?>
+                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span>
                         </a>
                     </li>
                 </ul>
@@ -441,6 +441,11 @@ JS
                                             'value' => $model->zones,
                                             'class' => 'form-control',
                                             'name' => 'zones[]',
+                                        ],
+                                        'pluginOptions' => [
+                                            'select2Options' => [
+                                                'placeholder' => '.com',
+                                            ],
                                         ],
                                     ]); ?>
                                 </div>
