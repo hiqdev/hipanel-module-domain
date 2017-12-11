@@ -24,8 +24,6 @@ $this->params['subtitle'] = Yii::t('hipanel:domain', 'Domain detailed informatio
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'Domains'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$accessToPremiumTab = Yii::$app->user->can('test.beta');
-
 $this->registerCss(<<<'CSS'
 .tab-pane {
     min-height: 300px;
@@ -76,52 +74,46 @@ CSS
 
     <div class="col-md-9">
         <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
             <ul id="domain-details-tab" class="nav nav-tabs">
                 <li class="active">
                     <a href="#domain-details" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Domain details') ?></a>
                 </li>
-                <?php if ($accessToPremiumTab) : ?>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <?= Yii::t('hipanel:domain', 'Premium package') ?> <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#premium" role="tab" data-toggle="tab">
-                                    <?= Yii::t('hipanel:domain', 'Manage Premium') ?>
-                                </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="#url-forwarding" role="tab" data-toggle="tab">
-                                    <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#email-forwarding" role="tab" data-toggle="tab">
-                                    <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#parking" role="tab" data-toggle="tab">
-                                    <?= Yii::t('hipanel:domain', 'Parking') ?>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                <?php endif; ?>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <?= Yii::t('hipanel:domain', 'Premium package') ?> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#premium" role="tab" data-toggle="tab">
+                                <?= Yii::t('hipanel:domain', 'Manage Premium') ?>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#url-forwarding" role="tab" data-toggle="tab">
+                                <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#email-forwarding" role="tab" data-toggle="tab">
+                                <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#parking" role="tab" data-toggle="tab">
+                                <?= Yii::t('hipanel:domain', 'Parking') ?>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li><a href="#ns-records" data-toggle="tab"><?= Yii::t('hipanel:domain', 'NS records') ?></a></li>
                 <li><a href="#dns-records" data-toggle="tab"><?= Yii::t('hipanel:domain', 'DNS records') ?></a></li>
                 <li><a href="#contacts" data-toggle="tab"><?= Yii::t('hipanel', 'Contacts') ?></a></li>
             </ul>
             <div class="tab-content">
 
-                <?php if ($accessToPremiumTab) : ?>
-                    <?= $this->render('_premiumTabs', compact('model', 'forwardingOptions')) ?>
-                <?php endif; ?>
+                <?= $this->render('_premiumTabs', compact('model', 'forwardingOptions')) ?>
 
-                <!-- Morris t - Sales -->
                 <div class="tab-pane active" id="domain-details">
                     <?= DomainGridView::detailView([
                         'boxed' => false,
@@ -182,7 +174,6 @@ CSS
                     } ?>
                 </div>
 
-                <!--  -->
                 <div class="tab-pane" id="contacts">
                     <div class="row">
                         <div class="col-md-12">

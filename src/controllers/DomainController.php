@@ -214,25 +214,16 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => ViewAction::class,
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
-                    if (Yii::$app->user->can('test.beta')) {
-                        $action->getDataProvider()->query
-                            ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parking', 'premium'])
-                            ->joinWith('mailfws')
-                            ->joinWith('urlfws')
-                            ->joinWith('parking')
-                            ->joinWith('premium')
-                            ->joinWith('registrant')
-                            ->joinWith('admin')
-                            ->joinWith('tech')
-                            ->joinWith('billing');
-                    } else {
-                        $action->getDataProvider()->query
-                            ->addSelect(['nsips', 'contacts', 'foa_sent_to'])
-                            ->joinWith('registrant')
-                            ->joinWith('admin')
-                            ->joinWith('tech')
-                            ->joinWith('billing');
-                    }
+                    $action->getDataProvider()->query
+                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parking', 'premium'])
+                        ->joinWith('mailfws')
+                        ->joinWith('urlfws')
+                        ->joinWith('parking')
+                        ->joinWith('premium')
+                        ->joinWith('registrant')
+                        ->joinWith('admin')
+                        ->joinWith('tech')
+                        ->joinWith('billing');
                 },
                 'data' => function ($action) {
                     return [

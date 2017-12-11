@@ -77,16 +77,14 @@ class DomainVariationsGenerator
     public function run()
     {
         $domains = $this->generateVariations();
-        if (Yii::$app->user->can('test.beta')) {
-            $suggestions = $this->generateSuggestions();
-            foreach ($suggestions as $suggestion) {
-                $key = array_search(strtolower($suggestion['fqdn']), $domains);
-                if ($key === false) {
-                    array_push($domains, $suggestion);
-                } else {
-                    unset($suggestion['isSuggestion']);
-                    $domains[$key] = array_map('strtolower', $suggestion);
-                }
+        $suggestions = $this->generateSuggestions();
+        foreach ($suggestions as $suggestion) {
+            $key = array_search(strtolower($suggestion['fqdn']), $domains);
+            if ($key === false) {
+                array_push($domains, $suggestion);
+            } else {
+                unset($suggestion['isSuggestion']);
+                $domains[$key] = array_map('strtolower', $suggestion);
             }
         }
         $this->orderVariations($domains);
