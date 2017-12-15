@@ -20,9 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $page->setSearchFormData() ?>
 
     <?php $page->beginContent('main-actions') ?>
-        <?= Html::a(Yii::t('hipanel:domain', 'Buy domain'), ['@domain-check'], ['class' => 'btn btn-sm btn-success']) ?>
-        <?php if (Yii::getAlias('@certificate', false)) : ?>
-            <?= Html::a(Yii::t('hipanel:certificate', 'Buy certificate'), ['@certificate/order/index'], ['class' => 'btn btn-sm btn-default']) ?>
+        <?php if (Yii::$app->user->can('deposit')) : ?>
+            <?= Html::a(Yii::t('hipanel:domain', 'Buy domain'), ['@domain-check'], ['class' => 'btn btn-sm btn-success']) ?>
+            <?php if (Yii::getAlias('@certificate', false)) : ?>
+                <?= Html::a(Yii::t('hipanel:certificate', 'Buy certificate'), ['@certificate/order/index'], ['class' => 'btn btn-sm btn-default']) ?>
+            <?php endif ?>
         <?php endif ?>
     <?php $page->endContent() ?>
 
