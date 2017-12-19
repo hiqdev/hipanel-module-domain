@@ -619,7 +619,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'preincoming-canceled' => [
                 'class' => RenderAction::class,
-                'view' => 'preincomingCanseled',
+                'view' => 'preincomingCanceled',
                 'data' => function ($action) {
                     return ['domains' => Yii::$app->request->get('domains')];
                 },
