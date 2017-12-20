@@ -13,10 +13,11 @@ namespace hipanel\modules\domain\logic;
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\forms\CheckForm;
 use hipanel\modules\domain\models\Domain;
+use hiqdev\hiart\ResponseErrorException;
 use Yii;
 
 /**
- * Class DomainVariationsGenerator provides a simple API to generate domain name variations
+ * Class DomainVariationsGenerator provides a simple API to generate domain name variations and suggestions
  * using the input domain name and a list of available zones.
  *
  * Usage example:
@@ -27,7 +28,6 @@ use Yii;
  * ]);
  *
  * $generator->run(); // returns array of 2 CheckForm models: for `example.com` and `example.net` respectively.
- *
  * ```
  */
 class DomainVariationsGenerator
@@ -76,76 +76,86 @@ class DomainVariationsGenerator
      */
     public function run()
     {
-        $domains = $this->generateVariations();
+        $variations = $this->generateZoneVariations();
+        $this->orderVariations($variations);
         $suggestions = $this->generateSuggestions();
-        foreach ($suggestions as $suggestion) {
-            $key = array_search(strtolower($suggestion['fqdn']), $domains);
-            if ($key === false) {
-                array_push($domains, $suggestion);
-            } else {
-                unset($suggestion['isSuggestion']);
-                $domains[$key] = array_map('strtolower', $suggestion);
-            }
-        }
-        $this->orderVariations($domains);
+        $this->removeDuplicates($variations, $suggestions);
 
-        return $this->buildModels($domains);
+        return array_merge($variations, $suggestions);
     }
 
     /**
-     * @param $variations array of domain name variations. See [[generateVariations]] for details.
-     * @return CheckForm[] the domain name variations models
+     * Removes items from $suggestions array that are already present in $variations array.
+     *
+     * @param CheckForm[] $variations
+     * @param CheckForm[] $suggestions passed by reference
      */
-    protected function buildModels($variations)
+    private function removeDuplicates($variations, &$suggestions)
     {
-        $results = [];
+        $domainNames = ArrayHelper::getColumn($variations, 'fqdn');
 
-        foreach ($variations as $domain) {
-            if (is_array($domain)) {
-                $results[] = new CheckForm(array_keys($this->availableZones), $domain);
-            } else {
-                $results[] = new CheckForm(array_keys($this->availableZones), ['fqdn' => $domain]);
-            }
-        }
+        $suggestions = array_filter($suggestions, function (CheckForm $suggestion) use ($domainNames) {
+            return array_search(strtolower($suggestion->fqdn), $domainNames) === false;
+        });
+    }
 
-        return $results;
+    /**
+     * @param array $attributes array of check form attributes
+     * @return CheckForm the domain name variations model
+     */
+    protected function buildModel(array $attributes)
+    {
+       return new CheckForm(array_keys($this->availableZones), $attributes);
     }
 
     /**
      * Generates variations form the [[domain]] using [[availableZones]]
      * You can re-define this method to get different variations.
-     * @return array of domain zone variations.
+     * @return CheckForm[] of domain zone variations.
      *  - Key - integer index
-     *  - Value - the variation itself
+     *  - Value - the [[CheckForm]] object
      */
-    protected function generateVariations()
+    protected function generateZoneVariations()
     {
         $variations = [];
 
         foreach ($this->availableZones as $zone => $label) {
-            $variations[] = $this->domain . '.' . $zone;
+            $variations[] = $this->buildModel(['fqdn' => $this->domain . '.' . $zone]);
         }
 
         return $variations;
     }
 
+    /**
+     * Fetches domain name suggestions from suggestion-generation API and returns [[CheckForm]] objects.
+     *
+     * @return CheckForm[]
+     */
     protected function generateSuggestions()
     {
-        $variations = [];
-        $apiData = Domain::perform('get-suggestions', ['name' => $this->domain, 'zones' => $this->zone]);
-        if (isset($apiData['results'])) {
-            foreach ($apiData['results'] as $row) {
-                if ($row['availability'] === 'available') {
-                    $variations[] = [
-                        'fqdn' => $row['name'],
-                        'isAvailable' => ($row['availability'] === 'available'),
-                        'isSuggestion' => true,
-                    ];
-                }
+        try {
+            $apiData = Domain::perform('get-suggestions', ['name' => $this->domain, 'zones' => $this->zone]);
+        } catch (ResponseErrorException $e) {
+            Yii::error("Failed to generate suggestions: {$e->getMessage()}", __METHOD__);
+            return [];
+        }
+
+        if (!isset($apiData['results'])) {
+            return [];
+        }
+
+        $suggestions = [];
+        foreach ($apiData['results'] as $row) {
+            if ($row['availability'] === 'available') {
+                $suggestions[] = $this->buildModel([
+                    'fqdn' => $row['name'],
+                    'isAvailable' => $row['availability'] === 'available',
+                    'isSuggestion' => true,
+                ]);
             }
         }
 
-        return $variations;
+        return $suggestions;
     }
 
     /**
@@ -155,9 +165,8 @@ class DomainVariationsGenerator
      */
     protected function orderVariations(&$variations)
     {
-        if (in_array($this->getFqdn(), $variations, true)) {
-            $variations = array_diff($variations, [$this->getFqdn()]);
-            array_unshift($variations, $this->getFqdn());
-        }
+        usort($variations, function (CheckForm $prev, CheckForm $curr) {
+            return $curr->fqdn === $this->getFqdn() ? 1 : 0;
+        });
     }
 }
