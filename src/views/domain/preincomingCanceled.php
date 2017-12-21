@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-8 col-md-offset-2">
             <div class="box box-widget">
                 <div class="box-header with-border">
-                    <?= Html::tag('h3', $domains, [
+                    <?= Html::tag('h3', Html::encode($domains), [
                         'class' => 'box-title',
                         'style' => 'text-transform: uppercase; font-weight: bold;',
                     ]) ?>

@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
 /** @var \hipanel\modules\domain\forms\CheckForm $model */
 /** @var array $dropDownZonesOptions */
-/** @var array $results */
+/** @var \hipanel\modules\domain\forms\CheckForm[] $results */
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
 iCheckAsset::register($this);
@@ -481,11 +481,18 @@ JS
                             <?php endforeach; ?>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="suggestions">
-                            <?php foreach ($results as $model) : ?>
-                                <?php if ($model->isSuggestion) : ?>
+                            <?php $suggestions = array_filter($results, function (\hipanel\modules\domain\forms\CheckForm $model) {
+                                return $model->isSuggestion;
+                            }) ?>
+
+                            <?php if (count($suggestions) > 0) : ?>
+                                <?php foreach ($suggestions as $model) : ?>
                                     <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <?php // TODO:
+                                // <h4><?= Yii::t('hipanel:domain', "We can't suggest you something similar to this domain name.") </h4> ?>
+                            <?php endif ?>
                         </div>
 
                     </div>
