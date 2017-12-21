@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $page->beginContent('main-actions') ?>
         <?php if (Yii::$app->user->can('deposit')) : ?>
             <?= Html::a(Yii::t('hipanel:domain', 'Buy domain'), ['@domain-check'], ['class' => 'btn btn-sm btn-success']) ?>
-            <?php if (Yii::getAlias('@certificate', false)) : ?>
+            <?php if (Yii::getAlias('@certificate', false) && Yii::$app->user->can('certificate.pay') && Yii::$app->user->can('test.beta')) : ?>
                 <?= Html::a(Yii::t('hipanel:certificate', 'Buy certificate'), ['@certificate/order/index'], ['class' => 'btn btn-sm btn-default']) ?>
             <?php endif ?>
         <?php endif ?>
