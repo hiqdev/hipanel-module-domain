@@ -21,7 +21,7 @@ class PremiumOrderProduct extends AbstractPremiumProduct
     public function load($data, $formName = null)
     {
         if ($result = parent::load($data, '')) {
-            $this->description = Yii::t('hipanel.domain.premium', 'Purchase premium package');
+            $this->description = Yii::t('hipanel.domain.premium', 'Purchase of premium package');
         }
 
         return $result;

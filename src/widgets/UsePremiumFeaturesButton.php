@@ -59,7 +59,7 @@ class UsePremiumFeaturesButton extends Widget
                 ]),
             ]);
 
-            echo $this->modalContent ?: Yii::t('hipanel.domain.premium', 'The premium package is to be activated to enable this action.');
+            echo $this->modalContent ?: Yii::t('hipanel.domain.premium', 'This action is available only in premium package.');
 
             Modal::end();
         });

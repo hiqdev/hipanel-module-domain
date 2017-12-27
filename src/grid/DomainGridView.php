@@ -38,7 +38,7 @@ class DomainGridView extends BoxedGridView
             'is_premium' => [
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $state = ($model->premium->is_active) ? Yii::t('hipanel.domain.premium', 'Activated to {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
+                    $state = ($model->premium->is_active) ? Yii::t('hipanel.domain.premium', 'Active till {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
                         'expires' => strtotime($model->premium->expires),
                         'days_left' => $model->premium->days_left,
                     ]) : Html::tag('span', Yii::t('hipanel.domain.premium', 'Not activated'), ['class' => 'text-danger']);
@@ -68,12 +68,12 @@ class DomainGridView extends BoxedGridView
                         0 => [
                             'style' => 'display: none;',
                             'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel.domain.premium', 'You can enable the automatic renewal of the premium package for this domain.'),
+                            'content' => Yii::t('hipanel.domain.premium', 'You can enable automatic renewal of the premium package for this domain.'),
                         ],
                         1 => [
                             'style' => 'display: none;',
                             'class' => 'small text-muted font-normal md-pl-10',
-                            'content' => Yii::t('hipanel.domain.premium', 'Automatic renewal of premium package for this domain is enabled.'),
+                            'content' => Yii::t('hipanel.domain.premium', 'Automatic renewal of the premium package for this domain is enabled.'),
                         ],
                     ],
                 ],
