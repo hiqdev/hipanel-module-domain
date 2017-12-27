@@ -17,6 +17,6 @@ class PremiumOrderPurchase extends AbstractPremiumPurchase
     /** {@inheritdoc} */
     public function renderNotes()
     {
-        return Yii::t('hipanel:domain', 'Premium package is payed up to') . ' <b>' . Yii::$app->formatter->asDate($this->_result['expires']) . '</b>';
+        return Yii::t('hipanel.domain.premium', 'The premium package was activated till {date}', ['date' => '<b>' . Yii::$app->formatter->asDate($this->_result['expires']) . '</b>']);
     }
 }

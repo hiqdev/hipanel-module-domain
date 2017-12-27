@@ -30,4 +30,5 @@ return [
     'Update record' => 'Изменить запись',
     'You can enable automatic renewal of the premium package for this domain.' => 'Вы можете включить автоматическое продление премиум-пакета для этого домена.',
     'Automatic renewal of the premium package for this domain is enabled.' => 'Автоматическое продление премиум-пакета для этого домена включено.',
+    'The premium package was activated till {date}' => 'Премиум-пакет был активирован до {date}',
 ];
