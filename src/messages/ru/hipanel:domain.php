@@ -339,4 +339,5 @@ return [
     'E-mail forwarding is not configured' => 'Перенаправление почты не настроено',
     'Exact search' => 'Точный поиск',
     'Similar domains' => 'Похожие домены',
+    'We can\'t suggest you something similar to entered domain name.' => 'Мы не можем предложить вам что-то похожее на введенное доменное имя.',
 ];

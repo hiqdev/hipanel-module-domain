@@ -490,9 +490,10 @@ JS
                                     <?= $this->render('_checkDomainItem', ['model' => $model]) ?>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <?php // TODO:
-                                // <h4><?= Yii::t('hipanel:domain', "We can't suggest you something similar to this domain name.") </h4> ?>
-                            <?php endif ?>
+                                <div class="bg-warning clearfix" style="padding: 1em;">
+                                    <?= Html::tag('h4', Yii::t('hipanel:domain', "We can't suggest you something similar to entered domain name.")) ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                     </div>
