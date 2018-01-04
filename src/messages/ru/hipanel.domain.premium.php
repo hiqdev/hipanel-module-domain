@@ -16,6 +16,7 @@ return [
     'URL forwarding' => 'Перенаправление URL',
     'Email forwarding' => 'Перенаправление почты',
     'Parking' => 'Парковка',
+    'Renewal of premium package' => 'Продление премиум-пакета',
     'Purchase of premium package' => 'Покупка премиум-пакета',
     'Buy premium package for {price}' => 'Купить премиум-пакет за {price}',
     'Renew premium package for {price}' => 'Продлить премиум-пакет за {price}',
