@@ -13,13 +13,17 @@ namespace hipanel\modules\domain\cart;
 /**
  * Abstract class AbstractDomainPurchase.
  * Holds data to perform domain purchase:
- * - domain
- * - zone
- * - period - how many years
+ *
+ * @property string domain
+ * @property string zone
+ * @property string period – how many years
  */
 abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\AbstractPurchase
 {
     use \hipanel\base\ModelTrait;
+
+    /** @var AbstractDomainProduct */
+    public $position;
 
     protected $ruZones = [
         'ru' => 1,
