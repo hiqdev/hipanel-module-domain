@@ -39,7 +39,11 @@ class DomainRegistrationPurchase extends AbstractDomainPurchase
     /** {@inheritdoc} */
     public function renderNotes()
     {
-        return Yii::t('hipanel:domain', 'Domain is payed up to') . ' <b>' . Yii::$app->formatter->asDate($this->_result['expiration_date']) . '</b>';
+        $date = (new \DateTime())->add(new \DateInterval('P' . $this->amount . 'Y'));
+
+        return Yii::t('hipanel:domain', 'The domain name was registered till {date}', [
+            'date' => Yii::$app->formatter->asDate($date)
+        ]);
     }
 
     public function getPurchasabilityRules()
