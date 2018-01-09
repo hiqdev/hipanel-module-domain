@@ -149,7 +149,7 @@ class DomainVariationsGenerator
             if ($row['availability'] === 'available') {
                 $suggestions[] = $this->buildModel([
                     'fqdn' => $row['name'],
-                    'isAvailable' => $row['availability'] === 'available',
+                    'isAvailable' => null,
                     'isSuggestion' => true,
                 ]);
             }
