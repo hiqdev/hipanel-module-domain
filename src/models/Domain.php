@@ -153,7 +153,7 @@ class Domain extends \hipanel\base\Model
             [['domains'], 'required', 'when' => function ($model) {
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
-            [['domain'], DomainValidator::class, 'on' => ['transfer']],
+            [['domain'], DomainValidator::class, 'enableIdn' => true, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
