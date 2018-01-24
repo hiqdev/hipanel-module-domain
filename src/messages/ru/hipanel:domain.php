@@ -244,7 +244,6 @@ return [
     'Please cancel the transfer my domain(s): {domains}.' => 'Пожалуйста, отмените трансфер: {domains}',
     'Policy on Transfer of Registrations between Registrars' => '"Политика передачи регистраций между регистраторами"',
     'Popular Domains' => 'Популярные Домены',
-    'Premium autorenewal has been changed' => 'Автоматическое продление премиума было изменено',
     'Promotion' => 'Акционные',
     'Protection' => 'Защита',
     'Protection from transfer' => 'Защита от трансфера',
