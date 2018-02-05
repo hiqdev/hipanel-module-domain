@@ -30,6 +30,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'encode' => false,
                 'linkOptions' => [
                     'target' => '_blank',
+                    'rel' => 'noopener noreferrer',
                 ],
             ],
             'view' => [
