@@ -22,6 +22,7 @@ use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
+use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
@@ -45,7 +46,6 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
 use yii\db\Exception;
-use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -55,34 +55,15 @@ class DomainController extends \hipanel\base\CrudController
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
-            'renew-access' => [
-                'class' => AccessControl::class,
-                'only' => ['add-to-cart-renewal', 'bulk-renewal'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.pay'],
-                    ],
-                ],
-            ],
-            'freeze-access' => [
-                'class' => AccessControl::class,
-                'only' => ['enable-freeze', 'enable-freeze-w-p'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.freeze'],
-                    ],
-                ],
-            ],
-            'unfreeze-access' => [
-                'class' => AccessControl::class,
-                'only' => ['disable-freeze', 'disable-freeze-w-p'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.unfreeze'],
-                    ],
+            [
+                'class' => EasyAccessControl::class,
+                'actions' => [
+                    'add-to-cart-renewal' => 'domain.pay',
+                    'bulk-renewal' => 'domain.pay',
+                    'enable-freeze' => 'domain.freeze',
+                    'enable-freeze-w-p' => 'domain.freeze',
+                    'unfreeze-access' => 'domain.unfreeze',
+                    '*' => 'domain.read',
                 ],
             ],
         ]);
