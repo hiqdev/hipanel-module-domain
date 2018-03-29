@@ -306,7 +306,8 @@ class DomainController extends \hipanel\base\CrudController
                 'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
             ],
             'delete-agp' => [
-                'class' => SmartPerformAction::class,
+                'class' => SmartDeleteAction::class,
+                'scenario' => 'delete-agp',
                 'success' => Yii::t('hipanel:domain', 'Domain deleted'),
                 'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
             ],
@@ -321,7 +322,8 @@ class DomainController extends \hipanel\base\CrudController
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],
             'force-reject-preincoming' => [
-                'class' => SmartPerformAction::class,
+                'class' => SmartDeleteAction::class,
+                'scenario' => 'force-reject-preincoming',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],

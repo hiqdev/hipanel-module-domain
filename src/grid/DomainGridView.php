@@ -52,22 +52,33 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'enableSorting' => false,
                 'value' => function ($model) {
-                    $out = State::widget(compact('model'));
-                    $status = [];
+                    $out[] = State::widget(compact('model'));
                     if ($model->isFreezed() || $model->isHolded() || $model->isWPFreezed()) {
-                        $out .= '<br>';
-                        $status[] = $model->isFreezed() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']) : '';
-                        $status[] = $model->isWPFreezed() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']) : '';
-                        $status[] = $model->isHolded() ? Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']) : '';
+                        $status = [];
+
+                        if ($model->isFreezed()) {
+                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']);
+                        }
+
+                        if ($model->isWPFreezed()) {
+                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']);
+                        }
+
+                        if ($model->isHolded()) {
+                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']);
+                        }
+
+                        $out[] = implode('&nbsp;', $status);
                     }
-                    return $out . implode('&nbsp;', $status);
+
+                    return implode('<br>', $out);
                 },
             ],
             'foa_sent_to' => [
                 'format' => 'html',
                 'filter' => false,
                 'visible' => function ($model) {
-                    return $model->state === Domain::STATE_PREINCOMING;
+                    return $model->canSendFOA();
                 },
                 'value' => function ($model) {
                     return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
@@ -247,81 +258,90 @@ class DomainGridView extends BoxedGridView
                 'header' => Yii::t('hipanel', 'Actions'),
                 'buttons' => [
                     'notify-transfer-in' => function ($url, $model, $key) {
-                        return $model->state === 'preincoming'
-                            ? Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('hipanel:domain', 'Send FOA again'), $url, [
+                        if ($model->canSendFOA()) {
+                            return Html::a('<i class="fa fa-envelope-o"></i>' . Yii::t('hipanel:domain', 'Send FOA again'), $url, [
                                 'data' => [
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'approve-preincoming' => function ($url, $model, $key) {
                     },
                     'reject-preincoming' => function ($url, $model, $key) {
                     },
                     'approve-transfer' => function ($url, $model, $key) {
-                        return ($model->isOutgoing() && Yii::$app->user->can('support') && $model->notDomainOwner())
-                            ? Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('hipanel:domain', 'Approve transfer'), $url, [
+                        if ($model->canApproveTransfer()) {
+                            return Html::a('<i class="fa fa-exclamation-circle"></i>' . Yii::t('hipanel:domain', 'Approve transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'reject-transfer' => function ($url, $model, $key) {
-                        return $model->state === 'outgoing'
-                            ? Html::a('<i class="fa fa-anchor"></i>' . Yii::t('hipanel:domain', 'Reject transfer'), $url, [
+                        if ($model->canRejectTransfer()) {
+                            return Html::a('<i class="fa fa-anchor"></i>' . Yii::t('hipanel:domain', 'Reject transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to reject outgoing transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'cancel-transfer' => function ($url, $model, $key) {
-                        return $model->state === 'incoming'
-                            ? Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('hipanel:domain', 'Cancel transfer'), $url, [
+                        if ($model->canCancelTransfer()) {
+                            return Html::a('<i class="fa fa-exclamation-triangle"></i>' . Yii::t('hipanel:domain', 'Cancel transfer'), $url, [
                                 'data' => [
                                     'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $model->domain]),
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'sync' => function ($url, $model, $key) {
-                        return ($model->isActive() && Yii::$app->user->can('support') && $model->notDomainOwner())
-                            ? Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel:domain', 'Synchronize contacts'), $url, [
+                        if ($model->canSynchronizeContacts()) {
+                            return Html::a('<i class="fa ion-ios-loop-strong"></i>' . Yii::t('hipanel:domain', 'Synchronize contacts'), $url, [
                                 'data' => [
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
-                    },
-                    'delete' => function ($url, $model, $key) {
-                        return $model->canDelete() ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
-                            'title' => Yii::t('hipanel', 'Delete'),
-                            'aria-label' => Yii::t('hipanel', 'Delete'),
-                            'data' => [
-                                'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
-                                'method' => 'post',
-                                'data-pjax' => '0',
-                            ],
-                        ]) : '';
-                    },
-                    'delete-agp' => function ($url, $model, $key) {
-                        if (!in_array($model->state, ['ok'], true)) {
-                            return '';
-                        }
-                        if (time() >= strtotime('+5 days', strtotime($model->created_date))) {
-                            return '';
-                        }
-                        if (strtotime('+1 year', time()) < strtotime($model->expires)) {
-                            return '';
+                            ]);
                         }
 
-                        return in_array(Domain::getZone($model->domain), ['com', 'net'], true)
-                            ? Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel:domain', 'Delete by AGP'), $url, [
+                        return '';
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        if ($model->canDelete()) {
+                            return Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel', 'Delete'), $url, [
+                                'title' => Yii::t('hipanel', 'Delete'),
+                                'aria-label' => Yii::t('hipanel', 'Delete'),
+                                'data' => [
+                                    'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $model->domain]),
+                                    'method' => 'post',
+                                    'data-pjax' => '0',
+                                ],
+                            ]);
+                        }
+
+                        return '';
+                    },
+                    'delete-agp' => function ($url, $model, $key) {
+                        if ($model->canDeleteAGP()) {
+                            return Html::a('<i class="fa fa-trash-o"></i>' . Yii::t('hipanel:domain', 'Delete by AGP'), $url, [
                                 'title' => Yii::t('hipanel:domain', 'Delete by AGP'),
                                 'aria-label' => Yii::t('hipanel:domain', 'Delete by AGP'),
                                 'data' => [
@@ -329,45 +349,69 @@ class DomainGridView extends BoxedGridView
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'enable-freeze' => function ($url, $model, $key) {
-                        return (!$model->isFreezed() && Yii::$app->user->can('support') && $model->notDomainOwner())
-                            ? Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel:domain', 'Freeze domain'), $url, [
+                        if ($model->isFreezed()) {
+                            return '';
+                        }
+
+                        if (!$model->canFreezeUnfreeze())
+                            return Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel:domain', 'Freeze domain'), $url, [
                                 'data' => [
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'disable-freeze' => function ($url, $model, $key) {
-                        return ($model->isFreezed() && Yii::$app->user->can('support') && $model->notDomainOwner())
-                            ? Html::a('<i class="fa fa-unlock"></i>' . Yii::t('hipanel:domain', 'Unfreeze domain'), $url, [
+                        if (!$model->isFreezed()) {
+                            return '';
+                        }
+
+                        if ($model->canFreezeUnfreeze()) {
+                            return Html::a('<i class="fa fa-unlock"></i>' . Yii::t('hipanel:domain', 'Unfreeze domain'), $url, [
                                 'data' => [
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'enable-hold' => function ($url, $model, $key) {
                         if ($model->isHolded()) {
                             return '';
                         }
 
-                        if (Yii::$app->user->can('support') && Yii::$app->user->not($model->client_id) && Yii::$app->user->not($model->seller_id)) {
+                        if ($model->canHoldUnhold()) {
                             return Html::a('<i class="fa fa-bomb"></i>' . Yii::t('hipanel:domain', 'Enable Hold'), $url);
                         }
 
                         return '';
                     },
                     'disable-hold' => function ($url, $model, $key) {
-                        return ($model->isHolded() && $model->isActive() && Yii::$app->user->can('support') && $model->notDomainOwner())
-                            ? Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel:domain', 'Disable Hold'), $url, [
+                        if (!$model->isHolded()) {
+                            return '';
+                        }
+
+                        if ($model->canHoldUnhold()) {
+                            return Html::a('<i class="fa fa-link"></i>' . Yii::t('hipanel:domain', 'Disable Hold'), $url, [
                                 'data' => [
                                     'method' => 'post',
                                     'data-pjax' => '0',
                                 ],
-                            ]) : '';
+                            ]);
+                        }
+
+                        return '';
                     },
                     'manage-dns' => function ($url, $model, $key) {
                         if (Yii::getAlias('@dns', false)) {

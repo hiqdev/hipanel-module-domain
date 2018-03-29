@@ -39,6 +39,20 @@ class Domain extends \hipanel\base\Model
 
     public static $contactTypes = ['registrant', 'admin', 'tech', 'billing'];
 
+    public static $maxDeligationPeriods = [
+        'ru' => 2,
+        'su' => 2,
+        'рф' => 2,
+        '*' => 10,
+    ];
+
+    public static $maxDeligations = [
+        'ru' => 1,
+        'su' => 1,
+        'рф' => 1,
+        '*' => 10,
+    ];
+
     public static function contactTypesWithLabels()
     {
         return [
@@ -57,7 +71,7 @@ class Domain extends \hipanel\base\Model
             self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Outgoing transfer domains'),
             self::STATE_EXPIRED => Yii::t('hipanel:domain', 'Expired domains'),
         ];
-        if ($this->can('support')) {
+        if (self::can('support')) {
             $out = array_merge($out, [
                 self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
                 self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
@@ -112,6 +126,7 @@ class Domain extends \hipanel\base\Model
                 'disable-w-p-freeze',
                 'notify-transfer-in',
                 'delete',
+                'force-reject-preincoming',
             ]],
 
             // Check domain
@@ -304,6 +319,11 @@ class Domain extends \hipanel\base\Model
         return $this->state === static::STATE_PREINCOMING;
     }
 
+    public function isIncoming()
+    {
+        return $this->state === static::STATE_INCOMING;
+    }
+
     public function isActive()
     {
         return $this->isOk() || $this->isExpired();
@@ -324,10 +344,12 @@ class Domain extends \hipanel\base\Model
 
     public function notDomainOwner()
     {
-        return Yii::$app->user->not($this->client_id)
-            && !$this->can('resell')
-            && $this->can('support')
-            && Yii::$app->user->identity->seller_id !== $this->client_id;
+        return Yii::$app->user->not($this->client_id) && (
+            $this->can('resell') || (
+                    $this->can('support')
+                &&  Yii::$app->user->identity->seller_id !== $this->client_id
+            )
+        );
     }
 
     public function getDnsRecords()
@@ -561,17 +583,47 @@ class Domain extends \hipanel\base\Model
         return strtotime('+56 days', time()) > strtotime($this->expires);
     }
 
+    public function isRenewable()
+    {
+        if ($this->isExpired()) {
+            return true;
+        }
+
+        if (!$this->isActive()) {
+            return false;
+        }
+
+        $zone = $this->getZone();
+        $zonePresentInMaxDeligationPeriods = array_key_exists($zone, static::$maxDeligationPeriods, true);
+        $maxDeligationPeriod = static::$maxDeligationPeriods[$zonePresentInMaxDeligationPeriods ? $zone : '*'];
+
+        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDeligationPeriod}", time())) {
+            return false;
+        }
+
+        return $this->isRussianRenewable() || !$this->isRussianZones();
+    }
+
     public function isSynchronizable()
     {
-        return !$this->isRussianZones();
+        return $this->isActive() && !$this->isRussianZones();
     }
 
     public function isPushable()
     {
+        return $this->isOk();
+    }
+
+    public function isForcePushable()
+    {
+        return $this->isExpired() || $this->isDeleting();
+    }
+
+    public function canPush()
+    {
         return !$this->isRussianZones() && (
-            ($this->isOk() && $this->can('domain.push'))
-            ||
-            (($this->isExpired() || $this->isDeleting()) && $this->can('domain.force-push'))
+                ($this->isPushable() && $this->can('domain.push'))
+            ||  ($this->isForcePushable() && $this->can('domain.push'))
         );
     }
 
@@ -583,7 +635,7 @@ class Domain extends \hipanel\base\Model
     public function canDeleteAGP()
     {
         return $this->isZone(['com', 'net'])
-            && $this->state === self::STATE_OK
+            && $this->isOk()
             && strtotime($this->created_date) > strtotime('-5 days', time())
             && strtotime($this->expires) < strtotime('+1 year', time())
             && $this->can('manage');
@@ -594,7 +646,7 @@ class Domain extends \hipanel\base\Model
         return $this->isZone(['ru', 'su', 'рф']);
     }
 
-    /**
+    /**a
      * Returns true if the zone is among given list of zones.
      * @param array|string $zones zone or list of zones
      * @return bool
@@ -606,20 +658,24 @@ class Domain extends \hipanel\base\Model
         return is_array($zones) ? in_array($this->getZone(), $zones, true) : $zone === $zones;
     }
 
-    public function can($permission)
+    public static function can($permission)
     {
         return Yii::$app->user->can($permission);
     }
 
     public function canRenew()
     {
-        return $this->isActive() && $this->can('domain.pay')
-            && (!$this->isRussianZones() || $this->isRussianRenewable());
+        return $this->can('domain.pay') && $this->isRenewable();
     }
 
     public function canRegenPassword()
     {
         return $this->isActive() && !$this->isRussianZones();
+    }
+
+    public function canSendFOA()
+    {
+        return $this->isPreincoming() && !$this->isRussianZones();
     }
 
     public function canApproveTransfer()
@@ -630,17 +686,50 @@ class Domain extends \hipanel\base\Model
             && !$this->isRussianZones();
     }
 
+    public function canCancelPreincoming()
+    {
+        return $this->isPreincoming()
+            && $this->notDomainOwner()
+            && $this->can('support')
+            && !$this->isRussianZones();
+    }
+
+    public function canRejectTransfer()
+    {
+        return $this->isOutgoing() && !$this->isRussianZones();
+    }
+
+    public function canCancelTransfer()
+    {
+        return $this->isIncoming() && !$this->isRussianZones();
+    }
+
+    public function canSynchronizeContacts()
+    {
+        return $this->isSynchronizable()
+            && $this->notDomainOwner()
+            && $this->can('support');
+    }
+
     public function canFreezeUnfreeze()
     {
         return $this->can($this->isFreezed() ? 'domain.unfreeze' : 'domain.freeze')
-            && $this->model->notDomainOwner()
-            && !$this->model->isRussianZones();
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
     }
 
     public function canWPFreezeUnfreeze()
     {
         return $this->can($this->isWPFreezed() ? 'domain.unfreeze' : 'domain.freeze')
-            && $this->model->notDomainOwner()
-            && !$this->model->isRussianZones();
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
+    }
+
+    public function canHoldUnhold()
+    {
+        return $this->isActive()
+            && $this->can($this->isHolded() ? 'domain.hold' : 'domain.unhold')
+            && $this->notDomainOwner()
+            && !$this->isRussianZones();
     }
 }
