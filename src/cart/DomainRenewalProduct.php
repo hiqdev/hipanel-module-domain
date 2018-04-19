@@ -12,9 +12,11 @@ namespace hipanel\modules\domain\cart;
 
 use DateTime;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
+use hipanel\modules\finance\cart\BatchPurchaseStrategy;
 use Yii;
 
-class DomainRenewalProduct extends AbstractDomainProduct
+class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
 {
     /** {@inheritdoc} */
     protected $_purchaseModel = 'hipanel\modules\domain\cart\DomainRenewalPurchase';
@@ -35,6 +37,7 @@ class DomainRenewalProduct extends AbstractDomainProduct
         'ru' => 56,
         'su' => 56,
         'рф' => 56,
+        'xn--p1ai' => 56,
     ];
 
     /** {@inheritdoc} */
@@ -108,5 +111,10 @@ class DomainRenewalProduct extends AbstractDomainProduct
             [['model_id'], 'integer'],
             [['id'], 'daysBeforeExpireValidator'],
         ]);
+    }
+
+    public function getBatchPurchaseStrategyClass()
+    {
+        return BatchPurchaseStrategy::class;
     }
 }

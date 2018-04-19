@@ -99,12 +99,16 @@ class DomainTariffRepository
      */
     public function orderZones($zones)
     {
+        return $zones;
+
+        /* XXX disabled search
+         * XXX expecting API to return properly ordered zones
         $result = ArrayHelper::index($zones, 'zone');
 
         uasort($result, function ($a, $b) {
             return $a->zone === Domain::DEFAULT_ZONE ? -1 : 1;
         });
 
-        return $result;
+        return $result;*/
     }
 }

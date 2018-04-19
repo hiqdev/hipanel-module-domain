@@ -26,7 +26,7 @@ class HostController extends \hipanel\base\CrudController
 {
     public function actions()
     {
-        return [
+        return array_merge(parent::actions(), [
             'index' => [
                 'class'     => IndexAction::class,
                 'filterStorageMap' => [
@@ -75,6 +75,6 @@ class HostController extends \hipanel\base\CrudController
                 'class'     => SmartPerformAction::class,
                 'success'   => Yii::t('hipanel:domain', 'Name server deleted'),
             ],
-        ];
+        ]);
     }
 }

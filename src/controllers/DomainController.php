@@ -12,7 +12,6 @@ namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\Action;
 use hipanel\actions\IndexAction;
-use hipanel\actions\OrientationAction;
 use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\ProxyAction;
 use hipanel\actions\RedirectAction;
@@ -23,20 +22,32 @@ use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
+use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\ArrayHelper;
+use hipanel\models\Ref;
 use hipanel\modules\client\models\Client;
+use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
+use hipanel\modules\domain\cart\Calculation;
 use hipanel\modules\domain\cart\DomainRegistrationProduct;
 use hipanel\modules\domain\cart\DomainRenewalProduct;
 use hipanel\modules\domain\cart\DomainTransferProduct;
+use hipanel\modules\domain\cart\PremiumOrderProduct;
+use hipanel\modules\domain\cart\PremiumRenewalProduct;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
+use hipanel\modules\domain\models\Parking;
+use hipanel\modules\domain\models\Urlfw;
+use hipanel\modules\domain\widgets\GetPremiumButton;
 use hiqdev\hiart\Collection;
 use hiqdev\yii2\cart\actions\AddToCartAction;
 use Yii;
 use yii\base\DynamicModel;
 use yii\base\Event;
-use yii\filters\AccessControl;
+use yii\db\Exception;
+use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class DomainController extends \hipanel\base\CrudController
@@ -44,34 +55,15 @@ class DomainController extends \hipanel\base\CrudController
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
-            'renew-access' => [
-                'class' => AccessControl::class,
-                'only' => ['add-to-cart-renewal', 'bulk-renewal'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.pay'],
-                    ],
-                ],
-            ],
-            'freeze-access' => [
-                'class' => AccessControl::class,
-                'only' => ['enable-freeze', 'enable-freeze-w-p'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.freeze'],
-                    ],
-                ],
-            ],
-            'unfreeze-access' => [
-                'class' => AccessControl::class,
-                'only' => ['disable-freeze', 'disable-freeze-w-p'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['domain.unfreeze'],
-                    ],
+            [
+                'class' => EasyAccessControl::class,
+                'actions' => [
+                    'add-to-cart-renewal' => 'domain.pay',
+                    'bulk-renewal' => 'domain.pay',
+                    'enable-freeze' => 'domain.freeze',
+                    'enable-freeze-w-p' => 'domain.freeze',
+                    'unfreeze-access' => 'domain.unfreeze',
+                    '*' => 'domain.read',
                 ],
             ],
         ]);
@@ -79,10 +71,18 @@ class DomainController extends \hipanel\base\CrudController
 
     public function actions()
     {
-        return [
-            'add-to-cart-renewal' => [
+        return array_merge(parent::actions(), [
+            'test' => [
+                'class' => RenderAction::class,
+            ],
+            'add-to-cart-premium' => [
                 'class' => AddToCartAction::class,
-                'productClass' => DomainRenewalProduct::class,
+                'productClass' => PremiumOrderProduct::class,
+                'redirectToCart' => true,
+            ],
+            'add-to-cart-premium-renewal' => [
+                'class' => AddToCartAction::class,
+                'productClass' => PremiumRenewalProduct::class,
                 'redirectToCart' => true,
             ],
             'bulk-renewal' => [
@@ -99,6 +99,11 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => AddToCartAction::class,
                 'productClass' => DomainTransferProduct::class,
                 'bulkLoad' => true,
+            ],
+            'add-to-cart-renewal' => [
+                'class' => AddToCartAction::class,
+                'redirectToCart' => true,
+                'productClass' => DomainRenewalProduct::class,
             ],
             'domain-push-modal' => [
                 'class' => PrepareBulkAction::class,
@@ -121,6 +126,7 @@ class DomainController extends \hipanel\base\CrudController
                     $id = Yii::$app->request->get('id', false);
                     if ($id) {
                         $domainContacts = Domain::perform('get-contacts', ['ids' => [$id]], ['batch' => true]);
+
                         return [
                             'domainContact' => reset($domainContacts),
                         ];
@@ -131,7 +137,6 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'bulk-set-contacts' => [
                 'class' => SmartPerformAction::class,
-//                'scenario' => 'set-contacts',
                 'success' => Yii::t('hipanel:domain', 'Contacts is changed'),
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
@@ -166,10 +171,6 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => RedirectAction::class,
                         'url' => function ($action) {
-                            if (Yii::$app->user->can('support')) {
-                                return null;
-                            }
-
                             return ['@domain'];
                         },
                     ],
@@ -195,7 +196,11 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     $action = $event->sender;
                     $action->getDataProvider()->query
-                        ->addSelect(['nsips', 'contacts', 'foa_sent_to'])
+                        ->addSelect(['nsips', 'contacts', 'foa_sent_to', 'mailfws', 'urlfws', 'parking', 'premium'])
+                        ->joinWith('mailfws')
+                        ->joinWith('urlfws')
+                        ->joinWith('parking')
+                        ->joinWith('premium')
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')
@@ -204,12 +209,26 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
-                        'hasPincode' => $this->checkUserHasPincode()
+                        'hasPincode' => $this->checkUserHasPincode(),
+                        'forwardingOptions' => $action->controller->getForwardingOptions(),
                     ];
                 },
             ],
             'validate-form' => [
                 'class' => ValidateFormAction::class,
+            ],
+            'validate-urlfw-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Urlfw::class,
+            ],
+            'validate-mailfw-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Mailfw::class,
+                'validatedInputId' => false,
+            ],
+            'validate-park-form' => [
+                'class' => ValidateFormAction::class,
+                'model' => Parking::class,
             ],
             'validate-nss' => [
                 'class' => ValidateFormAction::class,
@@ -222,10 +241,12 @@ class DomainController extends \hipanel\base\CrudController
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $request = Yii::$app->request;
-                    $action->collection->load([[
-                        'pincode' => $request->post('pincode'),
-                        'receiver' => $request->post('receiver'),
-                    ]]);
+                    $action->collection->load([
+                        [
+                            'pincode' => $request->post('pincode'),
+                            'receiver' => $request->post('receiver'),
+                        ],
+                    ]);
                 },
                 'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
                     return 'push-' . $attribute;
@@ -265,7 +286,7 @@ class DomainController extends \hipanel\base\CrudController
                     'success' => [
                         'class' => RedirectAction::class,
                         'url' => function ($action) {
-                            return $action->controller->redirect(Yii::$app->request->referrer);
+                            return Yii::$app->request->referrer;
                         },
                     ],
                 ],
@@ -320,6 +341,17 @@ class DomainController extends \hipanel\base\CrudController
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domain = Yii::$app->request->post('Domain');
+
+                            return ['@domain/transfer-cenceled', 'id' => $domain['id']];
+                        },
+                    ],
+                ],
             ],
             'force-reject-preincoming' => [
                 'class' => SmartDeleteAction::class,
@@ -510,9 +542,106 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'buy' => [
                 'class' => RedirectAction::class,
-                'url' => Yii::$app->params['orgUrl'],
+                'url' => Yii::$app->params['organization.url'],
             ],
-        ];
+            'approve-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'approve-preincoming',
+                'success' => Yii::t('hipanel:domain', 'Successfully approved'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
+                'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
+                    /** @var Action $action */
+                    $action = $event->sender;
+                    foreach ($action->collection->models as $model) {
+                        $model->confirm_data = JSON::decode($model->confirm_data);
+                    }
+                },
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domains = Yii::$app->request->post('Domain')['domains'];
+
+                            return ['@domain/preincoming-started', 'domains' => $domains];
+                        },
+                    ],
+                ],
+            ],
+            'reject-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'reject-preincoming',
+                'success' => Yii::t('hipanel:domain', 'Successfully rejected'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
+                'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
+                    /** @var Action $action */
+                    $action = $event->sender;
+                    foreach ($action->collection->models as $model) {
+                        $model->confirm_data = JSON::decode($model->confirm_data);
+                    }
+                },
+                'POST html' => [
+                    'save' => true,
+                    'success' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domains = Yii::$app->request->post('Domain')['domains'];
+
+                            return ['@domain/preincoming-canceled', 'domains' => $domains];
+                        },
+                    ],
+                ],
+            ],
+            'preincoming-started' => [
+                'class' => RenderAction::class,
+                'view' => 'preincomingStarted',
+                'data' => function ($action) {
+                    return ['domains' => Yii::$app->request->get('domains')];
+                },
+            ],
+            'preincoming-canceled' => [
+                'class' => RenderAction::class,
+                'view' => 'preincomingCanceled',
+                'data' => function ($action) {
+                    return ['domains' => Yii::$app->request->get('domains')];
+                },
+            ],
+            'transfer-canceled' => [
+                'class' => ViewAction::class,
+                'view' => 'transferCanceled',
+            ],
+        ]);
+    }
+
+    public function actionTransferOut($id)
+    {
+        $apiData = Domain::perform('get-info', compact('id'));
+        $model = Domain::find()->populate([$apiData])[0];
+        if ($model->state !== 'outgoing') {
+            throw new Exception('Domain is not pending transfer');
+        }
+
+        return $this->render('transferOut', ['model' => $model]);
+    }
+
+    public function actionTransferIn($domains, $till_date, $what, $salt, $hash)
+    {
+        Yii::$app->get('hiart')->disableAuth();
+        $data = compact('domains', 'till_date', 'what', 'salt', 'hash');
+        $userIP = Yii::$app->request->userIP;
+        $model = new Domain($data);
+        $model->confirm_data = JSON::encode($data);
+        if ($model->hasErrors()) {
+            throw new Exception('Params validation has errors.');
+        }
+
+        return $this->render('transferIn', compact('model', 'userIP'));
     }
 
     public function actionRenew()
@@ -566,7 +695,98 @@ class DomainController extends \hipanel\base\CrudController
     {
         return Yii::$app->cache->getOrSet(['user-pincode-enabled', Yii::$app->user->id], function () {
             $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
+
             return $pincodeData['pincode_enabled'];
         }, 3600);
     }
+
+    public function getRecordForwardingTypes()
+    {
+        // todo exclude permanent redirect, remain temporary only
+        return $this->getRefs('type,forwarding', 'hipanel:domain');
+    }
+
+    public function actionGetPremiumPrice($id, $client_id, $type, $domain)
+    {
+        if (Yii::$app->request->isAjax) {
+            $model = DynamicModel::validateData(compact('id', 'client_id', 'type', 'domain'), [
+                [['id', 'client_id'], 'integer'],
+                ['type', 'in', 'range' => [GetPremiumButton::RENEW, GetPremiumButton::PURCHASE]],
+                ['domain', DomainPartValidator::class],
+            ]);
+            if ($model->hasErrors()) {
+                throw new \Exception(__METHOD__ . ' has validation errors');
+            }
+            $data = [
+                'id' => $id,
+                'client_id' => $client_id,
+                'type' => $type,
+                'domain' => $domain,
+                'object' => 'feature',
+                'expires' => (new \DateTime())->modify('+1 year')->format('c'),
+                'amount' => 1,
+            ];
+
+            $response = Calculation::perform('calc-value', $data, ['batch' => false]);
+            $price = Yii::$app->formatter->asCurrency($response['value']['usd']['value'], 'usd');
+
+            return $price;
+        }
+    }
+
+    public function actionSetPremiumFeature($for)
+    {
+        $model = $this->getPaidFeatureModelByName($for);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setFeature();
+
+            Yii::$app->session->addFlash('success', Yii::t('hipanel:domain', 'Action was successful.'));
+
+            return $this->renderPaidFeatureTab($model->domain_id, $for);
+        }
+    }
+
+    public function actionInlinePremiumFeatureForm($domainId, $featureId, $for)
+    {
+        $model = $this->getPaidFeatureModelByName($for);
+        $model->loadFeatureByDomainId($domainId, $featureId);
+        $domain = Domain::find()->where(['id' => $domainId])->joinWith('premium')->addSelect('premium')->one();
+
+        return $this->renderAjax('premium' . DIRECTORY_SEPARATOR . '_updateForm', [
+            'formFileName' => '_form' . ucfirst($for),
+            'model' => $model,
+            'domain' => $domain,
+            'forwardingOptions' => $this->getForwardingOptions(),
+        ]);
+    }
+
+    private function getPaidFeatureModelByName($name)
+    {
+        $modelName = '\hipanel\modules\domain\models\\' . ucfirst($name);
+
+        return new $modelName;
+    }
+
+    protected function renderPaidFeatureTab($domainId, $for)
+    {
+        if (($model = (new Domain())->find()
+                ->addSelect(['mailfws', 'urlfws', 'parking', 'premium'])
+                ->joinWith(['premium', 'urlfws', 'mailfws', 'parking'])
+                ->where(['id' => $domainId])->one()) === null) {
+
+            throw new NotFoundHttpException('Domain does not exist');
+        }
+
+        return $this->render('premium' . DIRECTORY_SEPARATOR . $for, [
+            'model' => $model,
+            'forwardingOptions' => $this->getForwardingOptions(),
+        ]);
+    }
+
+    public function getForwardingOptions()
+    {
+        return Ref::findCached('type,forwarding', 'hipanel:domain', ['select' => 'full']);
+    }
+
 }

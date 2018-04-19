@@ -14,15 +14,42 @@ use Yii;
 
 class DomainRegistrationPurchase extends AbstractDomainPurchase
 {
+    public $registrant;
+
+    public function init()
+    {
+        parent::init();
+
+        $this->registrant = $this->position->registrant;
+    }
+
     /** {@inheritdoc} */
     public static function operation()
     {
         return 'Register';
     }
 
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['registrant'], 'integer'],
+        ]);
+    }
+
     /** {@inheritdoc} */
     public function renderNotes()
     {
-        return Yii::t('hipanel:domain', 'Domain is payed up to') . ' <b>' . Yii::$app->formatter->asDate($this->_result['expiration_date']) . '</b>';
+        $date = (new \DateTime())->add(new \DateInterval('P' . $this->amount . 'Y'));
+
+        return Yii::t('hipanel:domain', 'The domain name was registered till {date}', [
+            'date' => Yii::$app->formatter->asDate($date)
+        ]);
+    }
+
+    public function getPurchasabilityRules()
+    {
+        return [
+            DomainContactsCompatibilityValidator::class
+        ];
     }
 }

@@ -17,8 +17,10 @@ use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\menus\DomainActionsMenu;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
+use hipanel\modules\domain\widgets\GetPremiumButton;
 use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
+use hipanel\widgets\Label;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\bootstrap_switch\LabeledAjaxSwitch;
 use hiqdev\combo\StaticCombo;
@@ -30,9 +32,66 @@ use yii\helpers\Url;
 
 class DomainGridView extends BoxedGridView
 {
-    public static function defaultColumns()
+    public function columns()
     {
-        return [
+        return array_merge(parent::columns(), [
+            'is_premium' => [
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $state = ($model->premium->is_active) ? Yii::t('hipanel.domain.premium', 'Active till {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
+                        'expires' => strtotime($model->premium->expires),
+                        'days_left' => $model->premium->days_left,
+                    ]) : Html::tag('span', Yii::t('hipanel.domain.premium', 'Not activated'), ['class' => 'text-danger']);
+
+                    return $state . GetPremiumButton::widget(['model' => $model]);
+                },
+                'contentOptions' => [
+                    'style' => 'display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;',
+                ],
+            ],
+            'premium_autorenewal' => [
+                'class' => BootstrapSwitchColumn::class,
+                'attribute' => 'premium_autorenewal',
+                'url' => Url::toRoute('@hdomain/set-premium-autorenewal'),
+                'filter' => false,
+                'enableSorting' => false,
+                'encodeLabel' => false,
+                'label' => Html::tag('span', Yii::t('hipanel.domain.premium', 'Premium autorenewal')),
+                'pluginOptions' => function ($model) {
+                    return [
+                        'readonly' => !(bool)$model->premium->is_active,
+                    ];
+                },
+                'switchOptions' => [
+                    'class' => LabeledAjaxSwitch::class,
+                    'labels' => [
+                        0 => [
+                            'style' => 'display: none;',
+                            'class' => 'text-danger md-pl-10',
+                            'content' => Yii::t('hipanel.domain.premium', 'You can enable automatic renewal of the premium package for this domain.'),
+                        ],
+                        1 => [
+                            'style' => 'display: none;',
+                            'class' => 'small text-muted font-normal md-pl-10',
+                            'content' => Yii::t('hipanel.domain.premium', 'Automatic renewal of the premium package for this domain is enabled.'),
+                        ],
+                    ],
+                ],
+
+            ],
+            'transfer_attention' => [
+                'label' => Yii::t('hipanel:domain', 'Attention'),
+                'value' => function ($model) {
+                    return $model->client_name;
+                },
+            ],
+            'transfer_re' => [
+                'attribute' => 'domain',
+                'label' => Yii::t('hipanel:domain', 'Re'),
+                'value' => function ($model) {
+                    return Yii::t('hipanel:domain', 'Transfer of {domain}', ['domain' => strtoupper($model->domain)]);
+                },
+            ],
             'domain' => [
                 'class' => MainColumn::class,
                 'attribute' => 'domain',
@@ -52,7 +111,9 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'enableSorting' => false,
                 'value' => function ($model) {
-                    $out[] = State::widget(compact('model'));
+                    $labelOptions = $model->labelTitle ? ['title' => $model->labelTitle] : [];
+                    $out[] = State::widget(compact('model', 'labelOptions'));
+
                     if ($model->isFreezed() || $model->isHolded() || $model->isWPFreezed()) {
                         $status = [];
 
@@ -82,12 +143,10 @@ class DomainGridView extends BoxedGridView
                 },
                 'value' => function ($model) {
                     return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
-                }
+                },
             ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'whois_protected',
-                'url' => Url::toRoute('set-whois-protect'),
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
@@ -97,9 +156,10 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'pluginOptions' => [
-                    'offColor' => 'warning',
-                ],
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->whois_protected);
+                },
             ],
             'whois_protected_with_label' => [ // don't forget to update `whois_protected` column as well
                 'class' => BootstrapSwitchColumn::class,
@@ -134,18 +194,20 @@ class DomainGridView extends BoxedGridView
                 ],
             ],
             'is_secured' => [ // don't forget to update `is_secured_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
                 'encodeLabel' => false,
                 'filter' => false,
                 'enableSorting' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
-                'url' => Url::toRoute('set-lock'),
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
                 'popoverOptions' => [
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->is_secured);
+                },
             ],
             'is_secured_with_label' => [ // don't forget to update `is_secured` column as well
                 'class' => BootstrapSwitchColumn::class,
@@ -200,11 +262,13 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
-                'class' => BootstrapSwitchColumn::class,
-                'filter' => false,
-                'url' => Url::toRoute('set-autorenewal'),
-                'attribute' => 'autorenewal',
                 'label' => Html::tag('span', Yii::t('hipanel', 'Autorenew')),
+                'attribute' => 'autorenewal',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return $this->getStateLabel($model->autorenewal);
+                },
+                'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,
                 'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
@@ -254,7 +318,8 @@ class DomainGridView extends BoxedGridView
             ],
             'old_actions' => [
                 'class' => ActionColumn::class,
-                'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}', // {state}
+                'template' => '{view} {manage-dns} {notify-transfer-in} {approve-preincoming} {reject-preincoming} {approve-transfer} {reject-transfer} {cancel-transfer} {sync} {enable-hold} {disable-hold} {enable-freeze} {disable-freeze} {delete-agp} {delete}',
+                // {state}
                 'header' => Yii::t('hipanel', 'Actions'),
                 'buttons' => [
                     'notify-transfer-in' => function ($url, $model, $key) {
@@ -359,7 +424,7 @@ class DomainGridView extends BoxedGridView
                             return '';
                         }
 
-                        if (!$model->canFreezeUnfreeze())
+                        if (!$model->canFreezeUnfreeze()) {
                             return Html::a('<i class="fa fa-lock"></i>' . Yii::t('hipanel:domain', 'Freeze domain'), $url, [
                                 'data' => [
                                     'method' => 'post',
@@ -415,13 +480,24 @@ class DomainGridView extends BoxedGridView
                     },
                     'manage-dns' => function ($url, $model, $key) {
                         if (Yii::getAlias('@dns', false)) {
-                            return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel:domain', 'Manage DNS'), ['@dns/zone/view', 'id' => $model->id]);
+                            return Html::a('<i class="fa fa-globe"></i>' . Yii::t('hipanel:domain', 'Manage DNS'), [
+                                '@dns/zone/view',
+                                'id' => $model->id,
+                            ]);
                         }
 
                         return '';
                     },
                 ],
             ],
-        ];
+        ]);
+    }
+
+    protected function getStateLabel($value)
+    {
+        return Label::widget([
+            'label' => $value ? Yii::t('hipanel', 'Enabled') : Yii::t('hipanel', 'Disabled'),
+            'color' => $value ? 'success' : null,
+        ]);
     }
 }

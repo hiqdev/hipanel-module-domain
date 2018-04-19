@@ -18,17 +18,17 @@ use yii\helpers\Html;
 
 class HostGridView extends BoxedGridView
 {
-    public static function defaultColumns()
+    public function columns()
     {
-        return [
+        return array_merge(parent::columns(), [
             'host' => [
                 'class' => MainColumn::class,
                 'filterAttribute' => 'host_like',
             ],
             'bold_host' => [
-                'format'    => 'html',
+                'format' => 'html',
                 'attribute' => 'host',
-                'value'     => function ($model) {
+                'value' => function ($model) {
                     return Html::tag('b', $model->host);
                 },
             ],
@@ -49,6 +49,6 @@ class HostGridView extends BoxedGridView
                     'url' => 'update',
                 ],
             ],
-        ];
+        ]);
     }
 }

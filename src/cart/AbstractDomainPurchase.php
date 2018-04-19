@@ -12,10 +12,25 @@ namespace hipanel\modules\domain\cart;
 
 /**
  * Abstract class AbstractDomainPurchase.
+ * Holds data to perform domain purchase:
+ *
+ * @property string domain
+ * @property string zone
+ * @property string period – how many years
  */
 abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\AbstractPurchase
 {
     use \hipanel\base\ModelTrait;
+
+    /** @var AbstractDomainProduct */
+    public $position;
+
+    protected $ruZones = [
+        'ru' => 1,
+        'su' => 1,
+        'рф' => 1,
+        'xn--p1ai' => 1,
+    ];
 
     /** {@inheritdoc} */
     public static function tableName()
@@ -27,10 +42,14 @@ abstract class AbstractDomainPurchase extends \hipanel\modules\finance\cart\Abst
     public function init()
     {
         parent::init();
-
         $this->domain = $this->position->name;
         $this->period = $this->position->getQuantity();
         $this->zone = $this->position->getZone();
+    }
+
+    public function isRuZone()
+    {
+        return isset($this->ruZones[$this->zone]);
     }
 
     /** {@inheritdoc} */

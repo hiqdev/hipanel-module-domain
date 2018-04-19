@@ -83,10 +83,10 @@ class TransferController extends \hipanel\base\CrudController
             if (!empty($post[0]['domains'])) {
                 $domains = [];
                 foreach (StringHelper::explode($post[0]['domains'], "\n") as $line) {
-                    preg_match('/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i', $line, $matches);
+                    preg_match('/^(([a-zа-я0-9][0-9a-zа-я\-]+\.)+([a-zа-я0-9][0-9a-zа-я\-]+))(?:[,;\s]+)(.*)$/ui', $line, $matches);
                     if ($matches) {
                         $domain = strtolower($matches[1]);
-                        $password = $matches[2];
+                        $password = $matches[4];
                         $domains[] = compact('domain', 'password');
                     }
                 }
@@ -124,10 +124,10 @@ class TransferController extends \hipanel\base\CrudController
             if (!empty($post[0]['domains'])) {
                 $domains = [];
                 foreach (StringHelper::explode($post[0]['domains'], "\n") as $line) {
-                    preg_match('/^([a-z0-9][0-9a-z.-]+)(?:[,;\s]+)(.*)/i', $line, $matches);
+                    preg_match('/(([a-zа-я0-9][0-9a-zа-я\-]+\.)+([a-zа-я0-9][0-9а-яa-z\-]+))(?:[,;\s]+)(.*)/ui', $line, $matches);
                     if ($matches) {
                         $domain = strtolower($matches[1]);
-                        $password = $matches[2];
+                        $password = $matches[4];
                         $domains[] = compact('domain', 'password');
                     }
                 }

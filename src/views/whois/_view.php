@@ -22,18 +22,18 @@ $this->registerCss('
 <?php switch ($model->availability) : ?>
 <?php case Whois::REGISTRATION_UNAVAILABLE: ?>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="md-mb-10 text-center">
                     <?= LazyLoad::widget([
                         'src' => $model->screenshot,
                         'options' => [
-                            'class' => 'img-thumbnail shot-img',
+                            'style' => 'width: 380px',
                             'alt' => $model->domain,
                         ],
                     ]) ?>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-12 col-xs-12">
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [

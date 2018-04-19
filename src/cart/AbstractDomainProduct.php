@@ -36,6 +36,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         'ru' => 1,
         'su' => 1,
         'рф' => 1,
+        'xn--p1ai' => 1,
         '*' => 10,
     ];
 
@@ -90,5 +91,13 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
             'domain' => $this->name,
             'zone' => $this->getZone(),
         ], $options));
+    }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['_operation'] = $this->_operation;
+        $parent['_model'] = $this->_model;
+        return $parent;
     }
 }

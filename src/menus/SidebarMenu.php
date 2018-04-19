@@ -37,12 +37,12 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                     'check-domain' => [
                         'label' => Yii::t('hipanel:domain', 'Buy domain'),
                         'url'   => ['/domain/check/check-domain'],
-                        'visible' => Yii::$app->user->can('deposit'),
+                        'visible' => Yii::$app->user->can('domain.pay'),
                     ],
                     'transfer' => [
                         'label' => Yii::t('hipanel:domain', 'Transfer domain'),
                         'url'   => ['/domain/transfer/index'],
-                        'visible' => Yii::$app->user->can('deposit'),
+                        'visible' => Yii::$app->user->can('domain.pay'),
                     ],
                     'whois' => [
                         'label' => Yii::t('hipanel:domain', 'WHOIS lookup'),

@@ -10,13 +10,13 @@ $addToCartPath = '/domain/domain/add-to-cart-registration';
 
 $canBuyDomain = Yii::$app->user->isGuest || Yii::$app->user->can('domain.pay');
 
+$isAvailableCssClass = $model->isAvailable ? 'available' : 'unavailable';
+$isSuggestionCssClass = $model->isSuggestion ? 'suggestion' : '';
+$isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
+
 ?>
 
-<div class="domain-iso-line
-    <?= Domain::setIsotopeFilterValue($model->zone) ?>
-    <?= $model->isAvailable ? 'available' : 'unavailable' ?>
-    <?//= $line['fqdn'] === $requestedDomain ? 'popular' : $requestedDomain ?>
-">
+<div class="domain-iso-line <?= $isAvailableCssClass ?> <?= $isotopeFilterCssClass ?> <?= $isSuggestionCssClass ?>">
     <div
         class="domain-line <?= $model->isAvailable ? 'checked' : '' ?>"
         data-domain="<?= $model->fqdn ?>">
@@ -27,7 +27,7 @@ $canBuyDomain = Yii::$app->user->isGuest || Yii::$app->user->can('domain.pay');
                 <span class="domain-img"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
             <?php endif; ?>
 
-            <?php if ($model->isAvailable === true) : ?>
+            <?php if ($model->isAvailable) : ?>
                 <span class="domain-name"><?= $model->getDomain() ?></span><span
                     class="domain-zone">.<?= $model->getZone() ?></span>
             <?php else : ?>

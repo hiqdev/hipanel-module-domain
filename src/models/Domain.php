@@ -83,6 +83,21 @@ class Domain extends \hipanel\base\Model
         return $out;
     }
 
+    public function getLabelTitle()
+    {
+        $options = [
+            self::STATE_INCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is in progress. It may take up 5 days, so keep patience.'),
+            self::STATE_OUTGOING => Yii::t('hipanel:domain', 'Domain name transfer to another registrar is in progress. It may take up 5 days, so keep patience.'),
+            self::STATE_EXPIRED => Yii::t('hipanel:domain', 'This domain has been expired. You have a month from the date of its expiration to renew it, otherwise it will be deleted and may be registered by someone else.'),
+            self::STATE_DELETED => Yii::t('hipanel:domain', 'The domain name has been deleted because it was not renewed during the month after the expiration date. If you want to get your domain back, you should register it again.'),
+            self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.'),
+            self::STATE_GONE => Yii::t('hipanel:domain', 'Domain name has been transferred to another registrar.'),
+            self::STATE_DELETING => Yii::t('hipanel:domain', 'The domain name has been expired and you have not renewed it during the month after the expiration date. Domain name will be dropped in 2 months after the expiration date, after that it may be occupied by someone else. Domain names usually got occupied by bots in minutes after dropping, then sold for many times higher price on auctions. If you don\'t want to miss your domain name, contact support to restore it.'),
+        ];
+
+        return isset($options[$this->state]) ? $options[$this->state] : null;
+    }
+
     use \hipanel\base\ModelTrait;
 
     /** {@inheritdoc} */
@@ -92,13 +107,14 @@ class Domain extends \hipanel\base\Model
             [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'], 'integer'],
             [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'], 'safe'],
             [['seller', 'seller_name', 'client', 'client_name'], 'safe'],
+            [['premium_expires', 'premium_days_left'], 'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date'],
             [['registered', 'operated'], 'date'],
             [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
-            [['block', 'epp_client_id', 'nameservers', 'nsips'], 'safe'],
+            [['block', 'epp_client_id', 'nameservers', 'nsips', 'request_date', 'name'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
 
             // Contacts
@@ -149,22 +165,10 @@ class Domain extends \hipanel\base\Model
             [['domain', 'password'], 'required', 'when' => function ($model) {
                 return empty($model->domains);
             }, 'on' => ['transfer']],
-//            [['password'], 'required', 'when' => function ($model) {
-//                return empty($model->domains) && $model->domain;
-//            }, 'on' => ['transfer']],
             [['domains'], 'required', 'when' => function ($model) {
                 return empty($model->domain) && empty($model->password);
             }, 'on' => ['transfer']],
-            [['domain'], DomainValidator::class, 'on' => ['transfer']],
-//            [['password'], function ($attribute) {
-//                try {
-//                    $this->perform('CheckTransfer', ['domain' => $this->domain, 'password' => $this->password]);
-//                } catch (Exception $e) {
-//                    $this->addError($attribute, Yii::t('hipanel:domain', 'Wrong code: {message}', ['message' => $e->getMessage()]));
-//                }
-//            }, 'when' => function ($model) {
-//                return $model->domain;
-//            }, 'on' => ['transfer']],
+            [['domain'], DomainValidator::class, 'enableIdn' => true, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
 
             // NSs
@@ -192,6 +196,19 @@ class Domain extends \hipanel\base\Model
 
             // Bulk set contacts
             [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],
+
+            [[
+                'confirm_data',
+                'domains',
+                'till_date',
+                'what',
+                'salt',
+                'hash',
+            ], 'safe', 'on' => ['approve-preincoming', 'reject-preincoming']],
+
+            // Premium package
+            [['url_fw', 'mail', 'park', 'dnspremium'], 'integer'],
+            ['premium_autorenewal', 'boolean'],
         ];
     }
 
@@ -199,6 +216,12 @@ class Domain extends \hipanel\base\Model
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
+            'url_fw' => Yii::t('hipanel:domain', ''),
+            'mail' => Yii::t('hipanel:domain', ''),
+            'park' => Yii::t('hipanel:domain', ''),
+            'dnspremium' => Yii::t('hipanel:domain', ''),
+
+
             'epp_client_id' => Yii::t('hipanel:domain', 'EPP client ID'),
             'remoteid' => Yii::t('hipanel', 'Remote ID'),
             'domain' => Yii::t('hipanel', 'Domain name'),
@@ -216,10 +239,9 @@ class Domain extends \hipanel\base\Model
             'is_holded' => Yii::t('hipanel:domain', 'On hold'),
             'is_freezed' => Yii::t('hipanel:domain', 'Domain changes freezed'),
             'wp_freezed' => Yii::t('hipanel:domain', 'Domain WHOIS freezed'),
-            'foa_sent_to' => Yii::t('hipanel:domain', 'FOA was sent to'),
-            'is_premium' => Yii::t('hipanel:domain', 'Is premium'),
             'prem_expires' => Yii::t('hipanel:domain', 'Premium expires'),
             'prem_daysleft' => Yii::t('hipanel:domain', 'Premium days left'),
+            'is_premium' => Yii::t('hipanel:domain', 'Premium package'),
             'premium_autorenewal' => Yii::t('hipanel:domain', 'Premium autorenewal'),
             'url_fwval' => Yii::t('hipanel:domain', 'Url forwarding'),
             'mailval' => Yii::t('hipanel:domain', 'Mail'),
@@ -254,6 +276,26 @@ class Domain extends \hipanel\base\Model
         return $this->hasOne(Contact::class, ['domain_id' => 'id']);
     }
 
+    public function getMailfws()
+    {
+        return $this->hasMany(Mailfw::class, ['domain_id' => 'id']);
+    }
+
+    public function getUrlfws()
+    {
+        return $this->hasMany(Urlfw::class, ['domain_id' => 'id']);
+    }
+
+    public function getPremium()
+    {
+        return $this->hasOne(Premium::class, ['domain_id' => 'id']);
+    }
+
+    public function getParking()
+    {
+        return $this->hasOne(Parking::class, ['domain_id' => 'id']);
+    }
+
     public function getAdmin()
     {
         return $this->hasOne(Contact::class, ['domain_id' => 'id']);
@@ -281,17 +323,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return (bool) $this->is_freezed;
+        return (bool)$this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return (bool) $this->wp_freezed;
+        return (bool)$this->wp_freezed;
     }
 
     public function isHolded()
     {
-        return (bool) $this->is_holded;
+        return (bool)$this->is_holded;
     }
 
     public function isOk()

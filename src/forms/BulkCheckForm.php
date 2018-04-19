@@ -58,13 +58,19 @@ class BulkCheckForm extends Model
             // Check split FQDNs to zone is allowed
             [['fqdns'], 'filter', 'filter' => function ($value) {
                 return array_filter($value, function ($value) {
-                    list(, $zone) = explode('.', $value, 2);
+                    list($fqdn, $zone) = explode('.', $value, 2);
 
                     if (empty($zone)) {
                         return $value;
                     }
 
-                    return in_array($zone, array_keys($this->availableZones), true);
+                    $zoneIsAvailable = in_array($zone, array_keys($this->availableZones), true);
+
+                    if (!$zoneIsAvailable) {
+                        return $fqdn;
+                    }
+
+                    return $zoneIsAvailable;
                 });
             }],
 

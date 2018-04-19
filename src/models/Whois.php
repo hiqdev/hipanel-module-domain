@@ -79,7 +79,14 @@ class Whois extends ActiveRecord
 
     public function getGoogle()
     {
-        return intval(\SEOstats\Services\Google::getPageRank($this->url));
+        try {
+            $result = intval(\SEOstats\Services\Google::getPageRank($this->url));
+            return $result;
+        } catch (Exception $e) {
+
+        }
+
+        return null;
     }
 
     public function getAlexa()
@@ -90,25 +97,33 @@ class Whois extends ActiveRecord
                 return Alexa::getGlobalRank();
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+
         }
+
+        return null;
     }
 
     public function getYandex()
     {
-        $str = file('http://bar-navig.yandex.ru/u?ver=2&show=32&url=' . $this->url);
-        if ($str === false) {
-            $ans = false;
-        } else {
-            $is_find = preg_match("/value=\"(.\d*)\"/", implode('', $str), $tic);
-
-            if ($is_find < 1) {
-                $ans = 0;
+        try {
+            $str = file('http://bar-navig.yandex.ru/u?ver=2&show=32&url=' . $this->url);
+            if ($str === false) {
+                $ans = false;
             } else {
-                $ans = $tic[1];
+                $is_find = preg_match("/value=\"(.\d*)\"/", implode('', $str), $tic);
+
+                if ($is_find < 1) {
+                    $ans = 0;
+                } else {
+                    $ans = $tic[1];
+                }
             }
+
+            return $ans;
+        } catch (Exception $e) {
+
         }
 
-        return $ans;
+        return null;
     }
 }

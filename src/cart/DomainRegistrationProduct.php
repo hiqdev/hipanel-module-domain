@@ -10,9 +10,11 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
+use hipanel\modules\finance\cart\BatchPurchaseStrategy;
 use Yii;
 
-class DomainRegistrationProduct extends AbstractDomainProduct
+class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
 {
     /** {@inheritdoc} */
     protected $_purchaseModel = DomainRegistrationPurchase::class;
@@ -20,10 +22,22 @@ class DomainRegistrationProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     protected $_operation = 'registration';
 
+    /**
+     * @var string
+     */
+    public $registrant;
+
     /** {@inheritdoc} */
     public function getId()
     {
         return hash('crc32b', implode('_', ['domain', 'registration', $this->name]));
+    }
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            ['registrant', 'integer']
+        ]);
     }
 
     /** {@inheritdoc} */
@@ -34,5 +48,17 @@ class DomainRegistrationProduct extends AbstractDomainProduct
         }
 
         return $result;
+    }
+
+    public function getBatchPurchaseStrategyClass()
+    {
+        return BatchPurchaseStrategy::class;
+    }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['registrant'] = $this->registrant;
+        return $parent;
     }
 }

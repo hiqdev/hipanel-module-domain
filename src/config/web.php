@@ -13,6 +13,7 @@ return [
         '@domain' => '/domain/domain',
         '@host'   => '/domain/host',
         '@domain-check' => '/domain/check',
+        '@domain-contact' => '/domain/contact',
     ],
     'modules' => [
         'domain' => [
@@ -32,11 +33,28 @@ return [
                     'forceTranslation' => true,
                     'basePath' => '@hipanel/modules/domain/messages',
                 ],
+                'hipanel.domain.premium' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@hipanel/modules/domain/messages',
+                ],
             ],
         ],
     ],
     'container' => [
         'definitions' => [
+            \hipanel\modules\dashboard\menus\DashboardMenu::class => [
+                'add' => [
+                    'domain' => [
+                        'menu' => [
+                            'class' => \hipanel\modules\domain\menus\DashboardItem::class,
+                        ],
+                        'where' => [
+                            'after'  => ['finance', 'clients', 'dashboard', 'header'],
+                            'before' => ['certificates', 'servers', 'hosting'],
+                        ],
+                    ],
+                ],
+            ],
             \hiqdev\thememanager\menus\AbstractSidebarMenu::class => [
                 'add' => [
                     'check-domain' => [
@@ -48,8 +66,8 @@ return [
                             'class' => \hipanel\modules\domain\menus\SidebarMenu::class,
                         ],
                         'where' => [
-                            'after'  => ['tickets', 'finance', 'clients', 'dashboard', 'header'],
-                            'before' => ['servers', 'hosting'],
+                            'after'  => ['finance', 'clients', 'dashboard', 'header'],
+                            'before' => ['certificates', 'servers', 'hosting'],
                         ],
                     ],
                 ],
