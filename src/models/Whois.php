@@ -31,6 +31,7 @@ class Whois extends ActiveRecord
     public function rules()
     {
         return [
+            [['domain'], 'filter', 'filter' => 'strtolower'],
             [['domain'], DomainValidator::class, 'enableIdn' => true],
         ];
     }
