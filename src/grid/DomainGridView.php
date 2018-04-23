@@ -15,10 +15,10 @@ use hipanel\grid\BoxedGridView;
 use hipanel\grid\MainColumn;
 use hipanel\grid\XEditableColumn;
 use hipanel\modules\domain\menus\DomainActionsMenu;
+use hipanel\modules\domain\menus\DomainStateMenu;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\GetPremiumButton;
-use hipanel\modules\domain\widgets\State;
 use hipanel\widgets\ArraySpoiler;
 use hipanel\widgets\Label;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
@@ -111,28 +111,7 @@ class DomainGridView extends BoxedGridView
                 'filterInputOptions' => ['style' => 'width:120px'],
                 'enableSorting' => false,
                 'value' => function ($model) {
-                    $labelOptions = $model->labelTitle ? ['title' => $model->labelTitle] : [];
-                    $out[] = State::widget(compact('model', 'labelOptions'));
-
-                    if ($model->isFreezed() || $model->isHolded() || $model->isWPFreezed()) {
-                        $status = [];
-
-                        if ($model->isFreezed()) {
-                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'Froze'), ['class' => 'label label-info']);
-                        }
-
-                        if ($model->isWPFreezed()) {
-                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-snowflake-o')]) . ' ' . Yii::t('hipanel:domain', 'WP Froze'), ['class' => 'label label-info']);
-                        }
-
-                        if ($model->isHolded()) {
-                            $status[] = Html::tag('span', Html::tag('span', '', ['class' => Menu::iconClass('fa-ban')]) . ' ' . Yii::t('hipanel:domain', 'Held'), ['class' => 'label label-warning']);
-                        }
-
-                        $out[] = implode('&nbsp;', $status);
-                    }
-
-                    return implode('<br>', $out);
+                    return DomainStateMenu::widget(['model' => $model]);
                 },
             ],
             'foa_sent_to' => [
