@@ -83,7 +83,7 @@ class Domain extends \hipanel\base\Model
         return $out;
     }
 
-    public function getLabelTitle()
+    public function getStateTitle()
     {
         $options = [
             self::STATE_INCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is in progress. It may take up 5 days, so keep patience.'),
