@@ -59,7 +59,7 @@ use yii\helpers\Html;
                     </div>
                     <!-- /.col-md-6 -->
                     <div class="col-md-8">
-                        <?= $form->field($model, "[$model->id]nsips")->label(false); ?>
+                        <?= $form->field($model, "[$model->id]nsips")->textInput(['readonly' => $model->state !== $model::STATE_OK])->label(false); ?>
                     </div>
                     <!-- /.col-md-6 -->
                 <?php endforeach; ?>

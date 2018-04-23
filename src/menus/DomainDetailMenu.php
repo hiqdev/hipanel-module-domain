@@ -42,10 +42,10 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                     ],
                 ]),
                 'encode' => false,
-                'visible' => $this->model->isPushable(),
+                'visible' => $this->model->canPush(),
             ],
             [
-                'visible' => $this->model->canRenew() && Yii::$app->user->can('domain.pay'),
+                'visible' => $this->model->canRenew(),
                 'label' => Yii::t('hipanel:domain', 'Renew domain'),
                 'icon' => 'fa-forward',
                 'url' => ['add-to-cart-renewal', 'model_id' => $this->model->id],
@@ -64,7 +64,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                         'pjax' => '0',
                     ],
                 ],
-                'visible' => !$this->model->isRussianZones(),
+                'visible' => $this->model->canDelete(),
             ],
         ]);
 

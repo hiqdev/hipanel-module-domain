@@ -54,7 +54,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                     ],
                 ],
                 'encode' => false,
-                'visible' => $this->model->state === Domain::STATE_PREINCOMING,
+                'visible' => $this->model->canSendFOA(),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'approve-preincoming'),
@@ -72,11 +72,11 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Approve transfer'),
                 'icon' => 'fa-exclamation-circle',
                 'url' => ['@domain/approve-transfer'],
-                'visible' => ($this->model->state === Domain::STATE_OUTGOING && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => $this->model->canApproveTransfer(),
                 'encode' => false,
                 'linkOptions' => [
                     'data' => [
-                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel incoming transfer of domain {domain}?', ['domain' => $this->model->domain]),
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to approve outgoing transfer of domain {domain}?', ['domain' => $this->model->domain]),
                         'method' => 'post',
                         'pjax' => '0',
                         'form' => 'approve-transfer',
@@ -90,7 +90,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => Yii::t('hipanel:domain', 'Reject transfer'),
                 'icon' => 'fa-anchor',
                 'url' => ['reject-transfer', 'id' => $this->model->id],
-                'visible' => $this->model->state === Domain::STATE_OUTGOING,
+                'visible' => $this->model->canRejectTransfer(),
                 'encode' => false,
             ],
             [
@@ -108,14 +108,33 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         ],
                     ],
                 ],
-                'visible' => $this->model->state === Domain::STATE_INCOMING,
+                'visible' => $this->model->canCancelTransfer(),
                 'encode' => false,
+            ],
+            [
+                'label' => Yii::t('hipanel:domain', 'Cancel preincoming transfer'),
+                'icon' => 'fa-trash',
+                'url' => ['@domain/force-reject-preincoming', 'id' => $this->model->id],
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel domain {domain} transfer?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'pjax' => '0',
+                        'form' => 'force-reject-preincoming',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                            'Domain[domain]' => $this->model->domain,
+                        ],
+
+                    ],
+                ],
+                'visible' => $this->model->canCancelPreincoming(),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
                 'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
-                'visible' => ($this->model->isSynchronizable() && in_array($this->model->state, [Domain::STATE_OK, Domain::STATE_EXPIRED], true) && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model)),
+                'visible' => $this->model->canSynchronizeContacts(),
                 'encode' => false,
             ],
             [
@@ -131,22 +150,18 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         'Domain[id]' => $this->model->id,
                     ],
                 ],
-                'visible' => Yii::$app->user->can('manage')
-                    &&
-                    in_array($this->model->state, [Domain::STATE_OK], true)
-                    &&
-                    time() <= strtotime('+5 days', strtotime($this->model->created_date))
-                    &&
-                    strtotime('+1 year', time()) > strtotime($this->model->expires)
-                    &&
-                    in_array(Domain::getZone($this->model->domain), ['com', 'net'], true),
+                'visible' => $this->model->canDeleteAGP(),
                 'encode' => false,
             ],
             [
-                'label' => !$this->model->isFreezed() ? Yii::t('hipanel:domain', 'Freeze domain') : Yii::t('hipanel:domain', 'Unfreeze domain'),
-                'url' => !$this->model->isFreezed() ? ['@domain/enable-freeze'] : ['@domain/disable-freeze'],
+                'label' => !$this->model->isFreezed()
+                    ? Yii::t('hipanel:domain', 'Freeze domain')
+                    : Yii::t('hipanel:domain', 'Unfreeze domain'),
+                'url' => !$this->model->isFreezed()
+                    ? ['@domain/enable-freeze']
+                    : ['@domain/disable-freeze'],
                 'icon' => 'fa-snowflake-o',
-                'visible' => !$this->model->isRussianZones() && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
+                'visible' => $this->model->canFreezeUnfreeze(),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
@@ -159,10 +174,14 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 ],
             ],
             [
-                'label' => !$this->model->isWPFreezed() ? Yii::t('hipanel:domain', 'Enable WHOIS-protect freeze') : Yii::t('hipanel:domain', 'Disable WHOIS-protect freeze'),
-                'url' => !$this->model->isWPFreezed() ? ['enable-w-p-freeze'] : ['disable-w-p-freeze'],
+                'label' => !$this->model->isWPFreezed()
+                    ? Yii::t('hipanel:domain', 'Enable WHOIS-protect freeze')
+                    : Yii::t('hipanel:domain', 'Disable WHOIS-protect freeze'),
+                'url' => !$this->model->isWPFreezed()
+                    ? ['@domain/enable-w-p-freeze']
+                    : ['@domain/disable-w-p-freeze'],
                 'icon' => 'fa-snowflake-o',
-                'visible' => !$this->model->isRussianZones() && Yii::$app->user->can('support') && Domain::notDomainOwner($this->model),
+                'visible' => $this->model->canWPFreezeUnfreeze(),
                 'linkOptions' => [
                     'data' => [
                         'method' => 'post',
@@ -188,7 +207,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                         ],
                     ],
                 ],
-                'visible' => !in_array(Domain::getZone($this->model->domain), ['ru', 'su', 'рф'], true) && (Yii::$app->user->can('support') && Yii::$app->user->not($this->model->client_id) && Yii::$app->user->not($this->model->seller_id)),
+                'visible' => $this->model->canHoldUnhold(),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Manage DNS'),
