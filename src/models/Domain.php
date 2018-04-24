@@ -636,7 +636,7 @@ class Domain extends \hipanel\base\Model
         }
 
         $zone = $this->getZone();
-        $zonePresentInMaxDelegationPeriods = array_key_exists($zone, static::$maxDelegationPeriods, true);
+        $zonePresentInMaxDelegationPeriods = !empty(static::$maxDelegationPeriods[$zone]);
         $maxDelegationPeriod = static::$maxDelegationPeriods[$zonePresentInMaxDelegationPeriods ? $zone : '*'];
 
         if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod}", time())) {
