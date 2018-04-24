@@ -39,14 +39,14 @@ class Domain extends \hipanel\base\Model
 
     public static $contactTypes = ['registrant', 'admin', 'tech', 'billing'];
 
-    public static $maxDeligationPeriods = [
+    public static $maxDelegationPeriods = [
         'ru' => 2,
         'su' => 2,
         'рф' => 2,
         '*' => 10,
     ];
 
-    public static $maxDeligations = [
+    public static $maxDelegations = [
         'ru' => 1,
         'su' => 1,
         'рф' => 1,
@@ -636,10 +636,10 @@ class Domain extends \hipanel\base\Model
         }
 
         $zone = $this->getZone();
-        $zonePresentInMaxDeligationPeriods = array_key_exists($zone, static::$maxDeligationPeriods, true);
-        $maxDeligationPeriod = static::$maxDeligationPeriods[$zonePresentInMaxDeligationPeriods ? $zone : '*'];
+        $zonePresentInMaxDelegationPeriods = array_key_exists($zone, static::$maxDelegationPeriods, true);
+        $maxDelegationPeriod = static::$maxDelegationPeriods[$zonePresentInMaxDelegationPeriods ? $zone : '*'];
 
-        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDeligationPeriod}", time())) {
+        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod}", time())) {
             return false;
         }
 
