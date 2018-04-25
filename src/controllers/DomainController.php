@@ -581,6 +581,13 @@ class DomainController extends \hipanel\base\CrudController
                             return ['@domain/preincoming-started', 'domains' => $domains];
                         },
                     ],
+                    'error' => [
+                        'class' => RedirectAction::class,
+                        'url' => function ($action) {
+                            $domains = Yii::$app->request->post('Domain')['domains'];
+                            return ['@domain/preincoming-failed', 'domains' => $domains];
+                        },
+                    ],
                 ],
             ],
             'reject-preincoming' => [
@@ -620,6 +627,13 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-canceled' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingCanceled',
+                'data' => function ($action) {
+                    return ['domains' => Yii::$app->request->get('domains')];
+                },
+            ],
+            'preincoming-failed' => [
+                'class' => RenderAction::class,
+                'view' => 'preincomingFailed',
                 'data' => function ($action) {
                     return ['domains' => Yii::$app->request->get('domains')];
                 },
