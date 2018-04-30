@@ -9,6 +9,7 @@ use hipanel\modules\client\actions\ContactCreateAction;
 use hipanel\modules\client\actions\ContactUpdateAction;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\cart\RegistrantModifier;
+use hipanel\filters\EasyAccessControl;
 use hiqdev\yii2\cart\Module as CartModule;
 use Yii;
 
@@ -17,6 +18,20 @@ class ContactController extends CrudController
     public static function modelClassName()
     {
         return Contact::class;
+    }
+
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => EasyAccessControl::class,
+                'actions' => [
+                    'create' => 'contact.create',
+                    'update' => 'contact.update',
+                    '*' => 'contact.read',
+                ],
+            ],
+        ]);
     }
 
     public function actions()

@@ -15,6 +15,7 @@ use hipanel\actions\ValidateFormAction;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
+use hipanel\filters\EasyAccessControl;
 use hiqdev\hiart\Collection;
 use hiqdev\hiart\ResponseErrorException;
 use hiqdev\yii2\cart\actions\AddToCartAction;
@@ -31,6 +32,19 @@ class TransferController extends \hipanel\base\CrudController
         $config['class'] = Domain::class;
 
         return Yii::createObject($config);
+    }
+
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => EasyAccessControl::class,
+                'actions' => [
+                    'add-to-cart-transfer' => 'domain.pay',
+                    '*' => 'domain.read',
+                ],
+            ],
+        ]);
     }
 
     /**
