@@ -1,15 +1,20 @@
 <?php
 
-namespace acceptance\seller\domain;
+namespace hipanel\modules\domain\tests\acceptance\seller;
 
 use Codeception\Example;
-use Step\Acceptance\Seller;
+use hipanel\tests\_support\Step\Acceptance\Seller;
 
+/**
+ * Class WhoisCest
+ *
+ * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ */
 class WhoisCest
 {
     protected function parent()
     {
-        return new \acceptance\client\domain\WhoisCest();
+        return new \hipanel\modules\domain\tests\acceptance\client\WhoisCest();
     }
 
     public function ensureIndexPageWorks(Seller $I)

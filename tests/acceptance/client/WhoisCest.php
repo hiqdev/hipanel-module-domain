@@ -1,10 +1,15 @@
 <?php
 
-namespace acceptance\client\domain;
+namespace hipanel\modules\domain\tests\acceptance\client;
 
-use Page\domain\Whois;
-use Step\Acceptance\Client;
+use hipanel\modules\domain\tests\_support\Page\Whois;
+use hipanel\tests\_support\Step\Acceptance\Client;
 
+/**
+ * Class WhoisCest
+ *
+ * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ */
 class WhoisCest
 {
     public function ensureIndexPageWorks(Client $I)

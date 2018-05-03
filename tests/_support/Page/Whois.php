@@ -1,11 +1,16 @@
 <?php
 
-namespace hipanel\tests\_support\Step\Acceptance;
+namespace hipanel\modules\domain\tests\_support\Page;
 
 use Codeception\Util\ActionSequence;
-use Page\Authenticated;
+use hipanel\tests\_support\Page\Authenticated;
 use yii\helpers\Url;
 
+/**
+ * Class Whois
+ *
+ * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ */
 class Whois extends Authenticated
 {
     public function openIndexPage()
