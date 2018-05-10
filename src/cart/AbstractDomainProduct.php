@@ -71,8 +71,11 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
 
         if ($this->_model) {
             $interval = (new \DateTime())->diff(new \DateTime($this->_model->expires));
-            if ($interval->y > 0 && !$interval->invert) {
+            if ($interval->y >= 0 && !$interval->invert) {
                 $limit -= $interval->y;
+                if ($interval->m > 0 || $interval->d > 0) {
+                    $limit--;
+                }
             }
         }
 
