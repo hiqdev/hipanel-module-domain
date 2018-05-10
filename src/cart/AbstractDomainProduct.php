@@ -12,9 +12,10 @@ namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
+use hiqdev\yii2\cart\DontIncrementQuantityWhenAlreadyInCart;
 use Yii;
 
-abstract class AbstractDomainProduct extends AbstractCartPosition
+abstract class AbstractDomainProduct extends AbstractCartPosition implements DontIncrementQuantityWhenAlreadyInCart
 {
     /**
      * @var Domain
@@ -100,4 +101,5 @@ abstract class AbstractDomainProduct extends AbstractCartPosition
         $parent['_model'] = $this->_model;
         return $parent;
     }
+
 }
