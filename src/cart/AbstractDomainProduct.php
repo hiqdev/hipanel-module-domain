@@ -80,6 +80,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
             }
         }
 
+        $limit = $limit < 1 ? 1 : $limit;
         for ($n = 1; $n <= $limit; ++$n) {
             $result[$n] = Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', $n);
         }
