@@ -183,7 +183,7 @@ return [
     'Domain transfer was rejected' => 'Трансфер домена был отклонён',
     'Domain was successfully pushed' => 'Домен был передан успешно',
     'Domains' => 'Домены',
-    'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, one{# day} other{# days}})' => 'Домен в зоне {zone} возможно продлить только в {min, plural, one{последний день} few{последние # дня} other{последние # дней}} перед окончанием срока регистрации. Домен {domain} вы сможете продлить после {date} (через {days, plural, one{# день} few{# дня} other{# дней}})',
+    'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, plural, one{# day} other{# days}})' => 'Домен в зоне {zone} возможно продлить только в {min, plural, one{последний день} few{последние # дня} other{последние # дней}} перед окончанием срока регистрации. Домен {domain} вы сможете продлить после {date} (через {days, plural, one{# день} few{# дня} other{# дней}})',
     'Domains in «ok» state' => 'В состоянии «ОК»',
     'Edit contact' => 'Редактирование контакта',
     'Enable Hold' => 'Прекратить делегирование',
