@@ -256,7 +256,7 @@ class Domain extends \hipanel\base\Model
 
             // domain transfer
             'receiver' => Yii::t('hipanel:domain', 'Receiver'),
-            'pincode' => Yii::t('hipanel:domain', 'Pin code'),
+            'pincode' => Yii::t('hipanel:domain', 'Pincode'),
 
             // contacts
             'registrant' => Yii::t('hipanel:client', 'Registrant contact'),
@@ -653,20 +653,18 @@ class Domain extends \hipanel\base\Model
 
     public function isPushable()
     {
-        return $this->isOk();
+        return $this->isOk() && !$this->isRussianZones();
     }
 
     public function isForcePushable()
     {
-        return $this->isExpired() || $this->isDeleting();
+        return $this->isExpired() || $this->isDeleting() || $this->isRussianZones();
     }
 
     public function canPush()
     {
-        return !$this->isRussianZones() && (
-                ($this->isPushable() && $this->can('domain.push'))
-            ||  ($this->isForcePushable() && $this->can('domain.push'))
-        );
+        return ($this->isPushable() && $this->can('domain.push'))
+            ||  ($this->isForcePushable() && $this->can('domain.force-push'));
     }
 
     public function canDelete()
