@@ -42,7 +42,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                     ],
                 ]),
                 'encode' => false,
-                'visible' => $this->model->canPush(),
+                'visible' => $this->model->canBePushed(),
             ],
             [
                 'visible' => $this->model->canRenew(),

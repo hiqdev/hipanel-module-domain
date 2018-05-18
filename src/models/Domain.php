@@ -661,7 +661,7 @@ class Domain extends \hipanel\base\Model
         return $this->isExpired() || $this->isDeleting() || $this->isRussianZones();
     }
 
-    public function canPush()
+    public function canBePushed()
     {
         return ($this->isPushable() && $this->can('domain.push'))
             ||  ($this->isForcePushable() && $this->can('domain.force-push'));
