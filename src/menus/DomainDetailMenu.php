@@ -30,7 +30,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
             [
                 'label' => AjaxModal::widget([
                     'id' => 'push-modal-link',
-                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Push domain') . ': ' . Html::tag('b', $this->title), ['class' => 'modal-title']),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Push domain') . ': ' . Html::tag('b', $this->model->domain), ['class' => 'modal-title']),
                     'scenario' => 'push',
                     'actionUrl' => ['domain-push-modal', 'id' => $this->model->id],
                     'size' => Modal::SIZE_DEFAULT,
@@ -42,7 +42,7 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                     ],
                 ]),
                 'encode' => false,
-                'visible' => $this->model->canPush(),
+                'visible' => $this->model->canBePushed(),
             ],
             [
                 'visible' => $this->model->canRenew(),

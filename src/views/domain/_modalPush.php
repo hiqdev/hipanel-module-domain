@@ -42,7 +42,7 @@ $unPushable = [];
             'data' => $models,
             'visibleCount' => count($models),
             'formatter' => function ($model) use (&$unPushable) {
-                if (!$model->isPushable()) {
+                if (!$model->canBePushed()) {
                     $unPushable[] =  $model->domain;
                 }
                 return $model->domain;
@@ -63,7 +63,7 @@ $unPushable = [];
 <?php endif; ?>
 
 <?php foreach ($models as $model) : ?>
-    <?php if ($model->isPushable()) : ?>
+    <?php if ($model->canBePushed()) : ?>
         <?= Html::activeHiddenInput($model, "[$model->id]id") ?>
         <?= Html::activeHiddenInput($model, "[$model->id]domain") ?>
         <?= Html::activeHiddenInput($model, "[$model->id]sender", ['value' => $model->client]) ?>
