@@ -3,7 +3,7 @@
 use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\client\widgets\combo\SellerCombo;
 use hipanel\modules\domain\models\Domain;
-use hipanel\widgets\DatePicker;
+use hiqdev\yii2\daterangepicker\DateRangePicker;
 use hiqdev\combo\StaticCombo;
 use yii\helpers\Html;
 
@@ -28,7 +28,7 @@ use yii\helpers\Html;
     <div class="col-md-4 col-sm-6 col-xs-12">
         <?= $search->field('seller_id')->widget(SellerCombo::class) ?>
     </div>
-<?php 
+<?php
 } ?>
 
 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -43,15 +43,14 @@ use yii\helpers\Html;
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
         <?= Html::tag('label', Yii::t('hipanel:domain', 'Registered range'), ['class' => 'control-label']); ?>
-        <?= DatePicker::widget([
+        <?= DateRangePicker::widget([
             'model' => $search->model,
             'attribute' => 'created_from',
             'attribute2' => 'created_till',
-            'type' => DatePicker::TYPE_RANGE,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-mm-yyyy',
+            'options' => [
+                'class' => 'form-control',
             ],
+            'dateFormat' => 'yyyy-MM-dd',
         ]) ?>
     </div>
 </div>
