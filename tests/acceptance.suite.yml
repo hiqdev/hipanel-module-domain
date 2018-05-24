@@ -16,9 +16,12 @@ modules:
             cleanup: false
             configFile: '%YII2_CONFIG_LOCATION%'
         - \hipanel\tests\_support\Helper\CredentialsProvider:
+            client.id: '%client.id%'
             client.login: '%client.login%'
             client.password: '%client.password%'
+            seller.id: '%seller.id%'
             seller.login: '%seller.login%'
             seller.password: '%seller.password%'
+            admin.id: '%admin.id%'
             admin.login: '%admin.login%'
             admin.password: '%admin.password%'
