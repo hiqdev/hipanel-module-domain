@@ -625,7 +625,7 @@ class Domain extends \hipanel\base\Model
         return strtotime('+56 days', time()) > strtotime($this->expires);
     }
 
-    public function isRenewable()
+    public function isRenewable(): bool
     {
         if ($this->isExpired()) {
             return true;
@@ -635,11 +635,8 @@ class Domain extends \hipanel\base\Model
             return false;
         }
 
-        $zone = $this->getZone();
-        $zonePresentInMaxDelegationPeriods = !empty(static::$maxDelegationPeriods[$zone]);
-        $maxDelegationPeriod = static::$maxDelegationPeriods[$zonePresentInMaxDelegationPeriods ? $zone : '*'];
-
-        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod}", time())) {
+        $maxDelegationPeriod = static::$maxDelegationPeriods[$this->getZone()] ?? static::$maxDelegationPeriods['*'];
+        if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod} year", time())) {
             return false;
         }
 

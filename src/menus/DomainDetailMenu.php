@@ -18,6 +18,9 @@ use yii\helpers\Html;
 
 class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
 {
+    /**
+     * @var Domain
+     */
     public $model;
 
     public function items()
