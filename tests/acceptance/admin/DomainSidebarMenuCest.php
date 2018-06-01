@@ -14,9 +14,8 @@ class DomainSidebarMenuCest
         $menu->ensureContains('Domains',[
             'Domains' => '@domain/index',
             'Name Servers' => '@host/index',
-            'Contacts' => '/client/contact/index',
+            'Contacts' => '@contact/index',
             'WHOIS lookup' => '/domain/whois/index',
-            'DNS' => '/dns/zone/index',
         ]);
 
         $menu->ensureDoesNotContain('Domains', [

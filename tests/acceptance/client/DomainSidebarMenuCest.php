@@ -12,11 +12,10 @@ class DomainSidebarMenuCest
         (new SidebarMenu($I))->ensureContains('Domains',[
             'Domains' => '@domain/index',
             'Name Servers' => '@host/index',
-            'Contacts' => '/client/contact/index',
+            'Contacts' => '@contact/index',
             'Buy domain' => '@domain-check/check-domain',
             'Transfer domain' => '/domain/transfer/index',
             'WHOIS lookup' => '/domain/whois/index',
-            'DNS' => '/dns/zone/index',
         ]);
     }
 }
