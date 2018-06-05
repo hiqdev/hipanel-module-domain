@@ -143,6 +143,7 @@ class Domain extends \hipanel\base\Model
                 'notify-transfer-in',
                 'delete',
                 'force-reject-preincoming',
+                'force-approve-preincoming',
             ]],
 
             // Check domain
@@ -154,7 +155,7 @@ class Domain extends \hipanel\base\Model
                     return $value;
                 }
             }, 'on' => 'check-domain'],
-            [['domain'], 'required', 'on' => ['check-domain']],
+            [['domain'], 'required', 'on' => ['check-domain', 'force-reject-preincoming', 'force-approve-preincoming']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
             [['zone'], 'default', 'value' => static::DEFAULT_ZONE, 'on' => ['check-domain']],

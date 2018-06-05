@@ -358,6 +358,9 @@ class DomainController extends \hipanel\base\CrudController
                 'scenario' => 'force-reject-preincoming',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
             ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
