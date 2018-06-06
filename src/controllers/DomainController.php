@@ -359,6 +359,15 @@ class DomainController extends \hipanel\base\CrudController
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
             ],
+            'force-approve-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'force-approve-preincoming',
+                'success' => Yii::t('hipanel:domain', 'Domain transfer was approved'),
+                'error' => Yii::t('hipanel:domain', 'Failed approve domain transfer'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
+            ],
             'approve-transfer' => [
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was approved'),

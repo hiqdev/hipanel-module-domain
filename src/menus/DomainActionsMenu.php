@@ -131,6 +131,25 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'visible' => $this->model->canCancelPreincoming(),
             ],
             [
+                'label' => Yii::t('hipanel:domain', 'Approve preincoming transfer'),
+                'icon' => 'fa-trash',
+                'url' => ['@domain/force-approve-preincoming', 'id' => $this->model->id, 'domain' => $this->model->domain],
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to approve domain {domain} transfer?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'pjax' => '0',
+                        'form' => 'force-approve-preincoming',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                            'Domain[domain]' => $this->model->domain,
+                        ],
+
+                    ],
+                ],
+                'visible' => $this->model->canCancelPreincoming(),
+            ],
+            [
                 'label' => Yii::t('hipanel:domain', 'Synchronize contacts'),
                 'icon' => 'fa-refresh',
                 'url' => ['sync', 'id' => $this->model->id],
