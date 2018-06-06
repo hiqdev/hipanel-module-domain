@@ -131,7 +131,7 @@ return [
     'Are you sure you want to delete domain {domain}?' => 'Вы уверены, что хотите удалить домен {domain}',
     'Are you sure you want to reject outgoing transfer of domain {domain}?' => 'Вы уверены, что хотите отклонить трансфер домена {domain}?',
     'Are you sure you want to approve domain {domain} transfer?' => 'Вы уверены, что хотите подтвердить трансфер домена {domain}?',
-    'Are you sure you want to reject domain {domain} transfer?' => 'Вы уверены, что хотите отменить трансфер домена {domain}?',
+    'Are you sure you want to cancel domain {domain} transfer?' => 'Вы уверены, что хотите отменить трансфер домена {domain}?',
     'Attention' => 'ВНИМАНИЕ',
     'Audio&Music' => 'Музыка и Аудио',
     'Authorization code' => 'Код авторизации',

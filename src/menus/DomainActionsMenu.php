@@ -132,7 +132,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'Approve preincoming transfer'),
-                'icon' => 'fa-trash',
+                'icon' => 'fa-exclamation-circle',
                 'url' => ['@domain/force-approve-preincoming', 'id' => $this->model->id, 'domain' => $this->model->domain],
                 'linkOptions' => [
                     'data' => [
