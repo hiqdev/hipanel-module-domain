@@ -63,6 +63,8 @@ class DomainController extends \hipanel\base\CrudController
                     'enable-freeze' => 'domain.freeze',
                     'enable-freeze-w-p' => 'domain.freeze',
                     'unfreeze-access' => 'domain.unfreeze',
+                    'force-reject-preincoming' => 'support',
+                    'force-approve-preincoming' => 'support',
                     '*' => 'domain.read',
                 ],
             ],
