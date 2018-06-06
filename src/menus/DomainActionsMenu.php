@@ -114,7 +114,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
             [
                 'label' => Yii::t('hipanel:domain', 'Cancel preincoming transfer'),
                 'icon' => 'fa-trash',
-                'url' => ['@domain/force-reject-preincoming', 'id' => $this->model->id],
+                'url' => ['@domain/force-reject-preincoming', 'id' => $this->model->id, 'domain' => $this->model->domain],
                 'linkOptions' => [
                     'data' => [
                         'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to cancel domain {domain} transfer?', ['domain' => $this->model->domain]),
