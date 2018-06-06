@@ -125,7 +125,7 @@ return [
     'An email was sent to your email address specified in Whois. To start the transfer, click on the link in the email.' => 'Письмо отправлено на емейл указанный в WHOIS. Чтобы начать трансфер нажмите на ссылку в письме.',
     'Approve transfer' => 'Подтвердить трансфер',
     'Cancel preincoming transfer' => 'Отменить входящий трансфер',
-    'Approve preincoming transfer' => 'Подтвердить начало входящего трансфера',
+    'Approve preincoming transfer' => 'Подтвердить входящий трансфер',
     'Are you sure you want to approve outgoing transfer of domain {domain}?' => 'Вы уверены, что хотите подтвердить трансфер домена {domain}?',
     'Are you sure you want to cancel incoming transfer of domain {domain}?' => 'Вы уверены, что хотите отменить трансфер домена {domain}?',
     'Are you sure you want to delete domain {domain}?' => 'Вы уверены, что хотите удалить домен {domain}',
