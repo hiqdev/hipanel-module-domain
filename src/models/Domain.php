@@ -104,7 +104,7 @@ class Domain extends \hipanel\base\Model
     public function rules()
     {
         return [
-            [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft'], 'integer'],
+            [['id', 'zone_id', 'seller_id', 'client_id', 'remoteid', 'daysleft', 'prem_daysleft', 'add_period'], 'integer'],
             [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'], 'safe'],
             [['seller', 'seller_name', 'client', 'client_name'], 'safe'],
             [['premium_expires', 'premium_days_left'], 'safe'],
@@ -672,9 +672,9 @@ class Domain extends \hipanel\base\Model
 
     public function canDeleteAGP()
     {
-        return $this->isZone(['com', 'net'])
+        return $this->add_period !== null
             && $this->isOk()
-            && strtotime($this->created_date) > strtotime('-5 days', time())
+            && strtotime($this->created_date) > strtotime("-{$this->add_period} hours", time())
             && strtotime($this->expires) < strtotime('+1 year', time())
             && $this->can('manage');
     }
