@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'size' => Modal::SIZE_LARGE,
             'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Set IPs'), 'class' => 'btn btn-sm btn-default'],
         ]) ?>
-        <?= $page->renderBulkButton(Yii::t('hipanel', 'Delete'), 'delete', 'danger')?>
+        <?= $page->renderBulkDeleteButton('delete') ?>
     <?php $page->endContent('bulk-actions') ?>
 
     <?php $page->beginContent('table') ?>
