@@ -344,4 +344,5 @@ return [
     'We can\'t suggest you something similar to entered domain name.' => 'Мы не можем предложить вам что-то похожее на введенное доменное имя.',
     'The domain name was registered till {date}' => 'Домен был зарегистрирован до {date}',
     'Pincode' => 'Пинкод',
+    'Domain names (one per row)' => 'Доменные имена (одно на строку)',
 ];

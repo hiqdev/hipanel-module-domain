@@ -12,6 +12,7 @@ namespace hipanel\modules\domain\models;
 
 use hipanel\base\SearchModelTrait;
 use hipanel\helpers\ArrayHelper;
+use Yii;
 
 class DomainSearch extends Domain
 {
@@ -23,6 +24,13 @@ class DomainSearch extends Domain
     {
         return ArrayHelper::merge($this->defaultSearchAttributes(), [
             'created_from', 'created_till', 'with_nsips', 'client_like', 'contacts'
+        ]);
+    }
+
+    public function attributeLabels()
+    {
+        return $this->mergeAttributeLabels([
+            'domains' => Yii::t('hipanel:domain', 'Domain names (one per row)')
         ]);
     }
 }

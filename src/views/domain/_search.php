@@ -8,12 +8,16 @@ use hiqdev\combo\StaticCombo;
 use yii\helpers\Html;
 
 /**
- * @var \hipanel\widgets\AdvancedSearch
+ * @var \hipanel\widgets\AdvancedSearch $search
+ * @var \yii\web\View $this
  */
 ?>
 
 <div class="col-md-4 col-sm-6 col-xs-12">
     <?= $search->field('domain_like') ?>
+</div>
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <?= $search->field('domains')->textarea() ?>
 </div>
 <div class="col-md-4 col-sm-6 col-xs-12">
     <?= $search->field('note') ?>
