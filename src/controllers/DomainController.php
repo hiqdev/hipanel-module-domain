@@ -63,6 +63,12 @@ class DomainController extends \hipanel\base\CrudController
                     'enable-freeze' => 'domain.freeze',
                     'enable-freeze-w-p' => 'domain.freeze',
                     'unfreeze-access' => 'domain.unfreeze',
+                    'transfer-in' => true,
+                    'approve-preincoming' => true,
+                    'reject-preincoming' => true,
+                    'preincoming-started, preincoming-started GET html, preincoming-started html' => true,
+                    'preincoming-cancel, preincoming-cancel GET html, preincoming-cancel html' => true,
+                    'preincoming-failed, preincoming-failed GET html, preincoming-failed html' => true,
                     '*' => 'domain.read',
                 ],
             ],
@@ -611,6 +617,9 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-started' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingStarted',
+                'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
+                },
                 'data' => function ($action) {
                     return ['domains' => Yii::$app->request->get('domains')];
                 },
