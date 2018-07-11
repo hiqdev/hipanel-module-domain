@@ -32,7 +32,6 @@ class HostController extends \hipanel\base\CrudController
                 'class' => EasyAccessControl::class,
                 'actions' => [
                     'create,update' => 'domain.update',
-                    'delete' => 'domain.delete',
                     '*' => 'domain.read',
                 ],
             ],
