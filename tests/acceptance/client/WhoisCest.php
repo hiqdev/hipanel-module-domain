@@ -41,18 +41,10 @@ class WhoisCest
     public function _domainSearchProvider()
     {
         return [
-            'mail.ru' => [
-                'domain' => 'mail.ru',
-                'see' => [
-                    'Sep 27, 1997',
-                    'Russian Federation',
-                ]
-            ],
             'ripe.net' => [
                 'domain' => 'ripe.net',
                 'see' => [
                     'Feb 25, 1992',
-                    'Netherlands',
                 ]
             ],
             'unexisting.domain' => [
