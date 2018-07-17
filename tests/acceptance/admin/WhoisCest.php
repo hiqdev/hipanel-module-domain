@@ -25,7 +25,10 @@ class WhoisCest
     public function _domainSearchProvider()
     {
         $items = $this->parent()->_domainSearchProvider();
-        unset($items['available-to-order-domain.com']['see']['add-to-cart-button']);
+        unset(
+            $items['available-to-order-domain.com']['see']['add-to-cart-button'],
+            $items['available-to-order-domain.com']['see']['availability-notice']
+        );
         $items['available-to-order-domain.com']['dontSee'] = ['Buy domain'];
 
         return $items;

@@ -56,7 +56,7 @@ class WhoisCest
             'available-to-order-domain.com' => [
                 'domain' => 'available-to-order-domain.com',
                 'see' => [
-                    'This domain is available for registration',
+                    'availability-notice' => 'This domain is available for registration',
                     'add-to-cart-button' => 'Buy domain'
                 ]
             ],
