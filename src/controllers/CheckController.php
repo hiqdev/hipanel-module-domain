@@ -66,9 +66,7 @@ class CheckController extends \hipanel\base\CrudController
                 }
             }
 
-            return $this->renderAjax('_checkDomainItem', [
-                'model' => $model,
-            ]);
+            return $this->renderPartial('_checkDomainItem', compact('model'));
         }
 
         return Yii::$app->end();
