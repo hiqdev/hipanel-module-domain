@@ -10,9 +10,9 @@ use yii\helpers\StringHelper;
 
 class BulkCheckForm extends Model
 {
-    public $fqdns;
+    public $fqdns = [];
 
-    public $zones;
+    public $zones = [];
     /**
      * @var array
      */
