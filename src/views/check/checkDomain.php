@@ -229,10 +229,6 @@ if (!empty($results)) {
             var $parentElem = $(element).find("div[data-domain='" + domain + "']").parents('div.domain-iso-line').eq(0);
             $elem.replaceWith($(data).find('.domain-line'));
             $parentElem.attr('class', $(data).attr('class'));
-            $('#domain-tabs a').on('shown.bs.tab', function (e) {
-                $('.filters .nav li.active a').click(); // FIX remove not filtred items
-            });
-            $('.filters .nav li.active a').click(); // FIX remove not filtred items
 
             return this;
         },
@@ -291,6 +287,12 @@ if (!empty($results)) {
 
                 return value;
             }
+            
+            $('#domain-tabs a').on('shown.bs.tab', function (e) {
+                $('.filters .nav li.active a').click(); // FIX remove not filtred items
+                console.log('123123');
+            });
+            $('.filters .nav li.active a').click(); // FIX remove not filtred items
         }
     });
 
