@@ -4,6 +4,7 @@
 namespace hipanel\modules\domain\tests\acceptance\client;
 
 use hipanel\helpers\Url;
+use hipanel\tests\_support\Page\GridView;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
 class DomainCest
@@ -38,7 +39,8 @@ class DomainCest
             'created_date' => 'Registered',
             'expires' => 'Paid till',
         ];
-        $I->seeSortColumns($sortColumns, '@domain/index');
+        $gridView = new GridView($I);
+        $gridView->containsColumns($sortColumns, '@domain/index');
 
         $I->see('Status', 'th');
 
