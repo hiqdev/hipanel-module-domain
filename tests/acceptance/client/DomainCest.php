@@ -3,7 +3,7 @@
 namespace hipanel\modules\domain\tests\acceptance\client;
 
 use hipanel\helpers\Url;
-use hipanel\tests\_support\Page\GridView;
+use hipanel\tests\_support\Page\IndexPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
 class DomainCest
@@ -13,7 +13,6 @@ class DomainCest
         $I->login();
         $I->needPage(Url::to('@domain/index'));
         $I->see('Domains', 'h1');
-        $I->seeLink('Buy domain', Url::to('@domain-check'));
         $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkDomainSearchBox($I);
     }
@@ -21,42 +20,40 @@ class DomainCest
     private function ensureICanSeeAdvancedSearchBox(Client $I)
     {
         $I->see('Advanced search', 'h3');
-        $I->seeElement('input', ['placeholder' => 'Domain name']);
-        $I->seeElement('textarea', ['placeholder' => 'Domain names (one per row)']);
-        $I->seeElement('input', ['placeholder' => 'Notes']);
+
+        $index = new IndexPage($I);
+        $index->containsFilters('form-advancedsearch-domain-search', [
+            ['input' => ['placeholder' => 'Domain name']],
+            ['textarea' => ['placeholder' => 'Domain names (one per row)']],
+            ['input' => ['placeholder' => 'Notes']],
+            ['input' => ['name' => 'date-picker']],
+        ]);
+
         $I->see('Status', 'span');
         $I->see('Registered range', 'label');
-        $I->seeElement('input', ['name' => 'date-picker']);
-        $I->see('Search', "//button[@type='submit']");
-        $I->seeLink('Clear', Url::to('@domain/index'));
+
+        $index->containsButtons([
+            ['a' => 'Buy domain'],
+            ["//button[@type='submit']" => 'Search'],
+            ['a' => 'Clear'],
+            ["//button[@type='button']" => 'Basic actions'],
+            ["//button[@type='button']" => 'Set notes'],
+            ["//button[@type='button']" => 'Set NS'],
+            ["//button[@type='button']" => 'Change contacts'],
+        ]);
     }
 
     private function ensureICanSeeBulkDomainSearchBox(Client $I)
     {
-        $sortColumns = [
-            'domain' => 'Domain name',
-            'created_date' => 'Registered',
-            'expires' => 'Paid till',
-        ];
-        $gridView = new GridView($I);
-        $gridView->containsColumns($sortColumns, '@domain/index');
-
-        $I->see('Status', 'th');
-
-        $columns = ['WHOIS', 'Protection', 'Autorenew'];
-        foreach ($columns as $text) {
-            $I->see($text, 'span');
-        }
-
-        $elements = [
-            'WHOIS protection',
-            'Protection from transfer',
-            'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account',
-        ];
-        foreach ($elements as $element) {
-            $I->seeElement('th', ['data-content' => $element]);
-        }
-
-        $I->see('No results found.', "//div[@class='empty']");
+        $index = new IndexPage($I);
+        $index->containsColumns('bulk-domain-search', [
+            'Domain name',
+            'Status',
+            'WHOIS',
+            'Protection',
+            'Registered',
+            'Paid till',
+            'Autorenew',
+        ]);
     }
 }

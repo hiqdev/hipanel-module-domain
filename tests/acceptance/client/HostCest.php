@@ -3,7 +3,7 @@
 namespace hipanel\modules\domain\tests\acceptance\client;
 
 use hipanel\helpers\Url;
-use hipanel\tests\_support\Page\GridView;
+use hipanel\tests\_support\Page\IndexPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
 class HostCest
@@ -13,7 +13,6 @@ class HostCest
         $I->login();
         $I->needPage(Url::to('@host'));
         $I->see('Name Servers', 'h1');
-        $I->seeLink('Create name server', Url::to('create'));
         $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkHostSearchBox($I);
     }
@@ -21,30 +20,35 @@ class HostCest
     private function ensureICanSeeAdvancedSearchBox(Client $I)
     {
         $I->see('Advanced search', 'h3');
-        $I->seeElement('input', [
-            'id' => 'hostsearch-host_like',
-            'placeholder' => 'Name server',
+
+        $index = new IndexPage($I);
+        $index->containsFilters('form-advancedsearch-host-search', [
+            ['input' => [
+                'id' => 'hostsearch-host_like',
+                'placeholder' => 'Name server',
+            ]],
+            ['input' => [
+                'id' => 'hostsearch-domain_like',
+                'placeholder' => 'Domain name',
+            ]],
         ]);
-        $I->seeElement('input', [
-            'id' => 'hostsearch-domain_like',
-            'placeholder' => 'Domain name',
+
+        $index->containsButtons([
+            ['a' => 'Create name server'],
+            ["//button[@type='submit']" => 'Search'],
+            ['a' => 'Clear'],
+            ["//button[@type='button']" => 'Set IPs'],
+            ["//button[@type='submit']" => 'Delete'],
         ]);
-        $I->see('Search', "//button[@type='submit']");
-        $I->seeLink('Clear', Url::to('@host/index'));
     }
 
     private function ensureICanSeeBulkHostSearchBox(Client $I)
     {
-        $sortColumns = [
-            'host' => 'Host',
-            'ips' => 'IPs',
-            'domain' => 'Domain name',
-        ];
-        $gridView = new GridView($I);
-        $gridView->containsColumns($sortColumns, '@host/index');
-
-        $I->see('Set IPs', "//button[@type='button']");
-        $I->see('Delete', "//button[@type='submit']");
-        $I->see('No results found.', "//div[@class='empty']");
+        $index = new IndexPage($I);
+        $index->containsColumns('bulk-host-search', [
+            'Host',
+            'IPs',
+            'Domain name',
+        ]);
     }
 }
