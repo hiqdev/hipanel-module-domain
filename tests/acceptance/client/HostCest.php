@@ -16,19 +16,18 @@ class HostCest
         $I->seeLink('Create name server', Url::to('create'));
         $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkHostSearchBox($I);
-
     }
 
     private function ensureICanSeeAdvancedSearchBox(Client $I)
     {
         $I->see('Advanced search', 'h3');
         $I->seeElement('input', [
-            'placeholder' => 'Name server',
             'id' => 'hostsearch-host_like',
+            'placeholder' => 'Name server',
         ]);
         $I->seeElement('input', [
-            'placeholder' => 'Domain name',
             'id' => 'hostsearch-domain_like',
+            'placeholder' => 'Domain name',
         ]);
         $I->see('Search', "//button[@type='submit']");
         $I->seeLink('Clear', Url::to('@host/index'));
