@@ -1,6 +1,5 @@
 <?php
 
-
 namespace hipanel\modules\domain\tests\acceptance\client;
 
 use hipanel\helpers\Url;
