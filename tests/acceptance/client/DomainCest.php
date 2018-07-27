@@ -19,6 +19,7 @@ class DomainCest
 
     private function ensureICanSeeAdvancedSearchBox(Client $I)
     {
+        $I->seeLink('Buy domain', Url::to('@domain-check'));
         $I->see('Advanced search', 'h3');
 
         $index = new IndexPage($I);
@@ -31,21 +32,17 @@ class DomainCest
 
         $I->see('Status', 'span');
         $I->see('Registered range', 'label');
-
-        $index->containsButtons([
-            ['a' => 'Buy domain'],
-            ["//button[@type='submit']" => 'Search'],
-            ['a' => 'Clear'],
-            ["//button[@type='button']" => 'Basic actions'],
-            ["//button[@type='button']" => 'Set notes'],
-            ["//button[@type='button']" => 'Set NS'],
-            ["//button[@type='button']" => 'Change contacts'],
-        ]);
     }
 
     private function ensureICanSeeBulkDomainSearchBox(Client $I)
     {
         $index = new IndexPage($I);
+        $index->containsBulkButtons([
+            ["//button[@type='button']" => 'Basic actions'],
+            ["//button[@type='button']" => 'Set notes'],
+            ["//button[@type='button']" => 'Set NS'],
+            ["//button[@type='button']" => 'Change contacts'],
+        ]);
         $index->containsColumns('bulk-domain-search', [
             'Domain name',
             'Status',

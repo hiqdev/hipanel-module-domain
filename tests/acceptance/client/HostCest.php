@@ -20,6 +20,7 @@ class HostCest
     private function ensureICanSeeAdvancedSearchBox(Client $I)
     {
         $I->see('Advanced search', 'h3');
+        $I->seeLink('Create name server', Url::to('create'));
 
         $index = new IndexPage($I);
         $index->containsFilters('form-advancedsearch-host-search', [
@@ -32,19 +33,15 @@ class HostCest
                 'placeholder' => 'Domain name',
             ]],
         ]);
-
-        $index->containsButtons([
-            ['a' => 'Create name server'],
-            ["//button[@type='submit']" => 'Search'],
-            ['a' => 'Clear'],
-            ["//button[@type='button']" => 'Set IPs'],
-            ["//button[@type='submit']" => 'Delete'],
-        ]);
     }
 
     private function ensureICanSeeBulkHostSearchBox(Client $I)
     {
         $index = new IndexPage($I);
+        $index->containsBulkButtons([
+            ["//button[@type='button']" => 'Set IPs'],
+            ["//button[@type='submit']" => 'Delete'],
+        ]);
         $index->containsColumns('bulk-host-search', [
             'Host',
             'IPs',
