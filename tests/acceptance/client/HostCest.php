@@ -4,45 +4,46 @@ namespace hipanel\modules\domain\tests\acceptance\client;
 
 use hipanel\helpers\Url;
 use hipanel\tests\_support\Page\IndexPage;
+use hipanel\tests\_support\Page\Widget\Input\Input;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
 class HostCest
 {
+    /**
+     * @var IndexPage
+     */
+    private $index;
+
+    public function _before(Client $I)
+    {
+        $this->index = new IndexPage($I);
+    }
+
     public function ensureIndexPageWorks(Client $I)
     {
         $I->login();
         $I->needPage(Url::to('@host'));
         $I->see('Name Servers', 'h1');
-        $this->ensureICanSeeAdvancedSearchBox($I);
-        $this->ensureICanSeeBulkHostSearchBox($I);
-    }
-
-    private function ensureICanSeeAdvancedSearchBox(Client $I)
-    {
-        $I->see('Advanced search', 'h3');
         $I->seeLink('Create name server', Url::to('create'));
+        $this->ensureICanSeeAdvancedSearchBox();
+        $this->ensureICanSeeBulkHostSearchBox();
+    }
 
-        $index = new IndexPage($I);
-        $index->containsFilters('form-advancedsearch-host-search', [
-            ['input' => [
-                'id' => 'hostsearch-host_like',
-                'placeholder' => 'Name server',
-            ]],
-            ['input' => [
-                'id' => 'hostsearch-domain_like',
-                'placeholder' => 'Domain name',
-            ]],
+    private function ensureICanSeeAdvancedSearchBox()
+    {
+        $this->index->containsFilters([
+            new Input('Name server'),
+            new Input('Domain name'),
         ]);
     }
 
-    private function ensureICanSeeBulkHostSearchBox(Client $I)
+    private function ensureICanSeeBulkHostSearchBox()
     {
-        $index = new IndexPage($I);
-        $index->containsBulkButtons([
-            ["//button[@type='button']" => 'Set IPs'],
-            ["//button[@type='submit']" => 'Delete'],
+        $this->index->containsBulkButtons([
+            'Set IPs',
+            'Delete',
         ]);
-        $index->containsColumns('bulk-host-search', [
+        $this->index->containsColumns([
             'Host',
             'IPs',
             'Domain name',
