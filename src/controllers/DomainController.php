@@ -63,6 +63,8 @@ class DomainController extends \hipanel\base\CrudController
                     'enable-freeze' => 'domain.freeze',
                     'enable-freeze-w-p' => 'domain.freeze',
                     'unfreeze-access' => 'domain.unfreeze',
+                    'force-reject-preincoming' => 'support',
+                    'force-approve-preincoming' => 'support',
                     'transfer-in' => true,
                     'approve-preincoming' => true,
                     'reject-preincoming' => true,
@@ -364,6 +366,15 @@ class DomainController extends \hipanel\base\CrudController
                 'scenario' => 'force-reject-preincoming',
                 'success' => Yii::t('hipanel:domain', 'Domain transfer was cancelled'),
                 'error' => Yii::t('hipanel:domain', 'Failed cancel domain transfer'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
+            ],
+            'force-approve-preincoming' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'force-approve-preincoming',
+                'success' => Yii::t('hipanel:domain', 'Domain transfer was approved'),
+                'error' => Yii::t('hipanel:domain', 'Failed approve domain transfer'),
                 'queryOptions' => [
                     'batch' => false,
                 ],
