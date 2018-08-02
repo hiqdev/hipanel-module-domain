@@ -41,18 +41,10 @@ class WhoisCest
     public function _domainSearchProvider()
     {
         return [
-            'mail.ru' => [
-                'domain' => 'mail.ru',
-                'see' => [
-                    'Sep 27, 1997',
-                    'Russian Federation',
-                ]
-            ],
             'ripe.net' => [
                 'domain' => 'ripe.net',
                 'see' => [
                     'Feb 25, 1992',
-                    'Netherlands',
                 ]
             ],
             'unexisting.domain' => [
@@ -64,7 +56,7 @@ class WhoisCest
             'available-to-order-domain.com' => [
                 'domain' => 'available-to-order-domain.com',
                 'see' => [
-                    'This domain is available for registration',
+                    'availability-notice' => 'This domain is available for registration',
                     'add-to-cart-button' => 'Buy domain'
                 ]
             ],

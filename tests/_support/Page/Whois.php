@@ -32,6 +32,6 @@ class Whois extends Authenticated
         $I->fillField('#whois-domain', $domain);
         $I->click('#whois-lookup button[type="submit"]');
         $I->wait(1);
-        $I->waitForElementNotVisible('#whois .progress', 15);
+        $I->waitForElementNotVisible('#whois .progress', 30);
     }
 }

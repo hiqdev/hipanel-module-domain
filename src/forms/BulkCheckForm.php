@@ -10,9 +10,9 @@ use yii\helpers\StringHelper;
 
 class BulkCheckForm extends Model
 {
-    public $fqdns;
+    public $fqdns = [];
 
-    public $zones;
+    public $zones = [];
     /**
      * @var array
      */
@@ -43,7 +43,7 @@ class BulkCheckForm extends Model
             [['fqdns'], 'filter', 'filter' => function ($fqdns) {
                 $domains = [];
                 foreach (StringHelper::explode($fqdns, "\n") as $line) {
-                    $domains = $domains + preg_split('/([,;\s])/i', $line);
+                    $domains = array_merge($domains, preg_split('/([,;\s])/i', $line));
                 }
 
                 return $domains;
