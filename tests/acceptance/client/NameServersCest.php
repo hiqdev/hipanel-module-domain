@@ -7,7 +7,7 @@ use hipanel\tests\_support\Page\IndexPage;
 use hipanel\tests\_support\Page\Widget\Input\Input;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
-class HostCest
+class NameServersCest
 {
     /**
      * @var IndexPage
