@@ -6,10 +6,6 @@ use yii\helpers\Url;
 
 //\yii\helpers\VarDumper::dump($domainsList, 10, true);
 $this->registerJs(<<<'JS'
-jQuery('.radio-check').iCheck({
-    checkboxClass: 'icheckbox_minimal-blue',
-    radioClass: 'iradio_minimal-blue'
-});
 
 jQuery('.radio-check').on('click', function() {
     var value = jQuery.trim(this.value);

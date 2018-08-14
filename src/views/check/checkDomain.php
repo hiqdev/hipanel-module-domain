@@ -4,7 +4,6 @@ use hipanel\assets\IsotopeAsset;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
 use hipanel\modules\domain\models\Domain;
-use hiqdev\assets\icheck\iCheckAsset;
 use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -14,16 +13,6 @@ use yii\helpers\Html;
 /** @var \hipanel\modules\domain\forms\CheckForm[] $results */
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
-iCheckAsset::register($this);
-$this->registerJs("
-    $('.icheck input').iCheck({
-        labelHover: false,
-        cursor: true,
-        handle: 'checkbox',
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-    });
-");
 
 $this->title = Yii::t('hipanel:domain', 'Domain check');
 $this->params['breadcrumbs'][] = $this->title;
