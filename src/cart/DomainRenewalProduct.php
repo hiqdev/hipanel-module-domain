@@ -104,12 +104,29 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
         return true;
     }
 
+    /**
+     * Checks domains status.
+     *
+     * @param $attribute
+     * @return bool
+     */
+    public function statusValidator($attribute)
+    {
+        if ($this->_model->isRenewable()) {
+            return true;
+        }
+
+        $this->addError('id', Yii::t('hipanel:domain', 'Domain status prohibits this operation'));
+        return false;
+    }
+
     /** {@inheritdoc} */
     public function rules()
     {
         return array_merge(parent::rules(), [
             [['model_id'], 'integer'],
             [['id'], 'daysBeforeExpireValidator'],
+            [['id'], 'statusValidator'],
         ]);
     }
 
