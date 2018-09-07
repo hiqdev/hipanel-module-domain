@@ -161,7 +161,6 @@ $(document).on('pjax:complete', function(event) {
                                     </div>
                                 </div>
                             </div>
-                            <?= Html::activeHiddenInput($nsModel, "[$i]domain_name", ['value' => $model->domain]) ?>
                         </div>
 
                     <?php endforeach; ?>

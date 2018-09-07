@@ -228,13 +228,6 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 ],
                 'visible' => $this->model->canHoldUnhold(),
             ],
-            [
-                'label' => Yii::t('hipanel:domain', 'Manage DNS'),
-                'icon' => 'fa-globe',
-                'url' => ['@dns/zone/view', 'id' => $this->model->id],
-                'visible' => (Yii::getAlias('@dns', false)),
-                'encode' => false,
-            ],
         ];
     }
 }
