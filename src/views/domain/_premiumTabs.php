@@ -15,7 +15,7 @@ $(document).on('click', '.pf-update-form-close', function () {
 
 ?>
 
-<div id="premium" class="tab-pane fade">
+<div id="premium" class="tab-pane active">
     <?= DomainGridView::detailView([
         'boxed' => false,
         'model' => $model,

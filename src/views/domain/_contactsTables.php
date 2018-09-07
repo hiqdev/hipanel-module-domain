@@ -2,30 +2,42 @@
 
 use hipanel\modules\client\grid\ContactGridView;
 use yii\helpers\Html;
-
+$this->registerCss("
+#domain-contacts-list {
+    margin-bottom: 0px;
+}
+#domain-contacts-list td {
+    padding: 0;
+}
+");
 ?>
 
 <?php foreach ($model->contactTypesWithLabels() as $contactType => $label) : ?>
     <?php $contact = $model->{$contactType} ?>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6"><?= Html::tag('h4', $label) ?></div>
-            <div class="col-md-6">
-                <div class="pull-right btn-group" style="padding-top:10px">
-                    <?= Html::a(Yii::t('hipanel', 'Details'), ['@contact/view', 'id' => $contact['id']], ['class' => 'btn btn-default btn-xs']) ?>
-                </div>
-            </div>
+    <div class="box-comment">
+        <div class="comment-text" style="margin-left: 10px;">
+            <span class="username">
+                <?= mb_strtoupper($label) ?>
+                <?= Html::a(Yii::t('hipanel', 'detailed information'), ['@contact/view', 'id' => $contact->id], ['class' => 'pull-right']) ?>
+            </span>
+            <table id="domain-contacts-list" class="table" style="table-layout: fixed">
+                <tr>
+                    <td>
+                        <?= $contact->renderVoicePhone() ?>
+                    </td>
+                    <td>
+                        <?= $contact->name ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?= $contact->email ?>
+                    </td>
+                    <td>
+                        <?= $contact->renderAddress() ?>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <?= ContactGridView::detailView([
-            'boxed' => false,
-            'model' => $contact,
-            'columns' => [
-                'name_link_with_verification',
-                'email_link_with_verification',
-                'organization',
-                'voice_phone',
-                'fax_phone',
-            ],
-        ]) ?>
     </div>
 <?php endforeach ?>

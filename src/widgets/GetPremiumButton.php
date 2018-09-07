@@ -57,26 +57,24 @@ class GetPremiumButton extends Widget
         $url = $this->buildUrl();
         $loader = '<i class="fa fa-refresh fa-spin fa-fw"></i>';
         $this->view->registerJs("
-            $(document).one('click', 'a[href=\"#premium\"][data-toggle=\"tab\"]', function (e) {
-                var waitingForPrice = $('#premium').find('.fetch-premium-price');
-                $.ajax({
-                    url: '{$url}',
-                    type : 'POST',
-                    beforeSend: function () {
-                        waitingForPrice.each(function() {
-                            var text = $(this).text();
-                            $(this).data('original-text', text);
-                            $(this).html(text.replace(/{price}/, '{$loader}'));
-                        });
-                    },
-                    success: function(price) {
-                        waitingForPrice.each(function() {
-                            var oldText = $(this).data('original-text');
-                            $(this).html(oldText.replace(/{price}/, price));
-                        });
-                    }
-                });
-            })
+            var waitingForPrice = $('#premium').find('.fetch-premium-price');
+            $.ajax({
+                url: '{$url}',
+                type : 'POST',
+                beforeSend: function () {
+                    waitingForPrice.each(function() {
+                        var text = $(this).text();
+                        $(this).data('original-text', text);
+                        $(this).html(text.replace(/{price}/, '{$loader}'));
+                    });
+                },
+                success: function(price) {
+                    waitingForPrice.each(function() {
+                        var oldText = $(this).data('original-text');
+                        $(this).html(oldText.replace(/{price}/, price));
+                    });
+                }
+            });
         ");
     }
 }
