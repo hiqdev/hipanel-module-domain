@@ -23,7 +23,7 @@ $this->registerCss("
             <table id="domain-contacts-list" class="table" style="table-layout: fixed">
                 <tr>
                     <td>
-                        <?= $contact->renderVoicePhone() ?>
+                        <?= $contact->voice_phone ?>
                     </td>
                     <td>
                         <?= $contact->name ?>
