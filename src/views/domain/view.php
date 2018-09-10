@@ -115,9 +115,6 @@ JS
 
     <div class="col-lg-3 col-md-6">
         <div class="box box-widget widget-user">
-            <!--div class="widget-user-header"
-                 style="background: url('//mini.s-shot.ru/1024x768/PNG/500/Z100/?<?= $model->domain ?>') top center; background-color: white; background-repeat:  no-repeat; background-size:  cover;">
-            </div-->
             <div class="widget-user-header" data-background-image-url="//mini.s-shot.ru/1024x768/PNG/500/Z100/?<?= $model->domain ?>"
                  style="background-position: top center; background-color: white; background-repeat:  no-repeat; background-size:  cover;">
             </div>
@@ -126,7 +123,7 @@ JS
                     <div class="col-sm-12">
                         <div class="description-block">
                             <h5 class="description-header" style="margin-bottom: .7rem; "><?= $this->title ?></h5>
-                            <span class="description-text"><?= ClientSellerLink::widget(['model' => $model]) ?></span>
+                            <span class="description-text" style="text-transform: none;"><?= ClientSellerLink::widget(['model' => $model]) ?></span>
                         </div>
                     </div>
                 </div>
