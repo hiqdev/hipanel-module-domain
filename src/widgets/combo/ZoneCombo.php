@@ -10,7 +10,7 @@ class ZoneCombo extends Combo
     public $type = 'domain/zone';
 
     /** {@inheritdoc} */
-    public $name = 'name';
+    public $name = 'text';
 
     /** {@inheritdoc} */
     public $url = '/domain/zone/get-zones';
@@ -19,8 +19,5 @@ class ZoneCombo extends Combo
     public $_return = ['id'];
 
     /** {@inheritdoc} */
-    public $_rename = ['text' => 'name'];
-
-    /** {@inheritdoc} */
-    public $_primaryFilter = 'name';
+    public $_primaryFilter = 'search';
 }

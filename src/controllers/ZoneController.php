@@ -17,7 +17,7 @@ class ZoneController extends \hipanel\base\CrudController
             [
                 'class' => EasyAccessControl::class,
                 'actions' => [
-                    '*' => 'domain.read',
+                    'get-zones' => 'domain.read',
                 ],
             ],
         ]);
@@ -28,12 +28,14 @@ class ZoneController extends \hipanel\base\CrudController
         $response = Yii::$app->response;
         $request = Yii::$app->request;
         $response->format = Response::FORMAT_JSON;
-        $searchTerm = $request->post('name');
+        $search = $request->post('search');
         $models = [];
-        $apiData = Yii::$app->hiart->createCommand()->perform('get-zones', '')->getData();
+        $apiData = Yii::$app->cache->getOrSet(['get-zones-data'], function () {
+            return Yii::$app->hiart->createCommand()->perform('get-zones', '')->getData();
+        }, 3600 * 60);
         foreach ($apiData as $id => $zone) {
-            if ($searchTerm) {
-                if (stripos($zone, $searchTerm) !== false) {
+            if ($search) {
+                if (mb_stripos($zone, $search) !== false) {
                     $models[] = ['id' => $id, 'text' => $zone];
                 }
             } else {
