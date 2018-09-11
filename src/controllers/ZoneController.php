@@ -35,11 +35,9 @@ class ZoneController extends \hipanel\base\CrudController
             return Yii::$app->hiart->createCommand()->perform('get-zones', '')->getData();
         }, 3600 * 60);
         foreach ($apiData as $id => $zone) {
-            if ($search) {
-                if (mb_stripos($zone, $search) !== false) {
-                    $models[] = ['id' => $id, 'text' => $zone];
-                }
-            } else {
+            if (empty($search)) {
+                $models[] = ['id' => $id, 'text' => $zone];
+            } elseif (mb_stripos($zone, $search) !== false) {
                 $models[] = ['id' => $id, 'text' => $zone];
             }
         }
