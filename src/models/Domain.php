@@ -142,6 +142,7 @@ class Domain extends \hipanel\base\Model
                 'disable-w-p-freeze',
                 'notify-transfer-in',
                 'delete',
+                'delete-agp',
                 'force-reject-preincoming',
                 'force-approve-preincoming',
             ]],
