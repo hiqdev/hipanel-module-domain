@@ -25,7 +25,7 @@ use hipanel\actions\ViewAction;
 use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\ArrayHelper;
 use hipanel\models\Ref;
-use hipanel\modules\client\models\Client;
+use hipanel\modules\client\helpers\HasPINCode;
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\actions\DomainOptionSwitcherAction;
 use hipanel\modules\domain\cart\Calculation;
@@ -52,6 +52,17 @@ use yii\web\Response;
 
 class DomainController extends \hipanel\base\CrudController
 {
+    /**
+     * @var bool
+     */
+    private $hasPINCode;
+
+    public function __construct($id, $module, HasPINCode $hasPINCode, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->hasPINCode = $hasPINCode();
+    }
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -119,7 +130,7 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     /** @var Action $action */
                     $action = $event->sender;
-                    $hasPincode = $this->checkUserHasPincode();
+                    $hasPincode = $this->hasPINCode;
 
                     $action->data['hasPincode'] = $hasPincode;
                     $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
@@ -217,7 +228,7 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
-                        'hasPincode' => $this->checkUserHasPincode(),
+                        'hasPincode' => $this->hasPINCode,
                         'forwardingOptions' => $action->controller->getForwardingOptions(),
                     ];
                 },
@@ -695,7 +706,7 @@ class DomainController extends \hipanel\base\CrudController
         $model = DynamicModel::validateData(compact('id', 'pincode'), array_filter([
             [['id'], 'integer'],
             [['pincode'], 'trim'],
-            $this->checkUserHasPincode() ? [['id', 'pincode'], 'required'] : null,
+            $this->hasPINCode ? [['id', 'pincode'], 'required'] : null,
         ]));
 
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -726,15 +737,6 @@ class DomainController extends \hipanel\base\CrudController
         } else {
             return Yii::t('hipanel', 'No items selected');
         }
-    }
-
-    protected function checkUserHasPincode()
-    {
-        return Yii::$app->cache->getOrSet(['user-pincode-enabled', Yii::$app->user->id], function () {
-            $pincodeData = Client::perform('has-pincode', ['id' => Yii::$app->user->id]);
-
-            return $pincodeData['pincode_enabled'];
-        }, 3600);
     }
 
     public function getRecordForwardingTypes()
