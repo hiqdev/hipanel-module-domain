@@ -53,14 +53,14 @@ use yii\web\Response;
 class DomainController extends \hipanel\base\CrudController
 {
     /**
-     * @var bool
+     * @var HasPINCode
      */
     private $hasPINCode;
 
     public function __construct($id, $module, HasPINCode $hasPINCode, $config = [])
     {
         parent::__construct($id, $module, $config);
-        $this->hasPINCode = $hasPINCode();
+        $this->hasPINCode = $hasPINCode;
     }
 
     public function behaviors()
@@ -130,7 +130,7 @@ class DomainController extends \hipanel\base\CrudController
                 'on beforePerform' => function ($event) {
                     /** @var Action $action */
                     $action = $event->sender;
-                    $hasPincode = $this->hasPINCode;
+                    $hasPincode = $this->hasPINCode->__invoke();
 
                     $action->data['hasPincode'] = $hasPincode;
                     $action->setScenario($hasPincode ? 'push-with-pincode' : 'push');
@@ -228,7 +228,7 @@ class DomainController extends \hipanel\base\CrudController
                 'data' => function ($action) {
                     return [
                         'pincodeModel' => new DynamicModel(['pincode']),
-                        'hasPincode' => $this->hasPINCode,
+                        'hasPincode' => $this->hasPINCode->__invoke(),
                         'forwardingOptions' => $action->controller->getForwardingOptions(),
                     ];
                 },
@@ -706,7 +706,7 @@ class DomainController extends \hipanel\base\CrudController
         $model = DynamicModel::validateData(compact('id', 'pincode'), array_filter([
             [['id'], 'integer'],
             [['pincode'], 'trim'],
-            $this->hasPINCode ? [['id', 'pincode'], 'required'] : null,
+            $this->hasPINCode->__invoke() ? [['id', 'pincode'], 'required'] : null,
         ]));
 
         Yii::$app->response->format = Response::FORMAT_JSON;
