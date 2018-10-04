@@ -400,6 +400,67 @@ class DomainController extends \hipanel\base\CrudController
                 'success' => Yii::t('hipanel:domain', 'FOA was sent'),
                 'error' => Yii::t('hipanel:domain', 'Failed send FOA'),
             ],
+            'force-notify-transfer-in-modal' => [
+                'class' => PrepareBulkAction::class,
+                'scenario' => 'force-notify-transfer-in',
+                'view' => '_modalNotifyTransferIn',
+            ],
+            'force-notify-transfer-in' => [
+                'class' => SmartPerformAction::class,
+                'scenario' => 'force-notify-transfer-in',
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $data = Yii::$app->request->post($action->collection->getModel()->formName());
+                    $sendTo = $data['send_to'];
+                    $forceEmail = $data['force_email'];
+                    unset($data['send_to'], $data['force_email']);
+                    foreach ($data as &$item) {
+                        $item['send_to'] = $sendTo;
+                        $item['force_email'] = $forceEmail;
+                    }
+                    $action->collection->load($data);
+                },
+                'success' => Yii::t('hipanel:domain', 'FOA was sent'),
+                'error' => Yii::t('hipanel:domain', 'Failed send FOA'),
+                'on beforeSave' => function(Event $event) {
+                    /** @var \hipanel\actions\Action $action */
+                    $action = $event->sender;
+
+                    $sendTo = Yii::$app->request->post('send_to');
+                    $forceEmail = Yii::$app->request->post('force_email');
+                    if ($sendTo === null || $sendTo === Domain::SEND_TO_WHOIS_EMAIL) {
+                        return ;
+                    }
+
+                    if ($sendTo === Domain::SEND_TO_FORCE_EMAIL && empty($forceEmail)) {
+                        return ;
+                    }
+
+                    foreach ($action->collection->models as $model) {
+                        $model->send_to = $sendTo;
+                        if ($sendTo === Domain::SEND_TO_FORCE_EMAIL) {
+                            $model->force_email = $forceEmail;
+                        }
+                    }
+                },
+            ],
+            'validate-force-notify-transfer-in' => [
+                'class' => ValidateFormAction::class,
+                'collectionLoader' => function ($action) {
+                    /** @var SmartPerformAction $action */
+                    $request = Yii::$app->request;
+                    $action->collection->load([
+                        [
+                            'send_to' => $request->post('send_to'),
+                            'force_email' => $request->post('force_email'),
+                        ],
+                    ]);
+                },
+                'validatedInputId' => function ($action, $model, $id, $attribute, $errors) {
+                    return 'push-' . $attribute;
+                },
+            ],
+
             'enable-hold' => [
                 'class' => SmartPerformAction::class,
                 'scenario' => 'enable-hold',

@@ -87,6 +87,12 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
                 'url' => '#',
                 'linkOptions' => ['data-action' => Url::to(['@domain/disable-autorenewal'])],
             ],
+            [
+                'label' => '<i class="fa fa-fw fa-envelope-o"></i>' . Yii::t('hipanel:domain', 'Send FOA'),
+                'url' => '#bulk-force-notify-transfer-in-modal',
+                'linkOptions' => ['data-toggle' => 'modal'],
+                'visible' => Yii::$app->user->can('domain.force-send-foa'),
+            ],
         ];
     }
 }

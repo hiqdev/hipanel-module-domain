@@ -69,6 +69,23 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
                 ],
                 'visible' => $this->model->canDelete(),
             ],
+            [
+                'label' => AjaxModal::widget([
+                    'id' => 'force-notify-transfer-in-modal',
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA again')),
+                    'scenario' => 'force-notify-transfer-in',
+                    'actionUrl' => ['@domain/force-notify-transfer-in-modal', 'id' => $this->model->id],
+                    'size' => Modal::SIZE_DEFAULT,
+                    'toggleButton' => [
+                        'label' => '<i class="fa fa-fw fa-envelope-o"></i>' . Yii::t('hipanel:domain', 'Send FOA again'),
+                        'class' => 'clickable',
+                        'data-pjax' => 0,
+                        'tag' => 'a',
+                    ],
+                ]),
+                'encode' => false,
+                'visible' => $this->model->canForceSendFOA(),
+            ],
         ]);
 
         unset($items['view']);
