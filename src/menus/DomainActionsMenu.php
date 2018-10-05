@@ -13,6 +13,10 @@ namespace hipanel\modules\domain\menus;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\helpers\StringHelper;
+use hipanel\widgets\AjaxModal;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
+
 
 class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
 {
@@ -54,7 +58,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                     ],
                 ],
                 'encode' => false,
-                'visible' => $this->model->canSendFOA(),
+                'visible' => $this->model->canSendFOA() && !$this->model->canForceSendFOA(),
             ],
             [
                 'label' => Yii::t('hipanel:domain', 'approve-preincoming'),

@@ -79,6 +79,22 @@ class DomainBulkActionsMenu extends \hiqdev\yii2\menus\Menu
                     'toggleButton' => ['label' => Yii::t('hipanel:domain', 'Change contacts'), 'class' => 'btn btn-sm btn-default'],
                 ]),
             ],
+            [
+                'label' => AjaxModal::widget([
+                    'id' => 'bulk-force-notify-transfer-in-modal',
+                    'bulkPage' => true,
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA to specific email')),
+                    'scenario' => 'force-notify-transfer-in-modal',
+                    'actionUrl' => ['@domain/force-notify-transfer-in-modal'],
+                    'size' => Modal::SIZE_DEFAULT,
+                    'toggleButton' => [
+                        'label' => Yii::t('hipanel:domain', 'Send FOA'),
+                        'class' => 'btn btn-sm btn-default',
+                    ],
+                ]),
+                'visible' => Yii::$app->user->can('domain.force-send-foa'),
+            ],
+
         ];
     }
 }

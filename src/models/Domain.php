@@ -35,6 +35,11 @@ class Domain extends \hipanel\base\Model
 
     const DEFAULT_ZONE = 'com';
 
+    const SEND_TO_FORCE_EMAIL = 'force_email';
+    const SEND_TO_WHOIS_EMAIL = 'whois';
+    const SEND_TO_REGISTRANT_EMAIL = 'registrant';
+    const SEND_TO_CLIENT_EMAIL = 'client';
+
     public $authCode;
 
     public static $contactTypes = ['registrant', 'admin', 'tech', 'billing'];
@@ -145,6 +150,7 @@ class Domain extends \hipanel\base\Model
                 'delete-agp',
                 'force-reject-preincoming',
                 'force-approve-preincoming',
+                'force-notify-transfer-in',
             ]],
 
             // Check domain
@@ -156,7 +162,7 @@ class Domain extends \hipanel\base\Model
                     return $value;
                 }
             }, 'on' => 'check-domain'],
-            [['domain'], 'required', 'on' => ['check-domain', 'force-reject-preincoming', 'force-approve-preincoming']],
+            [['domain'], 'required', 'on' => ['check-domain', 'force-reject-preincoming', 'force-approve-preincoming', 'force-notify-transfer-in']],
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
             [['zone'], 'default', 'value' => static::DEFAULT_ZONE, 'on' => ['check-domain']],
@@ -172,6 +178,14 @@ class Domain extends \hipanel\base\Model
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::class, 'enableIdn' => true, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
+            [['force_email'], 'filter', 'filter' => function ($value) use ($model) {
+                return isset($model->send_to) && $model->send_to === Domain::SEND_TO_FORCE_EMAIL ? $value : null;
+            }, 'on' => ['force-notify-transfer-in']],
+            [['force_email'], 'email', 'on' => ['force-notify-transfer-in']],
+            [['force_email'], 'required', 'when' => function ($model) {
+                return isset($model->send_to) && $model->send_to === Domain::SEND_TO_FORCE_EMAIL;
+            }, 'on' => ['force-notify-transfer-in']],
+            [['send_to'], 'safe', 'on' => ['force-notify-transfer-in']],
 
             // NSs
             [['domain', 'nameservers', 'nsips'], 'safe', 'on' => 'set-nss'],
@@ -715,6 +729,11 @@ class Domain extends \hipanel\base\Model
     public function canSendFOA()
     {
         return $this->isPreincoming() && !$this->isRussianZones();
+    }
+
+    public function canForceSendFOA()
+    {
+        return $this->canSendFOA() && $this->can('domain.force-send-foa');
     }
 
     public function canApproveTransfer()
