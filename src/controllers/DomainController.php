@@ -76,6 +76,8 @@ class DomainController extends \hipanel\base\CrudController
                     'unfreeze-access' => 'domain.unfreeze',
                     'force-reject-preincoming' => 'support',
                     'force-approve-preincoming' => 'support',
+                    'force-notify-transfer-in' => 'domain.force-send-foa',
+                    'force-notify-transfer-in-modal' => 'domain.force-send-foa',
                     'transfer-in' => true,
                     'approve-preincoming' => true,
                     'reject-preincoming' => true,
