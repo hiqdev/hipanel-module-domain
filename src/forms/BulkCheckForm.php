@@ -28,7 +28,7 @@ class BulkCheckForm extends Model
     /**
      * @param array $zones
      */
-    public function setZones($zones)
+    public function setZones($zones): void
     {
         $this->zones = (array)$zones;
     }
