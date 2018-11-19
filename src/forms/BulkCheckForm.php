@@ -15,23 +15,8 @@ class BulkCheckForm extends Model
     /**
      * @var array
      */
-    private $zones = [];
+    public $zones = [];
 
-    /**
-     * @return array
-     */
-    public function getZones()
-    {
-        return $this->zones;
-    }
-
-    /**
-     * @param array $zones
-     */
-    public function setZones($zones)
-    {
-        $this->zones = (array)$zones;
-    }
     /**
      * @var array
      */
@@ -58,10 +43,13 @@ class BulkCheckForm extends Model
             // FQDNs is required field
             [['fqdns'], 'required'],
 
-            // Split FQDNs
-            [['fqdns'], 'filter', 'filter' => function ($fqdns) {
+            // Split FQDNs and Zones (if zones is string)
+            [['fqdns', 'zones'], 'filter', 'filter' => function ($value) {
                 $domains = [];
-                foreach (StringHelper::explode($fqdns, "\n") as $line) {
+                if (is_array($value)) {
+                    return $value;
+                }
+                foreach (StringHelper::explode($value, "\n") as $line) {
                     $domains = array_merge($domains, preg_split('/([,;\s])/i', $line));
                 }
 
