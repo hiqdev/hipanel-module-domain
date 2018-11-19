@@ -12,7 +12,26 @@ class BulkCheckForm extends Model
 {
     public $fqdns = [];
 
-    public $zones = [];
+    /**
+     * @var array
+     */
+    private $zones = [];
+
+    /**
+     * @return array
+     */
+    public function getZones()
+    {
+        return $this->zones;
+    }
+
+    /**
+     * @param array $zones
+     */
+    public function setZones($zones)
+    {
+        $this->zones = (array)$zones;
+    }
     /**
      * @var array
      */
