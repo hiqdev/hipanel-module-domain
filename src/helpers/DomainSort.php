@@ -3,6 +3,7 @@
 namespace hipanel\modules\domain\helpers;
 
 use hipanel\modules\domain\forms\CheckForm;
+use hipanel\modules\domain\models\Domain;
 use Tuck\Sort\Sort;
 use Tuck\Sort\SortChain;
 
@@ -44,11 +45,22 @@ class DomainSort
             'adult',
             'sex',
         ];
-
-        return function (CheckForm $model) use ($order) {
-            list(, $zone) = explode('.', $model->fqdn, 2);
-            if (($key = array_search($zone, $order)) !== false) {
-                return $key;
+        $mapping = [
+            CheckForm::class => 'fqdn',
+            Domain::class => 'domain',
+        ];
+        return function ($model) use ($order, $mapping) {
+            $fqdn = null;
+            foreach ($mapping as $class => $attribute) {
+                if ($model instanceof $class) {
+                    $fqdn = $model->{$attribute};
+                }
+            }
+            if ($fqdn) {
+                list(, $zone) = explode('.', $fqdn, 2);
+                if (($key = array_search($zone, $order)) !== false) {
+                    return $key;
+                }
             }
 
             return INF;
