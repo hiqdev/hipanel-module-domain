@@ -17,6 +17,7 @@ use hipanel\modules\domain\repositories\DomainTariffRepository;
 use Yii;
 use yii\base\Module;
 use yii\web\NotFoundHttpException;
+use hipanel\modules\domain\helpers\DomainSort;
 
 class CheckController extends \hipanel\base\CrudController
 {
@@ -96,7 +97,7 @@ class CheckController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $bulkForm,
             'dropDownZonesOptions' => $dropDownZonesOptions,
-            'results' => $results,
+            'results' => DomainSort::byGeneralRules()->values($results),
         ]);
     }
 }
