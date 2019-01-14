@@ -26,17 +26,17 @@ class NameServersCest
         $I->needPage(Url::to('@host'));
         $I->see('Name Servers', 'h1');
         $I->seeLink('Create name server', Url::to('create'));
-        $this->ensureICanSeeAdvancedSearchBox();
+        $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkHostSearchBox();
     }
 
-    private function ensureICanSeeAdvancedSearchBox()
+    private function ensureICanSeeAdvancedSearchBox(Admin $I)
     {
         $this->index->containsFilters([
-            new Input('Name server'),
-            new Input('Domain name'),
-            new Select2('Client'),
-            new Select2('Reseller'),
+            Input::asAdvancedSearch($I, 'Name server'),
+            Input::asAdvancedSearch($I, 'Domain name'),
+            Select2::asAdvancedSearch($I, 'Client'),
+            Select2::asAdvancedSearch($I, 'Reseller'),
         ]);
     }
 
