@@ -26,19 +26,19 @@ class DomainCest
         $I->login();
         $I->needPage(Url::to('@domain/index'));
         $I->see('Domains', 'h1');
-        $this->ensureICanSeeAdvancedSearchBox();
+        $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkDomainSearchBox();
     }
 
-    private function ensureICanSeeAdvancedSearchBox()
+    private function ensureICanSeeAdvancedSearchBox(Admin $I)
     {
         $this->index->containsFilters([
-            new Input('Domain name'),
-            new Textarea('Domain names (one per row)'),
-            new Input('Notes'),
-            new Select2('Client'),
-            new Select2('Reseller'),
-            new Select2('Status'),
+            Input::asAdvancedSearch($I, 'Domain name'),
+            Textarea::asAdvancedSearch($I, 'Domain names (one per row)'),
+            Input::asAdvancedSearch($I, 'Notes'),
+            Select2::asAdvancedSearch($I, 'Client'),
+            Select2::asAdvancedSearch($I, 'Reseller'),
+            Select2::asAdvancedSearch($I, 'Status'),
         ]);
     }
 
