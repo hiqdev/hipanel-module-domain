@@ -85,6 +85,7 @@ use yii\web\JsExpression;
                             <?= $form->field($model, "[$i]ips")->widget(StaticCombo::class, [
                                 'formElementSelector' => '.item',
                                 'multiple' => true,
+                                'selectAllButton' => false,
                                 'data' => $model->ips ? array_combine($model->ips, $model->ips) : [],
                                 'pluginOptions' => [
                                     'select2Options' => [
@@ -124,7 +125,6 @@ use yii\web\JsExpression;
             <?php endforeach; ?>
         </div>
         <?php DynamicFormWidget::end() ?>
-        <?php Box::begin(['options' => ['class' => 'box-solid']]) ?>
         <div class="row">
             <div class="col-md-12 no">
                 <?= Html::submitButton(Yii::t('hipanel', 'Save'), ['class' => 'btn btn-success']) ?>
@@ -132,8 +132,6 @@ use yii\web\JsExpression;
                 <?= Html::button(Yii::t('hipanel', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
             </div>
         </div>
-        <?php Box::end() ?>
         <?php ActiveForm::end() ?>
-
     </div>
 </div>
