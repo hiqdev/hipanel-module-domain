@@ -10,11 +10,15 @@
 
 namespace hipanel\modules\domain\menus;
 
+use hipanel\modules\domain\models\Host;
 use Yii;
 
 class HostActionsMenu extends \hiqdev\yii2\menus\Menu
 {
-    public $models;
+    /**
+     * @var Host
+     */
+    public $model;
 
     public function items()
     {

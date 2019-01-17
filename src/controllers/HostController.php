@@ -11,11 +11,10 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\IndexAction;
-use hipanel\actions\OrientationAction;
 use hipanel\actions\PrepareBulkAction;
 use hipanel\actions\RedirectAction;
 use hipanel\actions\SmartCreateAction;
-use hipanel\actions\SmartPerformAction;
+use hipanel\actions\SmartDeleteAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
@@ -86,7 +85,7 @@ class HostController extends \hipanel\base\CrudController
                 'view' => '_bulkSetIps',
             ],
             'delete' => [
-                'class'     => SmartPerformAction::class,
+                'class'     => SmartDeleteAction::class,
                 'success'   => Yii::t('hipanel:domain', 'Name server deleted'),
             ],
         ]);
