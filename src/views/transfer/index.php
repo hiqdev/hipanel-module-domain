@@ -1,11 +1,17 @@
 <?php
 
-use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+
+/**
+ * @var \yii\web\View $this
+ * @var Domain $model
+ * @var Domain[] $models
+ * @var \yii\data\ArrayDataProvider $transferDataProvider
+ */
 
 $this->title = Yii::t('hipanel:domain', 'Domain transfer');
 $this->params['breadcrumbs'][] = $this->title;

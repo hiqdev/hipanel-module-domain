@@ -119,7 +119,12 @@ class TransferController extends \hipanel\base\CrudController
             }
 
             Yii::$app->session->setFlash('transferGrid', 1);
-            $transferDataProvider = new ArrayDataProvider(['models' => $models]);
+            $transferDataProvider = new ArrayDataProvider([
+                'allModels' => $models,
+                'pagination' => false,
+                'sort' => false,
+                'modelClass' => Domain::class,
+            ]);
         }
 
         return $this->render('index', [
@@ -160,7 +165,12 @@ class TransferController extends \hipanel\base\CrudController
             }
 
             Yii::$app->session->setFlash('transferGrid', 1);
-            $transferDataProvider = new ArrayDataProvider(['models' => $models]);
+            $transferDataProvider = new ArrayDataProvider([
+                'allModels' => $models,
+                'pagination' => false,
+                'sort' => false,
+                'modelClass' => Domain::class,
+            ]);
         }
 
         return $this->render('index', [
