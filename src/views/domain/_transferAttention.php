@@ -7,11 +7,8 @@
                 </h3>
             </div>
             <div class="box-body">
-                <p><?= Yii::t('hipanel:domain', 'transfer_attention_1') ?>.</p>
-                <h4><b><?= Yii::t('hipanel:domain', 'transfer_attention_2') ?>!</b></h4>
-                <p><?= Yii::t('hipanel:domain', 'transfer_attention_3') ?>.</p>
-                <p><?= Yii::t('hipanel:domain', 'transfer_attention_4') ?>.</p>
-                <p><?= Yii::t('hipanel:domain', 'transfer_attention_5') ?>.</p>
+                <p><?= Yii::t('hipanel:domain', 'The transfer will end within (6) six days if the current registrar of recorder does not cancel the request.') ?></p>
+                <p><?= Yii::t('hipanel:domain', 'If you have any further questions, please {create_a_ticket}.', ['create_a_ticket' => Html::a(Yii::t('hipanel:domain', 'create a ticket'), ['@ticket/create'])]) ?></p>
             </div>
         </div>
     </div>

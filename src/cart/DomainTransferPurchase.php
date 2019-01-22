@@ -45,7 +45,7 @@ class DomainTransferPurchase extends AbstractDomainPurchase
     {
         return $this->isRuZone()
             ? Yii::t('hipanel:domain', 'Transfer confirmation email would be send to domain owner after comparing and checking contact data from our partner ARDIS-RU')
-            : Yii::t('hipanel:domain', 'Transfer confirmation email was sent to:') . ' <b>' . $this->_result['email'] . '</b>';
+            ? '';
     }
 
     public function getPurchasabilityRules()
@@ -60,7 +60,11 @@ class DomainTransferPurchase extends AbstractDomainPurchase
         $res = parent::execute();
         if ($res) {
             $view = Yii::$app->getView();
-            $view->params['remarks']['transferAttention'] = $view->render('@hipanel/modules/domain/views/domain/_transferAttention');
+            if (!$this->isRuZone()) {
+                $view->params['remarks']['transferAttention'] = $view->render('@hipanel/modules/domain/views/domain/_transferAttention');
+            } else {
+                $view->params['remarks']['transferAttention'] = '';
+            }
         }
 
         return $res;
