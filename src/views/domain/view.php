@@ -137,7 +137,7 @@ JS
     </div>
 
     <div class="col-lg-4 col-md-6">
-        <div class="box box-widget">
+        <div class="box box-widget" id="domain-settings">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Domain detailed information') ?></h3>
             </div>

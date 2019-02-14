@@ -1,7 +1,8 @@
 <?php
 
-namespace hipanel\modules\domain\tests\acceptance\client;
+namespace hipanel\modules\domain\tests\acceptance\client\domain;
 
+use hipanel\modules\domain\tests\_support\Domain;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
@@ -10,31 +11,34 @@ use hipanel\helpers\Url;
 
 class DomainChangeNSsCest
 {
-    /** @var string  */
-    private $testDomain = 'vylys.com';
-
-    /** @var string */
-    private $domainId;
-
     /** @var DomainViewPage */
     private $viewPage;
 
+    /** @var Domain */
+    private $domain;
+
     private $successNotification = 'Name servers changed';
 
-    public function ensureIHaveTestingDomain(Client $I)
+    public function _before(Client $I)
     {
-        $indexPage = new DomainIndexPage($I);
+        $I->login();
+    }
+
+    public function ensureIOpenTestDomainPage(Client $I)
+    {
+        $indexPage      = new DomainIndexPage($I);
+        $this->viewPage = new DomainViewPage($I);
+        $this->domain   = new Domain();
 
         $I->needPage(Url::to('@domain/index'));
-        $this->domainId = $indexPage->getDomainId($this->testDomain);
-        $I->needPage(Url::to('@domain/view?id=' . $this->domainId));
-        $I->see($this->testDomain, 'h1');
+        $domainId = $indexPage->getDomainId($this->domain->getName());
+        $this->domain->setDomainId($domainId);
+        $I->needPage(Url::to('@domain/view?id=' . $domainId));
+        $I->see($this->domain->getName(), 'h1');
     }
 
     public function ensureICanAddNS(Client $I)
     {
-        $this->getViewPage($I);
-
         $nsAmount = $this->viewPage->countNSs();
         $this->addNs();
         $I->pressButton('Save');
@@ -44,8 +48,6 @@ class DomainChangeNSsCest
 
     public function ensureICanDeleteNS(Client $I)
     {
-        $this->getViewPage($I);
-
         if (($n = $this->viewPage->countNSs()) <= 1) {
             $this->addNs();
         };
@@ -60,14 +62,6 @@ class DomainChangeNSsCest
         $nss = $this->viewPage->getNSs();
         $nsName = $this->getNewNSName($nss);
         $this->viewPage->addNS($nsName);
-    }
-
-    /**
-     * @param Client $I
-     */
-    private function getViewPage(Client $I): void
-    {
-        $this->viewPage = new DomainViewPage($I);
     }
 
     /**

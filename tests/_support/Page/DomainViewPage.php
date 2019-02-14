@@ -11,6 +11,9 @@ class DomainViewPage extends Authenticated
     /** @var string  */
     private $nsPaneCssId = '#ns-records';
 
+    /** @var string  */
+    private $settingsPaneCssId = '#domain-settings';
+
     /** @var @var string */
     private $nsRowSelector;
 
@@ -21,7 +24,10 @@ class DomainViewPage extends Authenticated
         $this->nsRowSelector = $this->nsPaneCssId . ' .item';
     }
 
-    public function addNS($nsName)
+    /**
+     * @param string $nsName
+     */
+    public function addNS(string $nsName): void
     {
         $addButtonSelector = $this->nsRowSelector . ':last-child .add-item';
         $this->tester->click($addButtonSelector);
@@ -31,24 +37,58 @@ class DomainViewPage extends Authenticated
             ->setValue($nsName);
     }
 
-    public function countNSs()
+    /**
+     * @return int
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function countNSs(): int
     {
         return $this->tester->countElements($this->nsPaneCssId . ' .item');
     }
 
-    public function getNSs()
+    /**
+     * @return array
+     */
+    public function getNSs(): array
     {
         $selector = $this->nsRowSelector . ' input[id^="ns"]';
         return $this->tester->grabMultiple($selector, 'value');
     }
 
-    public function checkAmountOfNSs($nssAmount)
+    /**
+     * @param int $nssAmount
+     */
+    public function checkAmountOfNSs(int $nssAmount): void
     {
         $this->tester->seeNumberOfElements($this->nsPaneCssId . ' .item', $nssAmount);
     }
 
-    public function deleteLastNS()
+    public function deleteLastNS(): void
     {
         $this->tester->click($this->nsRowSelector . ':last-child .remove-item');
+    }
+
+    /**
+     * @param string $settingName
+     */
+    public function switchSetting(string $settingName): void
+    {
+        $this->tester->click($this->settingsPaneCssId . " div[class *= '${settingName}']");
+    }
+
+    /**
+     * @param string $note
+     */
+    public function setNote(string $note): void
+    {
+        $this->tester->click($this->settingsPaneCssId . " a[data-name='note']");
+        (new Input($this->tester, $this->settingsPaneCssId . ' div.popover input'))
+            ->setValue($note);
+        $this->tester->click($this->settingsPaneCssId . " div.popover button[class*='submit']");
+    }
+
+    public function getAuthorizationCode()
+    {
+        return $this->tester->grabTextFrom('#authcode-static');
     }
 }
