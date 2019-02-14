@@ -67,4 +67,28 @@ class DomainViewPage extends Authenticated
     {
         $this->tester->click($this->nsRowSelector . ':last-child .remove-item');
     }
+
+    /**
+     * @param string $settingName
+     */
+    public function switchSetting(string $settingName): void
+    {
+        $this->tester->click($this->settingsPaneCssId . " div[class *= '${settingName}']");
+    }
+
+    /**
+     * @param string $note
+     */
+    public function setNote(string $note): void
+    {
+        $this->tester->click($this->settingsPaneCssId . " a[data-name='note']");
+        (new Input($this->tester, $this->settingsPaneCssId . ' div.popover input'))
+            ->setValue($note);
+        $this->tester->click($this->settingsPaneCssId . " div.popover button[class*='submit']");
+    }
+
+    public function getAuthorizationCode()
+    {
+        return $this->tester->grabTextFrom('#authcode-static');
+    }
 }

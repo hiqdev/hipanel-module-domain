@@ -1,9 +1,8 @@
 <?php
 
-namespace hipanel\modules\domain\tests\acceptance\client;
+namespace hipanel\modules\domain\tests\acceptance\client\domain;
 
 use hipanel\modules\domain\tests\_support\Domain;
-use hipanel\modules\domain\tests\_support\OpenDomainViewPage;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
@@ -27,9 +26,9 @@ class DomainChangeNSsCest
 
     public function ensureIOpenTestDomainPage(Client $I)
     {
-        $indexPage = new DomainIndexPage($I);
+        $indexPage      = new DomainIndexPage($I);
         $this->viewPage = new DomainViewPage($I);
-        $this->domain = new Domain();
+        $this->domain   = new Domain();
 
         $I->needPage(Url::to('@domain/index'));
         $domainId = $indexPage->getDomainId($this->domain->getName());
