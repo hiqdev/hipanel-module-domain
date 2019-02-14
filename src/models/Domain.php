@@ -250,7 +250,7 @@ class Domain extends \hipanel\base\Model
             'since' => Yii::t('hipanel:domain', 'Since Time'),
             'lastop' => Yii::t('hipanel:domain', 'Last Operation'),
             'operated' => Yii::t('hipanel:domain', 'Last Operation Time'),
-            'whois_protected' => Yii::t('hipanel:domain', 'WHOIS'),
+            'whois_protected' => Yii::t('hipanel:domain', 'WHOIS protect'),
             'is_secured' => Yii::t('hipanel:domain', 'Protection'),
             'is_holded' => Yii::t('hipanel:domain', 'On hold'),
             'is_freezed' => Yii::t('hipanel:domain', 'Domain changes freezed'),

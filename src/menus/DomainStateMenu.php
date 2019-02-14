@@ -21,7 +21,7 @@ class DomainStateMenu extends \hiqdev\yii2\menus\Menu
 
     public $model;
 
-    public function items()
+    public function items(): array
     {
         return [
             [

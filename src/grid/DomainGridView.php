@@ -20,7 +20,7 @@ use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\widgets\Expires;
 use hipanel\modules\domain\widgets\GetPremiumButton;
 use hipanel\widgets\ArraySpoiler;
-use hipanel\widgets\Label;
+use hipanel\widgets\IconStateLabel;
 use hiqdev\bootstrap_switch\BootstrapSwitchColumn;
 use hiqdev\bootstrap_switch\LabeledAjaxSwitch;
 use hiqdev\combo\StaticCombo;
@@ -97,6 +97,7 @@ class DomainGridView extends BoxedGridView
                 'attribute' => 'domain',
                 'note' => true,
                 'filterAttribute' => 'domain_like',
+                'filterOptions' => ['class' => 'narrow-filter'],
             ],
             'state' => [
                 'format' => 'html',
@@ -108,7 +109,7 @@ class DomainGridView extends BoxedGridView
                         'hasId' => true,
                     ]);
                 },
-                'filterInputOptions' => ['style' => 'width:120px'],
+                'filterOptions' => ['class' => 'narrow-filter'],
                 'enableSorting' => false,
                 'value' => function ($model) {
                     return DomainStateMenu::widget(['model' => $model]);
@@ -127,17 +128,26 @@ class DomainGridView extends BoxedGridView
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
                 'attribute' => 'whois_protected',
                 'filter' => false,
+                'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
                 'enableSorting' => false,
                 'encodeLabel' => false,
-                'label' => Html::tag('span', 'WHOIS'),
-                'popover' => 'WHOIS protection',
+                'label' => Html::tag('span', Yii::t('hipanel:domain', 'WHOIS protect')),
+                'popover' => Yii::t('hipanel:domain', 'WHOIS protection'),
                 'popoverOptions' => [
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
                 'format' => 'html',
                 'value' => function ($model) {
-                    return $this->getStateLabel($model->whois_protected);
+                    return IconStateLabel::widget([
+                        'model' => $model,
+                        'attribute' => 'whois_protected',
+                        'icons' => 'fa-shield',
+                        'messages' => [
+                            Yii::t('hipanel:domain', 'WHOIS protect is enabled'),
+                            Yii::t('hipanel:domain', 'WHOIS protect is disabled'),
+                        ],
+                    ]);
                 },
             ],
             'whois_protected_with_label' => [ // don't forget to update `whois_protected` column as well
@@ -179,13 +189,22 @@ class DomainGridView extends BoxedGridView
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
+                'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
                 'popoverOptions' => [
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
                 'format' => 'html',
                 'value' => function ($model) {
-                    return $this->getStateLabel($model->is_secured);
+                    return IconStateLabel::widget([
+                        'model' => $model,
+                        'attribute' => 'is_secured',
+                        'icons' => ['fa-lock', 'fa-unlock'],
+                        'messages' => [
+                            Yii::t('hipanel:domain', 'Secure domain service is enabled'),
+                            Yii::t('hipanel:domain', 'Secure domain service is disabled'),
+                        ],
+                    ]);
                 },
             ],
             'is_secured_with_label' => [ // don't forget to update `is_secured` column as well
@@ -243,12 +262,21 @@ class DomainGridView extends BoxedGridView
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
                 'label' => Html::tag('span', Yii::t('hipanel', 'Autorenew')),
                 'attribute' => 'autorenewal',
-                'format' => 'html',
+                'format' => 'raw',
                 'value' => function ($model) {
-                    return $this->getStateLabel($model->autorenewal);
+                    return IconStateLabel::widget([
+                        'model' => $model,
+                        'attribute' => 'autorenewal',
+                        'icons' => 'fa-refresh',
+                        'messages' => [
+                            Yii::t('hipanel:domain', 'Autorenewal is enabled'),
+                            Yii::t('hipanel:domain', 'Autorenewal is disabled'),
+                        ],
+                    ]);
                 },
                 'filter' => false,
                 'enableSorting' => false,
+                'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
                 'encodeLabel' => false,
                 'popover' => Yii::t('hipanel:domain', 'The domain will be autorenewed for one year in a week before it expires if you have enough credit on your account'),
                 'popoverOptions' => [
@@ -472,11 +500,13 @@ class DomainGridView extends BoxedGridView
         ]);
     }
 
-    protected function getStateLabel($value)
+    protected function getStateLabel($value, string $icon, string $help = ''): string
     {
-        return Label::widget([
-            'label' => $value ? Yii::t('hipanel', 'Enabled') : Yii::t('hipanel', 'Disabled'),
-            'color' => $value ? 'success' : null,
-        ]);
+        return Html::tag('span', Html::tag('i', null, [
+            'class' => "fa {$icon} fw " . ($value ? 'text-success' : 'text-muted'),
+            'style' => 'font-size: 18px;',
+            'aria-hidden' => true,
+            'title' => $help,
+        ]));
     }
 }
