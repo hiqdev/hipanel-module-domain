@@ -571,11 +571,11 @@ class DomainController extends \hipanel\base\CrudController
             // Whois protect
             'set-whois-protect' => [
                 'class' => DomainOptionSwitcherAction::class,
-                'success' => Yii::t('hipanel:domain', 'WHOIS protect is changed'),
+                'success' => Yii::t('hipanel:domain', 'WHOIS protect has been changed'),
             ],
             'enable-whois-protect' => [
                 'class' => SmartPerformAction::class,
-                'success' => Yii::t('hipanel:domain', 'WHOIS protect is enabled'),
+                'success' => Yii::t('hipanel:domain', 'WHOIS protect has been enabled'),
                 'scenario' => 'set-whois-protect',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -587,7 +587,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'disable-whois-protect' => [
                 'class' => SmartPerformAction::class,
-                'success' => Yii::t('hipanel:domain', 'WHOIS protect is disabled'),
+                'success' => Yii::t('hipanel:domain', 'WHOIS protect has been disabled'),
                 'scenario' => 'set-whois-protect',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -600,11 +600,11 @@ class DomainController extends \hipanel\base\CrudController
             // Lock
             'set-lock' => [
                 'class' => DomainOptionSwitcherAction::class,
-                'success' => Yii::t('hipanel:domain', 'Lock was changed'),
+                'success' => Yii::t('hipanel:domain', 'Lock has been changed'),
             ],
             'enable-lock' => [
                 'class' => SmartPerformAction::class,
-                'success' => Yii::t('hipanel:domain', 'Lock was enabled'),
+                'success' => Yii::t('hipanel:domain', 'Lock has been enabled'),
                 'scenario' => 'set-lock',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
@@ -616,7 +616,7 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'disable-lock' => [
                 'class' => SmartPerformAction::class,
-                'success' => Yii::t('hipanel:domain', 'Lock was disabled'),
+                'success' => Yii::t('hipanel:domain', 'Lock has been disabled'),
                 'scenario' => 'set-lock',
                 'on beforeSave' => function (Event $event) {
                     /** @var Action $action */
