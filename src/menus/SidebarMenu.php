@@ -35,7 +35,7 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                         'url'   => ['/client/contact/index'],
                     ],
                     'check-domain' => [
-                        'label' => Yii::t('hipanel:domain', 'Buy domain'),
+                        'label' => Yii::t('hipanel:domain', 'Register domain'),
                         'url'   => ['/domain/check/check-domain'],
                         'visible' => Yii::$app->user->can('domain.pay'),
                     ],

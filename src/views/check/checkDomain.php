@@ -156,19 +156,27 @@ if (!empty($results)) {
         $('.suggestion').css({'display': 'block'});  
     });
 
-    $(document).on('click', 'a.add-to-cart-button', function(event) {
-        event.preventDefault();
+    var goToTheCartHandler = function(evt) {
+        evt.preventDefault();
+        window.location.replace($(this).prop('href'));
+        return false;
+    }
+    var addToCartHandler = function (evt) {
+        evt.preventDefault();
         var addToCartElem = $(this);
-        addToCartElem.button('loading');
+        addToCartElem.button('loading')
         $.post(addToCartElem.data('domain-url'), function() {
             hipanel.updateCart(function() {
                 addToCartElem.button('complete');
-                setTimeout(function () {addToCartElem.addClass('disabled')}, 0);
+                setTimeout(function () {
+                    addToCartElem.one('click', goToTheCartHandler);
+                }, 0);
             });
         });
 
         return false;
-    });
+    }
+    $(document).on('click', 'a.add-to-cart-button', addToCartHandler);
 
     $.fn.isOnScreen = function(x, y){
 
@@ -295,8 +303,7 @@ JS
 
 <div class="row">
 
-
-    <div class="col-lg-push-3 col-md-push-3 col-lg-9 col-md-9 col-sm-12 col-xs-12">
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 
         <div class="row">
             <div class="col-md-12">
@@ -365,10 +372,15 @@ JS
 
                     <ul id="domain-tabs" class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#commons" aria-controls="home" role="tab" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Exact search') ?></a>
+                            <a href="#commons" aria-controls="home" role="tab"
+                               data-toggle="tab"><?= Yii::t('hipanel:domain', 'Exact search') ?></a>
                         </li>
                         <li role="presentation">
-                            <a href="#suggestions" aria-controls="profile" role="tab" data-toggle="tab"><?= Yii::t('hipanel:domain', 'Similar domains') ?></a>
+                            <span class="badge bg-red"
+                                  style="position: absolute; top: -3px; right: -7px; font-size: 10px; font-weight: 400; z-index: 1;">new</span>
+                            <a href="#suggestions" aria-controls="profile" role="tab" data-toggle="tab">
+                                <?= Yii::t('hipanel:domain', 'Similar domains') ?>
+                            </a>
                         </li>
                     </ul>
 
@@ -403,7 +415,7 @@ JS
         <?php endif; ?>
     </div>
 
-    <div class="col-lg-pull-9 col-md-pull-9 col-lg-3 col-md-3 col-sm-12 col-xs-12 filters">
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 filters">
 
         <div class="box box-solid">
             <div class="box-header with-border">
@@ -443,51 +455,16 @@ JS
                             <span class="label label-default pull-right"><?= count($results) ?></span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" data-filter=".general"><?= Yii::t('hipanel:domain', 'General') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('general', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".internet"><?= Yii::t('hipanel:domain', 'Internet') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('internet', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".sport"><?= Yii::t('hipanel:domain', 'Sport') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('sport', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".society"><?= Yii::t('hipanel:domain', 'Society') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('society', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".geo"><?= Yii::t('hipanel:domain', 'GEO') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('geo', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".nature"><?= Yii::t('hipanel:domain', 'Nature') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('nature', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".audio_music"><?= Yii::t('hipanel:domain', 'Audio&Music') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('audio_music', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".home_gifts"><?= Yii::t('hipanel:domain', 'Home&Gifts') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('home_gifts', $results) ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-filter=".adult"><?= Yii::t('hipanel:domain', 'Adult') ?>
-                            <span class="label label-default pull-right"><?= Domain::getCategoriesCount('adult', $results) ?></span>
-                        </a>
-                    </li>
+                    <?php foreach (Domain::getCategories() as $category => $relatedZones) : ?>
+                        <li>
+                            <a href="#" data-filter=".<?= $category ?>">
+                                <?= Yii::t('hipanel:domain', implode('&', array_map('ucfirst', explode('_', $category)))) ?>
+                                <span class="label label-default pull-right">
+                                    <?= Domain::getCategoriesCount($category, $results) ?>
+                                </span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>

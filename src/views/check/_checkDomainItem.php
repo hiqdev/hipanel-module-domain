@@ -50,11 +50,11 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
             <?php if ($model->isAvailable && $canBuyDomain) : ?>
-                <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel:domain', 'Add to cart'), ['add-to-cart-registration', 'name' => $model->fqdn], [
+                <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel:domain', 'Add to cart'), ['/cart/cart/index'], [
                     'data-pjax' => 0,
                     'class' => 'btn btn-flat bg-olive add-to-cart-button',
                     'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Adding'),
-                    'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'In cart'),
+                    'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Go to the cart'),
                     'data-domain-url' => Url::to([$addToCartPath, 'name' => $model->fqdn]),
                 ]) ?>
             <?php elseif ($model->isAvailable === false) : ?>
