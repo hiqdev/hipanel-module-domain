@@ -8,7 +8,7 @@ use hipanel\modules\domain\tests\_support\Domain;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
 
-class DomainChangeSettingsCest
+class DomainSettingsCest
 {
     /** @var DomainViewPage */
     private $viewPage;

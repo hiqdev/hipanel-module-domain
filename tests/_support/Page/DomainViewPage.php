@@ -12,10 +12,19 @@ class DomainViewPage extends Authenticated
     private $nsPaneCssId = '#ns-records';
 
     /** @var string  */
+    private $dnsPaneCssId = '#dns-records';
+
+    /** @var string  */
     private $settingsPaneCssId = '#domain-settings';
 
     /** @var @var string */
     private $nsRowSelector;
+
+    /** @var string  */
+    const CREATE = 'create';
+
+    /** @var string  */
+    const UPDATE = 'update';
 
     public function __construct(AcceptanceTester $I)
     {
@@ -90,5 +99,44 @@ class DomainViewPage extends Authenticated
     public function getAuthorizationCode()
     {
         return $this->tester->grabTextFrom('#authcode-static');
+    }
+
+    /**
+     * @param string $domain
+     */
+    public function pressUpdateButtonFor(string $domain): void
+    {
+        $selector = "//td[contains(text(), '{$domain}')]" .
+                    "//parent::tr//a[contains(@class, 'edit-dns')]";
+        $this->tester->click($selector);
+    }
+
+    /**
+     * @param string $domain
+     */
+    public function pressDeleteButtonFor(string $domain): void
+    {
+        $selector = "//td[contains(text(), '{$domain}')]" .
+            "//parent::tr//a[contains(@data-target, 'delete')]";
+        $this->tester->click($selector);
+    }
+
+    public function fillDnsRecordInput(string $inputName, string $scenario, string $value): void
+    {
+        $selectors = [
+            self::CREATE => ' .panel',
+            self::UPDATE => ' tr',
+        ];
+        $location = $selectors[$scenario];
+
+        $inputSelector = $this->dnsPaneCssId . $location . " input[name*='$inputName']";
+        (new Input($this->tester, $inputSelector))
+            ->setValue($value);
+    }
+
+    public function confirmRecordDeletion(): void
+    {
+        $this->tester->waitForElement('div.modal.in');
+        $this->tester->click($this->dnsPaneCssId . " .modal.in input[value='Delete record']");
     }
 }

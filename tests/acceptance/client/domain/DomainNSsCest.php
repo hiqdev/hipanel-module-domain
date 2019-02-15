@@ -9,7 +9,7 @@ use hipanel\tests\_support\Step\Acceptance\Client;
 use hipanel\helpers\Url;
 
 
-class DomainChangeNSsCest
+class DomainNSsCest
 {
     /** @var DomainViewPage */
     private $viewPage;
