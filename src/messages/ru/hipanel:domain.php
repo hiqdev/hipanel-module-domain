@@ -354,5 +354,6 @@ return [
     'The domain name was registered till {date}' => 'Домен был зарегистрирован до {date}',
     'Pincode' => 'Пинкод',
     'Domain names (one per row)' => 'Доменные имена (одно на строку)',
+    'Emails (one per row)' => 'Email\'ы (один на строку)',
     'Domain status prohibits this operation' => 'Статус домена запрещает данную операцию',
 ];
