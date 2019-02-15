@@ -499,14 +499,4 @@ class DomainGridView extends BoxedGridView
             ],
         ]);
     }
-
-    protected function getStateLabel($value, string $icon, string $help = ''): string
-    {
-        return Html::tag('span', Html::tag('i', null, [
-            'class' => "fa {$icon} fw " . ($value ? 'text-success' : 'text-muted'),
-            'style' => 'font-size: 18px;',
-            'aria-hidden' => true,
-            'title' => $help,
-        ]));
-    }
 }
