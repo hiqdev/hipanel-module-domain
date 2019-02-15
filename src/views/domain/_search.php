@@ -22,6 +22,9 @@ use yii\helpers\Html;
 <div class="col-md-4 col-sm-6 col-xs-12">
     <?= $search->field('note') ?>
 </div>
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <?= $search->field('emails')->textarea() ?>
+</div>
 
 <?php if (Yii::$app->user->can('support')) {
     ?>

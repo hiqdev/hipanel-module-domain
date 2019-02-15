@@ -23,14 +23,15 @@ class DomainSearch extends Domain
     public function searchAttributes()
     {
         return ArrayHelper::merge($this->defaultSearchAttributes(), [
-            'created_from', 'created_till', 'with_nsips', 'client_like', 'contacts'
+            'created_from', 'created_till', 'with_nsips', 'client_like', 'contacts', 'emails',
         ]);
     }
 
     public function attributeLabels()
     {
         return $this->mergeAttributeLabels([
-            'domains' => Yii::t('hipanel:domain', 'Domain names (one per row)')
+            'domains' => Yii::t('hipanel:domain', 'Domain names (one per row)'),
+            'emails' => Yii::t('hipanel:domain', 'Emails (one per row)'),
         ]);
     }
 }
