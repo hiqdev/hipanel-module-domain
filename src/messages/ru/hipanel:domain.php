@@ -364,4 +364,5 @@ return [
     'Secure domain service is disabled' => 'Домен не защищен от изменений',
     'Autorenewal is enabled' => 'Автообновление включено',
     'Autorenewal is disabled' => 'Автообновление отключено',
+    'Auto renew' => 'Авто продление'
 ];
