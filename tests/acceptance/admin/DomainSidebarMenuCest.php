@@ -19,7 +19,7 @@ class DomainSidebarMenuCest
         ]);
 
         $menu->ensureDoesNotContain('Domains', [
-            'Buy domain',
+            'Register domain',
             'Transfer domain',
         ]);
     }

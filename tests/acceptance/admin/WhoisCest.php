@@ -29,7 +29,7 @@ class WhoisCest
             $items['available-to-order-domain.com']['see']['add-to-cart-button'],
             $items['available-to-order-domain.com']['see']['availability-notice']
         );
-        $items['available-to-order-domain.com']['dontSee'] = ['Buy domain'];
+        $items['available-to-order-domain.com']['dontSee'] = ['Register domain'];
 
         return $items;
     }

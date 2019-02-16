@@ -13,7 +13,7 @@ class DomainSidebarMenuCest
             'Domains' => '@domain/index',
             'Name Servers' => '@host/index',
             'Contacts' => '@contact/index',
-            'Buy domain' => '@domain-check/check-domain',
+            'Register domain' => '@domain-check/check-domain',
             'Transfer domain' => '/domain/transfer/index',
             'WHOIS lookup' => '/domain/whois/index',
         ]);

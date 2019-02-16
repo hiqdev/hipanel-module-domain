@@ -118,7 +118,7 @@ $this->registerCss('
                 </td>
                 <td>
                     <?php if (Yii::$app->user->can('domain.pay')) : ?>
-                        <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel:domain', 'Buy domain'),
+                        <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel:domain', 'Register domain'),
                             ['@domain/add-to-cart-registration', 'name' => $model->domain],
                             ['class' => 'btn btn-flat btn-block btn-sm ' . SmallBox::COLOR_OLIVE]
                         ) ?>
