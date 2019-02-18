@@ -141,7 +141,7 @@ JS
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Domain detailed information') ?></h3>
             </div>
-            <div class="box-body no-padding">
+            <div class="box-body no-padding table-responsive">
                 <?= DomainGridView::detailView([
                     'boxed' => false,
                     'model' => $model,
