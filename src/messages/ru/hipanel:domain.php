@@ -366,5 +366,5 @@ return [
     'Autorenewal is disabled' => 'Автообновление отключено',
     'Auto renew' => 'Авто продление',
     'Register domain' => 'Зарегистрировать домен',
-    'Go to the cart' => 'Перейти в корзину',
+    'Go to cart' => 'Перейти в корзину',
 ];
