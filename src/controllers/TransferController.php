@@ -40,9 +40,9 @@ class TransferController extends \hipanel\base\CrudController
             [
                 'class' => EasyAccessControl::class,
                 'actions' => [
-                    'add-to-cart-transfer' => '?',
-                    'validate-form' => '?',
-                    'index' => '?',
+                    'add-to-cart-transfer' => true,
+                    'validate-form' => true,
+                    'index' => true,
                     '*' => 'domain.read',
                 ],
             ],
