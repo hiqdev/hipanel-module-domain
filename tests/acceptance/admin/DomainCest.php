@@ -52,6 +52,8 @@ class DomainCest
         ]);
         $this->index->containsColumns([
             'Domain name',
+            'Client',
+            'Reseller',
             'Status',
             'WHOIS protect',
             'Protection',
