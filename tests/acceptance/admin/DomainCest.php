@@ -52,14 +52,12 @@ class DomainCest
         ]);
         $this->index->containsColumns([
             'Domain name',
-            'Client',
-            'Reseller',
             'Status',
-            'WHOIS',
+            'WHOIS protect',
             'Protection',
             'Registered',
             'Paid till',
-            'Autorenew',
+            'Auto renew',
         ]);
     }
 }
