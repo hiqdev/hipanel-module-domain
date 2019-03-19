@@ -36,6 +36,8 @@ class DomainSettingsCest
 
     public function ensureICanChangeNote(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $note = time();
         $this->viewPage->setNote($note);
         $I->waitForPageUpdate();
@@ -44,24 +46,32 @@ class DomainSettingsCest
 
     public function ensureICanChangeWhoisSettings(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $this->viewPage->switchSetting('whois');
         $I->closeNotification('WHOIS protect has been changed');
     }
 
     public function ensureICanChangeProtectionSettings(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $this->viewPage->switchSetting('secure');
         $I->closeNotification('Lock has been changed');
     }
 
     public function ensureICanChangeAutorenewalSettings(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $this->viewPage->switchSetting('autorenewal');
         $I->closeNotification('Autorenewal has been changed');
     }
 
     public function ensureICanChangeAuthorizationCode(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $I->pressButton('Show');
         $I->waitForPageUpdate();
         $oldAuthCode = $this->viewPage->getAuthorizationCode();

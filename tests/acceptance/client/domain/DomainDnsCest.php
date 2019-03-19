@@ -45,6 +45,10 @@ class DomainDnsCest
 
     public function ensureICanCreateDnsRecord(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+        $I->click("DNS records");
+        $I->waitForPageUpdate();
+
         $this->viewPage->fillDnsRecordInput('name', DomainViewPage::CREATE, $this->dnsRecord);
         $this->viewPage->fillDnsRecordInput('value', DomainViewPage::CREATE, $this->ip);
 
@@ -55,6 +59,10 @@ class DomainDnsCest
 
     public function ensureICanUpdateDnsRecord(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+        $I->click("DNS records");
+        $I->waitForPageUpdate();
+
         $this->viewPage->pressUpdateButtonFor(
             $this->dnsRecord . '.' . $this->domain->getName()
         );
@@ -76,6 +84,10 @@ class DomainDnsCest
 
     public function ensureICanDeleteDnsRecord(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+        $I->click("DNS records");
+        $I->waitForPageUpdate();
+
         $this->viewPage->pressDeleteButtonFor(
             $this->dnsRecord . '.' . $this->domain->getName()
         );

@@ -56,7 +56,7 @@ class DomainCest
             'Protection',
             'Registered',
             'Paid till',
-            'Autorenew',
+            'Auto renew',
         ]);
     }
 }

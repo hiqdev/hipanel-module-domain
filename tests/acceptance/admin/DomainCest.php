@@ -55,11 +55,11 @@ class DomainCest
             'Client',
             'Reseller',
             'Status',
-            'WHOIS',
+            'WHOIS protect',
             'Protection',
             'Registered',
             'Paid till',
-            'Autorenew',
+            'Auto renew',
         ]);
     }
 }

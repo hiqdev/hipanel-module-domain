@@ -25,4 +25,9 @@ class Domain
     {
         $this->domainId = $domainId;
     }
+
+    public function getDomainId(): int
+    {
+        return $this->domainId;
+    }
 }
