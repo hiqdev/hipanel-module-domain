@@ -39,6 +39,8 @@ class DomainNSsCest
 
     public function ensureICanAddNS(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         $nsAmount = $this->viewPage->countNSs();
         $this->addNs();
         $I->pressButton('Save');
@@ -48,6 +50,8 @@ class DomainNSsCest
 
     public function ensureICanDeleteNS(Client $I)
     {
+        $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
+
         if (($n = $this->viewPage->countNSs()) <= 1) {
             $this->addNs();
         };

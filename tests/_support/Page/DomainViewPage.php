@@ -129,7 +129,7 @@ class DomainViewPage extends Authenticated
         ];
         $location = $selectors[$scenario];
 
-        $inputSelector = $this->dnsPaneCssId . $location . " input[name*='$inputName']";
+        $inputSelector = $this->dnsPaneCssId . $location . " input[data-attribute='$inputName']";
         (new Input($this->tester, $inputSelector))
             ->setValue($value);
     }
