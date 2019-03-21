@@ -19,10 +19,25 @@ class DomainSort
      */
     public static function byGeneralRules(): SortChain
     {
-        return Sort::chain()->asc(self::byDomainName());
+        return Sort::chain()->asc(self::byZone());
     }
 
-    private static function byDomainName(): \Closure
+    public static function bySearchQueryTokens(array $tokens = []): SortChain
+    {
+        $tokens = array_map('mb_strtolower', $tokens);
+
+        return Sort::chain()->asc(self::byZone())->asc(function (CheckForm $model) use ($tokens) {
+            $fqdn = mb_strtolower($model->fqdn);
+            [$domain,] = explode('.', $fqdn, 2);
+            if (($key = array_search($fqdn, $tokens)) !== false || ($key = array_search($domain, $tokens)) !== false) {
+                return $key;
+            }
+
+            return INF;
+        });
+    }
+
+    public static function byZone(): \Closure
     {
         $order = [
             'com',
