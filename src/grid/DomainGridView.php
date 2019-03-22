@@ -256,7 +256,16 @@ class DomainGridView extends BoxedGridView
                 'filter' => false,
                 'headerOptions' => ['style' => 'width:1em'],
                 'value' => function ($model) {
-                    return Expires::widget(compact('model'));
+                    $html = Expires::widget(['model' => $model, 'labelOptions' => ['style' => 'line-height: inherit!important;']]);
+                    if ($model->isExpiresSoon() && $model->canRenew()) {
+                        $html = Html::tag('span',
+                            $html . '&nbsp;' . Html::a(Html::tag('i', null, ['class' => 'fa fa-fw fa-forward']) .
+                            Yii::t('hipanel:domain', 'Renew'), ['add-to-cart-renewal', 'model_id' => $model->id], ['class' => 'btn btn-success btn-xs']),
+                            ['style' => 'display: flex; justify-content: flex-start;']
+                        );
+                    }
+
+                    return $html;
                 },
             ],
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
