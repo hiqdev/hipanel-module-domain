@@ -651,6 +651,14 @@ class Domain extends \hipanel\base\Model
         return $this->isRussianRenewable() || !$this->isRussianZones();
     }
 
+    /**
+     * @return bool
+     */
+    public function isExpiresSoon(): bool
+    {
+        return $this->daysleft < 31;
+    }
+
     public function isSynchronizable()
     {
         return $this->isActive() && !$this->isRussianZones();
