@@ -11,6 +11,7 @@ use yii\helpers\Html;
 /** @var \hipanel\modules\domain\forms\CheckForm $model */
 /** @var array $dropDownZonesOptions */
 /** @var \hipanel\modules\domain\forms\CheckForm[] $results */
+
 DomainCheckPluginAsset::register($this);
 IsotopeAsset::register($this);
 
@@ -152,6 +153,11 @@ select2-container .select2-choice, .select2-container .select2-choices, .select2
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
     
+    hipanel.googleAnalytics($('[data-ga-search]'), {
+        'category': 'domain',
+        'action': 'search'
+    });
+
     $(document).on('click', 'checkbox', function() {
         $('.suggestion').css({'display': 'block'});  
     });
@@ -239,8 +245,15 @@ if (!empty($results)) {
             return false;
         },
         finally: function () {
+            var $domains = $('.domain-list');
+
+            hipanel.googleAnalytics($domains, {
+                'category': 'domain',
+                'action': 'add-to-cart'
+            });
+
             // init Isotope
-            var grid = $('.domain-list').isotope({
+            var grid = $domains.isotope({
                 itemSelector: '.domain-iso-line',
                 layout: 'vertical',
                 // disable initial layout
@@ -358,7 +371,10 @@ JS
                                     ]); ?>
                                 </div>
                             </div>
-                            <div class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), ['class' => 'btn btn-info btn-flat btn-block']); ?></div>
+                            <div class="col-md-2"><?= Html::submitButton(Yii::t('hipanel:domain', 'Search'), [
+                                    'class' => 'btn btn-info btn-flat btn-block',
+                                    'data-ga-search' => true,
+                                ]); ?></div>
                         </div>
                         <?php ActiveForm::end() ?>
                     </div>

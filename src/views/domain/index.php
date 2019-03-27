@@ -14,6 +14,13 @@ $this->title = Yii::t('hipanel', 'Domains');
 $this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
 $this->params['breadcrumbs'][] = $this->title;
 
+$this->registerJs(<<<JS
+    hipanel.googleAnalytics($('[data-ga-check]'), {
+        'category': 'domain',
+        'action': 'check'
+    });
+JS
+);
 ?>
 
 <?php $page = IndexPage::begin(compact('model', 'dataProvider')) ?>
@@ -21,7 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $page->beginContent('main-actions') ?>
         <?php if (Yii::$app->user->can('deposit')) : ?>
-            <?= Html::a(Yii::t('hipanel:domain', 'Register domain'), ['@domain-check'], ['class' => 'btn btn-sm btn-success']) ?>
+            <?= Html::a(Yii::t('hipanel:domain', 'Register domain'), ['@domain-check'], [
+                'class' => 'btn btn-sm btn-success',
+                'data-ga-check' => true,
+            ]) ?>
             <?php if (Yii::getAlias('@certificate', false) && Yii::$app->user->can('certificate.pay') && Yii::$app->user->can('test.beta')) : ?>
                 <?= Html::a(Yii::t('hipanel:certificate', 'Buy certificate'), ['@certificate/order/index'], ['class' => 'btn btn-sm btn-default']) ?>
             <?php endif ?>
