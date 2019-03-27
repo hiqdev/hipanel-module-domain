@@ -38,6 +38,9 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                         'label' => Yii::t('hipanel:domain', 'Register domain'),
                         'url'   => ['/domain/check/check-domain'],
                         'visible' => Yii::$app->user->can('domain.pay'),
+                        'options' => [
+                            'data-ga-check' => true
+                        ]
                     ],
                     'transfer' => [
                         'label' => Yii::t('hipanel:domain', 'Transfer domain'),

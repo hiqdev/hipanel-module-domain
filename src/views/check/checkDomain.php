@@ -3,7 +3,6 @@
 use hipanel\assets\IsotopeAsset;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\assets\DomainCheckPluginAsset;
-use hipanel\modules\domain\assets\GoogleAnalyticsAsset;
 use hipanel\modules\domain\models\Domain;
 use hiqdev\combo\StaticCombo;
 use yii\bootstrap\ActiveForm;
@@ -14,8 +13,6 @@ use yii\helpers\Html;
 /** @var \hipanel\modules\domain\forms\CheckForm[] $results */
 
 DomainCheckPluginAsset::register($this);
-GoogleAnalyticsAsset::register($this);
-
 IsotopeAsset::register($this);
 
 $this->title = Yii::t('hipanel:domain', 'Domain check');
@@ -156,7 +153,7 @@ select2-container .select2-choice, .select2-container .select2-choices, .select2
 if (!empty($results)) {
     $this->registerJs(<<<'JS'
     
-    $('[data-ga-search]').googleAnalytics({
+    hipanel.googleAnalytics($('[data-ga-search]'), {
         'category': 'domain',
         'action': 'search'
     });
@@ -248,9 +245,9 @@ if (!empty($results)) {
             return false;
         },
         finally: function () {
-            let $domains = $('.domain-list');
+            var $domains = $('.domain-list');
 
-            $domains.googleAnalytics({
+            hipanel.googleAnalytics($domains, {
                 'category': 'domain',
                 'action': 'add-to-cart'
             });

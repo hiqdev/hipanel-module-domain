@@ -1,6 +1,5 @@
 <?php
 
-use hipanel\modules\domain\assets\GoogleAnalyticsAsset;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainBulkActionsMenu;
 use hipanel\widgets\IndexPage;
@@ -11,14 +10,12 @@ use yii\bootstrap\Html;
  * @var $dataProvider \hiqdev\hiart\ActiveDataProvider
  */
 
-GoogleAnalyticsAsset::register($this);
-
 $this->title = Yii::t('hipanel', 'Domains');
 $this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs(<<<JS
-    $('[data-ga-check]').googleAnalytics({
+    hipanel.googleAnalytics($('[data-ga-check]'), {
         'category': 'domain',
         'action': 'check'
     });
