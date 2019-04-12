@@ -97,7 +97,7 @@ class CheckController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $bulkForm,
             'dropDownZonesOptions' => $dropDownZonesOptions,
-            'results' => DomainSort::bySearchQueryTokens($bulkForm->fqdns)->values($results),
+            'results' => $bulkForm->getErrors() ? [] : DomainSort::bySearchQueryTokens($bulkForm->fqdns)->values($results),
         ]);
     }
 }
