@@ -10,7 +10,6 @@ use yii\web\View;
  * @var Domain $model
  * @var boolean $askPincode
  */
-
 ?>
 
 <?= Html::beginForm([
@@ -33,7 +32,7 @@ use yii\web\View;
                     'data-id' => $model->id,
                     'data-url' => Url::to(['@domain/get-password']),
                     'data-error-message' => Yii::t('hipanel', 'An error occurred. Try again please.'),
-                    'data-ask-pincode' => (int) $askPincode
+                    'data-ask-pincode' => (int) $askPincode,
                 ]); ?>
                 <?php if ($model->canRegenPassword()) : ?>
                     <?= Html::button(Yii::t('hipanel:domain', 'Generate new'), [
@@ -42,7 +41,7 @@ use yii\web\View;
                         'data-loading-text' => Yii::t('hipanel:domain', 'Code generation...'),
                         'data-id' => $model->id,
                         'data-url' => Url::to(['@domain/regen-password']),
-                        'data-success-message' => Yii::t('hipanel:domain', 'The password has been changed')
+                        'data-success-message' => Yii::t('hipanel:domain', 'The password has been changed'),
                     ]) ?>
                 <?php endif ?>
             </span>

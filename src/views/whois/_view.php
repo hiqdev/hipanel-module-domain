@@ -129,7 +129,9 @@ $this->registerCss('
         </table>
         <?php break; ?>
 
-    <?php case Whois::REGISTRATION_UNSUPPORTED: ?>
+    <?php
+                        // no break
+                        case Whois::REGISTRATION_UNSUPPORTED: ?>
         <table class="table">
             <thead>
             <tr class="danger">

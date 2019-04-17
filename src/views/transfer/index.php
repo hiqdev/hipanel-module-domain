@@ -12,7 +12,6 @@ use yii\helpers\Url;
  * @var Domain[] $models
  * @var \yii\data\ArrayDataProvider $transferDataProvider
  */
-
 $this->title = Yii::t('hipanel:domain', 'Domain transfer');
 $this->params['breadcrumbs'][] = $this->title;
 

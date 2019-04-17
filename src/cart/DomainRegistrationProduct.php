@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -36,7 +36,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
     public function rules()
     {
         return array_merge(parent::rules(), [
-            ['registrant', 'integer']
+            ['registrant', 'integer'],
         ]);
     }
 
@@ -59,6 +59,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
     {
         $parent = parent::serializationMap();
         $parent['registrant'] = $this->registrant;
+
         return $parent;
     }
 }

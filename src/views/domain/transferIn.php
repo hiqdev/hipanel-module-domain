@@ -3,7 +3,6 @@
 /** @var Domain $model */
 
 /** @var string $userIP */
-
 use hipanel\modules\domain\models\Domain;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;

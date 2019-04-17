@@ -1,7 +1,6 @@
 <?php
 
 /** @var array $forwardingOptions */
-
 use hipanel\modules\domain\widgets\UsePremiumFeaturesButton;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -29,11 +28,11 @@ $urlFwOptions = array_reverse(array_filter($forwardingOptions, function ($ref) {
 ]) ?>
 
 <?php if (!$model->isNewRecord) : ?>
-    <?= Html::activeHiddenInput($model, "id") ?>
+    <?= Html::activeHiddenInput($model, 'id') ?>
 <?php endif; ?>
 
-<?= Html::activeHiddenInput($model, "domain_id") ?>
-<?= Html::activeHiddenInput($model, "status") ?>
+<?= Html::activeHiddenInput($model, 'domain_id') ?>
+<?= Html::activeHiddenInput($model, 'status') ?>
 
     <div class="row">
         <div class="col-md-4">
@@ -46,7 +45,7 @@ $urlFwOptions = array_reverse(array_filter($forwardingOptions, function ($ref) {
             <?= $form->field($model, 'value') ?>
         </div>
         <div class="col-md-12">
-            <?php if ((bool)$domain->premium->is_active === false) : ?>
+            <?php if ((bool) $domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
                     'text' => $model->isNewRecord ? Yii::t('hipanel.domain.premium', 'Add record') : Yii::t('hipanel.domain.premium', 'Update record'),
                     'options' => ['class' => 'btn btn-success btn-sm'],

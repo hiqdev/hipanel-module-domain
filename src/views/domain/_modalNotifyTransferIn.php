@@ -10,12 +10,11 @@ use yii\helpers\Html;
  * @var Domain
  * @var Domain[] $models
  */
-
-$this->registerCss("
+$this->registerCss('
     .domain-send-to-radio label {
         display: block;
     }
-");
+');
 
 $this->registerJs(<<<JS
     $('.domain-send-to-radio input[name="send_to"]').on('change', function() {
@@ -48,6 +47,7 @@ $unNotifiedTransferIn = [];
                 if (!$model->canSendFOA()) {
                     $unNotifiedTransferIn[] =  $model->domain;
                 }
+
                 return $model->domain;
             },
             'delimiter' => ',&nbsp; ',

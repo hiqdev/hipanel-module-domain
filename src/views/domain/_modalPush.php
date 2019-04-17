@@ -45,6 +45,7 @@ $unPushable = [];
                 if (!$model->canBePushed()) {
                     $unPushable[] =  $model->domain;
                 }
+
                 return $model->domain;
             },
             'delimiter' => ',&nbsp; ',

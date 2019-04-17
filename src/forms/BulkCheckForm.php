@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\forms;
 
@@ -83,7 +91,7 @@ class BulkCheckForm extends Model
 
             // Check if zones is available
             [['zones'], 'filter', 'filter' => function ($zones) {
-                return array_filter((array)$zones, function ($zone) {
+                return array_filter((array) $zones, function ($zone) {
                     return in_array($zone, array_keys($this->availableZones), true);
                 });
             }, 'skipOnEmpty' => true],
@@ -98,7 +106,7 @@ class BulkCheckForm extends Model
     public function getData()
     {
         $result = [];
-        $ifSingleZone = !empty($this->zones) && count($this->zones) == 1 ? reset($this->zones) : null;
+        $ifSingleZone = !empty($this->zones) && count($this->zones) === 1 ? reset($this->zones) : null;
         foreach ($this->fqdns as $row) {
             $result[] = ['fqdn' => $row, 'zone' => $ifSingleZone];
         }
@@ -130,7 +138,7 @@ class BulkCheckForm extends Model
 
         // Many domains or many zones
         //  => Intersection between selected and available zones
-        $zones = array_intersect_key($this->availableZones, array_flip((array)$this->zones));
+        $zones = array_intersect_key($this->availableZones, array_flip((array) $this->zones));
 
         // In case there is a zone in the domain
         //  => Add it to the zones array
@@ -153,12 +161,14 @@ class BulkCheckForm extends Model
         $form->fqdn = $fqdn;
 
         $generator = new DomainVariationsGenerator($form->getDomain(), $form->getZone(), $this->adjustZonesFor($form));
+
         return $generator->run();
     }
 
     private function getAvailableZonesOrderedBy($zone)
     {
         $zones = array_diff($this->availableZones, [$zone]);
+
         return [reset($this->zones) => $zone] + $zones;
     }
 

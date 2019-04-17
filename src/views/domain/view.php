@@ -6,7 +6,6 @@
  * @var boolean $hasPincode
  * @var array $forwardingOptions
  */
-
 use hipanel\modules\dns\widgets\DnsZoneEditWidget;
 use hipanel\modules\domain\grid\DomainGridView;
 use hipanel\modules\domain\menus\DomainDetailMenu;

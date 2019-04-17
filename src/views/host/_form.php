@@ -12,7 +12,6 @@ use yii\web\JsExpression;
 /**
  * @var \yii\web\View
  */
-
 ?>
 
 <div class="row">
@@ -93,18 +92,18 @@ use yii\web\JsExpression;
                                         'tags' => true,
                                         'tokenSeparators' => [';', ',', ' '],
                                         'minimumResultsForSearch' => new JsExpression('Infinity'),
-                                        'createTag' => new JsExpression("function (query) {
+                                        'createTag' => new JsExpression('function (query) {
                                             return {
                                                 id: query.term,
                                                 text: query.term,
                                                 tag: true
                                             };
-                                        }"),
+                                        }'),
                                         'language' => [
-                                            'noResults' => new JsExpression("function (params) {
-                                                return " . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ";
-                                            }")
-                                        ]
+                                            'noResults' => new JsExpression('function (params) {
+                                                return ' . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ';
+                                            }'),
+                                        ],
                                     ],
                                 ],
                             ])->label(false)->hint(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) ?>

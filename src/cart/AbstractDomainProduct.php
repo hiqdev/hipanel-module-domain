@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -61,6 +61,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     public function getZone()
     {
         list(, $zone) = explode('.', $this->name, 2);
+
         return $zone;
     }
 
@@ -75,7 +76,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
             if ($interval->y >= 0 && !$interval->invert) {
                 $limit -= $interval->y;
                 if ($interval->m > 0 || $interval->d > 0) {
-                    $limit--;
+                    --$limit;
                 }
             }
         }
@@ -103,7 +104,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
         $parent = parent::serializationMap();
         $parent['_operation'] = $this->_operation;
         $parent['_model'] = $this->_model;
+
         return $parent;
     }
-
 }

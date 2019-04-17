@@ -2,7 +2,6 @@
 
 /** @var \hipanel\modules\domain\models\Domain $model */
 /** @var array $forwardingOptions */
-
 use hipanel\modules\domain\assets\PremiumFeatureAsset;
 use hipanel\modules\domain\grid\DomainGridView;
 

@@ -5,18 +5,13 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\menus;
 
-use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\helpers\StringHelper;
-use hipanel\widgets\AjaxModal;
-use yii\bootstrap\Modal;
-use yii\helpers\Html;
-
 
 class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
 {
@@ -129,7 +124,6 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                             'Domain[id]' => $this->model->id,
                             'Domain[domain]' => $this->model->domain,
                         ],
-
                     ],
                 ],
                 'visible' => $this->model->canCancelPreincoming(),
@@ -148,7 +142,6 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                             'Domain[id]' => $this->model->id,
                             'Domain[domain]' => $this->model->domain,
                         ],
-
                     ],
                 ],
                 'visible' => $this->model->canCancelPreincoming(),

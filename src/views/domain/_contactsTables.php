@@ -1,15 +1,15 @@
 <?php
 
-use hipanel\modules\client\grid\ContactGridView;
 use yii\helpers\Html;
-$this->registerCss("
+
+$this->registerCss('
 #domain-contacts-list {
     margin-bottom: 0px;
 }
 #domain-contacts-list td {
     padding: 0;
 }
-");
+');
 ?>
 
 <?php foreach ($model->contactTypesWithLabels() as $contactType => $label) : ?>

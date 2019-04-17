@@ -28,6 +28,7 @@ $i = 0;
                 if (!$model->isContactChangeable()) {
                     $unchangeableZones[] = $model->domain;
                 }
+
                 return $model->domain;
             },
             'delimiter' => ',&nbsp; ',

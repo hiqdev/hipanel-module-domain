@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\_support\Page;
 
@@ -9,8 +17,8 @@ class DomainIndexPage extends IndexPage
 {
     /**
      * @param string $domainName
-     * @return string
      * @throws \Codeception\Exception\ModuleException
+     * @return string
      */
     public function getDomainId(string $domainName): string
     {

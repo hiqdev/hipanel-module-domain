@@ -1,13 +1,20 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\acceptance\client\domain;
 
+use hipanel\helpers\Url;
 use hipanel\modules\domain\tests\_support\Domain;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
-use hipanel\helpers\Url;
-
 
 class DomainNSsCest
 {
@@ -54,7 +61,7 @@ class DomainNSsCest
 
         if (($n = $this->viewPage->countNSs()) <= 1) {
             $this->addNs();
-        };
+        }
 
         $this->viewPage->deleteLastNS();
         $I->pressButton('Save');
@@ -74,13 +81,13 @@ class DomainNSsCest
      */
     private function getNewNSName(array $nss): string
     {
-        for ($i = 1; $i <= count($nss) + 1; $i++) {
+        for ($i = 1; $i <= count($nss) + 1; ++$i) {
             $nsName = "ns{$i}.topdns.me";
-            if (!in_array($nsName, $nss)) {
+            if (!in_array($nsName, $nss, true)) {
                 break;
             }
         }
 
-        return $nsName ?? "ns1.topdns.me";
+        return $nsName ?? 'ns1.topdns.me';
     }
 }

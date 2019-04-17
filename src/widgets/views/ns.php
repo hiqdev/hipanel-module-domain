@@ -143,10 +143,10 @@ $(document).on('pjax:complete', function(event) {
                                                     'minimumResultsForSearch' => new JsExpression('Infinity'),
                                                     'placeholder' => $nsModel->getAttributeLabel('ip'),
                                                     'language' => [
-                                                        'noResults' => new JsExpression("function (params) {
-                                                                return " . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ";
-                                                            }")
-                                                    ]
+                                                        'noResults' => new JsExpression('function (params) {
+                                                                return ' . Json::encode(Yii::t('hipanel:domain', 'Up to 13 IPv4 or IPv6 addresses separated with comma')) . ';
+                                                            }'),
+                                                    ],
                                                 ],
                                             ],
                                         ])->label(false) ?>
