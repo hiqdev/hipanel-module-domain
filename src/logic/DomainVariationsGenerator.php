@@ -77,7 +77,6 @@ class DomainVariationsGenerator
     public function run()
     {
         $variations = $this->generateZoneVariations();
-        $this->orderVariations($variations);
         $suggestions = $this->generateSuggestions();
         $this->removeDuplicates($variations, $suggestions);
 
@@ -157,17 +156,5 @@ class DomainVariationsGenerator
         }
 
         return $suggestions;
-    }
-
-    /**
-     * Orders $variations to have the originally queried domain on top of the list.
-     *
-     * @param array $variations
-     */
-    protected function orderVariations(&$variations)
-    {
-        usort($variations, function (CheckForm $prev, CheckForm $curr) {
-            return $curr->fqdn === $this->getFqdn() ? 1 : 0;
-        });
     }
 }

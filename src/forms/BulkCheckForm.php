@@ -127,13 +127,12 @@ class BulkCheckForm extends Model
         // Single domain, no zones selected
         //  => all zones
         if (count($this->fqdns) === 1 && count($this->zones) === 0) {
-            return $this->availableZones;
-        }
-
-        // Single domain and single zone
-        //  => all zones ordered by the selected zone
-        if (count($this->fqdns) === 1 && count($this->zones) === 1) {
-            return $this->getAvailableZonesOrderedBy('.' . reset($this->zones));
+            if ($singleZoneWithDomain = $checkForm->getZone()) {
+                $zones = array_diff_key($this->availableZones, [$singleZoneWithDomain => '']);
+                return [$singleZoneWithDomain => '.' . $singleZoneWithDomain] + $zones;
+            } else {
+                return $this->availableZones;
+            }
         }
 
         // Many domains or many zones
@@ -163,13 +162,6 @@ class BulkCheckForm extends Model
         $generator = new DomainVariationsGenerator($form->getDomain(), $form->getZone(), $this->adjustZonesFor($form));
 
         return $generator->run();
-    }
-
-    private function getAvailableZonesOrderedBy($zone)
-    {
-        $zones = array_diff($this->availableZones, [$zone]);
-
-        return [reset($this->zones) => $zone] + $zones;
     }
 
     public function variateAll()
