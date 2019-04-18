@@ -22,6 +22,28 @@ use Tuck\Sort\SortChain;
  */
 class DomainSort
 {
+    public static $defaultOrder = [
+        'com',
+        'net',
+        'name',
+        'cc',
+        'tv',
+        'org',
+        'info',
+        'pro',
+        'mobi',
+        'biz',
+        'me',
+        'kiev.ua',
+        'com.ua',
+        'ru',
+        'su',
+        'xxx',
+        'porn',
+        'adult',
+        'sex',
+    ];
+
     /**
      * @return SortChain
      */
@@ -47,31 +69,11 @@ class DomainSort
 
     public static function byZone(): \Closure
     {
-        $order = [
-            'com',
-            'net',
-            'name',
-            'cc',
-            'tv',
-            'org',
-            'info',
-            'pro',
-            'mobi',
-            'biz',
-            'me',
-            'kiev.ua',
-            'com.ua',
-            'ru',
-            'su',
-            'xxx',
-            'porn',
-            'adult',
-            'sex',
-        ];
         $mapping = [
             CheckForm::class => 'fqdn',
             Domain::class => 'domain',
         ];
+        $order = self::$defaultOrder;
 
         return function ($model) use ($order, $mapping) {
             $fqdn = null;

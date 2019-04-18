@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\controllers;
 
+use hipanel\base\CrudController;
 use hipanel\helpers\ArrayHelper;
 use hipanel\modules\domain\forms\BulkCheckForm;
 use hipanel\modules\domain\forms\CheckForm;
@@ -18,7 +19,7 @@ use hipanel\modules\domain\repositories\DomainTariffRepository;
 use Yii;
 use yii\base\Module;
 
-class CheckController extends \hipanel\base\CrudController
+class CheckController extends CrudController
 {
     /**
      * @var DomainTariffRepository
@@ -96,7 +97,7 @@ class CheckController extends \hipanel\base\CrudController
         return $this->render('checkDomain', [
             'model' => $bulkForm,
             'dropDownZonesOptions' => $dropDownZonesOptions,
-            'results' => $bulkForm->getErrors() ? [] : DomainSort::bySearchQueryTokens($bulkForm->fqdns)->values($results),
+            'results' => $bulkForm->getErrors() ? [] : $results,
         ]);
     }
 }
