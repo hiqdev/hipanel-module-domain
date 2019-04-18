@@ -129,10 +129,11 @@ class BulkCheckForm extends Model
         if (count($this->fqdns) === 1 && count($this->zones) === 0) {
             if ($singleZoneWithDomain = $checkForm->getZone()) {
                 $zones = array_diff_key($this->availableZones, [$singleZoneWithDomain => '']);
+
                 return [$singleZoneWithDomain => '.' . $singleZoneWithDomain] + $zones;
-            } else {
-                return $this->availableZones;
             }
+
+            return $this->availableZones;
         }
 
         // Many domains or many zones
