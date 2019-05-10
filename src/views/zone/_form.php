@@ -14,15 +14,15 @@ use yii\helpers\Url;
 
 ?>
 
+<?php $form = ActiveForm::begin([
+    'id' => 'dynamic-form',
+    'enableClientValidation' => true,
+    'validateOnBlur' => true,
+    'enableAjaxValidation' => true,
+    'validationUrl' => Url::toRoute(['validate-form', 'scenario' => reset($models)->isNewRecord ? 'create' : 'update']),
+]) ?>
 <div class="row">
     <div class="col-md-12">
-        <?php $form = ActiveForm::begin([
-            'id' => 'dynamic-form',
-            'enableClientValidation' => true,
-            'validateOnBlur' => true,
-            'enableAjaxValidation' => true,
-            'validationUrl' => Url::toRoute(['validate-form', 'scenario' => reset($models)->isNewRecord ? 'create' : 'update']),
-        ]) ?>
         <?php DynamicFormWidget::begin([
             'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
             'widgetBody' => '.container-items', // required: css class selector
@@ -91,16 +91,15 @@ use yii\helpers\Url;
                 </div>
             <?php endforeach ?>
         </div>
-    </div>
-
-    <?php DynamicFormWidget::end() ?>
-    <div class="row">
-        <div class="col-md-12 no">
-            <?= Html::submitButton(Yii::t('hipanel', 'Save'), ['class' => 'btn btn-success']) ?>
-            &nbsp;
-            <?= Html::button(Yii::t('hipanel', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
-        </div>
-    </div>
-    <?php ActiveForm::end() ?>
+        <?php DynamicFormWidget::end() ?>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12 no">
+        <?= Html::submitButton(Yii::t('hipanel', 'Save'), ['class' => 'btn btn-success']) ?>
+        &nbsp;
+        <?= Html::button(Yii::t('hipanel', 'Cancel'), ['class' => 'btn btn-default', 'onclick' => 'history.go(-1)']) ?>
+    </div>
+</div>
+<?php ActiveForm::end() ?>

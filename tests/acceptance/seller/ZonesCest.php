@@ -23,10 +23,8 @@ class ZonesCest
     public function ensureIndexPageWorks(Seller $I)
     {
         $I->login();
-        $I->needPage(Url::to('@host'));
-        $I->see('Name Servers', 'h1');
-        $I->seeLink('Create name server', Url::to('create'));
-//        $this->ensureICanSeeAdvancedSearchBox($I);
-//        $this->ensureICanSeeBulkHostSearchBox();
+        $I->needPage(Url::to('@zone/index'));
+        $I->see('Zone', 'h1');
+        $I->seeLink('Create zone', Url::to('create'));
     }
 }
