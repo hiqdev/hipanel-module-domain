@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $page->setSearchFormData(compact(['types', 'brands', 'states'])) ?>
         <?php $page->beginContent('main-actions') ?>
-<!--            --><?php // if (Yii::$app->user->can('order.create')) : ?>
+            <?php  if (Yii::$app->user->can('zone.create')) : ?>
                 <?= Html::a(Yii::t('hipanel:domain', 'Create zone'), ['@zone/create'], ['class' => 'btn btn-sm btn-success']) ?>
-<!--            --><?php //endif; ?>
+            <?php endif; ?>
         <?php $page->endContent() ?>
 
         <?php $page->beginContent('sorter-actions') ?>
@@ -42,7 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $page->renderBulkButton('disable', Yii::t('hipanel', 'Disable')) ?>
             <?= $page->renderBulkButton('enable', Yii::t('hipanel', 'Enable')) ?>
             <?= $page->renderBulkButton('update', Yii::t('hipanel', 'Update')) ?>
-<!--            --><?//= Html::a(Yii::t('hipanel:domain', 'Update'), ['@zone/update'], ['class' => 'btn btn-default btn-sm'])?>
             <?= $page->renderBulkDeleteButton('delete') ?>
         <?php $page->endContent('bulk-actions') ?>
 

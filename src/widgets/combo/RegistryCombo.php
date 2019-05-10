@@ -3,6 +3,7 @@
 namespace hipanel\modules\domain\widgets\combo;
 
 use hiqdev\combo\Combo;
+use Yii;
 
 class RegistryCombo extends Combo
 {

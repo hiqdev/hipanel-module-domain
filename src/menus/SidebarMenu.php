@@ -54,6 +54,7 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                     'zone' => [
                         'label' => Yii::t('hipanel:domain', 'Zone'),
                         'url'   => ['@zone/index'],
+                        'visible' => Yii::$app->user->can('zone.read'),
                     ],
                 ],
             ],

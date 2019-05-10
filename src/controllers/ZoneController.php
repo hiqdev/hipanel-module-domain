@@ -13,29 +13,36 @@ namespace hipanel\modules\domain\controllers;
 use hipanel\actions\IndexAction;
 use hipanel\actions\SmartCreateAction;
 use hipanel\actions\SmartDeleteAction;
+use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\base\CrudController;
+use hipanel\filters\EasyAccessControl;
+use hipanel\modules\domain\models\Zone;
 use Yii;
-use yii\web\Response;
 use hipanel\actions\ViewAction;
+use yii\base\Event;
 
 class ZoneController extends CrudController
 {
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function behaviors(): array
-//    {
-//        return array_merge(parent::behaviors(), [
-//            [
-//                'class' => EasyAccessControl::class,
-//                'actions' => [
-//                    'get-zones' => 'domain.read',
-//                ],
-//            ],
-//        ]);
-//    }
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors(): array
+    {
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => EasyAccessControl::class,
+                'actions' => [
+                    'create' => 'zone.create',
+                    'update' => 'zone.update',
+                    'delete' => 'zone.delete',
+
+                    '*' => 'zone.read',
+                ],
+            ],
+        ]);
+    }
 
     public function actions(): array
     {
@@ -58,12 +65,32 @@ class ZoneController extends CrudController
                 'class' => SmartDeleteAction::class,
                 'success' => Yii::t('hipanel:domain', 'Zone has been deleted'),
             ],
-//            'disable' => [
-//                'class' => SmartPerformAction::class,
-//            ],
-//            'enable' => [
-//                'class' => SmartPerformAction::class,
-//            ],
+            'disable' => [
+                'class' => SmartPerformAction::class,
+                'success' => Yii::t('hipanel:domain', 'Zone has been disabled'),
+                'on beforeSave' => function (Event $event) {
+                    /** @var \hipanel\actions\Action $action */
+                    $action = $event->sender;
+                    $registry = Yii::$app->request->post('registry');
+                    foreach ($action->collection->models as $model) {
+                        $model->state = Zone::STATE_NOT_WORKING;
+                        $model->registry = $registry[$model->id];
+                    }
+                },
+            ],
+            'enable' => [
+                'class' => SmartPerformAction::class,
+                'success' => Yii::t('hipanel:domain', 'Zone has been enabled'),
+                'on beforeSave' => function (Event $event) {
+                    /** @var \hipanel\actions\Action $action */
+                    $action = $event->sender;
+                    $registry = Yii::$app->request->post('registry');
+                    foreach ($action->collection->models as $model) {
+                        $model->state = Zone::STATE_OK;
+                        $model->registry = $registry[$model->id];
+                    }
+                },
+            ],
             'validate-form' => [
                 'class' => ValidateFormAction::class,
             ],

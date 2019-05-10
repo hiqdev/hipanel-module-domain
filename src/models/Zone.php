@@ -11,6 +11,9 @@ class Zone extends Model
 {
     use ModelTrait;
 
+    const STATE_OK = 'ok';
+    const STATE_NOT_WORKING = 'notworking';
+
     /**
      * {@inheritdoc}
      */
@@ -23,6 +26,7 @@ class Zone extends Model
             [['name', 'registry', 'no', 'state'], 'required', 'on' => ['create', 'update']],
             [['id'], 'required', 'on' => ['update', 'delete']],
             [['add_limit'], 'integer', 'min' => 0, 'max' => 100],
+            [['id', 'state', 'registry'], 'safe', 'on' => ['enable', 'disable']]
         ];
     }
 
@@ -31,13 +35,21 @@ class Zone extends Model
         return $this->mergeAttributeLabels([
             'has_contacts' => Yii::t('hipanel:domain', 'Has contacts'),
             'password_required' => Yii::t('hipanel:domain', 'Password required'),
-            'provider' => Yii::t('hipanel:domain', 'Provider'),
+            'registry' => Yii::t('hipanel:domain', 'Registry'),
             'name' => Yii::t('hipanel:domain', 'Name'),
             'state' => Yii::t('hipanel:domain', 'State'),
             'no' => Yii::t('hipanel:domain', 'No.'),
             'add_period' => Yii::t('hipanel:domain', 'Add grace period'),
             'add_limit' => Yii::t('hipanel:domain', 'Add grace period limit'),
         ]);
+    }
+
+    public function scenarioActions()
+    {
+        return [
+            'disable' => 'update',
+            'enable' => 'update',
+        ];
     }
 
     public function getTypeList()

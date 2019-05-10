@@ -46,6 +46,9 @@ class ZoneGridView extends BoxedGridView
                         'formElementSelector' => 'td',
                     ]);
                 },
+                'value' => function (Zone $model) {
+                    return Html::hiddenInput("registry[$model->id]", $model->registry) . $model->registry;
+                },
             ],
             'state' => [
                 'label' => Yii::t('hipanel:domain', 'State'),
@@ -54,6 +57,9 @@ class ZoneGridView extends BoxedGridView
                 'class' => RefColumn::class,
                 'format' => 'raw',
                 'gtype' => 'state,zone',
+                'value' => function (Zone $model) {
+                    return Yii::t('hipanel:domain', $model->state);
+                },
             ],
             'no' => [
                 'attribute' => 'no',
@@ -66,7 +72,7 @@ class ZoneGridView extends BoxedGridView
                 'attribute' => 'autorenew',
                 'filter' => false,
                 'format' => 'raw',
-                'label' => Yii::t('hipanel:domain', 'Autorenew grace period'),
+                'label' => Yii::t('hipanel:domain', 'Auto-Renew grace period'),
             ],
             'redemption' => [
                 'attribute' => 'redemption',

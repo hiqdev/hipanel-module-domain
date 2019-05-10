@@ -57,7 +57,7 @@ use yii\helpers\Url;
 
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?= $form->field($model, "[$i]registry")->widget(RegistryCombo::class) ?>
+                            <?= $form->field($model, "[$i]registry")->widget(RegistryCombo::class)->label(Yii::t('hipanel:domain', 'Registry')) ?>
                         </div>
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
