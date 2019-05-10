@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\_support\Page;
 
@@ -8,22 +16,22 @@ use hipanel\tests\_support\Page\Widget\Input\Input;
 
 class DomainViewPage extends Authenticated
 {
-    /** @var string  */
+    /** @var string */
     private $nsPaneCssId = '#ns-records';
 
-    /** @var string  */
+    /** @var string */
     private $dnsPaneCssId = '#dns-records';
 
-    /** @var string  */
+    /** @var string */
     private $settingsPaneCssId = '#domain-settings';
 
     /** @var @var string */
     private $nsRowSelector;
 
-    /** @var string  */
+    /** @var string */
     const CREATE = 'create';
 
-    /** @var string  */
+    /** @var string */
     const UPDATE = 'update';
 
     public function __construct(AcceptanceTester $I)
@@ -47,8 +55,8 @@ class DomainViewPage extends Authenticated
     }
 
     /**
-     * @return int
      * @throws \Codeception\Exception\ModuleException
+     * @return int
      */
     public function countNSs(): int
     {
@@ -61,6 +69,7 @@ class DomainViewPage extends Authenticated
     public function getNSs(): array
     {
         $selector = $this->nsRowSelector . ' input[id^="ns"]';
+
         return $this->tester->grabMultiple($selector, 'value');
     }
 

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\_support\Page;
 
@@ -7,7 +15,7 @@ use hipanel\tests\_support\Page\Authenticated;
 use yii\helpers\Url;
 
 /**
- * Class Whois
+ * Class Whois.
  *
  * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
  */

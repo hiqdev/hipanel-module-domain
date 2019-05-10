@@ -1,12 +1,20 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\acceptance\client\domain;
 
 use hipanel\helpers\Url;
-use hipanel\tests\_support\Step\Acceptance\Client;
 use hipanel\modules\domain\tests\_support\Domain;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
+use hipanel\tests\_support\Step\Acceptance\Client;
 
 class DomainSettingsCest
 {

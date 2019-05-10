@@ -3,8 +3,8 @@
 use hipanel\modules\client\widgets\combo\ClientCombo;
 use hipanel\modules\client\widgets\combo\SellerCombo;
 use hipanel\modules\domain\models\Domain;
-use hiqdev\yii2\daterangepicker\DateRangePicker;
 use hiqdev\combo\StaticCombo;
+use hiqdev\yii2\daterangepicker\DateRangePicker;
 use yii\helpers\Html;
 
 /**

@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\models;
@@ -81,9 +81,9 @@ class Whois extends ActiveRecord
     {
         try {
             $result = intval(\SEOstats\Services\Google::getPageRank($this->url));
+
             return $result;
         } catch (Exception $e) {
-
         }
 
         return null;
@@ -97,7 +97,6 @@ class Whois extends ActiveRecord
                 return Alexa::getGlobalRank();
             }
         } catch (Exception $e) {
-
         }
 
         return null;
@@ -121,7 +120,6 @@ class Whois extends ActiveRecord
 
             return $ans;
         } catch (Exception $e) {
-
         }
 
         return null;

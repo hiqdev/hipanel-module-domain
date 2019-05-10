@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -42,14 +42,14 @@ class DomainRegistrationPurchase extends AbstractDomainPurchase
         $date = (new \DateTime())->add(new \DateInterval('P' . $this->amount . 'Y'));
 
         return Yii::t('hipanel:domain', 'The domain name was registered till {date}', [
-            'date' => Yii::$app->formatter->asDate($date)
+            'date' => Yii::$app->formatter->asDate($date),
         ]);
     }
 
     public function getPurchasabilityRules()
     {
         return [
-            DomainContactsCompatibilityValidator::class
+            DomainContactsCompatibilityValidator::class,
         ];
     }
 }

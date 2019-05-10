@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\cart;
@@ -42,6 +42,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     public function getQuantityOptions()
     {
         $amount = in_array($this->getZone(), ['ru', 'su', 'рф'], true) ? 0 : 1;
+
         return [$amount => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', $amount)];
     }
 
@@ -72,6 +73,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     {
         $parent = parent::serializationMap();
         $parent['registrant'] = $this->registrant;
+
         return $parent;
     }
 }

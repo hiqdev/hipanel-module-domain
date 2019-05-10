@@ -9,7 +9,6 @@ use yii\bootstrap\Html;
  * @var $this \yii\web\View
  * @var $dataProvider \hiqdev\hiart\ActiveDataProvider
  */
-
 $this->title = Yii::t('hipanel', 'Domains');
 $this->params['subtitle'] = array_filter(Yii::$app->request->get($model->formName(), [])) ? Yii::t('hipanel', 'filtered list') : Yii::t('hipanel', 'full list');
 $this->params['breadcrumbs'][] = $this->title;

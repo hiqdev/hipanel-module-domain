@@ -1,7 +1,6 @@
 <?php
 
 /** @var $model */
-
 use yii\helpers\Html;
 
 $this->title = Yii::t('hipanel:domain', 'Domain transfer was canceled');

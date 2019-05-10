@@ -1,12 +1,20 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\acceptance\client\domain;
 
+use hipanel\helpers\Url;
 use hipanel\modules\domain\tests\_support\Domain;
 use hipanel\modules\domain\tests\_support\Page\DomainIndexPage;
 use hipanel\modules\domain\tests\_support\Page\DomainViewPage;
 use hipanel\tests\_support\Step\Acceptance\Client;
-use hipanel\helpers\Url;
 
 class DomainDnsCest
 {
@@ -16,10 +24,10 @@ class DomainDnsCest
     /** @var Domain */
     private $domain;
 
-    /** @var string  */
+    /** @var string */
     private $dnsRecord = 'test-record';
 
-    /** @var string  */
+    /** @var string */
     private $ip = '192.168.42.21';
 
     public function _before(Client $I)
@@ -46,7 +54,7 @@ class DomainDnsCest
     public function ensureICanCreateDnsRecord(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
-        $I->click("DNS records");
+        $I->click('DNS records');
         $I->waitForPageUpdate();
 
         $this->viewPage->fillDnsRecordInput('name', DomainViewPage::CREATE, $this->dnsRecord);
@@ -60,7 +68,7 @@ class DomainDnsCest
     public function ensureICanUpdateDnsRecord(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
-        $I->click("DNS records");
+        $I->click('DNS records');
         $I->waitForPageUpdate();
 
         $this->viewPage->pressUpdateButtonFor(
@@ -85,7 +93,7 @@ class DomainDnsCest
     public function ensureICanDeleteDnsRecord(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
-        $I->click("DNS records");
+        $I->click('DNS records');
         $I->waitForPageUpdate();
 
         $this->viewPage->pressDeleteButtonFor(

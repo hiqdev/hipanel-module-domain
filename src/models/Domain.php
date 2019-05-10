@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\models;
@@ -238,7 +238,6 @@ class Domain extends \hipanel\base\Model
             'park' => Yii::t('hipanel:domain', ''),
             'dnspremium' => Yii::t('hipanel:domain', ''),
 
-
             'epp_client_id' => Yii::t('hipanel:domain', 'EPP client ID'),
             'remoteid' => Yii::t('hipanel', 'Remote ID'),
             'domain' => Yii::t('hipanel', 'Domain name'),
@@ -340,17 +339,17 @@ class Domain extends \hipanel\base\Model
 
     public function isFreezed()
     {
-        return (bool)$this->is_freezed;
+        return (bool) $this->is_freezed;
     }
 
     public function isWPFreezed()
     {
-        return (bool)$this->wp_freezed;
+        return (bool) $this->wp_freezed;
     }
 
     public function isHolded()
     {
-        return (bool)$this->is_holded;
+        return (bool) $this->is_holded;
     }
 
     public function isOk()
@@ -600,6 +599,7 @@ class Domain extends \hipanel\base\Model
                     break;
                 }
             }
+
             return $result;
         };
 

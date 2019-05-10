@@ -13,7 +13,7 @@ use yii\data\ArrayDataProvider;
 ]) ?>
 
 <?php if ($model->premium->is_active) : ?>
-    <?= $this->render('_formMailfw', ['model' => new Mailfw, 'domain' => $model]) ?>
+    <?= $this->render('_formMailfw', ['model' => new Mailfw(), 'domain' => $model]) ?>
 <?php else : ?>
     <?= PremiumAlert::widget() ?>
 <?php endif; ?>

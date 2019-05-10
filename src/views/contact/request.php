@@ -4,10 +4,9 @@
  * @var \yii\web\View $this
  * @var bool $requestPassport
  */
-
 use hipanel\widgets\AjaxModal;
-use yii\bootstrap\Modal;
 use yii\bootstrap\Html;
+use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 $this->title = Yii::t('cart', 'Order execution');
@@ -17,8 +16,8 @@ $this->title = Yii::t('cart', 'Order execution');
 <?php \hipanel\widgets\Box::begin([
     'title' => Yii::t('hipanel:domain', 'In order to finish domain registration, we ask you to fill missing contact data'),
     'options' => [
-        'class' => 'box-warning'
-    ]
+        'class' => 'box-warning',
+    ],
 ]) ?>
 
 <?php if ($requestPassport) : ?>
@@ -28,7 +27,7 @@ $this->title = Yii::t('cart', 'Order execution');
             Yii::t('hipanel:domain', 'No. 2011-18/81 from 2011-10-05 p.9.2.5.'),
             'http://cctld.ru/files/pdf/docs/rules_ru-rf.pdf?v=2',
             ['target' => '_blank', 'rel' => 'nofollow']
-        )
+        ),
     ]) ?>
     </h5>
 <?php endif ?>
@@ -42,7 +41,7 @@ $this->title = Yii::t('cart', 'Order execution');
     'actionUrl' => ['@contact/update'],
     'size' => Modal::SIZE_LARGE,
     'toggleButton' => false,
-    'clientEvents' => ['show.bs.modal' => false]
+    'clientEvents' => ['show.bs.modal' => false],
 ]) ?>
 <?= AjaxModal::widget([
     'id' => 'contact-create',
@@ -51,7 +50,7 @@ $this->title = Yii::t('cart', 'Order execution');
     'actionUrl' => ['@contact/create'],
     'size' => Modal::SIZE_LARGE,
     'toggleButton' => false,
-    'clientEvents' => ['show.bs.modal' => false]
+    'clientEvents' => ['show.bs.modal' => false],
 ]) ?>
 
 <?php \yii\bootstrap\ActiveForm::begin([
@@ -62,7 +61,7 @@ $this->title = Yii::t('cart', 'Order execution');
             <?= Html::radio('action', false, [
                 'value' => 'update',
                 'ref' => '#contact-edit',
-                'data-url' => Url::to(['@domain-contact/update', 'requestPassport' => (bool)$requestPassport])
+                'data-url' => Url::to(['@domain-contact/update', 'requestPassport' => (bool) $requestPassport]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Select an existing contact, update it and use it') ?>
 
@@ -80,7 +79,7 @@ $this->title = Yii::t('cart', 'Order execution');
             <?= Html::radio('action', false, [
                 'value' => 'create',
                 'ref' => '#contact-create',
-                'data-url' => Url::to(['@domain-contact/create', 'requestPassport' => (bool)$requestPassport])
+                'data-url' => Url::to(['@domain-contact/create', 'requestPassport' => (bool) $requestPassport]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Create new contact and use it') ?>
         </label>

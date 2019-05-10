@@ -1,6 +1,5 @@
 <?php
 
-use hipanel\modules\domain\models\Domain;
 use yii\helpers\Html;
 
 $options = [

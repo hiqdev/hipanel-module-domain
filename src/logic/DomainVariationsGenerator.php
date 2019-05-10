@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\logic;
@@ -77,7 +77,6 @@ class DomainVariationsGenerator
     public function run()
     {
         $variations = $this->generateZoneVariations();
-        $this->orderVariations($variations);
         $suggestions = $this->generateSuggestions();
         $this->removeDuplicates($variations, $suggestions);
 
@@ -95,7 +94,7 @@ class DomainVariationsGenerator
         $domainNames = ArrayHelper::getColumn($variations, 'fqdn');
 
         $suggestions = array_filter($suggestions, function (CheckForm $suggestion) use ($domainNames) {
-            return array_search(strtolower($suggestion->fqdn), $domainNames) === false;
+            return array_search(strtolower($suggestion->fqdn), $domainNames, true) === false;
         });
     }
 
@@ -105,7 +104,7 @@ class DomainVariationsGenerator
      */
     protected function buildModel(array $attributes)
     {
-       return new CheckForm(array_keys($this->availableZones), $attributes);
+        return new CheckForm(array_keys($this->availableZones), $attributes);
     }
 
     /**
@@ -137,6 +136,7 @@ class DomainVariationsGenerator
             $apiData = Domain::perform('get-suggestions', ['name' => $this->domain, 'zones' => $this->zone]);
         } catch (ResponseErrorException $e) {
             Yii::error("Failed to generate suggestions: {$e->getMessage()}", __METHOD__);
+
             return [];
         }
 
@@ -156,17 +156,5 @@ class DomainVariationsGenerator
         }
 
         return $suggestions;
-    }
-
-    /**
-     * Orders $variations to have the originally queried domain on top of the list.
-     *
-     * @param array $variations
-     */
-    protected function orderVariations(&$variations)
-    {
-        usort($variations, function (CheckForm $prev, CheckForm $curr) {
-            return $curr->fqdn === $this->getFqdn() ? 1 : 0;
-        });
     }
 }

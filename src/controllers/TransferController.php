@@ -5,17 +5,17 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\SmartPerformAction;
 use hipanel\actions\ValidateFormAction;
+use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\models\Domain;
-use hipanel\filters\EasyAccessControl;
 use hiqdev\hiart\Collection;
 use hiqdev\hiart\ResponseErrorException;
 use hiqdev\yii2\cart\actions\AddToCartAction;

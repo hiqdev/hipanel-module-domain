@@ -1,7 +1,6 @@
 <?php
 
 /** @var array $forwardingOptions */
-
 use hipanel\modules\domain\grid\UrlfwGridView;
 use hipanel\modules\domain\models\Urlfw;
 use hipanel\modules\domain\widgets\PremiumAlert;
@@ -16,7 +15,7 @@ use yii\data\ArrayDataProvider;
 
 <?php if ($model->premium->is_active) : ?>
     <?= $this->render('_formUrlfw', [
-        'model' => new Urlfw,
+        'model' => new Urlfw(),
         'domain' => $model,
         'forwardingOptions' => $forwardingOptions,
     ]) ?>

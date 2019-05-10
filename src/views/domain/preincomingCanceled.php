@@ -1,7 +1,6 @@
 <?php
 
 /** @var string $domains */
-
 use yii\helpers\Html;
 
 $this->title = count(explode(',', $domains)) > 1 ? Yii::t('hipanel:domain', 'Domains transfer canceled') : Yii::t('hipanel:domain', 'Domain transfer was canceled');

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\grid;
 
@@ -17,7 +25,7 @@ abstract class AbstractPremiumGrid extends GridView
      */
     public $is_premium;
 
-    public $layout = "<div class=\"table-responsive\">{items}</div>";
+    public $layout = '<div class="table-responsive">{items}</div>';
 
     public $tableOptions = ['class' => 'table'];
 

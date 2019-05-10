@@ -47,10 +47,10 @@ JS
     'validationUrl' => Url::toRoute(['@domain/validate-park-form', 'scenario' => $model->scenario]),
 ]) ?>
 
-<?= Html::activeHiddenInput($model, "domain_id") ?>
+<?= Html::activeHiddenInput($model, 'domain_id') ?>
 <?php if (!$model->isNewRecord) : ?>
-    <?= Html::activeHiddenInput($model, "id") ?>
-    <?= Html::activeHiddenInput($model, "park_id") ?>
+    <?= Html::activeHiddenInput($model, 'id') ?>
+    <?= Html::activeHiddenInput($model, 'park_id') ?>
 <?php endif; ?>
     <div class="row">
         <div class="col-md-6">
@@ -62,7 +62,7 @@ JS
             <?= $form->field($model, 'sitetext')->textarea(['rows' => 7]) ?>
         </div>
         <div class="col-md-12">
-            <?php if ((bool)$domain->premium->is_active === false) : ?>
+            <?php if ((bool) $domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
                     'text' => Yii::t('hipanel.domain.premium', 'Save'),
                     'options' => ['class' => 'btn btn-success btn-sm'],

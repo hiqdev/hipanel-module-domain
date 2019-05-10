@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\repositories;
@@ -70,7 +70,7 @@ class DomainTariffRepository
             return [];
         }
 
-        $resources = array_filter((array)$tariff->resources, function ($resource) use ($type) {
+        $resources = array_filter((array) $tariff->resources, function ($resource) use ($type) {
             return $resource->zone !== null && $resource->type === $type;
         });
 
@@ -84,7 +84,7 @@ class DomainTariffRepository
     /**
      * Method provides list of domain zones available for registration.
      *
-     * @return array|null array of zones or `null`, when no zones were found.
+     * @return array|null array of zones or `null`, when no zones were found
      */
     public function getAvailableZones()
     {
@@ -94,7 +94,7 @@ class DomainTariffRepository
     }
 
     /**
-     * @param Resource[] $zones array of domain resources to be sorted
+     * @param resource[] $zones array of domain resources to be sorted
      * @return array sorted by the default zone resources
      */
     public function orderZones($zones)

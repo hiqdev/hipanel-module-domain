@@ -20,11 +20,11 @@ $model->domain_id = $domain->id;
     'validationUrl' => Url::toRoute(['@domain/validate-mailfw-form', 'scenario' => $model->scenario]),
 ]) ?>
 
-<?= Html::activeHiddenInput($model, "domain_id") ?>
-<?= Html::activeHiddenInput($model, "status") ?>
+<?= Html::activeHiddenInput($model, 'domain_id') ?>
+<?= Html::activeHiddenInput($model, 'status') ?>
 
 <?php if (!$model->isNewRecord) : ?>
-    <?= Html::activeHiddenInput($model, "id") ?>
+    <?= Html::activeHiddenInput($model, 'id') ?>
 <?php endif; ?>
     <div class="row">
         <div class="col-md-6">
@@ -34,7 +34,7 @@ $model->domain_id = $domain->id;
             <?= $form->field($model, 'value')->hint(Yii::t('hipanel.domain.premium', 'Comma or space separeted')) ?>
         </div>
         <div class="col-md-12">
-            <?php if ((bool)$domain->premium->is_active === false) : ?>
+            <?php if ((bool) $domain->premium->is_active === false) : ?>
                 <?= UsePremiumFeaturesButton::widget([
                     'text' => Yii::t('hipanel.domain.premium', 'Add record'),
                     'options' => ['class' => 'btn btn-success btn-sm'],

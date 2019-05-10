@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\grid;
@@ -59,7 +59,7 @@ class DomainGridView extends BoxedGridView
                 'label' => Html::tag('span', Yii::t('hipanel.domain.premium', 'Premium autorenewal')),
                 'pluginOptions' => function ($model) {
                     return [
-                        'readonly' => !(bool)$model->premium->is_active,
+                        'readonly' => !(bool) $model->premium->is_active,
                     ];
                 },
                 'switchOptions' => [
@@ -77,7 +77,6 @@ class DomainGridView extends BoxedGridView
                         ],
                     ],
                 ],
-
             ],
             'transfer_attention' => [
                 'label' => Yii::t('hipanel:domain', 'Attention'),

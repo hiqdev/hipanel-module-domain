@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\controllers;
@@ -424,18 +424,18 @@ class DomainController extends \hipanel\base\CrudController
                 },
                 'success' => Yii::t('hipanel:domain', 'FOA was sent'),
                 'error' => Yii::t('hipanel:domain', 'Failed send FOA'),
-                'on beforeSave' => function(Event $event) {
+                'on beforeSave' => function (Event $event) {
                     /** @var \hipanel\actions\Action $action */
                     $action = $event->sender;
 
                     $sendTo = Yii::$app->request->post('send_to');
                     $forceEmail = Yii::$app->request->post('force_email');
                     if ($sendTo === null || $sendTo === Domain::SEND_TO_WHOIS_EMAIL) {
-                        return ;
+                        return;
                     }
 
                     if ($sendTo === Domain::SEND_TO_FORCE_EMAIL && empty($forceEmail)) {
-                        return ;
+                        return;
                     }
 
                     foreach ($action->collection->models as $model) {
@@ -667,6 +667,7 @@ class DomainController extends \hipanel\base\CrudController
                         'class' => RedirectAction::class,
                         'url' => function ($action) {
                             $domains = Yii::$app->request->post('Domain')['domains'];
+
                             return ['@domain/preincoming-failed', 'domains' => $domains];
                         },
                     ],
@@ -867,7 +868,7 @@ class DomainController extends \hipanel\base\CrudController
     {
         $modelName = '\hipanel\modules\domain\models\\' . ucfirst($name);
 
-        return new $modelName;
+        return new $modelName();
     }
 
     protected function renderPaidFeatureTab($domainId, $for)
@@ -876,7 +877,6 @@ class DomainController extends \hipanel\base\CrudController
                 ->addSelect(['mailfws', 'urlfws', 'parking', 'premium'])
                 ->joinWith(['premium', 'urlfws', 'mailfws', 'parking'])
                 ->where(['id' => $domainId])->one()) === null) {
-
             throw new NotFoundHttpException('Domain does not exist');
         }
 
@@ -890,5 +890,4 @@ class DomainController extends \hipanel\base\CrudController
     {
         return Ref::findCached('type,forwarding', 'hipanel:domain', ['select' => 'full']);
     }
-
 }

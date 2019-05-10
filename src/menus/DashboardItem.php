@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hipanel-module-domain
  * @package   hipanel-module-domain
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hipanel\modules\domain\menus;
@@ -27,7 +27,7 @@ class DashboardItem extends \hiqdev\yii2\menus\Menu
     {
         return [
             'domains' => [
-                'label' => $this->render('dashboardItem', $this->dashboard->mget(['totalCount','model'])),
+                'label' => $this->render('dashboardItem', $this->dashboard->mget(['totalCount', 'model'])),
                 'encode' => false,
                 'visible' => Yii::$app->user->can('domain.read'),
             ],

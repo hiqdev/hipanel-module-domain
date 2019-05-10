@@ -1,4 +1,12 @@
 <?php
+/**
+ * Domain plugin for HiPanel
+ *
+ * @link      https://github.com/hiqdev/hipanel-module-domain
+ * @package   hipanel-module-domain
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hipanel\modules\domain\tests\acceptance\client;
 
@@ -6,7 +14,7 @@ use hipanel\modules\domain\tests\_support\Page\Whois;
 use hipanel\tests\_support\Step\Acceptance\Client;
 
 /**
- * Class WhoisCest
+ * Class WhoisCest.
  *
  * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
  */
@@ -45,20 +53,20 @@ class WhoisCest
                 'domain' => 'ripe.net',
                 'see' => [
                     'Feb 25, 1992',
-                ]
+                ],
             ],
             'unexisting.domain' => [
                 'domain' => 'unexisting.domain',
                 'see' => [
                     'Domain name is not registered yet, or the domain zone is not supported.',
-                ]
+                ],
             ],
             'available-to-order-domain.com' => [
                 'domain' => 'available-to-order-domain.com',
                 'see' => [
                     'availability-notice' => 'This domain is available for registration',
-                    'add-to-cart-button' => 'Register domain'
-                ]
+                    'add-to-cart-button' => 'Register domain',
+                ],
             ],
         ];
     }
