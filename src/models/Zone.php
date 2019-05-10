@@ -35,8 +35,8 @@ class Zone extends Model
             'name' => Yii::t('hipanel:domain', 'Name'),
             'state' => Yii::t('hipanel:domain', 'State'),
             'no' => Yii::t('hipanel:domain', 'No.'),
-            'add_period' => Yii::t('hipanel:domain', 'Add period'),
-            'add_limit' => Yii::t('hipanel:domain', 'Add period limit'),
+            'add_period' => Yii::t('hipanel:domain', 'Add grace period'),
+            'add_limit' => Yii::t('hipanel:domain', 'Add grace period limit'),
         ]);
     }
 
