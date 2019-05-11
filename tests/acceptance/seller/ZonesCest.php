@@ -29,7 +29,6 @@ class ZonesCest
 
     public function ensureIndexPageWorks(Seller $I): void
     {
-        $I->login();
         $I->needPage(Url::to('@zone/index'));
         $I->see('Zone', 'h1');
         $I->seeLink('Create zone', Url::to('create'));
@@ -39,7 +38,6 @@ class ZonesCest
 
     public function ensureICanCreateZone(Seller $I): void
     {
-        $I->login();
         $I->needPage(Url::to('@zone/create'));
         $I->click('Save');
         $I->waitForPageUpdate();
@@ -50,7 +48,6 @@ class ZonesCest
 
     public function ensureICanSeeViewPage(Seller $I): void
     {
-        $I->login();
         $I->needPage(Url::to('@zone/view?id=' . $this->zoneId));
         $I->see($this->testZoneValues['name'], 'h1');
     }
@@ -58,7 +55,6 @@ class ZonesCest
     public function ensureICanUpdateZone(Seller $I): void
     {
         $page = $this->zonePage;
-        $I->login();
         $I->needPage(Url::to('@zone/update?id='.$this->zoneId));
         $this->updateValues();
         $page->setupZoneForm($this->testZoneValues);
@@ -67,7 +63,6 @@ class ZonesCest
 
     public function ensureICanDisableZone(Seller $I): void
     {
-        $I->login();
         $I->needPage(Url::to('@zone/index'));
         $this->zonePage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
         $I->executeJS(<<<JS
@@ -80,7 +75,6 @@ JS
 
     public function ensureICanEnableZone(Seller $I): void
     {
-        $I->login();
         $I->needPage(Url::to('@zone/index'));
         $this->zonePage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
         $I->executeJS(<<<JS
