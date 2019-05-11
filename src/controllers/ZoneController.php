@@ -22,6 +22,7 @@ use hipanel\modules\domain\models\Zone;
 use Yii;
 use hipanel\actions\ViewAction;
 use yii\base\Event;
+use yii\web\Response;
 
 class ZoneController extends CrudController
 {
@@ -34,6 +35,8 @@ class ZoneController extends CrudController
             [
                 'class' => EasyAccessControl::class,
                 'actions' => [
+                    'get-zones' => 'domain.read',
+
                     'create' => 'zone.create',
                     'update' => 'zone.update',
                     'delete' => 'zone.delete',
@@ -44,6 +47,9 @@ class ZoneController extends CrudController
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function actions(): array
     {
         return array_merge(parent::actions(), [
@@ -97,25 +103,25 @@ class ZoneController extends CrudController
         ]);
     }
 
-//    public function actionGetZones()
-//    {
-//        $response = Yii::$app->response;
-//        $request = Yii::$app->request;
-//        $user = Yii::$app->user->identity;
-//        $response->format = Response::FORMAT_JSON;
-//        $search = $request->post('search');
-//        $models = [];
-//        $apiData = Yii::$app->cache->getOrSet(['get-zones-data', $user->id], function () {
-//            return Yii::$app->hiart->createCommand()->perform('get-zones', '')->getData();
-//        }, 3600 * 60);
-//        foreach ($apiData as $id => $zone) {
-//            if (empty($search)) {
-//                $models[] = ['id' => $id, 'text' => $zone];
-//            } elseif (mb_stripos($zone, $search) !== false) {
-//                $models[] = ['id' => $id, 'text' => $zone];
-//            }
-//        }
-//
-//        return $models;
-//    }
+    public function actionGetZones(): array
+    {
+        $response = Yii::$app->response;
+        $request = Yii::$app->request;
+        $user = Yii::$app->user->identity;
+        $response->format = Response::FORMAT_JSON;
+        $search = $request->post('search');
+        $models = [];
+        $apiData = Yii::$app->cache->getOrSet(['get-zones-data', $user->id], function () {
+            return Yii::$app->hiart->createCommand()->perform('get-zones', '')->getData();
+        }, 3600 * 60);
+        foreach ($apiData as $id => $zone) {
+            if (empty($search)) {
+                $models[] = ['id' => $id, 'text' => $zone];
+            } elseif (mb_stripos($zone, $search) !== false) {
+                $models[] = ['id' => $id, 'text' => $zone];
+            }
+        }
+
+        return $models;
+    }
 }
