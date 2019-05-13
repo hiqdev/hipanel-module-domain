@@ -77,10 +77,7 @@ class ZonesCest
     {
         $I->needPage(Url::to('@zone/index'));
         $this->zoneIndexPage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
-        $I->executeJS(<<<JS
-document.querySelector("input[type=checkbox][value='$this->zoneId']").click();
-JS
-        );
+        $this->zoneIndexPage->checkBoxClick($this->zoneId);
         $I->click('Disable');
         $I->closeNotification('Zone has been disabled');
     }
@@ -89,10 +86,7 @@ JS
     {
         $I->needPage(Url::to('@zone/index'));
         $this->zoneIndexPage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
-        $I->executeJS(<<<JS
-document.querySelector("input[type=checkbox][value='$this->zoneId']").click();
-JS
-        );
+        $this->zoneIndexPage->checkBoxClick((string)$this->zoneId);
         $I->click('Enable');
         $I->closeNotification('Zone has been enabled');
     }
@@ -100,12 +94,16 @@ JS
     protected function getZoneTestData(): array
     {
         return [
-            'registry'          => 'untagged',
-            'state'             => 'Ok',
-            'name'              => '.test',
-            'no'                => time(),
-            'add_period'        => '100',
-            'add_limit'         => '50',
+            'registry'                  => 'untagged',
+            'state'                     => 'Ok',
+            'name'                      => '.testtt',
+            'no'                        => time(),
+            'add_period'                => '100',
+            'add_limit'                 => '50',
+            'has_contacts'              => '1',
+            'password_required'         => '0',
+            'autorenew_grace_period'    => '',
+            'redemption_grace_period'   => '',
         ];
     }
 

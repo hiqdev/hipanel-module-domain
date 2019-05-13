@@ -4,6 +4,7 @@ namespace hipanel\modules\domain\tests\_support\Page\zone;
 
 use hipanel\tests\_support\Page\Authenticated;
 use hipanel\tests\_support\Page\IndexPage;
+use hipanel\tests\_support\Page\Widget\Input\CheckBox;
 use hipanel\tests\_support\Page\Widget\Input\Dropdown;
 use hipanel\tests\_support\Page\Widget\Input\Input;
 use hipanel\tests\_support\Page\Widget\Input\Select2;
@@ -41,6 +42,18 @@ class ZoneIndexPage extends Authenticated
         ]);
     }
 
+    public function checkBoxClick(string $zoneId): void
+    {
+        $I = $this->tester;
+        $checkBoxSelector = "input[type=checkbox][value='$zoneId']";
+        (new CheckBox($I, $checkBoxSelector))
+            ->setValue('1');
+    }
+
+    /**
+     * @param $name
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function getCreatedZoneOnIndexPage($name)
     {
         $I = $this->tester;
