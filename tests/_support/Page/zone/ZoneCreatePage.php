@@ -69,6 +69,12 @@ class ZoneCreatePage extends Authenticated
         (new Input($I, 'input[id$=name]'))
             ->setValue($values['name']);
 
+        (new Input($I, 'input[id$=autorenew_grace_period]'))
+            ->setValue($values['autorenew_grace_period']);
+
+        (new Input($I, 'input[id$=redemption_grace_period]'))
+            ->setValue($values['redemption_grace_period']);
+
         $this->checkBoxSetValue('has_contacts', $values['has_contacts']);
         $this->checkBoxSetValue('password_required', $values['password_required']);
     }
