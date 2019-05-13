@@ -10,6 +10,7 @@ use yii\helpers\Url;
 /**
  * @var \yii\web\View $this
  * @var \hipanel\modules\domain\models\Zone $model
+ * @var array $models
  */
 
 ?>

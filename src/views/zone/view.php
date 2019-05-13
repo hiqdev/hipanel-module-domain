@@ -6,6 +6,11 @@ use hipanel\widgets\Box;
 use hipanel\widgets\MainDetails;
 use yii\helpers\Html;
 
+/**
+ * @var \yii\web\View $this
+ * @var \hipanel\modules\domain\models\Zone $model
+ */
+
 $this->title = Html::encode($model->name);
 $this->params['subtitle'] = Yii::t('hipanel:domain', 'Name server detailed information') . ' #' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel:domain', 'Zones'), 'url' => ['index']];

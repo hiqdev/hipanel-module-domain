@@ -21,9 +21,7 @@ class ZoneSearch extends Zone
 
     public function searchAttributes()
     {
-        return ArrayHelper::merge($this->defaultSearchAttributes(), [
-
-        ]);
+        return $this->defaultSearchAttributes();
     }
 }
 

@@ -3,13 +3,13 @@
 namespace hipanel\modules\domain\tests\acceptance\seller;
 
 use hipanel\helpers\Url;
-use hipanel\modules\domain\tests\_support\Page\ZonePage;
+use hipanel\modules\domain\tests\_support\Page\ZoneIndexPage;
 use hipanel\tests\_support\Step\Acceptance\Seller;
 
 class ZonesCest
 {
     /**
-     * @var ZonePage $zonePage
+     * @var ZoneIndexPage $zonePage
      */
     private $zonePage;
     /**
@@ -23,7 +23,7 @@ class ZonesCest
 
     public function _before(Seller $I): void
     {
-        $this->zonePage = new ZonePage($I);
+        $this->zonePage = new ZoneIndexPage($I);
         $this->testZoneValues = $this->getZoneTestData();
     }
 

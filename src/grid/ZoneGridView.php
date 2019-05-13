@@ -29,7 +29,7 @@ class ZoneGridView extends BoxedGridView
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Name'),
                 'filterAttribute' => 'name_ilike',
-                'value' => function (Zone $model) {
+                'value' => function (Zone $model): string {
                     return Html::a($model->name, ['@zone/view', 'id' => $model->id]);
                 },
             ],
@@ -46,7 +46,7 @@ class ZoneGridView extends BoxedGridView
                         'formElementSelector' => 'td',
                     ]);
                 },
-                'value' => function (Zone $model) {
+                'value' => function (Zone $model): string {
                     return Html::hiddenInput("registry[$model->id]", $model->registry) . $model->registry;
                 },
             ],
@@ -57,7 +57,7 @@ class ZoneGridView extends BoxedGridView
                 'class' => RefColumn::class,
                 'format' => 'raw',
                 'gtype' => 'state,zone',
-                'value' => function (Zone $model) {
+                'value' => function (Zone $model): string {
                     return Yii::t('hipanel:domain', $model->state);
                 },
             ],
@@ -100,7 +100,7 @@ class ZoneGridView extends BoxedGridView
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Has contacts'),
                 'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
-                'value' => function (Zone $model) {
+                'value' => function (Zone $model): string {
                     return IconStateLabel::widget([
                         'model' => $model,
                         'attribute' => 'has_contacts',
@@ -120,7 +120,7 @@ class ZoneGridView extends BoxedGridView
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Password required'),
                 'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
-                'value' => function (Zone $model) {
+                'value' => function (Zone $model): string {
                     return IconStateLabel::widget([
                         'model' => $model,
                         'attribute' => 'password_required',

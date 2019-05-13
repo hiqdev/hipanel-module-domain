@@ -3,10 +3,14 @@
 namespace hipanel\modules\domain\menus;
 
 use hipanel\menus\AbstractDetailMenu;
+use hipanel\modules\domain\models\Zone;
 use Yii;
 
 class ZoneDetailMenu extends AbstractDetailMenu
 {
+    /**
+     * @var Zone $model
+     */
     public $model;
 
     public function items()
@@ -28,7 +32,7 @@ class ZoneDetailMenu extends AbstractDetailMenu
                         'method' => 'post',
                         'pjax' => '0',
                         'form' => 'delete',
-                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete this model?'),
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete this zone?'),
                         'params' => [
                             'Order[id]' => $this->model->id,
                         ],
