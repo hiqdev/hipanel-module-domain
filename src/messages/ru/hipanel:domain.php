@@ -375,11 +375,7 @@ return [
     'Add grace period limit' => 'Add grace period limit',
     'Auto-Renew grace period' => 'Auto-Renew grace period',
     'Redemption grace period' => 'Redemption grace period',
-//    'ok' => 'Ок',
-//    'notworking' => 'Не работает',
-//    'Details' => 'Детали',
-//    'Delete' => 'Удалить',
-//    'Update' => 'Обновить',
     'Create zone' => 'Создать зону',
+    'Zone detailed information' => 'Подробная информация о зоне',
     'Are you sure you want to delete this zone?' => 'Вы уверены, что хотите удалить эту зону?',
 ];

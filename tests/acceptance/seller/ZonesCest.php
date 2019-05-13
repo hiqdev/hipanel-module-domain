@@ -3,15 +3,25 @@
 namespace hipanel\modules\domain\tests\acceptance\seller;
 
 use hipanel\helpers\Url;
-use hipanel\modules\domain\tests\_support\Page\ZoneIndexPage;
+use hipanel\modules\domain\tests\_support\Page\zone\ZoneIndexPage;
+use hipanel\modules\domain\tests\_support\Page\zone\ZoneCreatePage;
+use hipanel\modules\domain\tests\_support\Page\zone\ZoneUpdatePage;
 use hipanel\tests\_support\Step\Acceptance\Seller;
 
 class ZonesCest
 {
     /**
-     * @var ZoneIndexPage $zonePage
+     * @var ZoneIndexPage $zoneIndexPage
      */
-    private $zonePage;
+    private $zoneIndexPage;
+    /**
+     * @var ZoneCreatePage $zoneCreatePage
+     */
+    private $zoneCreatePage;
+    /**
+     * @var ZoneUpdatePage $zoneUpdatePage
+     */
+    private $zoneUpdatePage;
     /**
      * @var string $zoneId
      */
@@ -23,7 +33,9 @@ class ZonesCest
 
     public function _before(Seller $I): void
     {
-        $this->zonePage = new ZoneIndexPage($I);
+        $this->zoneIndexPage = new ZoneIndexPage($I);
+        $this->zoneCreatePage  = new ZoneCreatePage($I);
+        $this->zoneUpdatePage  = new ZoneUpdatePage($I);
         $this->testZoneValues = $this->getZoneTestData();
     }
 
@@ -32,8 +44,8 @@ class ZonesCest
         $I->needPage(Url::to('@zone/index'));
         $I->see('Zone', 'h1');
         $I->seeLink('Create zone', Url::to('create'));
-        $this->zonePage->ensureICanSeeAdvancedSearchBox();
-        $this->zonePage->ensureICanSeeBulkSearchBox();
+        $this->zoneIndexPage->ensureICanSeeAdvancedSearchBox();
+        $this->zoneIndexPage->ensureICanSeeBulkSearchBox();
     }
 
     public function ensureICanCreateZone(Seller $I): void
@@ -41,9 +53,9 @@ class ZonesCest
         $I->needPage(Url::to('@zone/create'));
         $I->click('Save');
         $I->waitForPageUpdate();
-        $this->zonePage->seeZoneFormErrors();
-        $this->zonePage->setupZoneForm($this->testZoneValues);
-        $this->zoneId = $this->zonePage->seeZoneWasCreated();
+        $this->zoneCreatePage->seeZoneFormErrors();
+        $this->zoneCreatePage->setupZoneForm($this->testZoneValues);
+        $this->zoneId = $this->zoneCreatePage->seeZoneWasCreated();
     }
 
     public function ensureICanSeeViewPage(Seller $I): void
@@ -54,7 +66,7 @@ class ZonesCest
 
     public function ensureICanUpdateZone(Seller $I): void
     {
-        $page = $this->zonePage;
+        $page = $this->zoneUpdatePage;
         $I->needPage(Url::to('@zone/update?id='.$this->zoneId));
         $this->updateValues();
         $page->setupZoneForm($this->testZoneValues);
@@ -64,7 +76,7 @@ class ZonesCest
     public function ensureICanDisableZone(Seller $I): void
     {
         $I->needPage(Url::to('@zone/index'));
-        $this->zonePage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
+        $this->zoneIndexPage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
         $I->executeJS(<<<JS
 document.querySelector("input[type=checkbox][value='$this->zoneId']").click();
 JS
@@ -76,7 +88,7 @@ JS
     public function ensureICanEnableZone(Seller $I): void
     {
         $I->needPage(Url::to('@zone/index'));
-        $this->zonePage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
+        $this->zoneIndexPage->getCreatedZoneOnIndexPage($this->testZoneValues['name']);
         $I->executeJS(<<<JS
 document.querySelector("input[type=checkbox][value='$this->zoneId']").click();
 JS

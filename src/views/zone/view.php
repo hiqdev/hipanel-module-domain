@@ -12,7 +12,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Html::encode($model->name);
-$this->params['subtitle'] = Yii::t('hipanel:domain', 'Name server detailed information') . ' #' . $model->id;
+$this->params['subtitle'] = Yii::t('hipanel:domain', 'Zone detailed information') . ' #' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel:domain', 'Zones'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -37,7 +37,7 @@ $this->registerCss('
                 <?php
                 $box = Box::begin(['renderBody' => false]);
                 $box->beginHeader();
-                echo $box->renderTitle(Yii::t('hipanel:domain', 'Details'));
+                echo $box->renderTitle(Yii::t('hipanel', 'Details'));
                 $box->endHeader();
                 $box->beginBody();
                 echo ZoneGridView::detailView([

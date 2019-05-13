@@ -17,13 +17,13 @@ class ZoneDetailMenu extends AbstractDetailMenu
     {
         return [
             [
-                'label' => Yii::t('hipanel:domain', 'Update'),
+                'label' => Yii::t('hipanel', 'Update'),
                 'icon' => 'fa-pencil',
                 'url' => ['@zone/update', 'id' => $this->model->id],
                 'visible' => Yii::$app->user->can('zone.update'),
             ],
             [
-                'label' => Yii::t('hipanel:domain', 'Delete'),
+                'label' => Yii::t('hipanel', 'Delete'),
                 'icon' => 'fa-trash',
                 'url' => ['@zone/delete', 'id' => $this->model->id],
                 'visible' => Yii::$app->user->can('zone.delete'),
