@@ -2,6 +2,8 @@
 
 /**
  * @var \yii\web\View $this
+ * @var array $models
+ * @var \hipanel\modules\domain\models\Zone $model
  */
 
 $this->title = Yii::t('hipanel:domain', 'Create zone');

@@ -9,6 +9,7 @@ use yii\helpers\Html;
 /**
  * @var \yii\web\View $this
  * @var \hipanel\modules\domain\models\Zone $model
+ * @var array $models
  */
 
 $this->title = Html::encode($model->name);

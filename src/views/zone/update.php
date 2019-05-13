@@ -3,6 +3,7 @@
 /**
  * @var \yii\web\View $this
  * @var \hipanel\modules\domain\models\Zone $model
+ * @var array $models
  */
 
 $this->title = Yii::t('hipanel', 'Update');
