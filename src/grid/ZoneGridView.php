@@ -68,26 +68,26 @@ class ZoneGridView extends BoxedGridView
                 'label' => Yii::t('hipanel:domain', 'No.'),
                 'filterAttribute' => 'no_ilike',
             ],
-            'autorenew' => [
-                'attribute' => 'autorenew',
+            'autorenew_grace_period' => [
+                'attribute' => 'autorenew_grace_period',
                 'filter' => false,
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Auto-Renew grace period'),
             ],
-            'redemption' => [
-                'attribute' => 'redemption',
+            'redemption_grace_period' => [
+                'attribute' => 'redemption_grace_period',
                 'filter' => false,
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Redemption grace period'),
             ],
-            'add_period' => [
-                'attribute' => 'add_period',
+            'add_grace_period' => [
+                'attribute' => 'add_grace_period',
                 'filter' => false,
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Add grace period'),
             ],
-            'add_limit' => [
-                'attribute' => 'add_limit',
+            'add_grace_limit' => [
+                'attribute' => 'add_grace_limit',
                 'filter' => false,
                 'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Add grace period limit') . ', %',

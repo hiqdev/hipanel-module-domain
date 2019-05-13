@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $page->renderSorter([
                 'attributes' => [
                     'no',
-                    'add_period',
-                    'add_limit',
+                    'add_grace_period',
+                    'add_grace_limit',
                 ],
             ]) ?>
         <?php $page->endContent() ?>
@@ -59,10 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'password_required',
                         'state',
                         'no',
-                        'add_period',
-                        'add_limit',
-                        'autorenew',
-                        'redemption',
+                        'add_grace_period',
+                        'add_grace_limit',
+                        'autorenew_grace_period',
+                        'redemption_grace_period',
                     ],
                 ]) ?>
             <?php $page->endBulkForm() ?>

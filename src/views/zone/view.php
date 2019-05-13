@@ -50,10 +50,10 @@ $this->registerCss('
                         'password_required',
                         'state',
                         'no',
-                        'add_period',
-                        'add_limit',
-                        'autorenew',
-                        'redemption',
+                        'add_grace_period',
+                        'add_grace_limit',
+                        'autorenew_grace_period',
+                        'redemption_grace_period',
                     ],
                 ]);
                 $box->endBody();

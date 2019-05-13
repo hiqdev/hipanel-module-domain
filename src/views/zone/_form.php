@@ -39,10 +39,12 @@ use yii\helpers\Url;
                 'state',
                 'name',
                 'no',
-                'add_period',
-                'add_limit',
+                'add_grace_period',
+                'add_grace_limit',
                 'has_contacts',
                 'password_required',
+                'autorenew_grace_period',
+                'redemption_grace_period',
             ]
         ]) ?>
         <div class="container-items"><!-- widgetContainer -->
@@ -76,11 +78,21 @@ use yii\helpers\Url;
                         </div>
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?= $form->field($model, "[$i]add_period") ?>
+                            <?= $form->field($model, "[$i]add_grace_period") ?>
                         </div>
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?= $form->field($model, "[$i]add_limit") ?>
+                            <?= $form->field($model, "[$i]add_grace_limit") ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <?= $form->field($model, "[$i]autorenew_grace_period") ?>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <?= $form->field($model, "[$i]redemption_grace_period") ?>
                         </div>
                     </div>
 
