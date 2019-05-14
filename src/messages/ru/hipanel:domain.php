@@ -372,7 +372,7 @@ return [
     'State' => 'Статус',
     'No.' => 'Номер',
     'Add grace period' => 'Add grace period',
-    'Add grace period limit' => 'Add grace period limit',
+    'Add grace limit' => 'Add grace limit',
     'Auto-Renew grace period' => 'Auto-Renew grace period',
     'Redemption grace period' => 'Redemption grace period',
     'Create zone' => 'Создать зону',

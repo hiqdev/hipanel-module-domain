@@ -90,7 +90,7 @@ class ZoneGridView extends BoxedGridView
                 'attribute' => 'add_grace_limit',
                 'filter' => false,
                 'format' => 'raw',
-                'label' => Yii::t('hipanel:domain', 'Add grace period limit') . ', %',
+                'label' => Yii::t('hipanel:domain', 'Add grace limit') . ', %',
             ],
             'has_contacts' => [
                 'encodeLabel' => false,
