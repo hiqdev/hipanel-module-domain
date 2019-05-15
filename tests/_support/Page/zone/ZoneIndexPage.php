@@ -36,7 +36,7 @@ class ZoneIndexPage extends Authenticated
             'State',
             'No.',
             'Add grace period',
-            'Add grace period limit, %',
+            'Add grace limit, %',
             'Auto-Renew grace period',
             'Redemption grace period',
         ]);
