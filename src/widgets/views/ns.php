@@ -47,13 +47,13 @@ $(document).on('pjax:complete', function(event) {
     ],
 ]); ?>
 <?php if (!is_array($model)) : ?>
-    <?php if ($model->state === $model::STATE_OK) : ?>
+    <?php if ($model->isSetNSable()) : ?>
         <?= Html::activeHiddenInput($model, 'id') ?>
         <?= Html::activeHiddenInput($model, 'domain') ?>
     <?php endif ?>
 <?php else : ?>
     <?php foreach ($model as $item) : ?>
-        <?php if ($item->state === $item::STATE_OK) : ?>
+        <?php if ($item->isSetNSable()) : ?>
             <?= Html::activeHiddenInput($item, "[$item->id]id") ?>
             <?= Html::activeHiddenInput($item, "[$item->id]domain") ?>
         <?php endif ?>
@@ -73,7 +73,7 @@ $(document).on('pjax:complete', function(event) {
                 'class' => 'form-control',
                 'placeholder' => $model->getAttributeLabel('nameservers'),
                 'autocomplete' => 'off',
-                'readonly' => $model->state !== $model::STATE_OK,
+                'readonly' => !$model->isSetNSable(),
             ]) ?>
         <?php else : ?>
             <?= Html::textInput('nsips', '', [
@@ -88,7 +88,7 @@ $(document).on('pjax:complete', function(event) {
             'class' => 'btn btn-success',
             'id' => 'nss-save-button',
             'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'saving'),
-            'disabled' => $model->state !== $model::STATE_OK,
+            'disabled' => !$model->isSetNSable(),
         ]) ?>
     </div>
 </div>
@@ -124,7 +124,7 @@ $(document).on('pjax:complete', function(event) {
                                     <?= $form->field($nsModel, "[$i]name")->textInput([
                                         'placeholder' => $nsModel->getAttributeLabel('name'),
                                         'data-attribute' => 'name',
-                                        'readonly' => $model->state !== $model::STATE_OK,
+                                        'readonly' => !$model->isSetNSable(),
                                     ])->label(false) ?>
                                 </div>
                                 <div class="col-md-5">
@@ -134,7 +134,7 @@ $(document).on('pjax:complete', function(event) {
                                             'inputOptions' => [
                                                 'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
                                                 'data-attribute' => 'ip',
-                                                'readonly' => $model->state !== $model::STATE_OK,
+                                                'readonly' => !$model->isSetNSable(),
                                             ],
                                             'data' => $nsModel->ip ? array_combine($nsModel->ip, $nsModel->ip) : [],
                                             'multiple' => true,
@@ -158,11 +158,11 @@ $(document).on('pjax:complete', function(event) {
                                     <div class="btn-group" role="group">
                                         <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-plus']), [
                                             'class' => "add-item btn btn-default",
-                                            'disabled' => $model->state !== $model::STATE_OK,
+                                            'disabled' => !$model->isSetNSable(),
                                         ]) ?>
                                         <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-minus']), [
                                             'class' => 'remove-item btn btn-default',
-                                            'disabled' => $model->state !== $model::STATE_OK,
+                                            'disabled' => !$model->isSetNSable(),
                                         ]) ?>
                                     </div>
                                 </div>
