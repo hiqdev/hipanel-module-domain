@@ -88,6 +88,7 @@ $(document).on('pjax:complete', function(event) {
             'class' => 'btn btn-success',
             'id' => 'nss-save-button',
             'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'saving'),
+            'disabled' => $model->state !== $model::STATE_OK,
         ]) ?>
     </div>
 </div>
@@ -123,6 +124,7 @@ $(document).on('pjax:complete', function(event) {
                                     <?= $form->field($nsModel, "[$i]name")->textInput([
                                         'placeholder' => $nsModel->getAttributeLabel('name'),
                                         'data-attribute' => 'name',
+                                        'readonly' => $model->state !== $model::STATE_OK,
                                     ])->label(false) ?>
                                 </div>
                                 <div class="col-md-5">
@@ -154,10 +156,14 @@ $(document).on('pjax:complete', function(event) {
                                 </div>
                                 <div class="col-md-2 text-right">
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="add-item btn btn-default"><i
-                                                    class="glyphicon glyphicon-plus"></i></button>
-                                        <button type="button" class="remove-item btn btn-default"><i
-                                                    class="glyphicon glyphicon-minus"></i></button>
+                                        <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-plus']), [
+                                            'class' => "add-item btn btn-default",
+                                            'disabled' => $model->state !== $model::STATE_OK,
+                                        ]) ?>
+                                        <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-minus']), [
+                                            'class' => 'remove-item btn btn-default',
+                                            'disabled' => $model->state !== $model::STATE_OK,
+                                        ]) ?>
                                     </div>
                                 </div>
                             </div>
