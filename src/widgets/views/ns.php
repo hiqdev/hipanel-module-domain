@@ -88,7 +88,7 @@ $(document).on('pjax:complete', function(event) {
             'class' => 'btn btn-success',
             'id' => 'nss-save-button',
             'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> ' . Yii::t('hipanel', 'saving'),
-            'disabled' => !$model->isSetNSable(),
+            'disabled' => is_array($model) ? false : !$model->isSetNSable(),
         ]) ?>
     </div>
 </div>
@@ -124,7 +124,7 @@ $(document).on('pjax:complete', function(event) {
                                     <?= $form->field($nsModel, "[$i]name")->textInput([
                                         'placeholder' => $nsModel->getAttributeLabel('name'),
                                         'data-attribute' => 'name',
-                                        'readonly' => !$model->isSetNSable(),
+                                        'readonly' => is_array($model) ? false : !$model->isSetNSable(),
                                     ])->label(false) ?>
                                 </div>
                                 <div class="col-md-5">
@@ -134,7 +134,7 @@ $(document).on('pjax:complete', function(event) {
                                             'inputOptions' => [
                                                 'disabled' => !StringHelper::endsWith($nsModel->name, $model->domain),
                                                 'data-attribute' => 'ip',
-                                                'readonly' => !$model->isSetNSable(),
+                                                'readonly' => is_array($model) ? false : !$model->isSetNSable(),
                                             ],
                                             'data' => $nsModel->ip ? array_combine($nsModel->ip, $nsModel->ip) : [],
                                             'multiple' => true,
@@ -158,11 +158,11 @@ $(document).on('pjax:complete', function(event) {
                                     <div class="btn-group" role="group">
                                         <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-plus']), [
                                             'class' => "add-item btn btn-default",
-                                            'disabled' => !$model->isSetNSable(),
+                                            'disabled' => is_array($model) ? false : !$model->isSetNSable(),
                                         ]) ?>
                                         <?= Html::button(Html::tag('i', '', ['class' => 'glyphicon glyphicon-minus']), [
                                             'class' => 'remove-item btn btn-default',
-                                            'disabled' => !$model->isSetNSable(),
+                                            'disabled' => is_array($model) ? false : !$model->isSetNSable(),
                                         ]) ?>
                                     </div>
                                 </div>
