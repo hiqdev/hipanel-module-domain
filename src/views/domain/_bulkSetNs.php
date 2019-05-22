@@ -5,6 +5,14 @@ use hipanel\modules\domain\widgets\NsWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+foreach ($models as $id => $model) {
+    if ($model->isSetNSable()) {
+        $affected[] = $model;
+    } else {
+        $unaffected[] = $model;
+    }
+}
+
 ?>
 
 <div>
@@ -20,26 +28,42 @@ use yii\helpers\Html;
         <div role="tabpanel" class="tab-pane active" id="bulk">
             <div class="row" style="margin-top: 15pt;">
                 <div class="col-md-12">
-                    <?= NsWidget::widget([
-                        'model' => $models,
-                        'attribute' => 'nsips',
-                        'actionUrl' => 'bulk-set-nss',
-                    ]); ?>
-                    <br>
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
-                        <div class="panel-body">
-                            <?= \hipanel\widgets\ArraySpoiler::widget([
-                                'data' => $models,
-                                'visibleCount' => count($models),
-                                'formatter' => function ($model) {
-                                    return $model->domain;
-                                },
-                                'delimiter' => ',&nbsp; ',
-                            ]); ?>
+                    <?php if (!empty($affected)) : ?>
+                        <?= NsWidget::widget([
+                            'model' => $affected,
+                            'attribute' => 'nsips',
+                            'actionUrl' => 'bulk-set-nss',
+                        ]) ?>
+                        <br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
+                            <div class="panel-body">
+                                <?= \hipanel\widgets\ArraySpoiler::widget([
+                                    'data' => $affected,
+                                    'visibleCount' => count($affected),
+                                    'formatter' => function ($model) {
+                                        return $model->isSetNSable() ? $model->domain : null;
+                                    },
+                                    'delimiter' => ',&nbsp; ',
+                                ]); ?>
+                            </div>
                         </div>
-                    </div>
-
+                    <?php endif ?>
+                    <?php if (!empty($unaffected)) : ?>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Unaffected domains') ?></div>
+                            <div class="panel-body">
+                                <?= \hipanel\widgets\ArraySpoiler::widget([
+                                    'data' => $unaffected,
+                                    'visibleCount' => count($unaffected),
+                                    'formatter' => function ($model) {
+                                        return !$model->isSetNSable() ? $model->domain : null;
+                                    },
+                                    'delimiter' => ',&nbsp; ',
+                                ]); ?>
+                            </div>
+                        </div>
+                    <?php endif ?>
                 </div>
             </div>
         </div>
@@ -59,7 +83,7 @@ use yii\helpers\Html;
                     </div>
                     <!-- /.col-md-6 -->
                     <div class="col-md-8">
-                        <?= $form->field($model, "[$model->id]nsips")->textInput(['readonly' => $model->state !== $model::STATE_OK])->label(false); ?>
+                        <?= $form->field($model, "[$model->id]nsips")->textInput(['readonly' => !$model->isSetNSable()])->label(false); ?>
                     </div>
                     <!-- /.col-md-6 -->
                 <?php endforeach; ?>
