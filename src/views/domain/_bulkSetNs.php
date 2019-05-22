@@ -5,15 +5,15 @@ use hipanel\modules\domain\widgets\NsWidget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-?>
+foreach ($models as $id => $model) {
+    if ($model->isSetNSable()) {
+        $affected[] = $model;
+    } else {
+        $unaffected[] = $model;
+    }
+}
 
-<?php foreach ($models as $id => $model) : ?>
-    <?php if ($model->isSetNSable()) : ?>
-        <?php $affected[] = $model ?>
-    <?php else : ?>
-        <?php $unaffected[] = $model ?>
-    <?php endif ?>
-<?php endforeach ?>
+?>
 
 <div>
 
