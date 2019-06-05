@@ -51,6 +51,11 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                         'label' => Yii::t('hipanel:domain', 'WHOIS lookup'),
                         'url'   => ['/domain/whois/index'],
                     ],
+                    'zone' => [
+                        'label' => Yii::t('hipanel:domain', 'Zone'),
+                        'url'   => ['@zone/index'],
+                        'visible' => Yii::$app->user->can('zone.read'),
+                    ],
                 ],
             ],
         ];

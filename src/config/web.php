@@ -14,6 +14,7 @@ return [
         '@host'   => '/domain/host',
         '@domain-check' => '/domain/check',
         '@domain-contact' => '/domain/contact',
+        '@zone' => '/domain/zone',
     ],
     'modules' => [
         'domain' => [
