@@ -12,6 +12,7 @@ namespace hipanel\modules\domain\forms;
 
 use hipanel\modules\dns\validators\DomainPartValidator;
 use hipanel\modules\domain\models\Domain;
+
 use hiqdev\hiart\ResponseErrorException;
 use Yii;
 use yii\base\Model;
@@ -136,7 +137,7 @@ class CheckForm extends Model
     public function checkIsAvailable()
     {
         try {
-            $domain = mb_strtolower($this->fqdn);
+            $domain = DomainPartValidator::convertAsciiToIdn(mb_strtolower($this->fqdn));
             $check = Domain::perform('check', ['domains' => [$domain]], ['batch' => true]);
             $this->isAvailable = isset($check[$domain]) && $check[$domain] === 1;
         } catch (ResponseErrorException $e) {
