@@ -155,7 +155,7 @@ class Domain extends \hipanel\base\Model
             ]],
 
             // Check domain
-            [['domain'], DomainPartValidator::className(), 'message' => Yii::t('hipanel:domain', '\'{value}\' is not valid domain name'), 'on' => ['check-domain']],
+            [['domain'], DomainPartValidator::class, 'enableIdn' => true, 'message' => Yii::t('hipanel:domain', '\'{value}\' is not valid domain name'), 'on' => ['check-domain']],
             [['domain'], 'filter', 'filter' => function ($value) {
                 if (strpos($value, '.') !== false) {
                     return substr($value, 0, strpos($value, '.'));
