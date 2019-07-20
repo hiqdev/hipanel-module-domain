@@ -165,7 +165,7 @@ class DomainGridView extends BoxedGridView
                 'pluginOptions' => function($model) {
                     return [
                         'offColor' => 'warning',
-                        'readonly' => !(bool)$model->isWPChangeable(),
+                        'readonly' => !$model->isWPChangeable(),
                     ];
                 },
                 'switchOptions' => [
@@ -224,7 +224,7 @@ class DomainGridView extends BoxedGridView
                 ],
                 'pluginOptions' => function($model) {
                     return [
-                        'readonly' => !(bool) $model->isSecureChangeable(),
+                        'readonly' => !$model->isSecureChangeable(),
                     ];
                 },
                 'switchOptions' => [

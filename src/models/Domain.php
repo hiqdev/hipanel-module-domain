@@ -795,17 +795,17 @@ class Domain extends \hipanel\base\Model
             && !$this->isRussianZones();
     }
 
-    public function isWPChangeable()
+    public function isWPChangeable() : bool
     {
         return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZones();
     }
 
-    public function isSecureChangeable()
+    public function isSecureChangeable() : bool
     {
         return !$this->isRussianZones();
     }
 
-    public function getTopLevelZone()
+    public function getTopLevelZone() : bool
     {
         $domain = $this->domain;
         while (substr_count($domain, '.') > 1) {
