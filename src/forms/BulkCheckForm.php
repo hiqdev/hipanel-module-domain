@@ -88,7 +88,6 @@ class BulkCheckForm extends Model
                     return $zoneIsAvailable;
                 });
             }],
-
             // Check if zones is available
             [['zones'], 'filter', 'filter' => function ($zones) {
                 return array_filter((array) $zones, function ($zone) {
@@ -100,7 +99,7 @@ class BulkCheckForm extends Model
 
     public function getFqdnsInline()
     {
-        return $this->fqdns ? implode(' ', $this->fqdns) : '';
+        return $this->fqdns ? implode(' ', array_map(function($value) {return DomainPartValidator::convertAsciiToIdn($value);}, $this->fqdns)) : '';
     }
 
     public function getData()

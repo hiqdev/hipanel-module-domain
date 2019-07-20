@@ -130,6 +130,15 @@ class CheckForm extends Model
     }
 
     /**
+     * Returns domain name from the [[fqdn]] in IDN
+     * @return string
+     */
+    public function getDomainIDN()
+    {
+        return DomainPartValidator::convertAsciiToIdn($this->getDomain());
+    }
+
+    /**
      * Sends API request to check whether domain is available and sets result to [[isAvailable]].
      *
      * @return bool whether domain is available

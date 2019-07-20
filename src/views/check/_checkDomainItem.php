@@ -28,10 +28,10 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
             <?php endif; ?>
 
             <?php if ($model->isAvailable) : ?>
-                <span class="domain-name"><?= $model->getDomain() ?></span><span
+                <span class="domain-name"><?= $model->getDomainIDN() ?></span><span
                     class="domain-zone">.<?= $model->getZone() ?></span>
             <?php else : ?>
-                <span class="domain-name muted"><?= $model->getDomain() ?></span><span
+                <span class="domain-name muted"><?= $model->getDomainIDN() ?></span><span
                     class="domain-zone muted">.<?= $model->getZone() ?></span>
             <?php endif; ?>
         </div>
