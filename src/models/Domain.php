@@ -701,7 +701,7 @@ class Domain extends \hipanel\base\Model
 
     public function isRussianZones()
     {
-        return $this->isZone(['ru', 'su', 'рф']);
+        return $this->isZone(['ru', 'su', 'рф'], $this->getTopLevelZone());
     }
 
     /**a
@@ -709,11 +709,10 @@ class Domain extends \hipanel\base\Model
      * @param array|string $zones zone or list of zones
      * @return bool
      */
-    public function isZone($zones)
+    public function isZone($zones, $zone = null)
     {
-        $zone = $this->getZone();
-
-        return is_array($zones) ? in_array($this->getZone(), $zones, true) : $zone === $zones;
+        $zone = empty($zone) ? $this->getZone() : $zone;
+        return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
     }
 
     public static function can($permission)
@@ -794,5 +793,25 @@ class Domain extends \hipanel\base\Model
             && $this->can($this->isHolded() ? 'domain.hold' : 'domain.unhold')
             && $this->notDomainOwner()
             && !$this->isRussianZones();
+    }
+
+    public function isWPChangeable()
+    {
+        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZones();
+    }
+
+    public function isSecureChangeable()
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function getTopLevelZone()
+    {
+        $domain = $this->domain;
+        while (substr_count($domain, '.') > 1) {
+            $domain = static::getZone($domain);
+        }
+
+        return static::getZone($domain);
     }
 }
