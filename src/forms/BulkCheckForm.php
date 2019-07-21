@@ -99,7 +99,11 @@ class BulkCheckForm extends Model
 
     public function getFqdnsInline()
     {
-        return $this->fqdns ? implode(' ', array_map(function($value) {return DomainPartValidator::convertAsciiToIdn($value);}, $this->fqdns)) : '';
+        return $this->fqdns
+            ? implode(' ', array_map(function($value) {
+                    return DomainPartValidator::convertAsciiToIdn($value);
+                }, $this->fqdns))
+            : '';
     }
 
     public function getData()
