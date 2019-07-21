@@ -88,6 +88,7 @@ class BulkCheckForm extends Model
                     return $zoneIsAvailable;
                 });
             }],
+
             // Check if zones is available
             [['zones'], 'filter', 'filter' => function ($zones) {
                 return array_filter((array) $zones, function ($zone) {
