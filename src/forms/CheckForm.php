@@ -109,9 +109,9 @@ class CheckForm extends Model
 
     /**
      * Returns domain zone from the [[fqdn]].
-     * @return string
+     * @return null|string
      */
-    public function getZone() : string
+    public function getZone(): ?string
     {
         list(, $zone) = explode('.', $this->fqdn, 2);
 
@@ -120,9 +120,9 @@ class CheckForm extends Model
 
     /**
      * Returns domain name from the [[fqdn]].
-     * @return string
+     * @return null|string
      */
-    public function getDomain() : string
+    public function getDomain(): ?string
     {
         list($domain) = explode('.', $this->fqdn, 2);
 
@@ -131,9 +131,9 @@ class CheckForm extends Model
 
     /**
      * Returns domain name from the [[fqdn]] in IDN
-     * @return string
+     * @return null|string
      */
-    public function getDomainIDN() : string
+    public function getDomainIDN(): ?string
     {
         return DomainPartValidator::convertAsciiToIdn($this->getDomain());
     }
