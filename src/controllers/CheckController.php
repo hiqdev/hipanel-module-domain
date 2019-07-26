@@ -78,6 +78,7 @@ class CheckController extends CrudController
         $results = [];
         $dropDownZonesOptions = $this->getAvailableZonesList();
         $bulkForm = new BulkCheckForm($dropDownZonesOptions);
+        $bulkForm->idns = Yii::$app->request->get();
 
         if ($bulkForm->load(Yii::$app->request->get(), '') && $bulkForm->validate()) {
             $results = $bulkForm->variateAll();

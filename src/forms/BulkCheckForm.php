@@ -20,6 +20,8 @@ class BulkCheckForm extends Model
 {
     public $fqdns = [];
 
+    public $idns = [];
+
     /**
      * @var array
      */
@@ -162,7 +164,7 @@ class BulkCheckForm extends Model
     public function variate($fqdn)
     {
         $form = new CheckForm($this->availableZones);
-        $form->fqdn = $fqdn;
+        $form->fqdn = array_values($this->idns)[0];
 
         $generator = new DomainVariationsGenerator($form->getDomain(), $form->getZone(), $this->adjustZonesFor($form));
 
