@@ -12,6 +12,7 @@ namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
+use hipanel\validators\DomainValidator;
 use hiqdev\yii2\cart\DontIncrementQuantityWhenAlreadyInCart;
 use Yii;
 
@@ -52,6 +53,11 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
         return [
             [['name'], 'required'],
         ];
+    }
+
+    public function getName(): string
+    {
+        return DomainValidator::convertAsciiToIdn($this->name);
     }
 
     /**
