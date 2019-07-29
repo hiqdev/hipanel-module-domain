@@ -701,17 +701,28 @@ class Domain extends \hipanel\base\Model
 
     public function isRussianZones()
     {
-        return $this->isZone(['ru', 'su', 'рф'], $this->getTopLevelZone());
+        return $this->isLastZone(['ru', 'su', 'рф'], $this->getTopLevelZone());
     }
 
-    /**a
+    /**
      * Returns true if the zone is among given list of zones.
      * @param array|string $zones zone or list of zones
      * @return bool
      */
-    public function isZone($zones, $zone = null)
+    public function isZone($zones) : bool
     {
-        $zone = empty($zone) ? $this->getZone() : $zone;
+        $zone = $this->getZone();
+        return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
+    }
+
+    /**
+     * Returns true if the zone is among given list of zones.
+     * @param array|string $zones zone or list of zones
+     * @return bool
+     */
+    public function isLastZone($zones) : bool
+    {
+        $zone = $this->getTopLevelZone();
         return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
     }
 
@@ -807,11 +818,6 @@ class Domain extends \hipanel\base\Model
 
     public function getTopLevelZone() : bool
     {
-        $domain = $this->domain;
-        while (substr_count($domain, '.') > 1) {
-            $domain = static::getZone($domain);
-        }
-
-        return static::getZone($domain);
+        return end(explode(".", $this->domain));
     }
 }
