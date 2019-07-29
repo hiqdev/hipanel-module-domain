@@ -176,7 +176,7 @@ JS
                                 ]);
                             },
                             'format' => 'raw',
-                            'visible' => !$model->isRussianZones(),
+                            'visible' => !$model->isRussianZone(),
                         ],
                     ],
                 ]) ?>
@@ -268,7 +268,7 @@ JS
                                     ]);
                                 },
                                 'format' => 'raw',
-                                'visible' => !$model->isRussianZones(),
+                                'visible' => !$model->isRussianZone(),
                             ],
                         ],
                     ]) ?>

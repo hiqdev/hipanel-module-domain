@@ -625,7 +625,7 @@ class Domain extends \hipanel\base\Model
 
     public function isContactChangeable()
     {
-        return !$this->isRussianZones();
+        return !$this->isRussianZone();
     }
 
     public function isRussianRenewable()
@@ -648,7 +648,7 @@ class Domain extends \hipanel\base\Model
             return false;
         }
 
-        return $this->isRussianRenewable() || !$this->isRussianZones();
+        return $this->isRussianRenewable() || !$this->isRussianZone();
     }
 
     /**
@@ -661,17 +661,17 @@ class Domain extends \hipanel\base\Model
 
     public function isSynchronizable()
     {
-        return $this->isActive() && !$this->isRussianZones();
+        return $this->isActive() && !$this->isRussianZone();
     }
 
     public function isPushable()
     {
-        return $this->isOk() && !$this->isRussianZones();
+        return $this->isOk() && !$this->isRussianZone();
     }
 
     public function isForcePushable()
     {
-        return $this->isExpired() || $this->isDeleting() || $this->isRussianZones();
+        return $this->isExpired() || $this->isDeleting() || $this->isRussianZone();
     }
 
     public function isSetNSable()
@@ -687,7 +687,7 @@ class Domain extends \hipanel\base\Model
 
     public function canDelete()
     {
-        return $this->isActive() && $this->can('domain.delete') && !$this->isRussianZones();
+        return $this->isActive() && $this->can('domain.delete') && !$this->isRussianZone();
     }
 
     public function canDeleteAGP()
@@ -699,7 +699,7 @@ class Domain extends \hipanel\base\Model
             && $this->can('manage');
     }
 
-    public function isRussianZones()
+    public function isRussianZone()
     {
         return $this->isLastZone(['ru', 'su', 'рф']);
     }
@@ -745,12 +745,12 @@ class Domain extends \hipanel\base\Model
 
     public function canRegenPassword()
     {
-        return $this->isActive() && !$this->isRussianZones();
+        return $this->isActive() && !$this->isRussianZone();
     }
 
     public function canSendFOA()
     {
-        return $this->isPreincoming() && !$this->isRussianZones();
+        return $this->isPreincoming() && !$this->isRussianZone();
     }
 
     public function canForceSendFOA()
@@ -763,7 +763,7 @@ class Domain extends \hipanel\base\Model
         return $this->isOutgoing()
             && $this->can('support')
             && $this->notDomainOwner()
-            && !$this->isRussianZones();
+            && !$this->isRussianZone();
     }
 
     public function canCancelPreincoming()
@@ -771,17 +771,17 @@ class Domain extends \hipanel\base\Model
         return $this->isPreincoming()
             && $this->notDomainOwner()
             && $this->can('support')
-            && !$this->isRussianZones();
+            && !$this->isRussianZone();
     }
 
     public function canRejectTransfer()
     {
-        return $this->isOutgoing() && !$this->isRussianZones();
+        return $this->isOutgoing() && !$this->isRussianZone();
     }
 
     public function canCancelTransfer()
     {
-        return $this->isIncoming() && !$this->isRussianZones();
+        return $this->isIncoming() && !$this->isRussianZone();
     }
 
     public function canSynchronizeContacts()
@@ -795,14 +795,14 @@ class Domain extends \hipanel\base\Model
     {
         return $this->can($this->isFreezed() ? 'domain.unfreeze' : 'domain.freeze')
             && $this->notDomainOwner()
-            && !$this->isRussianZones();
+            && !$this->isRussianZone();
     }
 
     public function canWPFreezeUnfreeze()
     {
         return $this->can($this->isWPFreezed() ? 'domain.unfreeze' : 'domain.freeze')
             && $this->notDomainOwner()
-            && !$this->isRussianZones();
+            && !$this->isRussianZone();
     }
 
     public function canHoldUnhold()
@@ -810,17 +810,17 @@ class Domain extends \hipanel\base\Model
         return $this->isActive()
             && $this->can($this->isHolded() ? 'domain.hold' : 'domain.unhold')
             && $this->notDomainOwner()
-            && !$this->isRussianZones();
+            && !$this->isRussianZone();
     }
 
     public function isWPChangeable() : bool
     {
-        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZones();
+        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZone();
     }
 
     public function isSecureChangeable() : bool
     {
-        return !$this->isRussianZones();
+        return !$this->isRussianZone();
     }
 
     public function getTopLevelZone() : string
