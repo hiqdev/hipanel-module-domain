@@ -816,7 +816,7 @@ class Domain extends \hipanel\base\Model
         return !$this->isRussianZones();
     }
 
-    public function getTopLevelZone() : bool
+    public function getTopLevelZone() : string
     {
         return end(explode(".", $this->domain));
     }
