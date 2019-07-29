@@ -162,7 +162,7 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'pluginOptions' => function($model) {
+                'pluginOptions' => function(Domain $model) : array {
                     return [
                         'offColor' => 'warning',
                         'readonly' => !$model->isWPChangeable(),
