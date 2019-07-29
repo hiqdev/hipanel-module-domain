@@ -701,7 +701,7 @@ class Domain extends \hipanel\base\Model
 
     public function isRussianZones()
     {
-        return $this->isLastZone(['ru', 'su', 'рф'], $this->getTopLevelZone());
+        return $this->isLastZone(['ru', 'su', 'рф']);
     }
 
     /**
@@ -716,14 +716,21 @@ class Domain extends \hipanel\base\Model
     }
 
     /**
-     * Returns true if the zone is among given list of zones.
+     * Returns true if the domain zone finishes with any of given zone.
      * @param array|string $zones zone or list of zones
      * @return bool
      */
     public function isLastZone($zones) : bool
     {
-        $zone = $this->getTopLevelZone();
-        return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
+        if (!is_array($zones)) {
+            $zones = [$zones];
+        }
+        foreach ($zones as $zone) {
+            if (substr($this->domain, -(strlen($zone) + 1)) === ".$zone") {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function can($permission)
