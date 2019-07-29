@@ -162,9 +162,12 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'pluginOptions' => [
-                    'offColor' => 'warning',
-                ],
+                'pluginOptions' => function(Domain $model) : array {
+                    return [
+                        'offColor' => 'warning',
+                        'readonly' => !$model->isWPChangeable(),
+                    ];
+                },
                 'switchOptions' => [
                     'class' => LabeledAjaxSwitch::class,
                     'labels' => [
@@ -212,13 +215,18 @@ class DomainGridView extends BoxedGridView
                 'filter' => false,
                 'enableSorting' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
-                'url' => Url::toRoute('set-lock'),
+                'url' => Url::toRoute('@domain/set-lock'),
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
                 'popoverOptions' => [
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
+                'pluginOptions' => function($model) {
+                    return [
+                        'readonly' => !$model->isSecureChangeable(),
+                    ];
+                },
                 'switchOptions' => [
                     'class' => LabeledAjaxSwitch::class,
                     'labels' => [

@@ -701,19 +701,29 @@ class Domain extends \hipanel\base\Model
 
     public function isRussianZones()
     {
-        return $this->isZone(['ru', 'su', 'рф']);
+        return $this->isLastZone(['ru', 'su', 'рф'], $this->getTopLevelZone());
     }
 
-    /**a
+    /**
      * Returns true if the zone is among given list of zones.
      * @param array|string $zones zone or list of zones
      * @return bool
      */
-    public function isZone($zones)
+    public function isZone($zones) : bool
     {
         $zone = $this->getZone();
+        return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
+    }
 
-        return is_array($zones) ? in_array($this->getZone(), $zones, true) : $zone === $zones;
+    /**
+     * Returns true if the zone is among given list of zones.
+     * @param array|string $zones zone or list of zones
+     * @return bool
+     */
+    public function isLastZone($zones) : bool
+    {
+        $zone = $this->getTopLevelZone();
+        return is_array($zones) ? in_array($zone, $zones, true) : $zone === $zones;
     }
 
     public static function can($permission)
@@ -794,5 +804,20 @@ class Domain extends \hipanel\base\Model
             && $this->can($this->isHolded() ? 'domain.hold' : 'domain.unhold')
             && $this->notDomainOwner()
             && !$this->isRussianZones();
+    }
+
+    public function isWPChangeable() : bool
+    {
+        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZones();
+    }
+
+    public function isSecureChangeable() : bool
+    {
+        return !$this->isRussianZones();
+    }
+
+    public function getTopLevelZone() : string
+    {
+        return end(explode(".", $this->domain));
     }
 }
