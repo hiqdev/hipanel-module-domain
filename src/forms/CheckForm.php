@@ -139,6 +139,14 @@ class CheckForm extends Model
     }
 
     /**
+     * @return string|null
+     */
+    public function getZoneIDN(): ?string
+    {
+        return DomainPartValidator::convertAsciiToIdn($this->getZone());
+    }
+
+    /**
      * Sends API request to check whether domain is available and sets result to [[isAvailable]].
      *
      * @return bool whether domain is available
