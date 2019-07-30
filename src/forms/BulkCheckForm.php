@@ -131,7 +131,7 @@ class BulkCheckForm extends Model
         // Single domain, no zones selected
         //  => all zones
         if (count($this->fqdns) === 1 && count($this->zones) === 0) {
-            if ($singleZoneWithDomain = $checkForm->getZone()) {
+            if ($singleZoneWithDomain = $checkForm->getZoneIDN()) {
                 $zones = array_diff_key($this->availableZones, [$singleZoneWithDomain => '']);
 
                 return [$singleZoneWithDomain => '.' . $singleZoneWithDomain] + $zones;
@@ -146,8 +146,8 @@ class BulkCheckForm extends Model
 
         // In case there is a zone in the domain
         //  => Add it to the zones array
-        if ($checkForm->getZone()) {
-            $zones[$checkForm->getZone()] = $checkForm->availableZones[$checkForm->getZone()];
+        if ($checkForm->getZoneIDN()) {
+            $zones[$checkForm->getZoneIDN()] = $checkForm->availableZones[$checkForm->getZoneIDN()];
         }
 
         // In case there are no selected zones and domain does not contain zone
