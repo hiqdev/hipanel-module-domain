@@ -34,5 +34,6 @@ class ContactIsIncompatibleException extends \hipanel\modules\finance\cart\NotPu
     {
         Yii::$app->response->redirect(Url::to(['@domain-contact/request', 'requestPassport' => $this->requestPassport]));
         Yii::$app->end();
+        return false;
     }
 }
