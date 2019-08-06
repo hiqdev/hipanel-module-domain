@@ -30,7 +30,7 @@ class ContactIsIncompatibleException extends \hipanel\modules\finance\cart\NotPu
         return new self();
     }
 
-    public function resolve()
+    public function resolve(): bool
     {
         Yii::$app->response->redirect(Url::to(['@domain-contact/request', 'requestPassport' => $this->requestPassport]));
         Yii::$app->end();
