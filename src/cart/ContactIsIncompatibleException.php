@@ -13,7 +13,7 @@ namespace hipanel\modules\domain\cart;
 use Yii;
 use yii\helpers\Url;
 
-class ContactIsIncompatibleException extends \hipanel\modules\finance\cart\NotPurchasablePositionException
+class ContactIsIncompatibleException extends \hiqdev\yii2\cart\NotPurchasableException
 {
     protected $requestPassport = false;
 
