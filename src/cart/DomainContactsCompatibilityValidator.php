@@ -13,7 +13,6 @@ namespace hipanel\modules\domain\cart;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\AbstractCartPosition;
 use hipanel\modules\finance\cart\AbstractPurchase;
-use hiqdev\yii2\cart\NotPurchasableException;
 use hipanel\modules\finance\cart\PositionPurchasabilityValidatorInterface;
 use hiqdev\hiart\ResponseErrorException;
 
@@ -65,7 +64,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
                 throw ContactIsIncompatibleException::generalDataRequired();
             }
 
-            throw new \hiqdev\yii2\cart\NotPurchasableException();
+            throw $e;
         }
     }
 }

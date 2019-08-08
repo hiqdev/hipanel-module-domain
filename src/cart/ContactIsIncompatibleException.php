@@ -10,14 +10,15 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hiqdev\yii2\cart\NotPurchasableException;
 use Yii;
 use yii\helpers\Url;
 
-class ContactIsIncompatibleException extends \hiqdev\yii2\cart\NotPurchasableException
+final class ContactIsIncompatibleException extends NotPurchasableException
 {
-    protected $requestPassport = false;
+    private $requestPassport = false;
 
-    public static function passportRequired()
+    public static function passportRequired(): self
     {
         $exception = new self();
         $exception->requestPassport = true;
@@ -25,7 +26,7 @@ class ContactIsIncompatibleException extends \hiqdev\yii2\cart\NotPurchasableExc
         return $exception;
     }
 
-    public static function generalDataRequired()
+    public static function generalDataRequired(): self
     {
         return new self();
     }
