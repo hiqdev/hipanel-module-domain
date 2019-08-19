@@ -74,7 +74,7 @@ class DomainSort
             CheckForm::class => 'fqdn',
             Domain::class => 'domain',
         ];
-        $order = empty(Yii::$app->params['module.domain.order.list']) ? self::$defaultOrder : Yii::$app->params['module.domain.order.list'];
+        $order = empty(Yii::$app->params['module.domain.zone.order.list']) ? self::$defaultOrder : Yii::$app->params['module.domain.zone.order.list'];
 
         return function ($model) use ($order, $mapping) {
             $fqdn = null;

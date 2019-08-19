@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'module.domain.order.list' => [],
+    'module.domain.zone.order.list' => [],
 ];
