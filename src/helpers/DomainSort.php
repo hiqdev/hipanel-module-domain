@@ -14,6 +14,7 @@ use hipanel\modules\domain\forms\CheckForm;
 use hipanel\modules\domain\models\Domain;
 use Tuck\Sort\Sort;
 use Tuck\Sort\SortChain;
+use Yii;
 
 /**
  * Class DomainSort provides sorting functions for domains.
@@ -22,7 +23,7 @@ use Tuck\Sort\SortChain;
  */
 class DomainSort
 {
-    public static $defaultOrder = [
+    private static $defaultOrder = [
         'com',
         'net',
         'name',
@@ -73,13 +74,15 @@ class DomainSort
             CheckForm::class => 'fqdn',
             Domain::class => 'domain',
         ];
-        $order = self::$defaultOrder;
+        $order = empty(Yii::$app->params['module.domain.zone.order.list']) ? self::$defaultOrder : Yii::$app->params['module.domain.zone.order.list'];
 
         return function ($model) use ($order, $mapping) {
             $fqdn = null;
             foreach ($mapping as $class => $attribute) {
                 if ($model instanceof $class) {
                     $fqdn = $model->{$attribute};
+                } else if (is_string($model)) {
+                    $fqdn = $model;
                 }
             }
             if ($fqdn) {

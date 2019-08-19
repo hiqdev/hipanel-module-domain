@@ -11,10 +11,12 @@
 namespace hipanel\modules\domain\forms;
 
 use hipanel\modules\dns\validators\DomainPartValidator;
+use hipanel\modules\domain\helpers\DomainSort;
 use hipanel\modules\domain\logic\DomainVariationsGenerator;
 use Yii;
 use yii\base\Model;
 use yii\helpers\StringHelper;
+use Tuck\Sort\Sort;
 
 class BulkCheckForm extends Model
 {
@@ -39,7 +41,7 @@ class BulkCheckForm extends Model
     {
         parent::__construct($config);
 
-        $this->availableZones = $availableZones;
+        $this->availableZones = DomainSort::byGeneralRules()->values($availableZones, Sort::PRESERVE_KEYS);
     }
 
     /**
