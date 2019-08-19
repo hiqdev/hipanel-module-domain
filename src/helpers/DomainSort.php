@@ -23,6 +23,28 @@ use Yii;
  */
 class DomainSort
 {
+    private static $defaultOrder = [
+        'com',
+        'net',
+        'name',
+        'cc',
+        'tv',
+        'org',
+        'info',
+        'pro',
+        'mobi',
+        'biz',
+        'me',
+        'kiev.ua',
+        'com.ua',
+        'ru',
+        'su',
+        'xxx',
+        'porn',
+        'adult',
+        'sex',
+    ];
+
     /**
      * @return SortChain
      */
@@ -52,29 +74,7 @@ class DomainSort
             CheckForm::class => 'fqdn',
             Domain::class => 'domain',
         ];
-        $defaultOrder = [
-            'com',
-            'net',
-            'name',
-            'cc',
-            'tv',
-            'org',
-            'info',
-            'pro',
-            'mobi',
-            'biz',
-            'me',
-            'kiev.ua',
-            'com.ua',
-            'ru',
-            'su',
-            'xxx',
-            'porn',
-            'adult',
-            'sex',
-        ];
-
-        $order = empty(Yii::$app->params['module.domain.zone.order.list']) ? $defaultOrder : Yii::$app->params['module.domain.zone.order.list'];
+        $order = empty(Yii::$app->params['module.domain.zone.order.list']) ? self::$defaultOrder : Yii::$app->params['module.domain.zone.order.list'];
 
         return function ($model) use ($order, $mapping) {
             $fqdn = null;
