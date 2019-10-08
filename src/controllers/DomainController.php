@@ -81,6 +81,8 @@ class DomainController extends \hipanel\base\CrudController
                     'transfer-in' => true,
                     'approve-preincoming' => true,
                     'reject-preincoming' => true,
+                    'delete-in-db' => 'domain.delete',
+                    'delete' => 'domain.delete',
                     'preincoming-started, preincoming-started GET html, preincoming-started html' => true,
                     'preincoming-cancel, preincoming-cancel GET html, preincoming-cancel html' => true,
                     'preincoming-failed, preincoming-failed GET html, preincoming-failed html' => true,
@@ -350,6 +352,11 @@ class DomainController extends \hipanel\base\CrudController
             'delete-agp' => [
                 'class' => SmartDeleteAction::class,
                 'scenario' => 'delete-agp',
+                'success' => Yii::t('hipanel:domain', 'Domain deleted'),
+                'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
+            ],
+            'delete-in-db' => [
+                'class' => SmartDeleteAction::class,
                 'success' => Yii::t('hipanel:domain', 'Domain deleted'),
                 'error' => Yii::t('hipanel:domain', 'Failed delete domain'),
             ],
