@@ -13,6 +13,7 @@ namespace hipanel\modules\domain\models;
 use hipanel\base\Model;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\dns\validators\FqdnValueValidator;
+use hipanel\validators\DomainValidator;
 use Yii;
 
 class Ns extends Model
@@ -29,7 +30,7 @@ class Ns extends Model
             }, 'skipOnArray' => true],
             [['ip'], 'each', 'rule' => ['ip']],
             [['ip'],  function ($attribute, $params) {
-                if (!StringHelper::endsWith($this->name, $this->domain_name)) {
+                if (!StringHelper::endsWith(DomainValidator::convertIdnToAscii($this->name), DomainValidator::convertIdnToAscii($this->domain_name))) {
                     $this->addError($attribute, Yii::t('hipanel:domain', 'To assign the IP, NS must be a child from main domain'));
                 }
             }],
