@@ -10,7 +10,10 @@
 
 namespace hipanel\modules\domain\models;
 
+use DateTimeImmutable;
 use Exception;
+use hipanel\base\Model;
+use hipanel\base\ModelTrait;
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\StringHelper;
 use hipanel\modules\client\models\Client;
@@ -22,7 +25,13 @@ use hipanel\validators\DomainValidator;
 use hiqdev\hiart\ResponseErrorException;
 use Yii;
 
-class Domain extends \hipanel\base\Model
+/**
+ * Class Domain
+ *
+ * @property string $domain
+ * @property string $expires
+ */
+class Domain extends Model
 {
     const STATE_OK = 'ok';
     const STATE_INCOMING = 'incoming';
@@ -103,7 +112,7 @@ class Domain extends \hipanel\base\Model
         return isset($options[$this->state]) ? $options[$this->state] : null;
     }
 
-    use \hipanel\base\ModelTrait;
+    use ModelTrait;
 
     /** {@inheritdoc} */
     public function rules()
@@ -630,7 +639,7 @@ class Domain extends \hipanel\base\Model
 
     public function isRussianRenewable()
     {
-        return strtotime('+56 days', time()) > strtotime($this->expires);
+        return strtotime('+56 days') > strtotime($this->expires);
     }
 
     public function isRenewable(): bool
@@ -825,6 +834,11 @@ class Domain extends \hipanel\base\Model
 
     public function getTopLevelZone() : string
     {
-        return end(explode(".", $this->domain));
+        return end(explode('.', $this->domain));
+    }
+
+    public function getExpires(): DateTimeImmutable
+    {
+        return new DateTimeImmutable($this->expires);
     }
 }

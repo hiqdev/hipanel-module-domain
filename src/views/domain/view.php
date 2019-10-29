@@ -162,6 +162,7 @@ JS
                         'note',
                         'state',
                         'whois_protected_with_label',
+                        'whois_privacy',
                         'is_secured_with_label',
                         'created_date',
                         'expires',

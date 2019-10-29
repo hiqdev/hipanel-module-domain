@@ -149,6 +149,12 @@ class DomainGridView extends BoxedGridView
                     ]);
                 },
             ],
+            'whois_privacy' => [
+                'format' => 'raw',
+                'value' => static function (Domain $domain): string {
+                    return Html::a('Enable WHOIS privacy', ['@domain/add-to-cart-whois-protect', 'name' => $domain->domain]);
+                }
+            ],
             'whois_protected_with_label' => [ // don't forget to update `whois_protected` column as well
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'whois_protected',
