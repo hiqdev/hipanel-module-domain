@@ -19,6 +19,7 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
 
     public function items()
     {
+        $user = Yii::$app->user;
         $url = 'http://' . $this->model->domain . '/';
 
         return [
@@ -171,6 +172,25 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'visible' => $this->model->canDeleteAGP(),
                 'encode' => false,
             ],
+            [
+                'label' => Yii::t('hipanel:domain', 'Delete in DB'),
+                'icon' => 'fa-trash-o',
+                'url' => ['@domain/delete-in-db'],
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'data-pjax' => '0',
+                        'form' => 'delete-agp',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
+                    ],
+                ],
+                'visible' => $user->can('domain.delete'),
+                'encode' => false,
+            ],
+
             [
                 'label' => !$this->model->isFreezed()
                     ? Yii::t('hipanel:domain', 'Freeze domain')

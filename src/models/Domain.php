@@ -157,6 +157,7 @@ class Domain extends Model
                 'notify-transfer-in',
                 'delete',
                 'delete-agp',
+                'delete-in-db',
                 'force-reject-preincoming',
                 'force-approve-preincoming',
                 'force-notify-transfer-in',

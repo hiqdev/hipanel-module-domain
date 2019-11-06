@@ -62,7 +62,7 @@ class DomainDnsCest
 
         $I->pressButton('Create');
         $I->waitForPageUpdate();
-        $I->closeNotification('DNS record created successfully');
+        $I->closeNotification('DNS record saved successfully');
     }
 
     public function ensureICanUpdateDnsRecord(Client $I)
