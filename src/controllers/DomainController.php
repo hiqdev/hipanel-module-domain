@@ -233,7 +233,8 @@ class DomainController extends \hipanel\base\CrudController
                         ->joinWith('registrant')
                         ->joinWith('admin')
                         ->joinWith('tech')
-                        ->joinWith('billing');
+                        ->joinWith('billing')
+                        ->withPaidWhoisProtect();
                 },
                 'data' => function ($action) {
                     return [

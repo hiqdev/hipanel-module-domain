@@ -20,8 +20,10 @@ use hipanel\modules\client\models\Client;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\dns\models\Record;
 use hipanel\modules\dns\validators\DomainPartValidator;
+use hipanel\modules\domain\models\query\DomainQuery;
 use hipanel\modules\domain\validators\NsValidator;
 use hipanel\validators\DomainValidator;
+use hiqdev\hiart\ActiveQuery;
 use hiqdev\hiart\ResponseErrorException;
 use Yii;
 
@@ -124,7 +126,7 @@ class Domain extends Model
             [['premium_expires', 'premium_days_left'], 'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date'],
             [['registered', 'operated'], 'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed'], 'boolean'],
+            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
@@ -320,6 +322,11 @@ class Domain extends Model
     public function getParking()
     {
         return $this->hasOne(Parking::class, ['domain_id' => 'id']);
+    }
+
+    public function getPaidwp(): ActiveQuery
+    {
+        return $this->hasOne(Paidwp::class, ['domain_id' => 'id']);
     }
 
     public function getAdmin()
@@ -841,5 +848,21 @@ class Domain extends Model
     public function getExpires(): DateTimeImmutable
     {
         return new DateTimeImmutable($this->expires);
+    }
+
+    public function needToPayWhoisProtect(): bool
+    {
+        return Yii::$app->getModule('domain')->whoisProtectPaid && (bool)$this->is_wp_paid;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return DomainQuery
+     */
+    public static function find($options = []): DomainQuery
+    {
+        return new DomainQuery(get_called_class(), [
+            'options' => $options,
+        ]);
     }
 }

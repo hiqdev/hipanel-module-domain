@@ -19,6 +19,7 @@ return [
     'modules' => [
         'domain' => [
             'class' => \hipanel\modules\domain\Module::class,
+            'whoisProtectPaid' => $params['module.domain.whois_protect.paid'] ?? false,
         ],
     ],
     'components' => [

@@ -34,7 +34,7 @@ class WhoisProtectOrderPurchase extends AbstractPremiumPurchase
     {
         return Yii::t('hipanel.domain.premium', 'Your contact data privacy for domain {domain} is active till {date}', [
             'domain' => $this->position->name,
-//            'date' => '<b>' . Yii::$app->formatter->asDate($this->_result['expires']) . '</b>'
+            'date' => '<b>' . Yii::$app->formatter->asDate($this->_result['expires']) . '</b>'
         ]);
     }
 }

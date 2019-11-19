@@ -20,7 +20,6 @@ $("#parking-type_id").select2({
         return '<img src="https://ahnames.com/www/img/parking/park'+ option.id + '.png" width="50" />&nbsp;&nbsp;' + option.text;
     },
     templateSelection: function (option) {
-        console.log(option);
         if (option.id > 0 ) {
             return '<img src="https://ahnames.com/www/img/parking/park'+ option.id + '.png" width="20" />&nbsp;&nbsp;' + option.text;
         } else {

@@ -378,4 +378,5 @@ return [
     'Create zone' => 'Создать зону',
     'Zone detailed information' => 'Подробная информация о зоне',
     'Are you sure you want to delete this zone?' => 'Вы уверены, что хотите удалить эту зону?',
+    'Paid WHOIS protect' => 'Платная защита WHOIS',
 ];
