@@ -48,20 +48,28 @@ class PaidWPColumn extends DataColumn
     {
         /** @var Domain $model */
         $needToPayOptions = [];
-        if ($model->needToPayWhoisProtect()) {
+        if (!$model->needToPayWhoisProtect()) {
             $modalId = 'add-to-cart-whois-protect-modal-' . $key;
             Yii::$app->view->on(View::EVENT_END_BODY, static function () use ($model, $modalId) {
                 Modal::begin([
                     'id' => $modalId,
                     'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Paid WHOIS protect'), ['class' => 'modal-title']),
-                    'size' => Modal::SIZE_SMALL,
                     'toggleButton' => false,
                 ]);
+                echo Html::beginTag('div', ['style' => 'margin-bottom: 2em;', 'class' => 'text-justify']);
                 echo Html::tag(
                     'p',
-                    Yii::t('hipanel:domain', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
-                    ['style' => 'margin-bottom: 2em;', 'class' => 'text-justify']
+                    Yii::t('hipanel:domain', 'When you register a domain, the WHOIS of your domain name publishes your personal contact information (such as Name, Company Name, Address, Telephone Number, Email Address) as Contact Details for that domain name. The information becomes available to anyone who performs a WHOIS lookup query of your domain name.')
                 );
+                echo Html::tag(
+                    'p',
+                    Yii::t('hipanel:domain', 'Your personal information is, therefore, is at risk from being collected by data miners, who can then target you via email, telephone calls, postal messages, etc.')
+                );
+                echo Html::tag(
+                    'p',
+                    Yii::t('hipanel:domain', 'Using the Privacy Protection service, you may prevent such abuse. When you enable WHOIS privacy for your domain name, we replace your Contact Details in the WHOIS information with our company contact details, thus, masking your personal contact data.')
+                );
+                echo Html::endTag('div');
                 echo Html::a(
                     Yii::t('hipanel:domain', 'Add to cart'),
                     ['@domain/add-to-cart-whois-protect', 'name' => $model->domain],
