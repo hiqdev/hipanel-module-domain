@@ -222,6 +222,7 @@ class Domain extends \hipanel\base\Model
                 'what',
                 'salt',
                 'hash',
+                'token',
             ], 'safe', 'on' => ['approve-preincoming', 'reject-preincoming']],
 
             // Premium package

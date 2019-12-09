@@ -749,10 +749,10 @@ class DomainController extends \hipanel\base\CrudController
         return $this->render('transferOut', ['model' => $model]);
     }
 
-    public function actionTransferIn($domains, $till_date, $what, $salt, $hash)
+    public function actionTransferIn($domains = null, $till_date = null, $what = null, $salt = null, $hash = null, $token = null)
     {
         Yii::$app->get('hiart')->disableAuth();
-        $data = compact('domains', 'till_date', 'what', 'salt', 'hash');
+        $data = compact('domains', 'till_date', 'what', 'salt', 'hash', 'token');
         $userIP = Yii::$app->request->userIP;
         $model = new Domain($data);
         $model->confirm_data = JSON::encode($data);
