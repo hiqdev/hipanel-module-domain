@@ -95,7 +95,7 @@ class DomainController extends \hipanel\base\CrudController
                     'add-to-cart-registration' => ['post'],
                     'add-to-cart-transfer' => ['post'],
                 ],
-            ]
+            ],
         ]);
     }
 
