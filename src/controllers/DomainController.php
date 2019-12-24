@@ -49,6 +49,7 @@ use yii\db\Exception;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\filters\VerbFilter;
 
 class DomainController extends \hipanel\base\CrudController
 {
@@ -88,7 +89,13 @@ class DomainController extends \hipanel\base\CrudController
                     'preincoming-failed, preincoming-failed GET html, preincoming-failed html' => true,
                     '*' => 'domain.read',
                 ],
-            ],
+            ], [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'add-to-cart-registration' => ['post'],
+                    'add-to-cart-transfer' => ['post'],
+                ],
+            ]
         ]);
     }
 
