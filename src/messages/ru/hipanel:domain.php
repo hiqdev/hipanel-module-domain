@@ -72,6 +72,7 @@ return [
     'Re' => '',
     'SEO' => '',
     'Since Time' => '',
+    'Go to the cart' => 'Перейти в корзину',
     'System Expiration Time' => '',
     'To assign the IP, NS must be a child from main domain' => '',
     'To proceed with the transfer you must respond with one of the following:' => 'Для продолжения трансфера вы должны ответить одним из вариантов:',
