@@ -829,7 +829,7 @@ class DomainController extends \hipanel\base\CrudController
             $model = DynamicModel::validateData(compact('id', 'client_id', 'type', 'domain'), [
                 [['id', 'client_id'], 'integer'],
                 ['type', 'in', 'range' => [GetPremiumButton::RENEW, GetPremiumButton::PURCHASE]],
-                ['domain', DomainPartValidator::class],
+                ['domain', DomainPartValidator::class, 'enableIdn' => true ],
             ]);
             if ($model->hasErrors()) {
                 throw new \Exception(__METHOD__ . ' has validation errors');
