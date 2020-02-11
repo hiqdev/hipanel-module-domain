@@ -149,40 +149,8 @@ class DomainGridView extends BoxedGridView
                     ]);
                 },
             ],
-            'whois_protected_with_label' => [ // don't forget to update `whois_protected` column as well
-                'class' => BootstrapSwitchColumn::class,
-                'attribute' => 'whois_protected',
-                'url' => Url::toRoute('set-whois-protect'),
-                'filter' => false,
-                'enableSorting' => false,
-                'encodeLabel' => false,
-                'label' => Html::tag('span', 'WHOIS'),
-                'popover' => 'WHOIS protection',
-                'popoverOptions' => [
-                    'placement' => 'bottom',
-                    'selector' => 'span',
-                ],
-                'pluginOptions' => function(Domain $model) : array {
-                    return [
-                        'offColor' => 'warning',
-                        'readonly' => !$model->isWPChangeable(),
-                    ];
-                },
-                'switchOptions' => [
-                    'class' => LabeledAjaxSwitch::class,
-                    'labels' => [
-                        0 => [
-                            'style' => 'display: none;',
-                            'class' => 'text-danger md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'The contact data is visible to everybody in the Internet'),
-                        ],
-                        1 => [
-                            'style' => 'display: none;',
-                            'class' => 'small text-muted font-normal md-pl-10',
-                            'content' => Yii::t('hipanel:domain', 'The contact data is protected and not exposed'),
-                        ],
-                    ],
-                ],
+            'whois_protected_with_label' => [
+                'class' => PaidWPColumn::class,
             ],
             'is_secured' => [ // don't forget to update `is_secured_with_label` column as well
                 'encodeLabel' => false,

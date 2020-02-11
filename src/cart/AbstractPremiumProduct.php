@@ -15,6 +15,13 @@ use hipanel\modules\finance\cart\AbstractCartPosition;
 use hiqdev\yii2\cart\DontIncrementQuantityWhenAlreadyInCart;
 use Yii;
 
+/**
+ * Class AbstractPremiumProduct
+ *
+ * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ *
+ * @property string $name The domain name
+ */
 abstract class AbstractPremiumProduct extends AbstractCartPosition implements DontIncrementQuantityWhenAlreadyInCart
 {
     /**
@@ -43,6 +50,15 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition implements Do
         ];
     }
 
+    public function load($data, $formName = null)
+    {
+        if ($result = parent::load($data, '')) {
+            $this->ensureRelatedData();
+        }
+
+        return $result;
+    }
+
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
@@ -64,5 +80,18 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition implements Do
         ];
 
         return parent::getCalculationModel(array_merge($localOptions, $options));
+    }
+
+    protected function serializationMap()
+    {
+        $parent = parent::serializationMap();
+        $parent['_model'] = $this->_model;
+        $parent['_operation'] = $this->_operation;
+
+        return $parent;
+    }
+
+    protected function ensureRelatedData(): void
+    {
     }
 }
