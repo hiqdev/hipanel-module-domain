@@ -52,7 +52,7 @@ class DomainGridView extends BoxedGridView
             'premium_autorenewal' => [
                 'class' => BootstrapSwitchColumn::class,
                 'attribute' => 'premium_autorenewal',
-                'url' => Url::toRoute('@hdomain/set-premium-autorenewal'),
+                'url' => Url::toRoute('@domain/set-paid-feature-autorenewal'),
                 'filter' => false,
                 'enableSorting' => false,
                 'encodeLabel' => false,

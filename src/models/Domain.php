@@ -239,6 +239,8 @@ class Domain extends Model
             // Premium package
             [['url_fw', 'mail', 'park', 'dnspremium'], 'integer'],
             ['premium_autorenewal', 'boolean'],
+
+            [['id', 'premium_autorenewal'], 'required', 'on' => ['set-paid-feature-autorenewal']],
         ];
     }
 

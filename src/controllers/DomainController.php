@@ -550,15 +550,36 @@ class DomainController extends \hipanel\base\CrudController
             // Premium Autorenewal
             'set-paid-feature-autorenewal' => [
                 'class' => SmartPerformAction::class,
-                'scenario' => 'set-autorenewal',
-                'success' => Yii::t('hipanel:domain', 'Premium autorenewal has been changed'),
-                'on beforeSave' => function (Event $event) {
-                    /** @var Action $action */
-                    $action = $event->sender;
-                    foreach ($action->collection->models as $model) {
-                        $model->autorenewal = 1;
-                    }
-                },
+                'success' => Yii::t('hipanel', 'Premium autorenewal has been changed'),
+                'queryOptions' => [
+                    'batch' => false,
+                ],
+                'POST ajax' => [
+                    'save' => true,
+                    'flash' => true,
+                    'success' => [
+                        'class' => RenderJsonAction::class,
+                        'return' => function ($action) {
+                            $message = Yii::$app->session->removeFlash('success');
+
+                            return [
+                                'success' => true,
+                                'text' => Yii::t('hipanel', reset($message)['text']),
+                            ];
+                        },
+                    ],
+                    'error' => [
+                        'class' => RenderJsonAction::class,
+                        'return' => function ($action) {
+                            $message = Yii::$app->session->removeFlash('error');
+
+                            return [
+                                'success' => false,
+                                'text' => reset($message)['text'],
+                            ];
+                        },
+                    ],
+                ],
             ],
             // Autorenewal
             'set-autorenewal' => [
