@@ -51,7 +51,7 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
     }
 
     /** {@inheritdoc} */
-    private function ensureRelatedData()
+    protected function ensureRelatedData()
     {
         $this->_model = Domain::findOne(['id' => $this->model_id]);
         $this->name = $this->_model->domain;

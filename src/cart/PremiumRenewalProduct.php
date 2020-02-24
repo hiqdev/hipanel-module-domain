@@ -52,7 +52,7 @@ class PremiumRenewalProduct extends AbstractPremiumProduct
     }
 
     /** {@inheritdoc} */
-    private function ensureRelatedData()
+    protected function ensureRelatedData()
     {
         $this->_model = Domain::findOne($this->model_id);
         $this->name = $this->_model->domain;
