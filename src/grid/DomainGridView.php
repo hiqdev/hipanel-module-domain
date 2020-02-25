@@ -148,6 +148,9 @@ class DomainGridView extends BoxedGridView
                         ],
                     ]);
                 },
+                'exportedValue' => function ($model) {
+                    return $model->whois_protected ? 'ON' : 'OFF';
+                }
             ],
             'whois_protected_with_label' => [
                 'class' => PaidWPColumn::class,
@@ -165,6 +168,9 @@ class DomainGridView extends BoxedGridView
                     'selector' => 'span',
                 ],
                 'format' => 'html',
+                'exportedValue' => function ($model) {
+                    return $model->is_secured ? 'ON' : 'OFF';
+                },
                 'value' => function ($model) {
                     return IconStateLabel::widget([
                         'model' => $model,
@@ -247,6 +253,9 @@ class DomainGridView extends BoxedGridView
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Auto renew')),
                 'attribute' => 'autorenewal',
                 'format' => 'raw',
+                'exportedValue' => function ($model) {
+                    return $model->autorenewal ? 'ON' : 'OFF';
+                },
                 'value' => function ($model) {
                     return IconStateLabel::widget([
                         'model' => $model,
