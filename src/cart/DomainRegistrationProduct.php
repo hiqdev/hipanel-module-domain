@@ -10,8 +10,10 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\widgets\WithWhoisProtectPosition;
 use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
 use hipanel\modules\finance\cart\BatchPurchaseStrategy;
+use hiqdev\yii2\cart\RelatedPosition;
 use Yii;
 
 class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
@@ -61,5 +63,16 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
         $parent['registrant'] = $this->registrant;
 
         return $parent;
+    }
+
+    public function getRelatedPositions(): array
+    {
+        return [
+            (new RelatedPosition())->configure([
+                'class' => WithWhoisProtectPosition::class,
+                'cart' => Yii::$app->getModule('cart')->getCart(),
+                'cartPosition' => $this,
+            ]),
+        ];
     }
 }
