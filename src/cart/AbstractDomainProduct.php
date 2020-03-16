@@ -11,9 +11,11 @@
 namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\widgets\WithWhoisProtectPosition;
 use hipanel\modules\finance\cart\AbstractCartPosition;
 use hipanel\validators\DomainValidator;
 use hiqdev\yii2\cart\DontIncrementQuantityWhenAlreadyInCart;
+use hiqdev\yii2\cart\RelatedPosition;
 use Yii;
 
 abstract class AbstractDomainProduct extends AbstractCartPosition implements DontIncrementQuantityWhenAlreadyInCart
@@ -66,7 +68,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
      */
     public function getZone()
     {
-        list(, $zone) = explode('.', $this->name, 2);
+        [, $zone] = explode('.', $this->name, 2);
 
         return $zone;
     }
@@ -112,5 +114,16 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
         $parent['_model'] = $this->_model;
 
         return $parent;
+    }
+
+    public function getRelatedPositions(): array
+    {
+        return [
+            (new RelatedPosition())->configure([
+                'class' => WithWhoisProtectPosition::class,
+                'cart' => Yii::$app->getModule('cart')->getCart(),
+                'cartPosition' => $this,
+            ]),
+        ];
     }
 }

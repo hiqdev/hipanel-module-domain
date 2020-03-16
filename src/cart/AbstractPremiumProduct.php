@@ -45,9 +45,9 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition implements Do
 
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['name'], 'safe'],
-        ];
+        ]);
     }
 
     public function load($data, $formName = null)

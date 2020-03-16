@@ -45,7 +45,7 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
-        $this->_model = Domain::findOne(['domains' => $this->name]);
+        $this->_model = Domain::findOne(['domains' => $this->name]) ?? new Domain(['domain' => $this->name, 'expires' => (new \DateTime())->modify('+1 year')->format('c')]);
         $this->_quantity = round($this->calculateExpirationQuantity()->days / 365, 2);
         $this->description = Yii::t('hipanel.domain.premium', 'Purchase of WHOIS privacy');
     }
