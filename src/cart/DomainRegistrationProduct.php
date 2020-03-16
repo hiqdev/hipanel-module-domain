@@ -67,12 +67,16 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
 
     public function getRelatedPositions(): array
     {
-        return [
-            (new RelatedPosition())->configure([
-                'class' => WithWhoisProtectPosition::class,
-                'cart' => Yii::$app->getModule('cart')->getCart(),
-                'cartPosition' => $this,
-            ]),
-        ];
+        if (Yii::$app->getModule('domain')->whoisProtectPaid) {
+            return [
+                (new RelatedPosition())->setWidget([
+                    'class' => WithWhoisProtectPosition::class,
+                    'cart' => Yii::$app->getModule('cart')->getCart(),
+                    'cartPosition' => $this,
+                ]),
+            ];
+        }
+
+        return  [];
     }
 }
