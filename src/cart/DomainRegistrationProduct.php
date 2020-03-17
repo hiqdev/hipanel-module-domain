@@ -14,6 +14,7 @@ use hipanel\modules\domain\widgets\WithWhoisProtectPosition;
 use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
 use hipanel\modules\finance\cart\BatchPurchaseStrategy;
 use hiqdev\yii2\cart\RelatedPosition;
+use hiqdev\yii2\cart\ShoppingCart;
 use Yii;
 
 class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
@@ -67,16 +68,12 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
 
     public function getRelatedPositions(): array
     {
-        if (Yii::$app->getModule('domain')->whoisProtectPaid) {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
             return [
-                (new RelatedPosition())->setWidget([
-                    'class' => WithWhoisProtectPosition::class,
-                    'cart' => Yii::$app->getModule('cart')->getCart(),
-                    'cartPosition' => $this,
-                ]),
+                (new WhoisProtectOrderRelatedPosition($this))->setWidget(WithWhoisProtectPosition::class),
             ];
         }
 
-        return  [];
+        return [];
     }
 }

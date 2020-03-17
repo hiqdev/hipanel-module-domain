@@ -8,6 +8,7 @@ use hipanel\modules\domain\cart\WhoisProtectOrderProduct;
 use hiqdev\themes\adminlte\CheckboxStyleAsset;
 use hiqdev\yii2\cart\CartPositionInterface;
 use hipanel\modules\finance\cart\Calculation;
+use hiqdev\yii2\cart\RelatedPositionInterface;
 use hiqdev\yii2\cart\ShoppingCart;
 use yii\base\Widget;
 use yii\helpers\Html;
@@ -22,7 +23,10 @@ class WithWhoisProtectPosition extends Widget
     public $cart;
 
     /** @var CartPositionInterface */
-    public $cartPosition;
+    public $mainPosition;
+
+    /** @var CartPositionInterface */
+    public $relatedPosition;
 
     public function init()
     {
@@ -32,23 +36,11 @@ class WithWhoisProtectPosition extends Widget
     public function run()
     {
         $currentPositions = $this->cart->getPositions();
-
-        $wpPostion = new WhoisProtectOrderProduct(['name' => $this->cartPosition->name]);
-        $wpPostion->setQuantity($this->cartPosition->getQuantity());
-        $calculator = new Calculator([$wpPostion]);
-        $calculationId = $wpPostion->getCalculationModel()->calculation_id;
-        $calculation = $calculator->getCalculation($calculationId);
-        $value = $calculation->forCurrency(Yii::$app->params['currency']);
-
-        $wpPostion->setPrice($value->price);
-        $wpPostion->setValue($value->value);
-        $wpPostion->setCurrency($value->currency);
-
-        $price = $this->cart->formatCurrency($wpPostion->cost, $wpPostion->currency);
+        $calculationId = $this->relatedPosition->getCalculationModel()->calculation_id;
+        $price = $this->cart->formatCurrency($this->relatedPosition->cost, $this->relatedPosition->currency);
 
         $checkboxId = mt_rand();
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
-        $tocart =
         $withWpCheckbox = Html::checkbox('with_whois_protect', !empty($parentExists[$calculationId]), [
             'id' => $checkboxId,
             'class' => 'option-input',
@@ -64,8 +56,8 @@ JS
             'data' => [
                 'tocart' => Url::toRoute([
                     '@domain/add-to-cart-whois-protect',
-                    'name' => $this->cartPosition->name,
-                    'parent_id' => $this->cartPosition->getCalculationModel()->calculation_id,
+                    'name' => $this->mainPosition->name,
+                    'parent_id' => $this->mainPosition->getCalculationModel()->calculation_id,
                 ]),
                 'fromcart' => Url::toRoute(['@cart/remove', 'id' => $calculationId]),
             ],
@@ -75,7 +67,7 @@ JS
             sprintf(
                 '%s %s <br/>%s',
                 $withWpCheckbox,
-                Yii::t('hipanel:domain', 'Add Whois Protectection for {price}', compact('price')),
+                Yii::t('hipanel:domain', 'Add WHOIS Protectection for {price}', compact('price')),
                 Html::tag(
                     'p',
                     Yii::t('hipanel:domain', 'Using the Privacy Protection service, you may prevent such abuse. When you enable WHOIS privacy for your domain name, we replace your Contact Details in the WHOIS information with our company contact details, thus, masking your personal contact data.'),
