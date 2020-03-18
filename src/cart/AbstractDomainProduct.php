@@ -117,13 +117,13 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     public function renderDescription(bool $isTopCart = false)
     {
         $description = parent::renderDescription();
-        $relatedPostions = [];
-        if (($postions = $this->getRelatedPositions()) && !$isTopCart) {
-            foreach ($postions as $postion) {
-                $relatedPostions[] = $postion->render();
+        $relatedPositions = [];
+        if (($positions = $this->getRelatedPositions()) && !$isTopCart) {
+            foreach ($positions as $position) {
+                $relatedPositions[] = $position->render();
             }
         }
 
-        return sprintf('%s<br/>%s', $description, implode('<br/>', $relatedPostions));
+        return sprintf('%s<br/>%s', $description, implode('<br/>', $relatedPositions));
     }
 }

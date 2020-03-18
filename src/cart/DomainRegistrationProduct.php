@@ -10,11 +10,8 @@
 
 namespace hipanel\modules\domain\cart;
 
-use hipanel\modules\domain\widgets\WithWhoisProtectPosition;
 use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
 use hipanel\modules\finance\cart\BatchPurchaseStrategy;
-use hiqdev\yii2\cart\RelatedPosition;
-use hiqdev\yii2\cart\ShoppingCart;
 use Yii;
 
 class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
@@ -70,7 +67,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
     {
         if (Yii::$app->getModule('domain')->payableWhoisProtect) {
             return [
-                (new WhoisProtectOrderRelatedPosition($this))->setWidget(WithWhoisProtectPosition::class),
+                (new WhoisProtectOrderRelatedPosition($this)),
             ];
         }
 
