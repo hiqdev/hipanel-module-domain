@@ -10,6 +10,7 @@ use hiqdev\yii2\cart\ShoppingCart;
 use yii\base\Widget;
 use yii\helpers\Html;
 use Yii;
+use yii\helpers\Json;
 use yii\web\JsExpression;
 
 class WithWhoisProtectPosition extends Widget
@@ -31,28 +32,43 @@ class WithWhoisProtectPosition extends Widget
     public function run()
     {
         $currentPositions = $this->cart->getPositions();
-        $calculationId = $this->relatedPosition->getCalculationModel()->calculation_id;
+        $calculationId = $this->relatedPosition->getId();
         $price = $this->cart->formatCurrency($this->relatedPosition->cost, $this->relatedPosition->currency);
 
         $checkboxId = mt_rand();
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
+        $cartUrl = Json::htmlEncode(Url::toRoute('/cart/cart/index'));
         $withWpCheckbox = Html::checkbox('with_whois_protect', !empty($parentExists[$calculationId]), [
             'id' => $checkboxId,
             'class' => 'option-input',
-            'onClick' => new JsExpression(<<<'JS'
-                document.querySelector('.invoice-overlay').style.display = 'block';
-                if (this.checked === false) {
-                    window.location.replace(encodeURI(this.dataset.fromcart));
-                } else {
-                    window.location.replace(encodeURI(this.dataset.tocart));
-                }
+            'onClick' => new JsExpression(<<<"JS"
+                const action = (this.checked === false) ? encodeURI(this.dataset.fromcart) : encodeURI(this.dataset.tocart);
+                $.ajax({
+                    url: action,
+                    beforeSend: () => {
+                        document.querySelector('.invoice-overlay').style.display = 'block';
+                    },
+                    complete: () => {
+                        $.ajax({
+                            url: '' + $cartUrl,
+                            success: cartHtml => {
+                                $('.content section.box').replaceWith(cartHtml);
+                            },
+                            complete: () => {
+                                hipanel.updateCart(() => {
+                                    document.querySelector('.invoice-overlay').style.display = 'none';
+                                })
+                            }
+                        });
+                    }
+                });
 JS
             ),
             'data' => [
                 'tocart' => Url::toRoute([
                     '@domain/add-to-cart-whois-protect',
                     'name' => $this->mainPosition->name,
-                    'parent_id' => $this->mainPosition->getCalculationModel()->calculation_id,
+                    'parent_id' => $this->mainPosition->getId(),
                 ]),
                 'fromcart' => Url::toRoute(['@cart/remove', 'id' => $calculationId]),
             ],
