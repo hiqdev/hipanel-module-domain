@@ -66,7 +66,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
      */
     public function getZone()
     {
-        list(, $zone) = explode('.', $this->name, 2);
+        [, $zone] = explode('.', $this->name, 2);
 
         return $zone;
     }
@@ -112,5 +112,18 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
         $parent['_model'] = $this->_model;
 
         return $parent;
+    }
+
+    public function renderDescription(bool $isTopCart = false)
+    {
+        $description = parent::renderDescription();
+        $relatedPositions = [];
+        if (($positions = $this->getRelatedPositions()) && !$isTopCart) {
+            foreach ($positions as $position) {
+                $relatedPositions[] = $position->render();
+            }
+        }
+
+        return sprintf('%s<br/>%s', $description, implode('<br/>', $relatedPositions));
     }
 }

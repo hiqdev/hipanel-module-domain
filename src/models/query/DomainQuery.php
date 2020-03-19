@@ -9,7 +9,7 @@ class DomainQuery extends ActiveQuery
 {
     public function withPaidWhoisProtect(): self
     {
-        if (Yii::$app->getModule('domain')->whoisProtectPaid) {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
             $this->addselect(['with_paidwp']);
             $this->joinwith('paidwp');
         }

@@ -62,4 +62,15 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
 
         return $parent;
     }
+
+    public function getRelatedPositions(): array
+    {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
+            return [
+                (new WhoisProtectOrderRelatedPosition($this)),
+            ];
+        }
+
+        return [];
+    }
 }
