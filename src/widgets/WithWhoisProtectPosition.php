@@ -37,7 +37,7 @@ class WithWhoisProtectPosition extends Widget
 
         $checkboxId = mt_rand();
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
-        $toCart = Json::htmlEncode(Url::toRoute('/cart/cart/index'));
+        $cartUrl = Json::htmlEncode(Url::toRoute('/cart/cart/index'));
         $withWpCheckbox = Html::checkbox('with_whois_protect', !empty($parentExists[$calculationId]), [
             'id' => $checkboxId,
             'class' => 'option-input',
