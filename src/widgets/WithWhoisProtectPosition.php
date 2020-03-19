@@ -50,7 +50,7 @@ class WithWhoisProtectPosition extends Widget
                     },
                     complete: () => {
                         $.ajax({
-                            url: '' + $toCart,
+                            url: '' + $cartUrl,
                             success: cartHtml => {
                                 $('.content section.box').replaceWith(cartHtml);
                             },
