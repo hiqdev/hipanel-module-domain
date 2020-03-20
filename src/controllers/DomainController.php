@@ -35,6 +35,7 @@ use hipanel\modules\domain\cart\DomainTransferProduct;
 use hipanel\modules\domain\cart\PremiumOrderProduct;
 use hipanel\modules\domain\cart\PremiumRenewalProduct;
 use hipanel\modules\domain\cart\WhoisProtectOrderProduct;
+use hipanel\modules\domain\cart\WhoisProtectRenewalProduct;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\domain\models\Mailfw;
 use hipanel\modules\domain\models\Ns;
@@ -114,6 +115,11 @@ class DomainController extends \hipanel\base\CrudController
             'add-to-cart-whois-protect' => [
                 'class' => AddToCartAction::class,
                 'productClass' => WhoisProtectOrderProduct::class,
+                'redirectToCart' => true,
+            ],
+            'add-to-cart-whois-protect-renewal' => [
+                'class' => AddToCartAction::class,
+                'productClass' => WhoisProtectRenewalProduct::class,
                 'redirectToCart' => true,
             ],
             'add-to-cart-premium-renewal' => [

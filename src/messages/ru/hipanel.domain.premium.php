@@ -41,5 +41,6 @@ return [
     'Automatic renewal of the premium package for this domain is enabled.' => 'Автоматическое продление премиум-пакета для этого домена включено.',
     'The premium package was activated till {date}' => 'Премиум-пакет был активирован до {date}',
     'Purchase of WHOIS privacy' => 'Защита приватных данных WHOIS',
-    '{n, plural, one{# day} other{# days}} – till the domain expiration date {expiration}' => '{n, plural, one{# день} few{# дня} other{# дней}} – до {expiration}, даты окончания регистрации домена'
+    '{n, plural, one{# day} other{# days}} – till the domain expiration date {expiration}' => '{n, plural, one{# день} few{# дня} other{# дней}} – до {expiration}, даты окончания регистрации домена',
+    'Your contact data privacy for domain {domain} is active till {date}' => 'Конфиденциальность ваших контактных данных для домена {domain} активна до {date}',
 ];
