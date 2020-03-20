@@ -119,6 +119,10 @@ JS
                 ['add-to-cart-renewal', 'model_id' => $model->id],
                 ['class' => 'btn btn-success btn-block margin-bottom']
             ) ?>
+            <?= Html::a(Html::tag('i', null, ['class' => 'fa fa-fw fa-forward']) . Yii::t('hipanel:domain', 'WHOIS protect renewal'),
+                ['add-to-cart-whois-protect-renewal', 'model_id' => $model->id],
+                ['class' => 'btn btn-success btn-block margin-bottom']
+            ) ?>
         <?php endif; ?>
 
         <div class="box box-widget widget-user">
