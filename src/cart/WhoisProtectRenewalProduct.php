@@ -15,6 +15,9 @@ use DateTimeImmutable;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 
+/**
+ * @property integer $model_id
+ */
 class WhoisProtectRenewalProduct extends AbstractPremiumProduct
 {
     /** {@inheritdoc} */

@@ -29,7 +29,7 @@ class WithWhoisProtectPosition extends Widget
         CheckboxStyleAsset::register($this->view);
     }
 
-    public function run()
+    public function run(): string
     {
         $currentPositions = $this->cart->getPositions();
         $calculationId = $this->relatedPosition->getId();
@@ -65,11 +65,7 @@ class WithWhoisProtectPosition extends Widget
 JS
             ),
             'data' => [
-                'tocart' => Url::toRoute([
-                    '@domain/add-to-cart-whois-protect',
-                    'name' => $this->mainPosition->name,
-                    'parent_id' => $this->mainPosition->getId(),
-                ]),
+                'tocart' => $this->getToCarUrl(),
                 'fromcart' => Url::toRoute(['@cart/remove', 'id' => $calculationId]),
             ],
         ]);
@@ -88,5 +84,14 @@ JS
             $checkboxId,
             ['class' => 'with-wp', 'style' => 'margin-top: 1em']
         );
+    }
+
+    public function getToCarUrl(): string
+    {
+        return Url::toRoute([
+            '@domain/add-to-cart-whois-protect',
+            'name' => $this->mainPosition->name,
+            'parent_id' => $this->mainPosition->getId(),
+        ]);
     }
 }

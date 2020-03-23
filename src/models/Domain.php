@@ -858,6 +858,11 @@ class Domain extends Model
         return Yii::$app->getModule('domain')->payableWhoisProtect && (bool)$this->is_wp_paid;
     }
 
+    public function isWhoisProtectPaid(): bool
+    {
+        return (bool)$this->whois_protected;
+    }
+
     /**
      * {@inheritdoc}
      * @return DomainQuery
