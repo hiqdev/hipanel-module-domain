@@ -14,6 +14,14 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
     /** @var Widget */
     private $widget;
 
+    public function __construct(CartPositionInterface $mainPosition)
+    {
+        parent::__construct($mainPosition);
+        if (!Yii::$app->request->isAjax && $this->relatedPosition->getModel()->isWhoisProtectPaid()) {
+            $this->cart->putPositions([$this->relatedPosition]);
+        }
+    }
+
     public function createRelatedPosition(): CalculableModelInterface
     {
         /** @var CalculableModelInterface|CartPositionInterface $position */
@@ -21,11 +29,8 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
         $position->load(['model_id' => $this->mainPosition->model_id]);
         $position->setQuantity($this->mainPosition->getQuantity());
         $position->parent_id = $this->mainPosition->getId();
-        if (!Yii::$app->request->isAjax && $position->getModel()->isWhoisProtectPaid()) {
-            $this->cart->putPositions([$position]);
-        }
 
-        return $this->calculate($position);
+        return $position;
     }
 
     public function getWidget(): Widget
@@ -33,8 +38,8 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
         if (empty($this->widget)) {
             $this->widget = Yii::createObject([
                 'class' => WithWhoisProtectRenewalPosition::class,
-                'relatedPosition' => $this->createRelatedPosition(),
                 'mainPosition' => $this->mainPosition,
+                'relatedPosition' => $this->relatedPosition,
                 'cart' => $this->cart,
             ]);
         }

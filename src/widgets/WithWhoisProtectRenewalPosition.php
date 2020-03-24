@@ -6,7 +6,7 @@ use hipanel\helpers\Url;
 
 class WithWhoisProtectRenewalPosition extends WithWhoisProtectPosition
 {
-    public function getToCarUrl(): string
+    public function getToCartUrl(): string
     {
         return Url::toRoute([
             '@domain/add-to-cart-whois-protect-renewal',

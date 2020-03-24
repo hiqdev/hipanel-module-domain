@@ -18,7 +18,7 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
         $position = new WhoisProtectOrderProduct(['name' => $this->mainPosition->name]);
         $position->setQuantity($this->mainPosition->getQuantity());
 
-        return $this->calculate($position);
+        return $position;
     }
 
     public function getWidget(): Widget
@@ -26,7 +26,7 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
         if (empty($this->widget)) {
             $this->widget = Yii::createObject([
                 'class' => WithWhoisProtectPosition::class,
-                'relatedPosition' => $this->createRelatedPosition(),
+                'relatedPosition' => $this->relatedPosition,
                 'mainPosition' => $this->mainPosition,
                 'cart' => $this->cart,
             ]);

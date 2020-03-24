@@ -65,7 +65,7 @@ class WithWhoisProtectPosition extends Widget
 JS
             ),
             'data' => [
-                'tocart' => $this->getToCarUrl(),
+                'tocart' => $this->getToCartUrl(),
                 'fromcart' => Url::toRoute(['@cart/remove', 'id' => $calculationId]),
             ],
         ]);
@@ -86,7 +86,7 @@ JS
         );
     }
 
-    public function getToCarUrl(): string
+    public function getToCartUrl(): string
     {
         return Url::toRoute([
             '@domain/add-to-cart-whois-protect',
