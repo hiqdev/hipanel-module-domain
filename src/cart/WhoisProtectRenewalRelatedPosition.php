@@ -14,21 +14,13 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
     /** @var Widget */
     private $widget;
 
-    public function __construct(CartPositionInterface $mainPosition)
-    {
-        parent::__construct($mainPosition);
-        if (!Yii::$app->request->isAjax && $this->relatedPosition->getModel()->isWhoisProtectPaid()) {
-            $this->cart->putPositions([$this->relatedPosition]);
-        }
-    }
-
     public function createRelatedPosition(): CalculableModelInterface
     {
         /** @var CalculableModelInterface|CartPositionInterface $position */
         $position = new WhoisProtectRenewalProduct();
-        $position->load(['model_id' => $this->mainPosition->model_id]);
         $position->setQuantity($this->mainPosition->getQuantity());
         $position->parent_id = $this->mainPosition->getId();
+        $position->model_id = $this->mainPosition->getModel()->id;
 
         return $position;
     }

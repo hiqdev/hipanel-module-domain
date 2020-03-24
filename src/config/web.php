@@ -21,6 +21,13 @@ return [
             'class' => \hipanel\modules\domain\Module::class,
             'payableWhoisProtect' => $params['module.domain.whois_protect.payable'] ?? false,
         ],
+        'cart' => [
+            'shoppingCartOptions' => [
+                'as domainRelatedProducts' => [
+                    'class' => \hipanel\modules\domain\cart\DomainRelatedProductsBehavior::class,
+                ]
+            ]
+        ]
     ],
     'components' => [
         'themeManager' => [

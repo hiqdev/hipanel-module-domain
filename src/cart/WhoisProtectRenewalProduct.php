@@ -29,7 +29,7 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
     /** {@inheritdoc} */
     public function getId()
     {
-        return hash('crc32b', implode('_', ['whois_protect', '_renew', $this->name]));
+        return hash('crc32b', implode('_', ['whois_protect', '_renew_', $this->model_id]));
     }
 
     /** {@inheritdoc} */
