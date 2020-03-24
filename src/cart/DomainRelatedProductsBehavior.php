@@ -23,9 +23,11 @@ class DomainRelatedProductsBehavior extends Behavior
         /** @var CartPositionInterface $mainPosition */
         $mainPosition = $event->position;
         if ($mainPosition instanceof DomainRenewalProduct && ($relatedPositions = $mainPosition->getRelatedPositions())) {
+            $positions = [];
             foreach ($relatedPositions as $position) {
-                $cart->put($position->relatedPosition);
+                $positions[] = $position->relatedPosition;
             }
+            $cart->putPositions($positions);
         }
     }
 }
