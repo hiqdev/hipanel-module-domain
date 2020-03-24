@@ -4,19 +4,23 @@ namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\finance\cart\RelatedPosition;
 use hipanel\modules\finance\models\CalculableModelInterface;
-use hipanel\modules\domain\widgets\WithWhoisProtectPosition;
+use hipanel\modules\domain\widgets\WithWhoisProtectRenewalPosition;
+use hiqdev\yii2\cart\CartPositionInterface;
 use Yii;
 use yii\base\Widget;
 
-class WhoisProtectOrderRelatedPosition extends RelatedPosition
+class WhoisProtectRenewalRelatedPosition extends RelatedPosition
 {
     /** @var Widget */
     private $widget;
 
     public function createRelatedPosition(): CalculableModelInterface
     {
-        $position = new WhoisProtectOrderProduct(['name' => $this->mainPosition->name]);
+        /** @var CalculableModelInterface|CartPositionInterface $position */
+        $position = new WhoisProtectRenewalProduct();
         $position->setQuantity($this->mainPosition->getQuantity());
+        $position->parent_id = $this->mainPosition->getId();
+        $position->model_id = $this->mainPosition->getModel()->id;
 
         return $position;
     }
@@ -25,9 +29,9 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
     {
         if (empty($this->widget)) {
             $this->widget = Yii::createObject([
-                'class' => WithWhoisProtectPosition::class,
-                'relatedPosition' => $this->relatedPosition,
+                'class' => WithWhoisProtectRenewalPosition::class,
                 'mainPosition' => $this->mainPosition,
+                'relatedPosition' => $this->relatedPosition,
                 'cart' => $this->cart,
             ]);
         }

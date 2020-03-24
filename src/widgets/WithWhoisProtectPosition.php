@@ -27,18 +27,20 @@ class WithWhoisProtectPosition extends Widget
     public function init()
     {
         CheckboxStyleAsset::register($this->view);
+        $this->view->registerJs('$(function () { $(\'[data-toggle="popover"]\').popover() });');
+        $this->view->registerCss('.with-wp .popover-content { width: 35em; }');
     }
 
-    public function run()
+    public function run(): string
     {
         $currentPositions = $this->cart->getPositions();
         $calculationId = $this->relatedPosition->getId();
-        $price = $this->cart->formatCurrency($this->relatedPosition->cost, $this->relatedPosition->currency);
-
-        $checkboxId = mt_rand();
+        $price = $this->cart->formatCurrency($this->relatedPosition->getCost(false), $this->relatedPosition->currency);
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
+        $isChecked = !empty($parentExists[$calculationId]);
+        $checkboxId = mt_rand();
         $cartUrl = Json::htmlEncode(Url::toRoute('/cart/cart/index'));
-        $withWpCheckbox = Html::checkbox('with_whois_protect', !empty($parentExists[$calculationId]), [
+        $withWpCheckbox = Html::checkbox('with_whois_protect', $isChecked, [
             'id' => $checkboxId,
             'class' => 'option-input',
             'onClick' => new JsExpression(<<<"JS"
@@ -48,45 +50,49 @@ class WithWhoisProtectPosition extends Widget
                     beforeSend: () => {
                         document.querySelector('.invoice-overlay').style.display = 'block';
                     },
-                    complete: () => {
+                    success: () => {
                         $.ajax({
                             url: '' + $cartUrl,
                             success: cartHtml => {
                                 $('.content section.box').replaceWith(cartHtml);
-                            },
-                            complete: () => {
                                 hipanel.updateCart(() => {
                                     document.querySelector('.invoice-overlay').style.display = 'none';
                                 })
-                            }
+                            },
                         });
                     }
                 });
 JS
             ),
             'data' => [
-                'tocart' => Url::toRoute([
-                    '@domain/add-to-cart-whois-protect',
-                    'name' => $this->mainPosition->name,
-                    'parent_id' => $this->mainPosition->getId(),
-                ]),
+                'tocart' => $this->getToCartUrl(),
                 'fromcart' => Url::toRoute(['@cart/remove', 'id' => $calculationId]),
             ],
         ]);
-
+        $hintMessage = Yii::t('hipanel:domain', 'Using the Privacy Protection service, you may prevent such abuse. When you enable WHOIS privacy for your domain name, we replace your Contact Details in the WHOIS information with our company contact details, thus, masking your personal contact data.');
         return Html::label(
             sprintf(
-                '%s %s <br/>%s',
+                '%s %s',
                 $withWpCheckbox,
-                Yii::t('hipanel:domain', 'Add WHOIS Protection for {price}', compact('price')),
-                Html::tag(
-                    'p',
-                    Yii::t('hipanel:domain', 'Using the Privacy Protection service, you may prevent such abuse. When you enable WHOIS privacy for your domain name, we replace your Contact Details in the WHOIS information with our company contact details, thus, masking your personal contact data.'),
-                    ['class' => 'text-muted', 'style' => 'font-size: smaller; margin: .7em 0;']
-                )
+                Html::tag('abbr', Yii::t('hipanel:domain', 'Add WHOIS Protection for {price}', compact('price')), [
+                    'data' => [
+                        'toggle' => 'popover',
+                        'content' => $hintMessage,
+                        'trigger' => 'hover',
+                    ]
+                ])
             ),
             $checkboxId,
             ['class' => 'with-wp', 'style' => 'margin-top: 1em']
         );
+    }
+
+    public function getToCartUrl(): string
+    {
+        return Url::toRoute([
+            '@domain/add-to-cart-whois-protect',
+            'name' => $this->mainPosition->name,
+            'parent_id' => $this->mainPosition->getId(),
+        ]);
     }
 }

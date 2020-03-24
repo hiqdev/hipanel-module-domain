@@ -127,6 +127,17 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
         ]);
     }
 
+    public function getRelatedPositions(): array
+    {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
+            return [
+                (new WhoisProtectRenewalRelatedPosition($this)),
+            ];
+        }
+
+        return [];
+    }
+
     public function getBatchPurchaseStrategyClass()
     {
         return BatchPurchaseStrategy::class;
