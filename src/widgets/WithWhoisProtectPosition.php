@@ -28,7 +28,7 @@ class WithWhoisProtectPosition extends Widget
     {
         CheckboxStyleAsset::register($this->view);
         $this->view->registerJs('$(function () { $(\'[data-toggle="popover"]\').popover() });');
-        $this->view->registerCss('.with-wp .popover-content { width: 35em; }');
+        $this->view->registerCss('.with-wp .popover-content { width: 35em; } .cart-finish .with-wp { display: none; }');
     }
 
     public function run(): string

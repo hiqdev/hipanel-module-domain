@@ -18,9 +18,12 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
     {
         /** @var CalculableModelInterface|CartPositionInterface $position */
         $position = new WhoisProtectRenewalProduct();
+        $rootModel = $this->mainPosition->getModel();
         $position->setQuantity($this->mainPosition->getQuantity());
         $position->parent_id = $this->mainPosition->getId();
-        $position->model_id = $this->mainPosition->getModel()->id;
+        $position->model_id = $rootModel->id;
+        $position->name = $rootModel->domain;
+        $position->description = Yii::t('hipanel:domain', 'WHOIS protect renewal');
 
         return $position;
     }
