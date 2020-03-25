@@ -35,7 +35,7 @@ class WithWhoisProtectPosition extends Widget
     {
         $currentPositions = $this->cart->getPositions();
         $calculationId = $this->relatedPosition->getId();
-        $price = $this->cart->formatCurrency($this->relatedPosition->getCost(false), $this->relatedPosition->currency);
+        $price = $this->cart->formatCurrency($this->relatedPosition->getPrice(), $this->relatedPosition->currency);
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
         $isChecked = !empty($parentExists[$calculationId]);
         $checkboxId = mt_rand();

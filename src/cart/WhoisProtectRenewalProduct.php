@@ -41,7 +41,7 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['model_id'], 'integer'],
+            [['model_id', 'quantity'], 'integer'],
         ]);
     }
 
@@ -63,7 +63,7 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
     {
         $this->_model = Domain::findOne($this->model_id);
         $this->name = $this->_model->domain;
-        $this->_quantity = round($this->calculateExpirationQuantity()->days / 365, 2);
+        $this->_quantity = $this->quantity ?: round($this->calculateExpirationQuantity()->days / 365, 2);
         $this->description = Yii::t('hipanel:domain', 'WHOIS protect renewal');
     }
 

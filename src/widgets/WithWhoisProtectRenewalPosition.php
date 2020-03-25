@@ -12,6 +12,7 @@ class WithWhoisProtectRenewalPosition extends WithWhoisProtectPosition
             '@domain/add-to-cart-whois-protect-renewal',
             'model_id' => $this->mainPosition->model_id,
             'parent_id' => $this->mainPosition->getId(),
+            'quantity' => $this->mainPosition->getQuantity(),
         ]);
     }
 }
