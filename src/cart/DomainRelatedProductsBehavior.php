@@ -12,22 +12,36 @@ class DomainRelatedProductsBehavior extends Behavior
     public function events(): array
     {
         return [
-            ShoppingCart::EVENT_POSITION_PUT => 'handle',
+            ShoppingCart::EVENT_POSITION_PUT => 'handlePositionPut',
+            ShoppingCart::EVENT_POSITION_UPDATE => 'handlePositionUpdate',
         ];
     }
 
-    public function handle(CartActionEvent $event): void
+    public function handlePositionPut(CartActionEvent $event): void
     {
         /** @var ShoppingCart $cart */
         $cart = $event->sender;
-        /** @var CartPositionInterface $mainPosition */
-        $mainPosition = $event->position;
-        if ($mainPosition instanceof DomainRenewalProduct && ($relatedPositions = $mainPosition->getRelatedPositions())) {
+        /** @var CartPositionInterface $rootPosition */
+        $rootPosition = $event->position;
+        if ($rootPosition instanceof DomainRenewalProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
             $positions = [];
             foreach ($relatedPositions as $position) {
                 $positions[] = $position->relatedPosition;
             }
             $cart->putPositions($positions);
+        }
+    }
+
+    public function handlePositionUpdate(CartActionEvent $event): void
+    {
+        /** @var ShoppingCart $cart */
+        $cart = $event->sender;
+        /** @var CartPositionInterface $mainPosition */
+        $rootPosition = $event->position;
+        if ($rootPosition instanceof DomainRenewalProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
+            foreach ($relatedPositions as $position) {
+                $cart->update($position->relatedPosition, $rootPosition->getQuantity());
+            }
         }
     }
 }
