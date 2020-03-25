@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\models;
 
+use DateTime;
 use DateTimeImmutable;
 use Exception;
 use hipanel\base\Model;
@@ -676,7 +677,12 @@ class Domain extends Model
      */
     public function isExpiresSoon(): bool
     {
-        return $this->daysleft < 31;
+        $days = 31;
+        if ($this->daysleft) {
+            return $this->daysleft < $days;
+        }
+
+        return (new DateTime($this->expires))->diff(new DateTime())->format('%a') < $days;
     }
 
     public function isSynchronizable()
