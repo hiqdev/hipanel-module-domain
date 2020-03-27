@@ -129,13 +129,10 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
 
     public function getRelatedPositions(): array
     {
-        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
-            return [
-                (new WhoisProtectRenewalRelatedPosition($this)),
-            ];
-        }
-
-        return [];
+        return array_filter([
+            Yii::$app->getModule('domain')->payableWhoisProtect && $this->_model->isWhoisProtectPaid() ?
+                (new WhoisProtectRenewalRelatedPosition($this)) : null,
+        ]);
     }
 
     public function getBatchPurchaseStrategyClass()

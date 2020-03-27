@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\models;
 
+use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use Exception;
@@ -866,7 +867,7 @@ class Domain extends Model
 
     public function isWhoisProtectPaid(): bool
     {
-        return (bool)$this->whois_protected;
+        return $this->is_wp_paid !== null;
     }
 
     /**
