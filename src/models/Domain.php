@@ -861,7 +861,7 @@ class Domain extends Model
 
     public function needToPayWhoisProtect(): bool
     {
-        return Yii::$app->getModule('domain')->payableWhoisProtect && (bool)$this->is_wp_paid;
+        return Yii::$app->getModule('domain')->payableWhoisProtect && $this->isWhoisProtectPaid();
     }
 
     public function isWhoisProtectPaid(): bool
