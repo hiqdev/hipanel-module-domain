@@ -61,7 +61,7 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
-        $this->_model = Domain::findOne($this->model_id);
+        $this->_model = Domain::find()->where(['id' => $this->model_id])->withPaidWhoisProtect()->one();
         $this->name = $this->_model->domain;
         $this->_quantity = $this->quantity ?: round($this->calculateExpirationQuantity()->days / 365, 2);
         $this->description = Yii::t('hipanel:domain', 'WHOIS protect renewal');

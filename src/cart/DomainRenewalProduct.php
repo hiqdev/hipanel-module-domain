@@ -53,7 +53,7 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
-        $this->_model = Domain::findOne(['id' => $this->model_id]);
+        $this->_model = Domain::find()->where(['id' => $this->model_id])->withPaidWhoisProtect()->one();
         $this->name = $this->_model->domain;
         $this->description = Yii::t('hipanel:domain', 'Renewal');
     }

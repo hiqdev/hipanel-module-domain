@@ -193,7 +193,6 @@ class DomainController extends \hipanel\base\CrudController
                     $action->collection->load($data);
                 },
             ],
-
             'push' => [
                 'class' => SmartPerformAction::class,
                 'collectionLoader' => function ($action) {
