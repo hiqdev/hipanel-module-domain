@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
 use hipanel\modules\finance\cart\BatchPurchaseStrategy;
 use Yii;
@@ -65,7 +66,7 @@ class DomainRegistrationProduct extends AbstractDomainProduct implements BatchPu
 
     public function getRelatedPositions(): array
     {
-        if (Yii::$app->getModule('domain')->payableWhoisProtect) {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect && (new Domain(['domain' => $this->name]))->canPayWhoisProtect()) {
             return [
                 (new WhoisProtectOrderRelatedPosition($this)),
             ];

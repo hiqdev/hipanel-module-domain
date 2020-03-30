@@ -82,6 +82,14 @@ abstract class AbstractPremiumProduct extends AbstractCartPosition implements Do
         return parent::getCalculationModel(array_merge($localOptions, $options));
     }
 
+    /**
+     * @return string
+     */
+    public function getOperation(): string
+    {
+        return $this->_operation;
+    }
+
     protected function serializationMap()
     {
         $parent = parent::serializationMap();

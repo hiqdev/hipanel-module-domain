@@ -41,7 +41,8 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['model_id', 'quantity'], 'integer'],
+            [['model_id'], 'integer'],
+            [['quantity'], 'number'],
         ]);
     }
 

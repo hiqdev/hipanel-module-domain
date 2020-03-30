@@ -48,7 +48,7 @@ class PaidWPColumn extends DataColumn
     {
         /** @var Domain $model */
         $needToPayOptions = [];
-        if (!$model->needToPayWhoisProtect()) {
+        if (!$model->needToPayWhoisProtect() && $model->canPayWhoisProtect()) {
             $modalId = 'add-to-cart-whois-protect-modal-' . $key;
             Yii::$app->view->on(View::EVENT_END_BODY, static function () use ($model, $modalId) {
                 Modal::begin([

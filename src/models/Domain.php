@@ -113,7 +113,7 @@ class Domain extends Model
             self::STATE_DELETING => Yii::t('hipanel:domain', 'The domain name has been expired and you have not renewed it during the month after the expiration date. Domain name will be dropped in 2 months after the expiration date, after that it may be occupied by someone else. Domain names usually got occupied by bots in minutes after dropping, then sold for many times higher price on auctions. If you don\'t want to miss your domain name, contact support to restore it.'),
         ];
 
-        return isset($options[$this->state]) ? $options[$this->state] : null;
+        return $options[$this->state] ?? null;
     }
 
     use ModelTrait;
@@ -728,7 +728,7 @@ class Domain extends Model
 
     public function isRussianZone()
     {
-        return $this->isLastZone(['ru', 'su', 'рф']);
+        return $this->isLastZone(['ru', 'su', 'рф', 'xn--p1ai']);
     }
 
     /**
@@ -858,6 +858,11 @@ class Domain extends Model
     public function getExpires(): DateTimeImmutable
     {
         return new DateTimeImmutable($this->expires);
+    }
+
+    public function canPayWhoisProtect(): bool
+    {
+        return !$this->isRussianZone();
     }
 
     public function needToPayWhoisProtect(): bool
