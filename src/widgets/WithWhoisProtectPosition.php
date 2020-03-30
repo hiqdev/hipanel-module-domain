@@ -78,7 +78,7 @@ JS
             sprintf(
                 '%s %s',
                 $withWpCheckbox,
-                Html::tag('abbr', Yii::t('hipanel:domain', '{operation} WHOIS Protection for {price}', compact('price', 'operation')), [
+                Html::tag('abbr', Yii::t('hipanel:domain', '{operation} WHOIS Protection for {price} per year', compact('price', 'operation')), [
                     'data' => [
                         'toggle' => 'popover',
                         'content' => $hintMessage,
@@ -97,7 +97,7 @@ JS
             '@domain/add-to-cart-whois-protect',
             'name' => $this->mainPosition->name,
             'parent_id' => $this->mainPosition->getId(),
-            'quantity' => $this->mainPosition->getQuantity(),
+            'quantity' => $this->relatedPosition->getQuantity(),
         ]);
     }
 

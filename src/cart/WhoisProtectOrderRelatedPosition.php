@@ -17,14 +17,16 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
     {
         $position = new WhoisProtectOrderProduct();
         $rootModel = $this->mainPosition->getModel();
+        $qty = $this->mainPosition->getQuantity();
         if ($rootModel) {
             $position->setModel($rootModel);
             $position->load([
                 'name' => $rootModel->domain,
                 'parent_id' => $rootModel->id,
             ]);
+            $qty += $position->calculateQuantity();
         }
-        $position->setQuantity($this->mainPosition->getQuantity());
+        $position->setQuantity($qty);
 
         return $position;
     }
