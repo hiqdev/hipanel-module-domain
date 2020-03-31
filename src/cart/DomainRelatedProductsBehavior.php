@@ -2,6 +2,7 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\models\Domain;
 use hiqdev\yii2\cart\CartPositionInterface;
 use hiqdev\yii2\cart\ShoppingCart;
 use yii\base\Behavior;
@@ -45,7 +46,14 @@ class DomainRelatedProductsBehavior extends Behavior
         if ($rootPosition instanceof DomainRenewalProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
             $cart->accumulateEvents(static function () use ($cart, $relatedPositions, $rootPosition) {
                 foreach ($relatedPositions as $position) {
-                    $cart->update($position->relatedPosition, $rootPosition->getQuantity() + $position->relatedPosition->calculateQuantity());
+                    /** @var Domain $relatedModel */
+                    if ($relatedModel = $position->relatedPosition->getModel()) {
+                        $qty = $rootPosition->getQuantity();
+                        if (!$relatedModel->isWhoisProtectPaid()) {
+                            $qty += $position->relatedPosition->calculateQuantity();
+                        }
+                        $cart->update($position->relatedPosition, $qty);
+                    }
                 }
             });
         }

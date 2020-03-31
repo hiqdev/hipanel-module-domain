@@ -10,8 +10,6 @@
 
 namespace hipanel\modules\domain\cart;
 
-use DateInterval;
-use DateTimeImmutable;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 
@@ -20,6 +18,8 @@ use Yii;
  */
 class WhoisProtectRenewalProduct extends AbstractPremiumProduct
 {
+    use WithDependetQuantityTrait;
+
     /** {@inheritdoc} */
     protected $_purchaseModel = WhoisProtectRenewalPurchase::class;
 
@@ -54,17 +54,12 @@ class WhoisProtectRenewalProduct extends AbstractPremiumProduct
         ]);
     }
 
-    private function calculateExpirationQuantity(): DateInterval
-    {
-        return $this->_model->getExpires()->diff(new DateTimeImmutable());
-    }
-
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
         $this->_model = Domain::find()->where(['id' => $this->model_id])->withPaidWhoisProtect()->one();
         $this->name = $this->_model->domain;
-        $this->_quantity = $this->quantity ?: round($this->calculateExpirationQuantity()->days / 365, 2);
+        $this->_quantity = $this->quantity ?? $this->calculateQuantity();
         $this->description = Yii::t('hipanel:domain', 'WHOIS protect renewal');
     }
 
