@@ -15,8 +15,18 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
 
     public function createRelatedPosition(): CalculableModelInterface
     {
-        $position = new WhoisProtectOrderProduct(['name' => $this->mainPosition->name]);
-        $position->setQuantity($this->mainPosition->getQuantity());
+        $position = new WhoisProtectOrderProduct();
+        $rootModel = $this->mainPosition->getModel();
+        $qty = $this->mainPosition->getQuantity();
+        if ($rootModel) {
+            $position->setModel($rootModel);
+            $position->load([
+                'name' => $rootModel->domain,
+                'parent_id' => $rootModel->id,
+            ]);
+            $qty += $position->calculateQuantity();
+        }
+        $position->setQuantity($qty);
 
         return $position;
     }

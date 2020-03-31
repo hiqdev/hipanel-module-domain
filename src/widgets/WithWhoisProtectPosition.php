@@ -4,6 +4,8 @@ namespace hipanel\modules\domain\widgets;
 
 use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\Url;
+use hipanel\modules\domain\cart\WhoisProtectOrderProduct;
+use hipanel\modules\domain\cart\WhoisProtectRenewalProduct;
 use hiqdev\themes\adminlte\CheckboxStyleAsset;
 use hiqdev\yii2\cart\CartPositionInterface;
 use hiqdev\yii2\cart\ShoppingCart;
@@ -38,6 +40,7 @@ class WithWhoisProtectPosition extends Widget
         $price = $this->cart->formatCurrency($this->relatedPosition->getPrice(), $this->relatedPosition->currency);
         $parentExists = ArrayHelper::getColumn($currentPositions, 'parent_id');
         $isChecked = !empty($parentExists[$calculationId]);
+        $operation = $this->getOperation();
         $checkboxId = mt_rand();
         $cartUrl = Json::htmlEncode(Url::toRoute('/cart/cart/index'));
         $withWpCheckbox = Html::checkbox('with_whois_protect', $isChecked, [
@@ -70,16 +73,17 @@ JS
             ],
         ]);
         $hintMessage = Yii::t('hipanel:domain', 'Using the Privacy Protection service, you may prevent such abuse. When you enable WHOIS privacy for your domain name, we replace your Contact Details in the WHOIS information with our company contact details, thus, masking your personal contact data.');
+
         return Html::label(
             sprintf(
                 '%s %s',
                 $withWpCheckbox,
-                Html::tag('abbr', Yii::t('hipanel:domain', 'Add WHOIS Protection for {price}', compact('price')), [
+                Html::tag('abbr', Yii::t('hipanel:domain', '{operation} WHOIS Protection for {price} per year', compact('price', 'operation')), [
                     'data' => [
                         'toggle' => 'popover',
                         'content' => $hintMessage,
                         'trigger' => 'hover',
-                    ]
+                    ],
                 ])
             ),
             $checkboxId,
@@ -93,6 +97,19 @@ JS
             '@domain/add-to-cart-whois-protect',
             'name' => $this->mainPosition->name,
             'parent_id' => $this->mainPosition->getId(),
+            'quantity' => $this->relatedPosition->getQuantity(),
         ]);
+    }
+
+    private function getOperation(): string
+    {
+        if ($this->relatedPosition instanceof WhoisProtectOrderProduct) {
+            return Yii::t('hipanel:domain', 'Add');
+        }
+        if ($this->relatedPosition instanceof WhoisProtectRenewalProduct) {
+            return Yii::t('hipanel:domain', 'Renew');
+        }
+
+        return Yii::t('hipanel:domain', 'Unknown operation type');
     }
 }

@@ -34,6 +34,13 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
         return hash('crc32b', implode('_', ['whois_protect', 'purchase', $this->name]));
     }
 
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['quantity'], 'number'],
+        ]);
+    }
+
     public function getQuantityOptions(): string
     {
         return Yii::t('hipanel.domain.premium', '{n, plural, one{# day} other{# days}} – till the domain expiration date {expiration}', [
@@ -42,11 +49,19 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
         ]);
     }
 
+    public function calculateQuantity(): float
+    {
+        return round($this->calculateExpirationQuantity()->days / 365, 2);
+    }
+
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
-        $this->_model = Domain::findOne(['domains' => $this->name]) ?? new Domain(['domain' => $this->name, 'expires' => (new \DateTime())->modify('+1 year')->format('c')]);
-        $this->_quantity = round($this->calculateExpirationQuantity()->days / 365, 2);
+        if (!$this->_model) {
+            $this->_model = Domain::findOne(['domains' => $this->name]) ?? new Domain(['domain' => $this->name, 'expires' => (new \DateTime())->modify('+1 year')->format('c')]);
+        }
+        $this->name = $this->_model->domain;
+        $this->_quantity = $this->quantity ?? $this->calculateQuantity();
         $this->description = Yii::t('hipanel.domain.premium', 'Purchase of WHOIS privacy');
     }
 
