@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\cart;
 
+use hipanel\modules\domain\models\Domain;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -75,5 +76,16 @@ class DomainTransferProduct extends AbstractDomainProduct
         $parent['registrant'] = $this->registrant;
 
         return $parent;
+    }
+
+    public function getRelatedPositions(): array
+    {
+        if (Yii::$app->getModule('domain')->payableWhoisProtect && (new Domain(['domain' => $this->name]))->canPayWhoisProtect()) {
+            return [
+                (new WhoisProtectOrderRelatedPosition($this)),
+            ];
+        }
+
+        return [];
     }
 }

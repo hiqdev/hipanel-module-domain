@@ -45,7 +45,7 @@ class DomainRelatedProductsBehavior extends Behavior
                     foreach ($relatedPositions as $position) {
                         /** @var Domain $relatedModel */
                         $qty = $rootPosition->getQuantity();
-                        if ($rootPosition instanceof DomainRegistrationProduct) {
+                        if ($rootPosition instanceof DomainRegistrationProduct || $rootPosition instanceof DomainTransferProduct) {
                             $position->relatedPosition->setModel($position->relatedPosition->fakeModel($rootPosition->name, $qty));
                         } else if (($relatedModel = $position->relatedPosition->getModel()) && !$relatedModel->isWhoisProtectPaid()) {
                             $qty += $position->relatedPosition->calculateQuantity();
