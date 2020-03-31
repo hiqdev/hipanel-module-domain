@@ -10,21 +10,20 @@ use yii\base\Widget;
 
 class WhoisProtectOrderRelatedPosition extends RelatedPosition
 {
-    /** @var Widget */
-    private $widget;
-
     public function createRelatedPosition(): CalculableModelInterface
     {
         $position = new WhoisProtectOrderProduct();
+        $rootPositionId = $this->mainPosition->getId();
         $rootModel = $this->mainPosition->getModel();
         $qty = $this->mainPosition->getQuantity();
         if ($rootModel) {
             $position->setModel($rootModel);
-            $position->load([
-                'name' => $rootModel->domain,
-                'parent_id' => $rootModel->id,
-            ]);
+            $position->load(['name' => $rootModel->domain, 'parent_id' => $rootPositionId]);
             $qty += $position->calculateQuantity();
+        } else {
+            $domainName = $this->mainPosition->name;
+            $position->setModel($position->fakeModel($domainName, $qty));
+            $position->load(['parent_id' => $rootPositionId]);
         }
         $position->setQuantity($qty);
 
@@ -33,15 +32,13 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
 
     public function getWidget(): Widget
     {
-        if (empty($this->widget)) {
-            $this->widget = Yii::createObject([
+        return Yii::createObject(
+            [
                 'class' => WithWhoisProtectPosition::class,
                 'relatedPosition' => $this->relatedPosition,
                 'mainPosition' => $this->mainPosition,
                 'cart' => $this->cart,
-            ]);
-        }
-
-        return $this->widget;
+            ]
+        );
     }
 }
