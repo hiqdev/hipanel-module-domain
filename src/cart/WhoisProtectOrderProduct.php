@@ -10,8 +10,6 @@
 
 namespace hipanel\modules\domain\cart;
 
-use DateInterval;
-use DateTimeImmutable;
 use hipanel\modules\domain\models\Domain;
 use Yii;
 
@@ -22,6 +20,8 @@ use Yii;
  */
 class WhoisProtectOrderProduct extends AbstractPremiumProduct
 {
+    use WithDependetQuantityTrait;
+
     /** {@inheritdoc} */
     protected $_purchaseModel = WhoisProtectOrderPurchase::class;
 
@@ -49,11 +49,6 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
         ]);
     }
 
-    public function calculateQuantity(): float
-    {
-        return round($this->calculateExpirationQuantity()->days / 365, 2);
-    }
-
     /** {@inheritdoc} */
     protected function ensureRelatedData(): void
     {
@@ -63,11 +58,6 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
         $this->name = $this->_model->domain;
         $this->_quantity = $this->quantity ?? $this->calculateQuantity();
         $this->description = Yii::t('hipanel.domain.premium', 'Purchase of WHOIS privacy');
-    }
-
-    private function calculateExpirationQuantity(): DateInterval
-    {
-        return $this->_model->getExpires()->diff(new DateTimeImmutable());
     }
 
     /** {@inheritdoc} */
