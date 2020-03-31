@@ -872,7 +872,7 @@ class Domain extends Model
 
     public function isWhoisProtectPaid(): bool
     {
-        return $this->is_wp_paid !== null;
+        return isset($this->is_wp_paid) && $this->is_wp_paid !== null;
     }
 
     /**

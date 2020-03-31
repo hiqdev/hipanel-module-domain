@@ -53,9 +53,12 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
     protected function ensureRelatedData(): void
     {
         if (!$this->_model) {
-            $this->_model = Domain::findOne(['domains' => $this->name]) ?? new Domain(['domain' => $this->name, 'expires' => (new \DateTime())->modify('+1 year')->format('c')]);
+            $model = Domain::findOne(['domains' => $this->name]);
+            $this->_model = $model;
         }
-        $this->name = $this->_model->domain;
+        if (!$this->name) {
+            $this->name = $this->_model->domain;
+        }
         $this->_quantity = $this->quantity ?? $this->calculateQuantity();
         $this->description = Yii::t('hipanel.domain.premium', 'Purchase of WHOIS privacy');
     }
@@ -67,5 +70,13 @@ class WhoisProtectOrderProduct extends AbstractPremiumProduct
             'object' => 'feature',
             'domain' => $this->name,
         ], $options));
+    }
+
+    public function fakeModel(string $fqdn, int $years = 1): Domain
+    {
+        return new Domain([
+            'domain' => $fqdn,
+            'expires' => (new \DateTime())->modify(sprintf('+%d year', $years))->format('c'),
+        ]);
     }
 }

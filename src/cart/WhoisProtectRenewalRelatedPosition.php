@@ -11,9 +11,6 @@ use yii\base\Widget;
 
 class WhoisProtectRenewalRelatedPosition extends RelatedPosition
 {
-    /** @var Widget */
-    private $widget;
-
     public function createRelatedPosition(): CalculableModelInterface
     {
         /** @var CalculableModelInterface|CartPositionInterface $position */
@@ -30,15 +27,13 @@ class WhoisProtectRenewalRelatedPosition extends RelatedPosition
 
     public function getWidget(): Widget
     {
-        if (empty($this->widget)) {
-            $this->widget = Yii::createObject([
+        return Yii::createObject(
+            [
                 'class' => WithWhoisProtectRenewalPosition::class,
                 'mainPosition' => $this->mainPosition,
                 'relatedPosition' => $this->relatedPosition,
                 'cart' => $this->cart,
-            ]);
-        }
-
-        return $this->widget;
+            ]
+        );
     }
 }

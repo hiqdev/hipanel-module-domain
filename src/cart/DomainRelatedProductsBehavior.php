@@ -24,11 +24,7 @@ class DomainRelatedProductsBehavior extends Behavior
         $cart = $event->sender;
         /** @var CartPositionInterface $rootPosition */
         $rootPosition = $event->position;
-        if (
-            $rootPosition instanceof DomainRenewalProduct
-            && $rootPosition->getModel()->needToPayWhoisProtect()
-            && ($relatedPositions = $rootPosition->getRelatedPositions())
-        ) {
+        if ($rootPosition instanceof AbstractDomainProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
             $positions = [];
             foreach ($relatedPositions as $position) {
                 $positions[] = $position->relatedPosition;
@@ -43,19 +39,21 @@ class DomainRelatedProductsBehavior extends Behavior
         $cart = $event->sender;
         /** @var CartPositionInterface $mainPosition */
         $rootPosition = $event->position;
-        if ($rootPosition instanceof DomainRenewalProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
-            $cart->accumulateEvents(static function () use ($cart, $relatedPositions, $rootPosition) {
-                foreach ($relatedPositions as $position) {
-                    /** @var Domain $relatedModel */
-                    if ($relatedModel = $position->relatedPosition->getModel()) {
+        if ($rootPosition instanceof AbstractDomainProduct && ($relatedPositions = $rootPosition->getRelatedPositions())) {
+            $cart->accumulateEvents(
+                static function () use ($cart, $relatedPositions, $rootPosition) {
+                    foreach ($relatedPositions as $position) {
+                        /** @var Domain $relatedModel */
                         $qty = $rootPosition->getQuantity();
-                        if (!$relatedModel->isWhoisProtectPaid()) {
+                        if ($rootPosition instanceof DomainRegistrationProduct) {
+                            $position->relatedPosition->setModel($position->relatedPosition->fakeModel($rootPosition->name, $qty));
+                        } else if (($relatedModel = $position->relatedPosition->getModel()) && !$relatedModel->isWhoisProtectPaid()) {
                             $qty += $position->relatedPosition->calculateQuantity();
                         }
                         $cart->update($position->relatedPosition, $qty);
                     }
                 }
-            });
+            );
         }
     }
 }
