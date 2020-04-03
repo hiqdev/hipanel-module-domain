@@ -83,7 +83,7 @@ class DomainBulkActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => AjaxModal::widget([
                     'id' => 'bulk-force-notify-transfer-in-modal',
                     'bulkPage' => true,
-                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA to specific email')),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA to specific email'), ['class' => 'modal-title']),
                     'scenario' => 'force-notify-transfer-in-modal',
                     'actionUrl' => ['@domain/force-notify-transfer-in-modal'],
                     'size' => Modal::SIZE_DEFAULT,
