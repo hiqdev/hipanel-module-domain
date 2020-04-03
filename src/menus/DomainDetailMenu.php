@@ -10,6 +10,7 @@
 
 namespace hipanel\modules\domain\menus;
 
+use hipanel\helpers\Url;
 use hipanel\modules\domain\models\Domain;
 use hipanel\widgets\AjaxModal;
 use Yii;
@@ -72,8 +73,9 @@ class DomainDetailMenu extends \hipanel\menus\AbstractDetailMenu
             [
                 'label' => AjaxModal::widget([
                     'id' => 'force-notify-transfer-in-modal',
-                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA again')),
+                    'header' => Html::tag('h4', Yii::t('hipanel:domain', 'Send FOA again'), ['class' => 'modal-title']),
                     'scenario' => 'force-notify-transfer-in',
+                    'handleSubmit' => Url::to(['@domain/force-notify-transfer-in']),
                     'actionUrl' => ['@domain/force-notify-transfer-in-modal', 'id' => $this->model->id],
                     'size' => Modal::SIZE_DEFAULT,
                     'toggleButton' => [
