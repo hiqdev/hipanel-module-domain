@@ -101,11 +101,7 @@ class DomainTariffRepository
      */
     public function orderZones($zones): array
     {
-        if (empty(Yii::$app->params['module.domain.zone.order.list'])) {
-            return DomainSort::byZoneNo()->values($zones);
-        }
-
-        return $zones;
+        return DomainSort::byZoneNo()->values($zones);
 
         /* XXX disabled search
          * XXX expecting API to return properly ordered zones
