@@ -11,9 +11,11 @@
 namespace hipanel\modules\domain\repositories;
 
 use hipanel\helpers\ArrayHelper;
+use hipanel\modules\domain\helpers\DomainSort;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\models\DomainResource;
 use hipanel\modules\finance\models\Tariff;
+use Yii;
 use yii\base\Application;
 
 class DomainTariffRepository
@@ -97,9 +99,9 @@ class DomainTariffRepository
      * @param resource[] $zones array of domain resources to be sorted
      * @return array sorted by the default zone resources
      */
-    public function orderZones($zones)
+    public function orderZones($zones): array
     {
-        return $zones;
+        return DomainSort::byZoneNo()->values($zones);
 
         /* XXX disabled search
          * XXX expecting API to return properly ordered zones

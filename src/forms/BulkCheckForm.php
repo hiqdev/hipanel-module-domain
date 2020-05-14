@@ -41,7 +41,7 @@ class BulkCheckForm extends Model
     {
         parent::__construct($config);
 
-        $this->availableZones = DomainSort::byGeneralRules()->values($availableZones, Sort::PRESERVE_KEYS);
+        $this->availableZones = $availableZones;
     }
 
     /**
