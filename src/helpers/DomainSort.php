@@ -10,8 +10,10 @@
 
 namespace hipanel\modules\domain\helpers;
 
+use Closure;
 use hipanel\modules\domain\forms\CheckForm;
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\finance\models\DomainResource;
 use Tuck\Sort\Sort;
 use Tuck\Sort\SortChain;
 use Yii;
@@ -23,34 +25,17 @@ use Yii;
  */
 class DomainSort
 {
-    private static $defaultOrder = [
-        'com',
-        'net',
-        'name',
-        'cc',
-        'tv',
-        'org',
-        'info',
-        'pro',
-        'mobi',
-        'biz',
-        'me',
-        'kiev.ua',
-        'com.ua',
-        'ru',
-        'su',
-        'xxx',
-        'porn',
-        'adult',
-        'sex',
-    ];
-
     /**
      * @return SortChain
      */
     public static function byGeneralRules(): SortChain
     {
         return Sort::chain()->asc(self::byZone());
+    }
+
+    public static function byZoneNo(): SortChain
+    {
+        return Sort::chain()->asc(self::byZoneNoOrder());
     }
 
     public static function bySearchQueryTokens(array $tokens = []): SortChain
@@ -68,13 +53,20 @@ class DomainSort
         });
     }
 
-    public static function byZone(): \Closure
+    private static function byZoneNoOrder(): Closure
+    {
+        return static function (DomainResource $zone) {
+            return $zone->no;
+        };
+    }
+
+    public static function byZone(): Closure
     {
         $mapping = [
             CheckForm::class => 'fqdn',
             Domain::class => 'domain',
         ];
-        $order = empty(Yii::$app->params['module.domain.zone.order.list']) ? self::$defaultOrder : Yii::$app->params['module.domain.zone.order.list'];
+        $order = Yii::$app->params['module.domain.zone.order.list'];
 
         return function ($model) use ($order, $mapping) {
             $fqdn = null;

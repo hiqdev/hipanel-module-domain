@@ -41,7 +41,8 @@ class BulkCheckForm extends Model
     {
         parent::__construct($config);
 
-        $this->availableZones = DomainSort::byGeneralRules()->values($availableZones, Sort::PRESERVE_KEYS);
+        $this->availableZones = empty(Yii::$app->params['module.domain.zone.order.list']) ?
+            $availableZones : DomainSort::byGeneralRules()->values($availableZones, Sort::PRESERVE_KEYS);
     }
 
     /**
