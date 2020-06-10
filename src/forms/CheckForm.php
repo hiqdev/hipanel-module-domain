@@ -39,6 +39,16 @@ class CheckForm extends Model
     public $isAvailable;
 
     /**
+     * @var bool whether domain is premium
+     */
+    public $isPremium;
+
+    /**
+     * @var array of check data
+     */
+    public $checkData;
+
+    /**
      * @var bool whether obj is suggestion
      */
     public $isSuggestion = false;
@@ -147,21 +157,33 @@ class CheckForm extends Model
     }
 
     /**
-     * Sends API request to check whether domain is available and sets result to [[isAvailable]].
+     * check whether domain is available and sets result to [[isAvailable]].
      *
      * @return bool whether domain is available
      */
     public function checkIsAvailable()
     {
-        try {
-            $domain = DomainPartValidator::convertAsciiToIdn(mb_strtolower($this->fqdn));
-            $check = Domain::perform('check', ['domains' => [$domain]], ['batch' => true]);
-            $this->isAvailable = isset($check[$domain]) && $check[$domain] === 1;
-        } catch (ResponseErrorException $e) {
-            $this->isAvailable = false;
+        if ($this->checkData === null) {
+            $this->sendRequest();
         }
 
+        $this->isAvailable = $this->checkData['is_available'];
         return $this->isAvailable;
+    }
+
+    /**
+     * check whether domain is premium and sets result to [[isPremium]].
+     *
+     * @return bool whether domain is available
+     */
+    public function checkIsPremium()
+    {
+        if ($this->checkData === null) {
+            $this->sendRequest();
+        }
+
+        $this->isPremium = $this->checkData['is_premium'];
+        return $this->isPremium;
     }
 
     public function attributeLabels()
@@ -169,5 +191,31 @@ class CheckForm extends Model
         return [
             'fqdn' => Yii::t('hipanel:domain', 'Domain'),
         ];
+    }
+
+    /**
+     * Send API request to API
+     *
+     * @return array
+     */
+    public function sendRequest()
+    {
+        $domain = DomainPartValidator::convertAsciiToIdn(mb_strtolower($this->fqdn));
+        $this->checkData = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, $domain], function () use ($domain) {
+            try {
+                $check = Domain::perform('check-premium', ['domains' => [$domain]], ['batch' => true]);
+                return [
+                    'is_available' => isset($check[$domain]['avail']) && $check[$domain]['avail'] === 1,
+                    'is_premium' => isset($check[$domain]['premium']) && $check[$domain]['premium'] === 1,
+                ];
+            } catch (ResponseErrorException $e) {
+                return [
+                    'is_available' => false,
+                    'is_premium' => false,
+                ];
+            }
+        }, 60);
+
+        return $this->checkData;
     }
 }

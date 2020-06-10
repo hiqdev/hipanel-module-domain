@@ -128,15 +128,17 @@ $this->registerCss('
             </thead>
         </table>
         <?php break; ?>
-
-    <?php
-                        // no break
-                        case Whois::REGISTRATION_UNSUPPORTED: ?>
+    <?php case WHOIS::REGISTRATION_PREMIUM: ?>
+    <?php case Whois::REGISTRATION_UNSUPPORTED: ?>
         <table class="table">
             <thead>
             <tr class="danger">
                 <td class="text-center text-bold">
-                    <?= Yii::t('hipanel:domain', 'Domain name is not registered yet, or the domain zone is not supported.') ?>
+                    <?php if ($model->availability === WHOIS::REGISTRATION_PREMIUM) : ?>
+                        <?= Yii::t('hipanel:domain', 'Domain name is not registered yet, or domain name is premium, or the domain zone is not supported.') ?>
+                    <?php else : ?>
+                        <?= Yii::t('hipanel:domain', 'Domain name is not registered yet, or the domain zone is not supported.') ?>
+                    <?php endif ?>
                 </td>
             </tr>
             </thead>
