@@ -181,7 +181,7 @@ class Domain extends Model
             [['zone'], 'safe', 'on' => ['check-domain']],
             [['zone'], 'trim', 'on' => ['check-domain']],
             [['zone'], 'default', 'value' => static::DEFAULT_ZONE, 'on' => ['check-domain']],
-            [['is_available'], 'boolean', 'on' => ['check-domain']],
+            [['is_available', 'is_premium'], 'boolean', 'on' => ['check-domain']],
             [['resource'], 'safe', 'on' => ['check-domain']], /// Array inside. Should be a relation hasOne
 
             // Domain transfer

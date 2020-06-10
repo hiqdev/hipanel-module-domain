@@ -27,6 +27,7 @@ class Whois extends ActiveRecord
     const REGISTRATION_AVAILABLE = 'available';
     const REGISTRATION_UNAVAILABLE = 'unavailable';
     const REGISTRATION_UNSUPPORTED = 'unsupported';
+    const REGISTRATION_PREMIUM = 'premium';
 
     public function rules()
     {
