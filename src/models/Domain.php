@@ -842,7 +842,7 @@ class Domain extends Model
 
     public function isWPChangeable() : bool
     {
-        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZone();
+        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZone() && ($this->getTopLevelZone() !== 'ws');
     }
 
     public function isSecureChangeable() : bool
@@ -862,7 +862,7 @@ class Domain extends Model
 
     public function canPayWhoisProtect(): bool
     {
-        return !$this->isRussianZone();
+        return !$this->isRussianZone() && ($this->getTopLevelZone() !== 'ws');
     }
 
     public function needToPayWhoisProtect(): bool
