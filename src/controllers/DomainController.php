@@ -81,7 +81,7 @@ class DomainController extends \hipanel\base\CrudController
                     'force-approve-preincoming' => 'support',
                     'force-notify-transfer-in' => 'domain.force-send-foa',
                     'force-notify-transfer-in-modal' => 'domain.force-send-foa',
-                    'transfer-in' => true,
+                    'transfer-in, transfer-in html, transfer-in GET html' => true,
                     'approve-preincoming' => true,
                     'reject-preincoming' => true,
                     'delete-in-db' => 'domain.delete',
