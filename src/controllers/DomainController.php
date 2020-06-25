@@ -692,7 +692,7 @@ class DomainController extends \hipanel\base\CrudController
                 'queryOptions' => [
                     'batch' => false,
                 ],
-                'on beforePerform' => function (Event $event) {
+                'on beforeRun' => function (Event $event) {
                     Yii::$app->get('hiart')->disableAuth();
                     /** @var Action $action */
                     $action = $event->sender;
@@ -727,7 +727,7 @@ class DomainController extends \hipanel\base\CrudController
                 'queryOptions' => [
                     'batch' => false,
                 ],
-                'on beforePerform' => function (Event $event) {
+                'on beforeRun' => function (Event $event) {
                     Yii::$app->get('hiart')->disableAuth();
                     /** @var Action $action */
                     $action = $event->sender;
@@ -750,7 +750,7 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-started' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingStarted',
-                'on beforePerform' => function (Event $event) {
+                'on beforeRun' => function (Event $event) {
                     Yii::$app->get('hiart')->disableAuth();
                 },
                 'data' => function ($action) {
@@ -760,7 +760,7 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-canceled' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingCanceled',
-                'on beforePerform' => function (Event $event) {
+                'on beforeRun' => function (Event $event) {
                     Yii::$app->get('hiart')->disableAuth();
                 },
                 'data' => function ($action) {
@@ -770,7 +770,7 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-failed' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingFailed',
-                'on beforePerform' => function (Event $event) {
+                'on beforeRun' => function (Event $event) {
                     Yii::$app->get('hiart')->disableAuth();
                 },
                 'data' => function ($action) {
