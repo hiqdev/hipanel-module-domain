@@ -87,7 +87,7 @@ class DomainController extends \hipanel\base\CrudController
                     'delete-in-db' => 'domain.delete',
                     'delete' => 'domain.delete',
                     'preincoming-started, preincoming-started GET html, preincoming-started html' => true,
-                    'preincoming-cancel, preincoming-cancel GET html, preincoming-cancel html' => true,
+                    'preincoming-canceled, preincoming-canceled GET html, preincoming-canceled html' => true,
                     'preincoming-failed, preincoming-failed GET html, preincoming-failed html' => true,
                     '*' => 'domain.read',
                 ],
@@ -760,6 +760,9 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-canceled' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingCanceled',
+                'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
+                },
                 'data' => function ($action) {
                     return ['domains' => Yii::$app->request->get('domains')];
                 },
@@ -767,6 +770,9 @@ class DomainController extends \hipanel\base\CrudController
             'preincoming-failed' => [
                 'class' => RenderAction::class,
                 'view' => 'preincomingFailed',
+                'on beforeSave' => function (Event $event) {
+                    Yii::$app->get('hiart')->disableAuth();
+                },
                 'data' => function ($action) {
                     return ['domains' => Yii::$app->request->get('domains')];
                 },
