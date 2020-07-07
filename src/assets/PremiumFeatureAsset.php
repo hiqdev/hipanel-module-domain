@@ -18,7 +18,7 @@ class PremiumFeatureAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@hipanel/modules/domain/assets/PremiumFeaturesAssets';
+    public $sourcePath = __DIR__ . '/PremiumFeaturesAssets';
 
     /**
      * @var array
