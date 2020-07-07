@@ -32,7 +32,7 @@ return [
     'components' => [
         'themeManager' => [
             'pathMap' => [
-                '@hipanel/modules/domain/views' => '$themedViewPaths',
+                dirname(__DIR__) . '/src/views' => '$themedViewPaths',
             ],
         ],
         'i18n' => [
@@ -40,11 +40,11 @@ return [
                 'hipanel:domain' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
                     'forceTranslation' => true,
-                    'basePath' => '@hipanel/modules/domain/messages',
+                    'basePath' => dirname(__DIR__) . '/src/messages',
                 ],
                 'hipanel.domain.premium' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@hipanel/modules/domain/messages',
+                    'basePath' => dirname(__DIR__) . '/src/messages',
                 ],
             ],
         ],
