@@ -61,7 +61,7 @@ class DomainTransferPurchase extends AbstractDomainPurchase
         if ($res) {
             $view = Yii::$app->getView();
             if (!$this->isRuZone()) {
-                $view->params['remarks']['transferAttention'] = $view->render(dirname(__DIR__) . '/views/domain/_transferAttention');
+                $view->params['remarks']['transferAttention'] = $view->renderFile(dirname(__DIR__) . '/views/domain/_transferAttention.php');
             } else {
                 $view->params['remarks']['transferAttention'] = '';
             }
