@@ -15,7 +15,7 @@ class DomainRenewalPurchase extends AbstractDomainPurchase
     /** {@inheritdoc} */
     public static function operation()
     {
-        return 'Renew';
+        return 'renew';
     }
 
     /**
