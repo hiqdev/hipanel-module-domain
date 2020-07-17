@@ -30,7 +30,7 @@ class DomainTransferPurchase extends AbstractDomainPurchase
     /** {@inheritdoc} */
     public static function operation()
     {
-        return 'Transfer';
+        return 'transfer';
     }
 
     public function rules()

@@ -26,7 +26,7 @@ class DomainRegistrationPurchase extends AbstractDomainPurchase
     /** {@inheritdoc} */
     public static function operation()
     {
-        return 'Register';
+        return 'register';
     }
 
     public function rules()
