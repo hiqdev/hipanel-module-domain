@@ -186,6 +186,12 @@ class CheckForm extends Model
         return $this->isPremium;
     }
 
+    public function checkDomain() {
+        $this->checkIsPremium();
+
+        return $this->checkIsAvailable();
+    }
+
     public function attributeLabels()
     {
         return [

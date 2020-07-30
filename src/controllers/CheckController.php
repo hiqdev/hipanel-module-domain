@@ -58,7 +58,7 @@ class CheckController extends CrudController
         $model = new CheckForm($zones);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->checkIsAvailable()) {
+            if ($model->checkDomain()) {
                 foreach ($this->getAvailableZones() as $resource) {
                     if ($resource->zone === $model->zone) {
                         $model->resource = $resource;
