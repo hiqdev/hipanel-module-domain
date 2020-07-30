@@ -15,7 +15,6 @@ $isSuggestionCssClass = $model->isSuggestion ? 'suggestion' : '';
 $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
 
 ?>
-
 <div class="domain-iso-line <?= $isAvailableCssClass ?> <?= $isotopeFilterCssClass ?> <?= $isSuggestionCssClass ?>">
     <div
         class="domain-line <?= $model->isAvailable ? 'checked' : '' ?>"
@@ -37,14 +36,14 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12 text-center">
         <span class="domain-price">
-            <?php if ($model->checkIsAvailable() && !$model->checkIsPremium()) : ?>
+            <?php if ($model->isAvailable && $model->isPremium === false) : ?>
                 <b><?= Yii::$app->formatter->format($model->resource->price, ['currency', $model->resource->currency]) ?></b>
                 <span class="domain-price-year">/ <?= Yii::t('hipanel:domain', 'year') ?></span>
-            <?php elseif($model->checkIsAvailable() && $model->checkIsPremium()) : ?>
+            <?php elseif($model->isAvailable === true && $model->isPremium === true) : ?>
                 <span class="domain-taken">
                     <?= Yii::t('hipanel:domain', 'Domain is Premium') ?>. <?= Yii::t('hipanel:domain', 'Please ask real price') ?>.
                 </span>
-            <?php elseif ($model->checkIsAvailable() === false) : ?>
+            <?php elseif ($model->isAvailable === false) : ?>
                 <span class="domain-taken">
                     <?= Yii::t('hipanel:domain', 'Domain is not available') ?>
                 </span>
@@ -52,7 +51,7 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
         </span>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
-            <?php if ($model->checkIsAvailable() && $canBuyDomain && !$model->checkIsPremium()) : ?>
+            <?php if ($model->isAvailable && $canBuyDomain && !$model->isPremium) : ?>
                 <?= Html::a('<i class="fa fa-cart-plus fa-lg"></i>&nbsp; ' . Yii::t('hipanel:domain', 'Add to cart'), ['/cart/cart/index'], [
                     'data-pjax' => 0,
                     'class' => 'btn btn-flat bg-olive add-to-cart-button',
@@ -60,9 +59,9 @@ $isotopeFilterCssClass = Domain::setIsotopeFilterValue($model->zone);
                     'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Go to the cart'),
                     'data-domain-url' => Url::to([$addToCartPath, 'name' => $model->fqdn]),
                 ]) ?>
-            <?php elseif ($model->checkIsPremium() && $canBuyDomain) : ?>
+            <?php elseif ($model->isPremium && $canBuyDomain) : ?>
                 <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel:domain', 'Create ticket'), ['@ticket/create', 'subject' => $model->fqdn], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
-            <?php elseif ($model->checkIsAvailable() === false) : ?>
+            <?php elseif ($model->isAvailable === false) : ?>
                 <?= Html::a('<i class="fa fa-search"></i>&nbsp; ' . Yii::t('hipanel:domain', 'WHOIS'), ['/domain/whois/index', 'domain' => $model->fqdn], ['target' => '_blank', 'class' => 'btn btn-default btn-flat']) ?>
             <?php endif; ?>
         </div>
