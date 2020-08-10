@@ -16,6 +16,35 @@ if ($model->domain !== null) {
     WhoisAsset::register($this);
     $this->registerJs("$('#whois').whois({domain: '{$model->domain}'});");
 }
+
+$this->registerJs(<<<'JS'
+
+    var goToTheCartHandler = function(evt) {
+        evt.preventDefault();
+        window.location.replace($(this).prop('href'));
+        return false;
+    }
+
+    var addToCartHandler = function (evt) {
+        evt.preventDefault();
+        var addToCartElem = $(this);
+        addToCartElem.button('loading')
+        $.post(addToCartElem.data('domain-url'), function() {
+            hipanel.updateCart(function() {
+                addToCartElem.button('complete');
+                setTimeout(function () {
+                    addToCartElem.one('click', goToTheCartHandler);
+                }, 0);
+            });
+        });
+
+        return false;
+    }
+
+    $(document).on('click', 'a.add-to-cart-button', addToCartHandler);
+JS
+);
+
 ?>
 <div class="row">
     <div class="col-md-3 col-sm-12">

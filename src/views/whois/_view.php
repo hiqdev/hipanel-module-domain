@@ -9,6 +9,7 @@ use hipanel\widgets\ArraySpoiler;
 use toriphes\lazyload\LazyLoad;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 $this->registerCss('
 .shot-img {
@@ -17,6 +18,7 @@ $this->registerCss('
     height: 325px;
 }
 ');
+
 ?>
 
 <?php switch ($model->availability) : ?>
@@ -119,8 +121,14 @@ $this->registerCss('
                 <td>
                     <?php if (Yii::$app->user->can('domain.pay')) : ?>
                         <?= Html::a('<i class="fa fa-fw fa-cart-plus"></i> ' . Yii::t('hipanel:domain', 'Register domain'),
-                            ['@domain/add-to-cart-registration', 'name' => $model->domain],
-                            ['class' => 'btn btn-flat btn-block btn-sm ' . SmallBox::COLOR_OLIVE]
+                            ['/cart/cart/index'],
+                            [
+                                'data-pjax' => 0,
+                                'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Adding'),
+                                'data-complete-text' => '<i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;' . Yii::t('hipanel:domain', 'Go to the cart'),
+                                'data-domain-url' => Url::to(['@domain/add-to-cart-registration', 'name' => $model->domain]),
+                                'class' => 'btn btn-flat add-to-cart-button btn-block btn-sm ' . SmallBox::COLOR_OLIVE,
+                            ]
                         ) ?>
                     <?php endif ?>
                 </td>
