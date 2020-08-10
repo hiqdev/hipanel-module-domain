@@ -153,6 +153,7 @@ class Domain extends \hipanel\base\Model
                 'force-approve-preincoming',
                 'force-notify-transfer-in',
                 'reject-transfer',
+                'cancel-transfer',
             ]],
 
             // Check domain
