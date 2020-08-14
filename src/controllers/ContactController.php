@@ -67,12 +67,14 @@ class ContactController extends CrudController
             'create' => [
                 'class' => ContactCreateAction::class,
                 'scenario' => Yii::$app->request->get('requestPassport') ? 'create-require-passport' : 'create',
+                'view' => 'create',
                 'on afterPerform' => $cartModifierCallback,
                 'POST html' => $postHtml,
             ],
             'update' => [
                 'class' => ContactUpdateAction::class,
                 'scenario' => Yii::$app->request->get('requestPassport') ? 'update-require-passport' : 'update',
+                'view' => 'update',
                 'on afterPerform' => $cartModifierCallback,
                 'POST html' => $postHtml,
             ],
@@ -85,5 +87,16 @@ class ContactController extends CrudController
     public function actionRequest($requestPassport = null)
     {
         return $this->render('request', compact('requestPassport'));
+    }
+
+    public function beforeAction($action)
+    {
+        parent::beforeAction($action);
+
+        if (in_array($action->id, ['create', 'update'])) {
+            $this->viewPath = Yii::$app->getModule('client')->getViewPath() . DIRECTORY_SEPARATOR . 'contact';
+        }
+
+        return true;
     }
 }
