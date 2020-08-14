@@ -17,7 +17,7 @@ use yii\web\JqueryAsset;
 
 class WhoisAsset extends AssetBundle
 {
-    public $sourcePath = '@hipanel/modules/domain/assets/WhoisPluginAssets';
+    public $sourcePath = __DIR__ . '/WhoisPluginAssets';
 
     public $js = [
         'WhoisPlugin.js',

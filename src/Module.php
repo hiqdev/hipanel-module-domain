@@ -24,5 +24,4 @@ class Module extends \hipanel\base\Module
      * @var bool Whether WHOIS Protect is paid
      */
     public $whoisProtectPaid = false;
-
 }

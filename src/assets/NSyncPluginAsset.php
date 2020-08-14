@@ -17,7 +17,7 @@ class NSyncPluginAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@hipanel/modules/domain/assets/NSyncPluginAssets';
+    public $sourcePath = __DIR__ . '/NSyncPluginAssets';
 
     /**
      * @var array

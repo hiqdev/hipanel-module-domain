@@ -17,7 +17,7 @@ class DomainCheckPluginAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@hipanel/modules/domain/assets/DomainCheckPluginAssets';
+    public $sourcePath = __DIR__ . '/DomainCheckPluginAssets';
 
     /**
      * @var array
