@@ -48,19 +48,24 @@ class WithWhoisProtectPosition extends Widget
             'class' => 'option-input',
             'onClick' => new JsExpression(<<<"JS"
                 const action = (this.checked === false) ? encodeURI(this.dataset.fromcart) : encodeURI(this.dataset.tocart);
+                const overlay = document.querySelector('.invoice-overlay');
                 $.ajax({
                     url: action,
                     beforeSend: () => {
+                      if (overlay) {
                         document.querySelector('.invoice-overlay').style.display = 'block';
+                      }
                     },
                     success: () => {
                         $.ajax({
                             url: '' + $cartUrl,
                             success: cartHtml => {
                                 $('.content section.box').replaceWith(cartHtml);
-                                hipanel.updateCart(() => {
-                                    document.querySelector('.invoice-overlay').style.display = 'none';
-                                })
+                                if (overlay) {
+                                    hipanel.updateCart(() => {
+                                        document.querySelector('.invoice-overlay').style.display = 'none';
+                                    });
+                                }
                             },
                         });
                     }
