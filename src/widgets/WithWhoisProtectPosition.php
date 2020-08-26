@@ -6,7 +6,7 @@ use hipanel\helpers\ArrayHelper;
 use hipanel\helpers\Url;
 use hipanel\modules\domain\cart\WhoisProtectOrderProduct;
 use hipanel\modules\domain\cart\WhoisProtectRenewalProduct;
-use hiqdev\themes\adminlte\CheckboxStyleAsset;
+use hipanel\assets\CheckboxStyleAsset;
 use hiqdev\yii2\cart\CartPositionInterface;
 use hiqdev\yii2\cart\ShoppingCart;
 use yii\base\Widget;
