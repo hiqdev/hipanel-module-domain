@@ -60,12 +60,16 @@ class WithWhoisProtectPosition extends Widget
                         $.ajax({
                             url: '' + $cartUrl,
                             success: cartHtml => {
-                                $('.content section.box').replaceWith(cartHtml);
-                                if (overlay) {
-                                    hipanel.updateCart(() => {
-                                        document.querySelector('.invoice-overlay').style.display = 'none';
-                                    });
+                                if (document.querySelector('.content section.box')) {
+                                    $('.content section.box').replaceWith(cartHtml);
+                                } else if (document.querySelector('section.invoice')) {
+                                    $('section.invoice').replaceWith(cartHtml);
                                 }
+                                hipanel.updateCart(() => {
+                                    if (overlay) {
+                                        document.querySelector('.invoice-overlay').style.display = 'none';
+                                    }
+                                });
                             },
                         });
                     }
