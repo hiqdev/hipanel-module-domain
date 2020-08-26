@@ -103,7 +103,7 @@ JS
     public function getToCartUrl(): string
     {
         return Url::toRoute([
-            '@domain/add-to-cart-whois-protect',
+            $this->view->theme->name === 'admintlte' ? '@domain/add-to-cart-whois-protect' : '/site/add-to-cart-whois-protect',
             'name' => $this->mainPosition->name,
             'parent_id' => $this->mainPosition->getId(),
             'quantity' => $this->relatedPosition->getQuantity(),
