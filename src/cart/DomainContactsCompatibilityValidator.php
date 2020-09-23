@@ -48,9 +48,14 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
      */
     private function ensureContactsAreSelectedForPurchases($purchases)
     {
-        if (empty(Yii::$app->params['domain.module.show.contact.form.always'])) {
+        if (empty(Yii::$app->params['domain.module.show_contact_form'])) {
             return true;
         }
+
+        if (Yii::$app->params['domain.module.show_contact_form'] !== 'always') {
+            return true;
+        }
+
         $models = array_filter($purchases, function($purchase) {
             $data = $purchase->getAttributes();
             return empty($data['registrant']);
