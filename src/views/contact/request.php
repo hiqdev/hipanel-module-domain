@@ -75,7 +75,7 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
 
             <?= \hipanel\modules\client\widgets\combo\ContactCombo::widget([
                 'inputOptions' => ['id' => 'contact-combo'],
-                'model' => new \yii\base\DynamicModel(['id' => Yii::$app->user->id]),
+                'model' => new \yii\base\DynamicModel(['id' => $registrant]),
                 'attribute' => 'id',
                 'hasId' => true,
                 'formElementSelector' => 'div',
