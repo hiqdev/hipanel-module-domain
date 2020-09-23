@@ -11,10 +11,14 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('cart', 'Order execution');
 
+$contactInfoUrl = Url::to(['@contact/short-view']);
+
 ?>
 
 <?php \hipanel\widgets\Box::begin([
-    'title' => Yii::t('hipanel:domain', 'In order to finish domain registration, we ask you to fill missing contact data'),
+    'title' => $requestRegistrant
+        ? Yii::t('hipanel:domain', 'In order to finish domain registration, please, select contact data')
+        : Yii::t('hipanel:domain', 'In order to finish domain registration, we ask you to fill missing contact data'),
     'options' => [
         'class' => 'box-warning',
     ],
@@ -55,22 +59,31 @@ $this->title = Yii::t('cart', 'Order execution');
 
 <?php \yii\bootstrap\ActiveForm::begin([
     'id' => 'contact-management-form',
+    'options' => [
+        'class' => 'col-md-6',
+    ],
 ]) ?>
     <div>
         <label>
             <?= Html::radio('action', false, [
                 'value' => 'update',
                 'ref' => '#contact-edit',
+                'checked' => 'checked',
                 'data-url' => Url::to(['@domain-contact/update', 'requestPassport' => (bool) $requestPassport]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Select an existing contact, update it and use it') ?>
 
             <?= \hipanel\modules\client\widgets\combo\ContactCombo::widget([
                 'inputOptions' => ['id' => 'contact-combo'],
-                'model' => new \yii\base\DynamicModel(['id' => null]),
+                'model' => new \yii\base\DynamicModel(['id' => Yii::$app->user->id]),
                 'attribute' => 'id',
                 'hasId' => true,
                 'formElementSelector' => 'div',
+                'filter' => [
+                    'client_id' => [
+                        'format' => Yii::$app->user->id,
+                    ],
+                ],
             ]) ?>
         </label>
     </div>
@@ -89,6 +102,8 @@ $this->title = Yii::t('cart', 'Order execution');
         <?= Html::submitButton(Yii::t('hipanel', 'Ok'), ['class' => 'btn btn-info']) ?>
     </div>
 <?php \yii\bootstrap\ActiveForm::end() ?>
+<div id='contact-combo-info' class="col-md-6">
+</div>
 <?php \hipanel\widgets\Box::end() ?>
 
 <?php
@@ -96,27 +111,50 @@ $this->title = Yii::t('cart', 'Order execution');
 $this->registerJs(<<<JS
 $(function () {
     var form = $('#contact-management-form');
-    
+
     form.find('input[value=update]').on('change', function () {
         $('#contact-combo').select2('open');
     });
-    
+
+    form.on('change', function (event) {
+        var input = form.find('input[name=action]:checked'),
+            params = {};
+
+        if (input.val() === 'create') {
+            $('#contact-combo-info').html('');
+            return false;
+        }
+
+        if (!$('#contact-combo').val()) {
+            $('#contact-combo-info').html('');
+            return false;
+        }
+
+        params.id = $('#contact-combo').val();
+
+        $.get('$contactInfoUrl', params).done(function (data) {
+            $('#contact-combo-info').html(data);
+        });
+    });
+
     form.on('beforeSubmit', function (event) {
         var input = form.find('input[name=action]:checked'),
             modalSelector = input.attr('ref'),
             params = {};
-        
+
         if (input.val() === 'update') {
             params.id = $('#contact-combo').val();
         }
-        
+
         $(modalSelector).modal('show');
         $.get(input.data('url'), params).done(function (data) {
             $(modalSelector + ' .modal-body').html(data);
         });
-        
+
         return false;
     });
+
+    form.trigger('change');
 }());
 JS
 );

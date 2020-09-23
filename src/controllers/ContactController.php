@@ -18,6 +18,7 @@ use hipanel\modules\client\actions\ContactCreateAction;
 use hipanel\modules\client\actions\ContactUpdateAction;
 use hipanel\modules\client\models\Contact;
 use hipanel\modules\domain\cart\RegistrantModifier;
+use hipanel\modules\client\models\Client;
 use hiqdev\yii2\cart\Module as CartModule;
 use Yii;
 
@@ -84,9 +85,20 @@ class ContactController extends CrudController
         ]);
     }
 
-    public function actionRequest($requestPassport = null)
+    public function actionRequest($requestPassport = null, $requestRegistrant = null, $registrant = null)
     {
-        return $this->render('request', compact('requestPassport'));
+        $values = Client::perform('get-class-values', [
+            'id' => Yii::$app->user->id,
+            'class' => 'client,domain_defaults',
+        ]);
+
+        $registrant = $registrant ?? ($values['registrant'] ?? Yii::$app->user->id);
+
+        return $this->render('request', [
+            'requestPassport' => $requestPassport,
+            'requestRegistrant' => $requestRegistrant,
+            'regitrant' => $registrant,
+        ]);
     }
 
     public function beforeAction($action)
