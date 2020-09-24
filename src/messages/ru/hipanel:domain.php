@@ -222,6 +222,7 @@ return [
     'IP addresses can be assigned to child name servers only.' => 'IP адреса могут быть назначены только дочерним серверам имён',
     'In cart' => 'В корзине',
     'In order to finish domain registration, we ask you to fill missing contact data' => 'Для завершения регистрации доменов требуется дополнить ваши контактные данные',
+    'In order to finish domain registration, please, select contact data' => 'Для завершения регистрации доменов требуется выбрать контакт и проверить контакт',
     'Incoming transfer domains' => 'Входящий трансфер',
     'Internet' => 'Интернет',
     'Lock has been changed' => 'Параметр "Защита" был успешно изменен',

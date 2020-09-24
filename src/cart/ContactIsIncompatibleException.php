@@ -18,22 +18,50 @@ final class ContactIsIncompatibleException extends NotPurchasableException
 {
     private $requestPassport = false;
 
-    public static function passportRequired(): self
+    private $requestRegistrant = false;
+
+    private $registrant = null;
+
+    public static function passportRequired($registrant = null): self
     {
         $exception = new self();
         $exception->requestPassport = true;
 
+        if ($registrant) {
+            $exception->registrant = $registrant;
+        }
+
         return $exception;
     }
 
-    public static function generalDataRequired(): self
+    public static function generalDataRequired($registrant = null): self
     {
-        return new self();
+        if (empty($registrant)) {
+            return new self();
+        }
+
+        $exception =  new self();
+        $exception->registrant = $registrant;
+
+        return $exception;
+    }
+
+    public static function registrantRequired(): self
+    {
+        $exception = new self();
+        $exception->requestRegistrant = true;
+
+        return $exception;
     }
 
     public function resolve(): bool
     {
-        Yii::$app->response->redirect(Url::to(['@domain-contact/request', 'requestPassport' => $this->requestPassport]));
+        Yii::$app->response->redirect(Url::to(array_filter([
+            '@domain-contact/request',
+            'requestPassport' => $this->requestPassport,
+            'requestRegistrant' => $this->requestRegistrant,
+            'registrant' => $this->registrant,
+        ])));
         Yii::$app->end();
         return false;
     }
