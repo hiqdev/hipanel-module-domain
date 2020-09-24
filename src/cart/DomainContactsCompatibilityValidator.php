@@ -65,6 +65,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
             return true;
         }
 
+        $this->ensureContactsAreCompatibleForPurchases($purchases);
         throw ContactIsIncompatibleException::registrantRequired();
     }
 
