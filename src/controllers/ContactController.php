@@ -92,13 +92,20 @@ class ContactController extends CrudController
             'class' => 'client,domain_defaults',
         ]);
 
-        $registrant = $registrant ?? ($values['registrant'] ?? Yii::$app->user->id);
+        $registrant = $registrant ?? ($values['registrant'] ?: Yii::$app->user->id);
 
         return $this->render('request', [
             'requestPassport' => $requestPassport,
             'requestRegistrant' => $requestRegistrant,
-            'regitrant' => $registrant,
+            'registrant' => $registrant,
         ]);
+    }
+
+    public function actionSetRegistrant(int $id)
+    {
+        (new RegistrantModifier(CartModule::getInstance()->getCart()))->setRegistrantId($id);
+
+        return $this->redirect(['@finance/cart/finish']);
     }
 
     public function beforeAction($action)

@@ -66,10 +66,10 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
     <div>
         <label>
             <?= Html::radio('action', false, [
-                'value' => 'update',
+                'value' => $requestRegistrant ? 'set-registrant' : 'update',
                 'ref' => '#contact-edit',
                 'checked' => 'checked',
-                'data-url' => Url::to(['@domain-contact/update', 'requestPassport' => (bool) $requestPassport]),
+                'data-url' => Url::to([$requestRegistrant ? '@domain-contact/set-registrant' : '@domain-contact/update', 'requestPassport' => (bool) $requestPassport]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Select an existing contact, update it and use it') ?>
 
@@ -140,10 +140,20 @@ $(function () {
     form.on('beforeSubmit', function (event) {
         var input = form.find('input[name=action]:checked'),
             modalSelector = input.attr('ref'),
+            url = input.data('url');
             params = {};
 
-        if (input.val() === 'update') {
+        if (input.val() !== 'create') {
             params.id = $('#contact-combo').val();
+        }
+
+        if (input.val() === 'set-registrant') {
+            var concatinate = '?';
+            if (url.indexOf("?") >= 0) {
+                concatinate = '&'
+            }
+            window.location.replace(input.data('url') + concatinate + 'id=' + params.id);
+            return false;
         }
 
         $(modalSelector).modal('show');
