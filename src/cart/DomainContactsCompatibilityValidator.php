@@ -91,7 +91,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
                 foreach ($purchases as $purchase) {
                     $id = $purchase->position->getId();
                     if (isset($responseData[$id]['_error_ops']['for']) && $responseData[$id]['_error_ops']['for'] === 'RU') {
-                        throw ContactIsIncompatibleException::passportRequired($first['registrant'] ?? null);
+                        throw ContactIsIncompatibleException::ruDataRequired($first['registrant'] ?? null);
                     }
                 }
 

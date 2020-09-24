@@ -67,14 +67,14 @@ class ContactController extends CrudController
         return array_merge(parent::actions(), [
             'create' => [
                 'class' => ContactCreateAction::class,
-                'scenario' => Yii::$app->request->get('requestPassport') ? 'create-require-passport' : 'create',
+                'scenario' => Yii::$app->request->get('requestRUData') ? 'create-ru-contact' : 'create',
                 'view' => 'create',
                 'on afterPerform' => $cartModifierCallback,
                 'POST html' => $postHtml,
             ],
             'update' => [
                 'class' => ContactUpdateAction::class,
-                'scenario' => Yii::$app->request->get('requestPassport') ? 'update-require-passport' : 'update',
+                'scenario' => Yii::$app->request->get('requestRUData') ? 'update-ru-contact' : 'update',
                 'view' => 'update',
                 'on afterPerform' => $cartModifierCallback,
                 'POST html' => $postHtml,
@@ -85,7 +85,7 @@ class ContactController extends CrudController
         ]);
     }
 
-    public function actionRequest($requestPassport = null, $requestRegistrant = null, $registrant = null)
+    public function actionRequest($requestRUData = null, $requestRegistrant = null, $registrant = null)
     {
         $values = Client::perform('get-class-values', [
             'id' => Yii::$app->user->id,
@@ -95,7 +95,7 @@ class ContactController extends CrudController
         $registrant = $registrant ?? ($values['registrant'] ?: Yii::$app->user->id);
 
         return $this->render('request', [
-            'requestPassport' => $requestPassport,
+            'requestRUData' => $requestRUData,
             'requestRegistrant' => $requestRegistrant,
             'registrant' => $registrant,
         ]);
