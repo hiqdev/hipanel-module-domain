@@ -48,11 +48,11 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
      */
     private function ensureContactsAreSelectedForPurchases($purchases)
     {
-        if (empty(Yii::$app->params['domain.module.show_contact_form'])) {
+        if (empty(Yii::$app->params['module.domain.show_contact_form'])) {
             return true;
         }
 
-        if (Yii::$app->params['domain.module.show_contact_form'] !== 'always') {
+        if (Yii::$app->params['module.domain.show_contact_form'] !== 'always') {
             return true;
         }
 
@@ -65,6 +65,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
             return true;
         }
 
+        $this->ensureContactsAreCompatibleForPurchases($purchases);
         throw ContactIsIncompatibleException::registrantRequired();
     }
 
@@ -91,7 +92,7 @@ class DomainContactsCompatibilityValidator implements PositionPurchasabilityVali
                 foreach ($purchases as $purchase) {
                     $id = $purchase->position->getId();
                     if (isset($responseData[$id]['_error_ops']['for']) && $responseData[$id]['_error_ops']['for'] === 'RU') {
-                        throw ContactIsIncompatibleException::passportRequired($first['registrant'] ?? null);
+                        throw ContactIsIncompatibleException::ruDataRequired($first['registrant'] ?? null);
                     }
                 }
 

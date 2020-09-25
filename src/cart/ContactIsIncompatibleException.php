@@ -16,16 +16,16 @@ use yii\helpers\Url;
 
 final class ContactIsIncompatibleException extends NotPurchasableException
 {
-    private $requestPassport = false;
+    private $requestRUData = false;
 
     private $requestRegistrant = false;
 
     private $registrant = null;
 
-    public static function passportRequired($registrant = null): self
+    public static function ruDataRequired($registrant = null): self
     {
         $exception = new self();
-        $exception->requestPassport = true;
+        $exception->requestRUData = true;
 
         if ($registrant) {
             $exception->registrant = $registrant;
@@ -58,7 +58,7 @@ final class ContactIsIncompatibleException extends NotPurchasableException
     {
         Yii::$app->response->redirect(Url::to(array_filter([
             '@domain-contact/request',
-            'requestPassport' => $this->requestPassport,
+            'requestRUData' => $this->requestRUData,
             'requestRegistrant' => $this->requestRegistrant,
             'registrant' => $this->registrant,
         ])));

@@ -2,7 +2,8 @@
 
 /**
  * @var \yii\web\View $this
- * @var bool $requestPassport
+ * @var bool $requestRUData
+ * @var bool $requestRegistrant
  */
 use hipanel\widgets\AjaxModal;
 use yii\bootstrap\Html;
@@ -24,7 +25,7 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
     ],
 ]) ?>
 
-<?php if ($requestPassport) : ?>
+<?php if ($requestRUData) : ?>
     <h5>
     <?= Yii::t('hipanel:domain', 'According to the rules of domain registration in .RU zone ({link}), you have to fill in your passport data.', [
         'link' => Html::a(
@@ -66,10 +67,10 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
     <div>
         <label>
             <?= Html::radio('action', false, [
-                'value' => 'update',
+                'value' => $requestRegistrant ? 'set-registrant' : 'update',
                 'ref' => '#contact-edit',
                 'checked' => 'checked',
-                'data-url' => Url::to(['@domain-contact/update', 'requestPassport' => (bool) $requestPassport]),
+                'data-url' => Url::to([$requestRegistrant ? '@domain-contact/set-registrant' : '@domain-contact/update', 'requestRUData' => (bool) $requestRUData]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Select an existing contact, update it and use it') ?>
 
@@ -92,7 +93,7 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
             <?= Html::radio('action', false, [
                 'value' => 'create',
                 'ref' => '#contact-create',
-                'data-url' => Url::to(['@domain-contact/create', 'requestPassport' => (bool) $requestPassport]),
+                'data-url' => Url::to(['@domain-contact/create', 'requestRUData' => (bool) $requestRUData]),
             ]) ?>
             <?= Yii::t('hipanel:domain', 'Create new contact and use it') ?>
         </label>
@@ -140,10 +141,20 @@ $(function () {
     form.on('beforeSubmit', function (event) {
         var input = form.find('input[name=action]:checked'),
             modalSelector = input.attr('ref'),
+            url = input.data('url');
             params = {};
 
-        if (input.val() === 'update') {
+        if (input.val() !== 'create') {
             params.id = $('#contact-combo').val();
+        }
+
+        if (input.val() === 'set-registrant') {
+            var concatinate = '?';
+            if (url.indexOf("?") >= 0) {
+                concatinate = '&'
+            }
+            window.location.replace(input.data('url') + concatinate + 'id=' + params.id);
+            return false;
         }
 
         $(modalSelector).modal('show');
