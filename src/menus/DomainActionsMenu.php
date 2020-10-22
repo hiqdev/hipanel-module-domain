@@ -155,6 +155,24 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'encode' => false,
             ],
             [
+                'label' => Yii::t('hipanel:domain', 'Delete'),
+                'icon' => 'fa-trash-o',
+                'url' => ['@domain/delete'],
+                'linkOptions' => [
+                    'data' => [
+                        'confirm' => Yii::t('hipanel:domain', 'Are you sure you want to delete domain {domain}?', ['domain' => $this->model->domain]),
+                        'method' => 'post',
+                        'data-pjax' => '0',
+                        'form' => 'delete-agp',
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                        ],
+                    ],
+                ],
+                'visible' => !$this->model->canDeleteAGP() && $this->model->canDelete(),
+                'encode' => false,
+            ],
+            [
                 'label' => Yii::t('hipanel:domain', 'Delete by AGP'),
                 'icon' => 'fa-trash-o',
                 'url' => ['@domain/delete-agp'],
@@ -190,7 +208,6 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 'visible' => $user->can('domain.delete'),
                 'encode' => false,
             ],
-
             [
                 'label' => !$this->model->isFreezed()
                     ? Yii::t('hipanel:domain', 'Freeze domain')
