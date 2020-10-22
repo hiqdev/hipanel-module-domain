@@ -11,6 +11,7 @@
 namespace hipanel\modules\domain\controllers;
 
 use hipanel\actions\IndexAction;
+use hipanel\actions\ComboSearchAction;
 use hipanel\actions\SmartCreateAction;
 use hipanel\actions\SmartDeleteAction;
 use hipanel\actions\SmartPerformAction;
@@ -41,7 +42,7 @@ class ZoneController extends CrudController
                     'update' => 'zone.update',
                     'delete' => 'zone.delete',
 
-                    '*' => 'zone.read',
+                    '*' => 'domain.read',
                 ],
             ],
         ]);
@@ -55,6 +56,9 @@ class ZoneController extends CrudController
         return array_merge(parent::actions(), [
             'index' => [
                 'class' => IndexAction::class,
+            ],
+            'search' => [
+                'class' => ComboSearchAction::class,
             ],
             'create' => [
                 'class' => SmartCreateAction::class,

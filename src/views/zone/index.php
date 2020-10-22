@@ -41,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $page->beginContent('bulk-actions') ?>
             <?= $page->renderBulkButton('disable', Yii::t('hipanel', 'Disable')) ?>
             <?= $page->renderBulkButton('enable', Yii::t('hipanel', 'Enable')) ?>
-            <?= $page->renderBulkButton('update', Yii::t('hipanel', 'Update')) ?>
             <?= $page->renderBulkDeleteButton('delete') ?>
         <?php $page->endContent('bulk-actions') ?>
 

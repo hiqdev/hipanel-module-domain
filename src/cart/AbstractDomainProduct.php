@@ -11,6 +11,8 @@
 namespace hipanel\modules\domain\cart;
 
 use hipanel\modules\domain\models\Domain;
+use hipanel\modules\domain\models\Zone;
+use hipanel\modules\domain\models\ZoneSearch;
 use hipanel\modules\finance\cart\AbstractCartPosition;
 use hipanel\validators\DomainValidator;
 use hiqdev\yii2\cart\DontIncrementQuantityWhenAlreadyInCart;
@@ -18,6 +20,10 @@ use Yii;
 
 abstract class AbstractDomainProduct extends AbstractCartPosition implements DontIncrementQuantityWhenAlreadyInCart
 {
+    /**
+     * Default value for max delegation period
+     */
+    const DEFAULT_QUANTITY_LIMIT = 10;
     /**
      * @var Domain
      */
@@ -75,7 +81,21 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     public function getQuantityOptions()
     {
         $result = [];
-        $limit = isset($this->quantityLimits[$this->getZone()]) ? $this->quantityLimits[$this->getZone()] : $this->quantityLimits['*'];
+        $limits = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'DomainQuantityLimits'], function() {
+            $models = Zone::find()->all();
+            foreach ($models as $model) {
+                $name = $model->getShortName();
+                $data[$name] = $model->getMaxDelegation();
+                if ($name !== DomainValidator::idn_to_utf8($name)) {
+                    $data[DomainValidator::convertAsciiToIdn($name)] = $model->getMaxDelegation();
+                    $data[DomainValidator::convertIdnToAscii($name)] = $model->getMaxDelegation();
+                }
+            }
+
+            return $data;
+        }, 1);
+
+        $limit = $limits[$this->getZone()] ?? self::DEFAULT_QUANTITY_LIMIT;
 
         if ($this->_model) {
             $interval = (new \DateTime())->diff(new \DateTime($this->_model->expires));
