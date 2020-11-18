@@ -14,12 +14,7 @@ use yii\helpers\Url;
         'boxTitle' => Yii::t('hipanel', 'Domains'),
     ]) ?>
         <?php $box->beginBody() ?>
-            <?= ObjectsCountWidget::widget([
-                'totalCount' => $totalCount['domains'],
-                'ownCount' => $model->count['domains'],
-            ]) ?>
-            <br>
-            <br>
+            <?= ObjectsCountWidget::widget(compact('route', 'ownCount', 'entityName')) ?>
             <?= SearchForm::widget([
                 'formOptions' => [
                     'id' => 'domain-search',

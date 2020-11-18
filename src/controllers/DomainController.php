@@ -21,6 +21,7 @@ use hipanel\actions\SmartDeleteAction;
 use hipanel\actions\SmartPerformAction;
 use hipanel\actions\SmartUpdateAction;
 use hipanel\actions\ValidateFormAction;
+use hipanel\actions\VariantsAction;
 use hipanel\actions\ViewAction;
 use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\ArrayHelper;
@@ -224,6 +225,11 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'index' => [
                 'class' => IndexAction::class,
+                'responseVariants' => [
+                    'get-total-count' => fn(VariantsAction $action): int => Domain::find()
+                        ->where(['states' => 'ok,incoming,outgoing,expired'])
+                        ->count(),
+                ],
                 'filterStorageMap' => [
                     'domain_like' => 'domain.domain.domain_like',
                     'ips' => 'hosting.ip.ip_in',
