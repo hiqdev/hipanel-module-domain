@@ -194,12 +194,12 @@ class Domain extends Model
             }, 'on' => ['transfer']],
             [['domain'], DomainValidator::class, 'enableIdn' => true, 'on' => ['transfer']],
             [['domain', 'password'], 'trim', 'on' => ['transfer']],
-            [['force_email'], 'filter', 'filter' => function ($value) use ($model) {
-                return isset($model->send_to) && $model->send_to === Domain::SEND_TO_FORCE_EMAIL ? $value : null;
+            [['force_email'], 'filter', 'filter' => function ($value) {
+                return !empty($this->send_to) && $this->send_to === Domain::SEND_TO_FORCE_EMAIL ? $value : null;
             }, 'on' => ['force-notify-transfer-in']],
             [['force_email'], 'email', 'on' => ['force-notify-transfer-in']],
             [['force_email'], 'required', 'when' => function ($model) {
-                return isset($model->send_to) && $model->send_to === Domain::SEND_TO_FORCE_EMAIL;
+                return !empty($model->send_to) && $model->send_to === Domain::SEND_TO_FORCE_EMAIL;
             }, 'on' => ['force-notify-transfer-in']],
             [['send_to'], 'safe', 'on' => ['force-notify-transfer-in']],
 

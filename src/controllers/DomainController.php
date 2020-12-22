@@ -445,13 +445,14 @@ class DomainController extends \hipanel\base\CrudController
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $data = Yii::$app->request->post($action->collection->getModel()->formName());
-                    $sendTo = $data['send_to'];
-                    $forceEmail = $data['force_email'];
+                    $sendTo = $data['send_to'] ?? Yii::$app->request->post('send_to');
+                    $forceEmail = !empty($data['force_email']) ? $data['force_email']  : Yii::$app->request->post('force_email');
                     unset($data['send_to'], $data['force_email']);
                     foreach ($data as &$item) {
                         $item['send_to'] = $sendTo;
                         $item['force_email'] = $forceEmail;
                     }
+
                     $action->collection->load($data);
                 },
                 'success' => Yii::t('hipanel:domain', 'FOA was sent'),

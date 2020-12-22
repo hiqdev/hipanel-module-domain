@@ -80,13 +80,13 @@ $unNotifiedTransferIn = [];
     Domain::SEND_TO_FORCE_EMAIL => Yii::t('hipanel:domain', 'Send FOA to specific email'),
 ], ['class' => 'domain-send-to-radio']) ?>
 
-<?= $form->field($model, 'force_email')->textInput([
+<?= Html::input('email', 'force_email', '', [
     'class' => 'form-control',
     'placeholder' => reset($models)->getAttributeLabel('force_email'),
     'autocomplete' => 'off',
     'id' => 'domain-force-email',
     'disabled' => 'disabled',
-])->label(false) ?>
+]) ?>
 
 <hr>
 <?= Html::submitButton(Yii::t('hipanel:domain', 'Send FOA'), ['class' => 'btn btn-success']) ?>
