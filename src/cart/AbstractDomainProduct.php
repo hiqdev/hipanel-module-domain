@@ -86,7 +86,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
             foreach ($models as $model) {
                 $name = $model->getShortName();
                 $data[$name] = $model->getMaxDelegation();
-                if ($name !== DomainValidator::idn_to_utf8($name)) {
+                if ($name !== DomainValidator::convertAsciiToIdn($name)) {
                     $data[DomainValidator::convertAsciiToIdn($name)] = $model->getMaxDelegation();
                     $data[DomainValidator::convertIdnToAscii($name)] = $model->getMaxDelegation();
                 }
