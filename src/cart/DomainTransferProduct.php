@@ -82,7 +82,7 @@ class DomainTransferProduct extends AbstractDomainProduct
     {
         if (Yii::$app->getModule('domain')->payableWhoisProtect && (new Domain(['domain' => $this->name]))->canPayWhoisProtect()) {
             return [
-                (new WhoisProtectOrderRelatedPosition($this)),
+                WhoisProtectOrderRelatedPosition::makeOrReturnNull($this),
             ];
         }
 

@@ -115,7 +115,10 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
     {
         if (!$this->_model->isRenewable()) {
             $this->addError('id', Yii::t('hipanel:domain', 'Domain status prohibits this operation'));
+            return false;
         }
+
+        return true;
     }
 
     /** {@inheritdoc} */
@@ -135,8 +138,9 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
         }
 
         return array_filter([
-            $this->_model->isWhoisProtectPaid() ?
-                (new WhoisProtectRenewalRelatedPosition($this)) : (new WhoisProtectOrderRelatedPosition($this)),
+            $this->_model->isWhoisProtectPaid()
+                ? WhoisProtectRenewalRelatedPosition::makeOrReturnNull($this)
+                : WhoisProtectOrderRelatedPosition::makeOrReturnNull($this),
         ]);
     }
 
