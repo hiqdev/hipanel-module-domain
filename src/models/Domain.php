@@ -876,6 +876,11 @@ class Domain extends Model
         return isset($this->is_wp_paid) && $this->is_wp_paid !== null;
     }
 
+    public function isWhoisProtectEnabled(): bool
+    {
+        return isset($this->whois_protected) && $this->whois_protected !== null;
+    }
+
     /**
      * {@inheritdoc}
      * @return DomainQuery
