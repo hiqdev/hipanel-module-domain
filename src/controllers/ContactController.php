@@ -37,7 +37,7 @@ class ContactController extends CrudController
                 'actions' => [
                     'create' => 'contact.create',
                     'update' => 'contact.update',
-                    '*' => 'contact.read',
+                    '*' => '@',
                 ],
             ],
         ]);
@@ -56,7 +56,7 @@ class ContactController extends CrudController
             'save' => true,
             'success' => [
                 'class' => RedirectAction::class,
-                'url' => ['@finance/cart/finish'],
+                'url' => ['@finance/cart/select'],
             ],
             'error' => [
                 'class' => RedirectAction::class,
@@ -105,7 +105,7 @@ class ContactController extends CrudController
     {
         (new RegistrantModifier(CartModule::getInstance()->getCart()))->setRegistrantId($id);
 
-        return $this->redirect(['@finance/cart/finish']);
+        return $this->redirect(['@finance/cart/select']);
     }
 
     public function beforeAction($action)
