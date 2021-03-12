@@ -264,6 +264,24 @@ class DomainActionsMenu extends \hiqdev\yii2\menus\Menu
                 ],
                 'visible' => $this->model->canHoldUnhold(),
             ],
+            [
+                'label' => Yii::t('hipanel:domain', 'Domain renew only in DB'),
+                'url' => ['@domain/renew-in-data-base'],
+                'icon' => 'fa-circle',
+                'linkOptions' => [
+                    'data' => [
+                        'method' => 'post',
+                        'pjax' => '0',
+                        'form' => 'renew-in-data-base-' . $this->model->id,
+                        'params' => [
+                            'Domain[id]' => $this->model->id,
+                            'Domain[domain]' => $this->model->domain,
+                            'Domain[expires]' => date("Y-m-d", strtotime($this->model->expires)),
+                        ],
+                    ],
+                ],
+                'visible' => $user->can('domain.maintain'),
+            ],
         ];
     }
 }

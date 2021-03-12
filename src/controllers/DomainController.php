@@ -90,6 +90,7 @@ class DomainController extends \hipanel\base\CrudController
                     'preincoming-started, preincoming-started GET html, preincoming-started html' => true,
                     'preincoming-canceled, preincoming-canceled GET html, preincoming-canceled html' => true,
                     'preincoming-failed, preincoming-failed GET html, preincoming-failed html' => true,
+                    'renew-in-data-base' => 'domain.maintain',
                     '*' => 'domain.read',
                 ],
             ], [
@@ -687,6 +688,10 @@ class DomainController extends \hipanel\base\CrudController
             'sync' => [
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Contacts synced'),
+            ],
+            'renew-in-data-base' => [
+                'class' => SmartPerformAction::class,
+                'success' => Yii::t('hipanel:domain', 'Renewed in DB'),
             ],
             'buy' => [
                 'class' => RedirectAction::class,

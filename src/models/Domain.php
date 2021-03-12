@@ -126,7 +126,7 @@ class Domain extends Model
             [['domain', 'statuses', 'name', 'zone', 'state', 'lastop', 'state_label'], 'safe'],
             [['seller', 'seller_name', 'client', 'client_name'], 'safe'],
             [['premium_expires', 'premium_days_left'], 'safe'],
-            [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date'],
+            [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date', 'format' => 'php:Y-m-d'],
             [['registered', 'operated'], 'date'],
             [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
@@ -244,6 +244,8 @@ class Domain extends Model
             ['premium_autorenewal', 'boolean'],
 
             [['id', 'premium_autorenewal'], 'required', 'on' => ['set-paid-feature-autorenewal']],
+            [['expires'], 'safe', 'on' => ['renew-in-data-base']],
+            [['id', 'expires', 'domain'], 'required', 'on' => ['renew-in-data-base']],
         ];
     }
 
