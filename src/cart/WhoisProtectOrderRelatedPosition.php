@@ -18,7 +18,10 @@ class WhoisProtectOrderRelatedPosition extends RelatedPosition
         $qty = $this->mainPosition->getQuantity();
         if ($rootModel) {
             $position->setModel($rootModel);
-            $position->load(['name' => $rootModel->domain, 'parent_id' => $rootPositionId]);
+            $position->load([
+                'name' => $rootModel->domain,
+                'parent_id' => $rootPositionId,
+            ]);
             $qty += $position->calculateQuantity();
         } else {
             $domainName = $this->mainPosition->name;

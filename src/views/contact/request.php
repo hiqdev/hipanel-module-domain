@@ -16,6 +16,10 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
 
 ?>
 
+<div class="blog">
+    <div class="row">
+        <div class="col-md-12">
+
 <?php \hipanel\widgets\Box::begin([
     'title' => $requestRegistrant
         ? Yii::t('hipanel:domain', 'In order to finish domain registration, please, select contact data')
@@ -106,6 +110,9 @@ $contactInfoUrl = Url::to(['@contact/short-view']);
 <div id='contact-combo-info' class="col-md-6">
 </div>
 <?php \hipanel\widgets\Box::end() ?>
+</div>
+</div>
+</div>
 
 <?php
 

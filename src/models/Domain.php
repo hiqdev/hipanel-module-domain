@@ -900,6 +900,11 @@ class Domain extends Model
         $limits = self::getZonesLimits();
         return $limits[$this->getZone()] ?? [];
     }
+  
+    public function isWhoisProtectEnabled(): bool
+    {
+        return isset($this->whois_protected) && $this->whois_protected !== null;
+    }
 
     /**
      * {@inheritdoc}
