@@ -921,21 +921,18 @@ class Domain extends Model
             $data = [];
             foreach ($models as $model) {
                 $name = $model->getShortName();
-                if ($name === DomainValidator::convertAsciiToIdn($name)) {
-                    $data[$name] = [
+                $limits = [
                         'max_delegation' => $model->getMaxDelegation(),
                         'before_expire' => $model->getDaysBeforeExpires(),
-                    ];
+                ];
+                
+                if ($name === DomainValidator::convertAsciiToIdn($name)) {
+                    $data[$name] = $limits;
                     continue;
                 }
-                $data[DomainValidator::convertAsciiToIdn($name)] = [
-                    'max_delegation' => $model->getMaxDelegation(),
-                    'before_expire' => $model->getDaysBeforeExpires(),
-                ];
-                $data[DomainValidator::convertIdnToAscii($name)] = [
-                    'max_delegation' => $model->getMaxDelegation(),
-                    'before_expire' => $model->getDaysBeforeExpires(),
-                ];
+                $data[DomainValidator::convertAsciiToIdn($name)] = $limits;
+                $data[DomainValidator::convertIdnToAscii($name)] = $limits;
+                
             }
             return $data;
         }, 3600);
