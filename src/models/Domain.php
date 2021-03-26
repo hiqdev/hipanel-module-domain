@@ -653,9 +653,14 @@ class Domain extends Model
         return !$this->isRussianZone();
     }
 
-    public function isRussianRenewable()
+    public function isDaysBeforeExpiresRenewable()
     {
-        return strtotime('+56 days') > strtotime($this->expires);
+        $days = $this->getDaysBeforeExpires();
+        if (empty($days)) {
+            return true;
+        }
+
+        return strtotime("+{$days} days") > strtotime($this->expires);
     }
 
     public function isRenewable(): bool
@@ -668,12 +673,12 @@ class Domain extends Model
             return false;
         }
 
-        $maxDelegationPeriod = static::$maxDelegationPeriods[$this->getZone()] ?? static::$maxDelegationPeriods['*'];
+        $maxDelegationPeriod = $this->getMaxDelegation() ?? static::$maxDelegationPeriods['*'];
         if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod} year")) {
             return false;
         }
 
-        return $this->isRussianRenewable() || !$this->isRussianZone();
+        return $this->isDaysBeforeExpiresRenewable();
     }
 
     /**
@@ -878,6 +883,22 @@ class Domain extends Model
         return isset($this->is_wp_paid) && $this->is_wp_paid !== null;
     }
 
+    public function getDaysBeforeExpires(): ?int
+    {
+        return $this->getZoneLimit('before_expire');
+    }
+
+    public function getMaxDelegation(): ?int
+    {
+        return $this->getZoneLimit('max_delegation');
+    }
+
+    public function getZoneLimits(): array
+    {
+        $limits = self::getZonesLimits();
+        return $limits[$this->getZone()] ?? [];
+    }
+
     /**
      * {@inheritdoc}
      * @return DomainQuery
@@ -888,4 +909,40 @@ class Domain extends Model
             'options' => $options,
         ]);
     }
+
+    public static function getZonesLimits(): array
+    {
+        return Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'ZonesInfo'], function() {
+            $models = Zone::find()
+                ->limit('ALL')
+                ->all();
+            $data = [];
+            foreach ($models as $model) {
+                $name = $model->getShortName();
+                if ($name === DomainValidator::convertAsciiToIdn($name)) {
+                    $data[$name] = [
+                        'max_delegation' => $model->getMaxDelegation(),
+                        'before_expire' => $model->getDaysBeforeExpires(),
+                    ];
+                    continue;
+                }
+                $data[DomainValidator::convertAsciiToIdn($name)] = [
+                    'max_delegation' => $model->getMaxDelegation(),
+                    'before_expire' => $model->getDaysBeforeExpires(),
+                ];
+                $data[DomainValidator::convertIdnToAscii($name)] = [
+                    'max_delegation' => $model->getMaxDelegation(),
+                    'before_expire' => $model->getDaysBeforeExpires(),
+                ];
+            }
+            return $data;
+        }, 3600);
+    }
+
+    protected function getZoneLimit(string $limit): ?int
+    {
+        $limits = $this->getZoneLimits();
+        return $limits[$limit] ?? null;
+    }
+
 }

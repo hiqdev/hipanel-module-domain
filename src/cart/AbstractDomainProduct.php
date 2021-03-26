@@ -69,24 +69,12 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
-        $result = [];
-        $limits = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'DomainQuantityLimits'], function() {
-            $models = Zone::find()
-                ->limit('ALL')
-                ->all();
-            foreach ($models as $model) {
-                $name = $model->getShortName();
-                $data[$name] = $model->getMaxDelegation();
-                if ($name !== DomainValidator::convertAsciiToIdn($name)) {
-                    $data[DomainValidator::convertAsciiToIdn($name)] = $model->getMaxDelegation();
-                    $data[DomainValidator::convertIdnToAscii($name)] = $model->getMaxDelegation();
-                }
-            }
-
-            return $data;
-        }, 3600);
-
-        $limit = $limits[$this->getZone()] ?? self::DEFAULT_QUANTITY_LIMIT;
+        if ($this->_model) {
+            $limit = $this->_model->getMaxDelegation() ?? self::DEFAULT_QUANTITY_LIMIT;
+        } else {
+            $limits = Domain::getZonesLimits();
+            $limit = $limits[$this->getZone()]['max_delegation'] ?? self::DEFAULT_QUANTITY_LIMIT;
+        }
 
         if ($this->_model) {
             $interval = (new \DateTime())->diff(new \DateTime($this->_model->expires));
