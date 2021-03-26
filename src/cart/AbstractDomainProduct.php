@@ -37,17 +37,6 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     /** {@inheritdoc} */
     protected $_calculationModel = Calculation::class;
 
-    /**
-     * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years
-     */
-    protected $quantityLimits = [
-        'ru' => 1,
-        'su' => 1,
-        'рф' => 1,
-        'xn--p1ai' => 1,
-        '*' => 10,
-    ];
-
     /** {@inheritdoc} */
     public function getIcon()
     {
@@ -82,7 +71,9 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     {
         $result = [];
         $limits = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'DomainQuantityLimits'], function() {
-            $models = Zone::find()->all();
+            $models = Zone::find()
+                ->limit('ALL')
+                ->all();
             foreach ($models as $model) {
                 $name = $model->getShortName();
                 $data[$name] = $model->getMaxDelegation();
@@ -93,7 +84,7 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
             }
 
             return $data;
-        }, 1);
+        }, 3600);
 
         $limit = $limits[$this->getZone()] ?? self::DEFAULT_QUANTITY_LIMIT;
 
