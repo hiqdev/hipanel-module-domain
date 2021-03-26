@@ -673,7 +673,9 @@ class Domain extends Model
             return false;
         }
 
-        $maxDelegationPeriod = $this->getMaxDelegation() ?? static::$maxDelegationPeriods['*'];
+        $maxDelegationPeriod = $this->getMaxDelegation()
+            ? ($this->getMaxDelegation() + 1)
+            : static::$maxDelegationPeriods['*'];
         if (strtotime('+1 year', strtotime($this->expires)) > strtotime("+{$maxDelegationPeriod} year")) {
             return false;
         }
