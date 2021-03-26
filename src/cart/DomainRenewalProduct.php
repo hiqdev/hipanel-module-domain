@@ -14,6 +14,7 @@ use DateTime;
 use hipanel\modules\domain\models\Domain;
 use hipanel\modules\finance\cart\BatchPurchasablePositionInterface;
 use hipanel\modules\finance\cart\BatchPurchaseStrategy;
+use hipanel\validators\DomainValidator;
 use Yii;
 
 class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchasablePositionInterface
@@ -29,16 +30,6 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
     {
         return ['model_id'];
     }
-
-    /**
-     * @var integer[] the limit of days before expiration date for each domain zone, when domain can be renewed
-     */
-    protected $daysBeforeExpire = [
-        'ru' => 56,
-        'su' => 56,
-        'рф' => 56,
-        'xn--p1ai' => 56,
-    ];
 
     /** {@inheritdoc} */
     public function load($data, $formName = null)
@@ -90,19 +81,32 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
      */
     public function daysBeforeExpireValidator($attribute)
     {
-        if (isset($this->daysBeforeExpire[$this->getZone()])) {
-            $minDays = $this->daysBeforeExpire[$this->getZone()];
-            $interval = (new DateTime())->diff(new DateTime($this->_model->expires));
-            $diff = $interval->format('%a') - $minDays;
-            if ($diff > 0) {
-                $date = Yii::$app->formatter->asDate((new DateTime())->add(new \DateInterval("P{$diff}D")));
-                $this->addError('id', Yii::t('hipanel:domain', 'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, plural, one{# day} other{# days}})', ['zone' => (string)$this->getZone(), 'min' => (int)$minDays, 'date' => (string)$date, 'days' => (int)$diff, 'domain' => (string)$this->name]));
-
-                return false;
-            }
+        if ($this->_model) {
+            $minDays = $this->_model->getDaysBeforeExpires();
+        } else {
+            $limits = Domain::getZonesLimits();
+            $minDays = $limits[$this->getZone()]['before_expire'] ?? null;
         }
 
-        return true;
+        if (!isset($minDays)) {
+            return true;
+        }
+        $interval = (new DateTime())->diff(new DateTime($this->_model->expires));
+        $diff = $interval->format('%a') - $minDays;
+        if ($diff <= 0) {
+            return true;
+        }
+
+        $date = Yii::$app->formatter->asDate((new DateTime())->add(new \DateInterval("P{$diff}D")));
+        $this->addError('id', Yii::t('hipanel:domain', 'Domains in zone {zone} could be renewed only in last {min, plural, one{# day} other{# days}} before the expiration date. You are able to renew domain {domain} only after {date} (in {days, plural, one{# day} other{# days}})', [
+            'zone' => (string)$this->getZone(),
+            'min' => (int)$minDays,
+            'date' => (string)$date,
+            'days' => (int)$diff,
+            'domain' => (string)$this->name,
+        ]));
+
+        return false;
     }
 
     /**

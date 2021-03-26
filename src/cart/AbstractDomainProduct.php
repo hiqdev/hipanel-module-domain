@@ -37,17 +37,6 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     /** {@inheritdoc} */
     protected $_calculationModel = Calculation::class;
 
-    /**
-     * @var integer[] The limit of quantity (years of purchase/renew) for each domain zone in years
-     */
-    protected $quantityLimits = [
-        'ru' => 1,
-        'su' => 1,
-        'рф' => 1,
-        'xn--p1ai' => 1,
-        '*' => 10,
-    ];
-
     /** {@inheritdoc} */
     public function getIcon()
     {
@@ -80,22 +69,12 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
-        $result = [];
-        $limits = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'DomainQuantityLimits'], function() {
-            $models = Zone::find()->all();
-            foreach ($models as $model) {
-                $name = $model->getShortName();
-                $data[$name] = $model->getMaxDelegation();
-                if ($name !== DomainValidator::convertAsciiToIdn($name)) {
-                    $data[DomainValidator::convertAsciiToIdn($name)] = $model->getMaxDelegation();
-                    $data[DomainValidator::convertIdnToAscii($name)] = $model->getMaxDelegation();
-                }
-            }
-
-            return $data;
-        }, 1);
-
-        $limit = $limits[$this->getZone()] ?? self::DEFAULT_QUANTITY_LIMIT;
+        if ($this->_model) {
+            $limit = $this->_model->getMaxDelegation() ?? self::DEFAULT_QUANTITY_LIMIT;
+        } else {
+            $limits = Domain::getZonesLimits();
+            $limit = $limits[$this->getZone()]['max_delegation'] ?? self::DEFAULT_QUANTITY_LIMIT;
+        }
 
         if ($this->_model) {
             $interval = (new \DateTime())->diff(new \DateTime($this->_model->expires));
