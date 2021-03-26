@@ -30,16 +30,6 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
         return ['model_id'];
     }
 
-    /**
-     * @var integer[] the limit of days before expiration date for each domain zone, when domain can be renewed
-     */
-    protected $daysBeforeExpire = [
-        'ru' => 56,
-        'su' => 56,
-        'рф' => 56,
-        'xn--p1ai' => 56,
-    ];
-
     /** {@inheritdoc} */
     public function load($data, $formName = null)
     {
@@ -90,8 +80,24 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
      */
     public function daysBeforeExpireValidator($attribute)
     {
-        if (isset($this->daysBeforeExpire[$this->getZone()])) {
-            $minDays = $this->daysBeforeExpire[$this->getZone()];
+        $limits = Yii::$app->cache->getOrSet([__CLASS__, __METHOD__, 'DomainBeforeExpireLimits'], function() {
+            $models = Zone::find()
+                ->limit('ALL')
+                ->all();
+            foreach ($models as $model) {
+                $name = $model->getShortName();
+                $data[$name] = $model->getDaysBeforeExpires();
+                if ($name !== DomainValidator::convertAsciiToIdn($name)) {
+                    $data[DomainValidator::convertAsciiToIdn($name)] = $model->getDaysBeforeExpires();
+                    $data[DomainValidator::convertIdnToAscii($name)] = $model->getDaysBeforeExpires();
+                }
+            }
+
+            return $data;
+        }, 3600);
+
+        if (isset($limits[$this->getZone()])) {
+            $minDays = $this->limits[$this->getZone()];
             $interval = (new DateTime())->diff(new DateTime($this->_model->expires));
             $diff = $interval->format('%a') - $minDays;
             if ($diff > 0) {
