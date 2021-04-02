@@ -743,7 +743,7 @@ class Domain extends Model
 
     public function isWPProhibited(): bool
     {
-        return isset($this->wp_disabled) && (bool)$this->wp_disabled === true;
+        return (bool) $this->getZoneLimit('wp_disabled');
     }
 
     /**
@@ -934,6 +934,7 @@ class Domain extends Model
                 $limits = [
                         'max_delegation' => $model->getMaxDelegation(),
                         'before_expire' => $model->getDaysBeforeExpires(),
+                        'wp_disabled' => (int) $model->isWPProhibited(),
                 ];
 
                 if ($name === DomainValidator::convertAsciiToIdn($name)) {

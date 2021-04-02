@@ -42,7 +42,8 @@ class DomainTransferProduct extends AbstractDomainProduct
     /** {@inheritdoc} */
     public function getQuantityOptions()
     {
-        $amount = in_array($this->getZone(), ['ru', 'su', 'рф'], true) ? 0 : 1;
+        // TODO: Get zones without renewal after transer from DB
+        $amount = in_array($this->getZone(), ['ru', 'su', 'рф', 'xn--p1ai'], true) ? 0 : 1;
 
         return [$amount => Yii::t('hipanel:domain', '{0, plural, one{# year} other{# years}}', $amount)];
     }
