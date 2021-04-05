@@ -128,7 +128,7 @@ class Domain extends Model
             [['premium_expires', 'premium_days_left'], 'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date', 'format' => 'php:Y-m-d'],
             [['registered', 'operated'], 'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid'], 'boolean'],
+            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid', 'wp_disabled'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
@@ -741,6 +741,11 @@ class Domain extends Model
         return $this->isLastZone(['ru', 'su', 'рф', 'xn--p1ai']);
     }
 
+    public function isWPProhibited(): bool
+    {
+        return (bool) $this->getZoneLimit('wp_disabled');
+    }
+
     /**
      * Returns true if the zone is among given list of zones.
      * @param array|string $zones zone or list of zones
@@ -852,7 +857,7 @@ class Domain extends Model
 
     public function isWPChangeable() : bool
     {
-        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isRussianZone() && ($this->getTopLevelZone() !== 'ws');
+        return (!$this->isWPFreezed() || $this->canWPFreezeUnfreeze()) && !$this->isWPProhibited();
     }
 
     public function isSecureChangeable() : bool
@@ -872,7 +877,7 @@ class Domain extends Model
 
     public function canPayWhoisProtect(): bool
     {
-        return !$this->isRussianZone() && ($this->getTopLevelZone() !== 'ws');
+        return !$this->isWPProhibited();
     }
 
     public function needToPayWhoisProtect(): bool
@@ -900,10 +905,10 @@ class Domain extends Model
         $limits = self::getZonesLimits();
         return $limits[$this->getZone()] ?? [];
     }
-  
+
     public function isWhoisProtectEnabled(): bool
     {
-        return isset($this->whois_protected) && $this->whois_protected !== null;
+        return isset($this->whois_protected) && (bool)$this->whois_protected !== false;
     }
 
     /**
@@ -929,15 +934,15 @@ class Domain extends Model
                 $limits = [
                         'max_delegation' => $model->getMaxDelegation(),
                         'before_expire' => $model->getDaysBeforeExpires(),
+                        'wp_disabled' => (int) $model->isWPProhibited(),
                 ];
-                
+
                 if ($name === DomainValidator::convertAsciiToIdn($name)) {
                     $data[$name] = $limits;
                     continue;
                 }
                 $data[DomainValidator::convertAsciiToIdn($name)] = $limits;
                 $data[DomainValidator::convertIdnToAscii($name)] = $limits;
-                
             }
             return $data;
         }, 3600);
