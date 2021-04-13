@@ -37,7 +37,7 @@ class ZoneGridView extends BoxedGridView
                 'label' => Yii::t('hipanel:domain', 'Registry'),
                 'attribute' => 'registry',
                 'filterOptions' => ['class' => 'narrow-filter'],
-                'format' => 'raw',
+                'format' => 'html',
                 'filterAttribute' => 'registry_ilike',
                 'filter' => function (DataColumn $column, Zone $model, string $attribute) {
                     return RegistryCombo::widget([

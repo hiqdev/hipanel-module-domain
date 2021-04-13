@@ -28,7 +28,8 @@ class PaidWPColumn extends DataColumn
         'selector' => 'span',
     ];
 
-    public $format = 'html';
+    /** TODO: fix */
+    public $format = 'raw';
 
     public function init(): void
     {
