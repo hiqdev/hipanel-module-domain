@@ -36,7 +36,6 @@ class DomainGridView extends BoxedGridView
     {
         return array_merge(parent::columns(), [
             'is_premium' => [
-                /** TODO: fix */
                 'format' => 'raw',
                 'value' => function ($model) {
                     $state = ($model->premium->is_active) ? Yii::t('hipanel.domain.premium', 'Active till {expires,date} ({days_left,plural,=0{# days} =1{# day} other{# days}} left)', [
@@ -308,7 +307,6 @@ class DomainGridView extends BoxedGridView
                 ],
             ],
             'nameservers' => [
-                /** TODO: fix */
                 'format' => 'raw',
                 'value' => function ($model) {
                     return ArraySpoiler::widget(['data' => $model->nameservers]);

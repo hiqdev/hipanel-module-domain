@@ -28,7 +28,6 @@ class PaidWPColumn extends DataColumn
         'selector' => 'span',
     ];
 
-    /** TODO: fix */
     public $format = 'raw';
 
     public function init(): void
@@ -73,7 +72,7 @@ class PaidWPColumn extends DataColumn
                 echo Html::endTag('div');
                 echo Html::a(
                     Yii::t('hipanel:domain', 'Add to cart'),
-                    ['@domain/add-to-cart-whois-protect', 'name' => $model->domain],
+                    ['@domain/add-to-cart-whois-protect', 'name' => Html::encode($model->domain)],
                     ['class' => 'btn btn-block btn-success']
                 );
                 Modal::end();
