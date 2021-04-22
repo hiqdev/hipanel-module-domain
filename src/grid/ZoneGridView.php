@@ -26,7 +26,7 @@ class ZoneGridView extends BoxedGridView
         return array_merge(parent::columns(), [
             'name' => [
                 'attribute' => 'name',
-                'format' => 'raw',
+                'format' => 'html',
                 'label' => Yii::t('hipanel:domain', 'Name'),
                 'filterAttribute' => 'name_ilike',
                 'value' => function (Zone $model): string {
@@ -37,7 +37,7 @@ class ZoneGridView extends BoxedGridView
                 'label' => Yii::t('hipanel:domain', 'Registry'),
                 'attribute' => 'registry',
                 'filterOptions' => ['class' => 'narrow-filter'],
-                'format' => 'raw',
+                'format' => 'html',
                 'filterAttribute' => 'registry_ilike',
                 'filter' => function (DataColumn $column, Zone $model, string $attribute) {
                     return RegistryCombo::widget([
@@ -55,7 +55,6 @@ class ZoneGridView extends BoxedGridView
                 'attribute' => 'state',
                 'filterOptions' => ['class' => 'narrow-filter'],
                 'class' => RefColumn::class,
-                'format' => 'raw',
                 'gtype' => 'state,zone',
                 'value' => function (Zone $model): string {
                     return Yii::t('hipanel:domain', $model->state);
@@ -64,32 +63,27 @@ class ZoneGridView extends BoxedGridView
             'no' => [
                 'attribute' => 'no',
                 'filter' => false,
-                'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'No.'),
                 'filterAttribute' => 'no_ilike',
             ],
             'autorenew_grace_period' => [
                 'attribute' => 'autorenew_grace_period',
                 'filter' => false,
-                'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Auto-Renew grace period'),
             ],
             'redemption_grace_period' => [
                 'attribute' => 'redemption_grace_period',
                 'filter' => false,
-                'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Redemption grace period'),
             ],
             'add_grace_period' => [
                 'attribute' => 'add_grace_period',
                 'filter' => false,
-                'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Add grace period'),
             ],
             'add_grace_limit' => [
                 'attribute' => 'add_grace_limit',
                 'filter' => false,
-                'format' => 'raw',
                 'label' => Yii::t('hipanel:domain', 'Add grace limit') . ', %',
             ],
             'has_contacts' => [
@@ -97,7 +91,7 @@ class ZoneGridView extends BoxedGridView
                 'filter' => false,
                 'enableSorting' => false,
                 'attribute' => 'has_contacts',
-                'format' => 'raw',
+                'format' => 'html',
                 'label' => Yii::t('hipanel:domain', 'Has contacts'),
                 'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
                 'value' => function (Zone $model): string {
@@ -117,7 +111,7 @@ class ZoneGridView extends BoxedGridView
                 'filter' => false,
                 'enableSorting' => false,
                 'attribute' => 'password_required',
-                'format' => 'raw',
+                'format' => 'html',
                 'label' => Yii::t('hipanel:domain', 'Password required'),
                 'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
                 'value' => function (Zone $model): string {
