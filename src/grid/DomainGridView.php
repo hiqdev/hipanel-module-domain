@@ -99,7 +99,7 @@ class DomainGridView extends BoxedGridView
                 'filterOptions' => ['class' => 'narrow-filter'],
             ],
             'state' => [
-                'format' => 'html',
+                'format' => 'raw',
                 'filter' => function ($grid, $model, $attribute) {
                     return StaticCombo::widget([
                         'model' => $model,
@@ -115,13 +115,13 @@ class DomainGridView extends BoxedGridView
                 },
             ],
             'foa_sent_to' => [
-                'format' => 'html',
+                'format' => 'raw',
                 'filter' => false,
                 'visible' => function ($model) {
                     return $model->canSendFOA();
                 },
                 'value' => function ($model) {
-                    return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . $model->foa_sent_to;
+                    return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Html::encode($model->foa_sent_to);
                 },
             ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
@@ -136,7 +136,7 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'format' => 'html',
+                'format' => 'raw',
                 'value' => function ($model) {
                     return IconStateLabel::widget([
                         'model' => $model,
@@ -167,7 +167,6 @@ class DomainGridView extends BoxedGridView
                     'placement' => 'bottom',
                     'selector' => 'span',
                 ],
-                'format' => 'html',
                 'exportedValue' => function ($model) {
                     return $model->is_secured ? 'ON' : 'OFF';
                 },
@@ -233,7 +232,7 @@ class DomainGridView extends BoxedGridView
                 'contentOptions' => ['class' => 'text-nowrap'],
             ],
             'expires' => [
-                'format' => 'html',
+                'format' => 'raw',
                 'filter' => false,
                 'headerOptions' => ['style' => 'width:1em'],
                 'value' => function ($model) {
@@ -252,7 +251,6 @@ class DomainGridView extends BoxedGridView
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Auto renew')),
                 'attribute' => 'autorenewal',
-                'format' => 'html',
                 'exportedValue' => function ($model) {
                     return $model->autorenewal ? 'ON' : 'OFF';
                 },
