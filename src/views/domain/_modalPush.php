@@ -11,7 +11,10 @@ use yii\helpers\Html;
  * @var Domain[] $models
  * @var bool $hasPincode
  */
-$unPushable = [];
+$unPushable = array_map(
+    fn ($model) => $model->domain,
+    array_filter($models, fn ($model) => !$model->canBePushed())
+);
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -39,15 +42,8 @@ $unPushable = [];
     <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
     <div class="panel-body">
         <?= ArraySpoiler::widget([
-            'data' => $models,
+            'data' => array_map(fn ($model) => $model->domain, $models),
             'visibleCount' => count($models),
-            'formatter' => function ($model) use (&$unPushable) {
-                if (!$model->canBePushed()) {
-                    $unPushable[] =  $model->domain;
-                }
-
-                return $model->domain;
-            },
             'delimiter' => ',&nbsp; ',
         ]); ?>
     </div>

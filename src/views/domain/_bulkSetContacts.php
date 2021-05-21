@@ -8,7 +8,15 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-$unchangeableZones = [];
+/**
+ * @var \yii\base\Model $model
+ * @var \yii\base\Model[] $models
+ */
+
+$unchangeableZones = array_map(
+    fn ($model) => $model->domain,
+    array_filter($models, fn ($model) => $model->isContactChangeable())
+);
 $model->setScenario(isset($domainContact) ? 'set-contacts' : 'bulk-set-contacts');
 $i = 0;
 ?>
@@ -22,15 +30,8 @@ $i = 0;
     <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
     <div class="panel-body">
         <?= ArraySpoiler::widget([
-            'data' => $models,
+            'data' => array_map(fn ($model) => $model->domain, $models),
             'visibleCount' => count($models),
-            'formatter' => function ($model) use (&$unchangeableZones) {
-                if (!$model->isContactChangeable()) {
-                    $unchangeableZones[] = $model->domain;
-                }
-
-                return $model->domain;
-            },
             'delimiter' => ',&nbsp; ',
         ]) ?>
     </div>
