@@ -39,11 +39,11 @@ foreach ($models as $id => $model) {
                             <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
                             <div class="panel-body">
                                 <?= \hipanel\widgets\ArraySpoiler::widget([
-                                    'data' => $affected,
+                                    'data' => array_filter(array_map(
+                                        fn ($model) => $model->isSetNSable() ? $model->domain : null,
+                                        $affected
+                                    )),
                                     'visibleCount' => count($affected),
-                                    'formatter' => function ($model) {
-                                        return $model->isSetNSable() ? $model->domain : null;
-                                    },
                                     'delimiter' => ',&nbsp; ',
                                 ]); ?>
                             </div>
@@ -54,11 +54,11 @@ foreach ($models as $id => $model) {
                             <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Unaffected domains') ?></div>
                             <div class="panel-body">
                                 <?= \hipanel\widgets\ArraySpoiler::widget([
-                                    'data' => $unaffected,
+                                    'data' => array_filter(array_map(
+                                        fn ($model) => $model->isSetNSable() ? null : $model->domain,
+                                        $affected
+                                    )),
                                     'visibleCount' => count($unaffected),
-                                    'formatter' => function ($model) {
-                                        return !$model->isSetNSable() ? $model->domain : null;
-                                    },
                                     'delimiter' => ',&nbsp; ',
                                 ]); ?>
                             </div>

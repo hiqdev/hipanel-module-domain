@@ -33,11 +33,8 @@ use yii\helpers\Html;
                         <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected name servers') ?></div>
                         <div class="panel-body">
                             <?= ArraySpoiler::widget([
-                                'data' => $models,
+                                'data' => array_map(fn ($model) => $model->host, $models),
                                 'visibleCount' => count($models),
-                                'formatter' => function ($model) {
-                                    return $model->host;
-                                },
                                 'delimiter' => ',&nbsp; ',
                             ]); ?>
                         </div>
