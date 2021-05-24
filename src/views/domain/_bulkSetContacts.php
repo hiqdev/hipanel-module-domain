@@ -13,10 +13,10 @@ use yii\helpers\Html;
  * @var \yii\base\Model[] $models
  */
 
-$unchangeableZones = array_map(
-    fn ($model) => $model->domain,
-    array_filter($models, fn ($model) => $model->isContactChangeable())
-);
+$unchangeableZones = array_filter(array_map(
+    fn ($model) => $model->isContactChangeable() ? null : $model->domain,
+    $models
+));
 $model->setScenario(isset($domainContact) ? 'set-contacts' : 'bulk-set-contacts');
 $i = 0;
 ?>
