@@ -39,10 +39,10 @@ foreach ($models as $id => $model) {
                             <div class="panel-heading"><?= Yii::t('hipanel:domain', 'Affected domains') ?></div>
                             <div class="panel-body">
                                 <?= \hipanel\widgets\ArraySpoiler::widget([
-                                    'data' => array_map(
-                                        fn ($model) => $model->domain,
-                                        array_filter($affected, fn ($model) => $model->isSetNSable())
-                                    ),
+                                    'data' => array_filter(array_map(
+                                        fn ($model) => $model->isSetNSable() ? $model->domain : null,
+                                        $affected
+                                    )),
                                     'visibleCount' => count($affected),
                                     'delimiter' => ',&nbsp; ',
                                 ]); ?>
