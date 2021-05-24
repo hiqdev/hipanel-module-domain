@@ -11,10 +11,10 @@ use yii\helpers\Html;
  * @var Domain[] $models
  * @var bool $hasPincode
  */
-$unPushable = array_map(
-    fn ($model) => $model->domain,
-    array_filter($models, fn ($model) => !$model->canBePushed())
-);
+$unPushable = array_filter(array_map(
+    fn ($model) => $model->canBePushed() ? null : $model->domain,
+    $models
+));
 ?>
 
 <?php $form = ActiveForm::begin([

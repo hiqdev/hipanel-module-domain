@@ -27,10 +27,10 @@ $this->registerJs(<<<JS
 JS
 );
 
-$unNotifiedTransferIn = array_map(
-    fn ($model) => $model->domain,
-    array_filter($models, fn ($model) => !$model->canSendFOA())
-);
+$unNotifiedTransferIn = array_filter(array_map(
+    fn ($model) => $model->canSendFOA() ? null : $model->domain,
+    $models
+));
 ?>
 
 <?php $form = ActiveForm::begin([
