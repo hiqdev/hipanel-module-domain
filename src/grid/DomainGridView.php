@@ -160,7 +160,7 @@ class DomainGridView extends BoxedGridView
                 'filter' => false,
                 'enableSorting' => false,
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Protection')),
-                'format' => 'html',
+                'format' => 'raw',
                 'attribute' => 'is_secured',
                 'popover' => Yii::t('hipanel:domain', 'Protection from transfer'),
                 'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
@@ -252,7 +252,7 @@ class DomainGridView extends BoxedGridView
             'autorenewal' => [ // don't forget to update `autorenewal_with_label` column as well
                 'label' => Html::tag('span', Yii::t('hipanel:domain', 'Auto renew')),
                 'attribute' => 'autorenewal',
-                'format' => 'html',
+                'format' => 'raw',
                 'exportedValue' => function ($model) {
                     return $model->autorenewal ? 'ON' : 'OFF';
                 },
