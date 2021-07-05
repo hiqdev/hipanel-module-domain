@@ -389,4 +389,14 @@ return [
     '{operation} WHOIS Protection for {price} per year' => '{operation} защиту WHOIS за {price} в год',
     'Add' => 'Добавить',
     'WHOIS protect renewal' => 'Продление WHOIS защиты',
+
+    'Key tag' => 'Идентификатор ключа',
+    'Digest algorithm' => 'Алгоритм шифрования дайжеста',
+    'Digest type' => 'Тип дайжест-алгоритма',
+    'Digest' => 'Дайжест',
+    'Key algorithm' => 'Алгоритм шифрования ключа',
+    'Key protocol' => 'Протокол',
+    'Key flag' => 'Zone Key flag',
+    'Public key' => 'Публичный ключ',
+    'Create SecDNS record' => 'Создать SecDNS запись',
 ];

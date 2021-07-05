@@ -15,6 +15,7 @@ return [
         '@domain-check' => '/domain/check',
         '@domain-contact' => '/domain/contact',
         '@zone' => '/domain/zone',
+        '@secdns' => '/domain/secdns',
     ],
     'modules' => [
         'domain' => [
