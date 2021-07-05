@@ -70,6 +70,9 @@ class Secdns extends \hipanel\base\Model
                 'when' => function($model) {
                     return !empty($model->pub_key);
                 },
+                'whenClient' => "function (attribute, value) {
+                    return $(this).parents('.item').find('input[id^=pub_key]').val() == '';
+                }",
                 'on' => ['create']
             ],
             [
@@ -78,14 +81,15 @@ class Secdns extends \hipanel\base\Model
                 'when' => function($model) {
                     return !empty($model->digest);
                 },
+                'whenClient' => "function (attribute, value) {
+                    return $(this).parents('.item').find('input[id^=digest]').val() == '';
+                }",
                 'on' => ['create']
             ],
             [['digest'], 'match', 'pattern' => '/[^0-9A-Z][0-9A-Z]+/ui', 'not' => true],
             [['pub_key'], 'match', 'pattern' => '/[^\s][\s]+/ui', 'not' => true],
-            [['digest'], 'string', 'length' => function($model) {
-                $lenghts = self::getDigestTypeLength();
-                return $lenghts[$model->digest_type];
-            }, 'on' => ['create']],
+            [['digest'], 'string', 'on' => 'create'],
+            [['digest'], 'validateDigestLength', 'on' => ['create']],
         ];
     }
 
@@ -197,5 +201,17 @@ class Secdns extends \hipanel\base\Model
         ];
     }
 
+    public function validateDigestLength($attr, $value)
+    {
+
+        $length = self::getDigestTypeLength();
+
+        if (strlen($this->$attr) === $length[$this->digest_type]) {
+            return true;
+        }
+
+        $this->addError($attr, Yii::t("hipanel:domain", "Length of `$attr` should be {$length[$this->digest_type]}"));
+        return false;
+    }
 
 }
