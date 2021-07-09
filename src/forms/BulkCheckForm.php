@@ -68,9 +68,7 @@ class BulkCheckForm extends Model
 
             // Apply DomainPartValue validator to the split FQDNs
             [['fqdns'], 'each', 'rule' => [DomainPartValidator::class, 'enableIdn' => true]],
-            [['fqdns'], 'filter', 'filter' => function ($value) {
-                return array_map('mb_strtolower', $value);
-            }],
+            [['fqdns'], 'filter', 'filter' => fn($value) => array_map('htmlentities', array_map('mb_strtolower', $value))],
 
             // Check split FQDNs to zone is allowed
             [['fqdns'], 'filter', 'filter' => function ($value) {
