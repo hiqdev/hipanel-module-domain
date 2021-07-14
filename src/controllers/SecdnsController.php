@@ -18,7 +18,7 @@ use hipanel\actions\RedirectAction;
 use hipanel\actions\RenderAction;
 use hipanel\actions\RenderJsonAction;
 use hipanel\actions\SmartDeleteAction;
-use hipanel\actions\SmartPerformAction;
+use hipanel\actions\SmartCreateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\filters\EasyAccessControl;
 use hipanel\helpers\ArrayHelper;
@@ -62,11 +62,9 @@ class SecdnsController extends \hipanel\base\CrudController
                 ],
             ],
             'create' => [
-                'class' => SmartPerformAction::class,
+                'class' => SmartCreateAction::class,
                 'success' => Yii::t('hipanel:domain', 'SecDNS record was created'),
                 'error' => Yii::t('hipanel:domain', 'Error during creating'),
-            ],
-            'create-modal' => [
             ],
             'delete' => [
                 'class' => SmartDeleteAction::class,

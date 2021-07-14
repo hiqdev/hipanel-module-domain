@@ -56,6 +56,10 @@ class SidebarMenu extends \hiqdev\yii2\menus\Menu
                         'url'   => ['@zone/index'],
                         'visible' => Yii::$app->user->can('zone.read'),
                     ],
+                    'secdns' => [
+                        'label' => Yii::t('hipanel:domain', 'SecDNS'),
+                        'url'   => ['/domain/secdns/index'],
+                    ],
                 ],
             ],
         ];

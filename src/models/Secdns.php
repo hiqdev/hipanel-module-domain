@@ -47,6 +47,66 @@ class Secdns extends \hipanel\base\Model
     const DNSKEY_FLAGS = 257;
     const DNSKEY_PROTOCOL = 3;
 
+    use \hipanel\base\ModelTrait;
+
+    /** {@inheritdoc} */
+    public function rules()
+    {
+        return [
+            [['id', 'domain_id', 'client_id', 'seller_id', 'key_tag', 'digest_alg', 'digest_type', 'key_alg', 'key_flags', 'key_protocol'], 'integer'],
+            [['domain', 'client', 'seller', 'digest', 'pub_key'], 'safe'],
+            [['id'], 'required', 'on' => ['delete']],
+            [['domain_id', 'key_tag'], 'required', 'on' => ['create']],
+            [['key_tag'], 'integer', 'min' => 1, 'max' => 65535],
+            [['digest', 'pub_key'], 'filter', 'filter' => 'trim'],
+            [['digest'], 'filter', 'filter' => 'strtoupper'],
+            [['digest_alg', 'key_alg'], 'in', 'range' => array_keys(self::algorithmTypesWithLabels())],
+            [['digest_type'], 'in', 'range' => array_keys(self::getDigestTypeLength())],
+            [
+                ['key_alg', 'key_flags', 'key_protocol'],
+                'required',
+                'when' => function($model): bool {
+                    return !empty($model->pub_key);
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $(this).parents('.item').find('input[id^=pub_key]').val() == '';
+                }",
+                'on' => ['create']
+            ],
+            [
+                ['digest_alg', 'digest_type'],
+                'required',
+                'when' => function($model): bool {
+                    return !empty($model->digest);
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $(this).parents('.item').find('input[id^=digest]').val() == '';
+                }",
+                'on' => ['create']
+            ],
+            [['digest'], 'match', 'pattern' => '/[^0-9A-Z][0-9A-Z]+/ui', 'not' => true],
+            [['pub_key'], 'match', 'pattern' => '/[^\s][\s]+/ui', 'not' => true],
+            [['digest'], 'string', 'on' => 'create'],
+            [['digest'], 'validateDigestLength', 'on' => ['create']],
+        ];
+    }
+
+    /** {@inheritdoc} */
+    public function attributeLabels()
+    {
+        return $this->mergeAttributeLabels([
+            'domain' => Yii::t('hipanel:domain', 'Domain'),
+            'key_tag' => Yii::t('hipanel:domain', 'Key tag'),
+            'digest' => Yii::t('hipanel:domain', 'Digest'),
+            'digest_alg' => Yii::t('hipanel:domain', 'Digest algorithm'),
+            'digest_type' => Yii::t('hipanel:domain', 'Digest type'),
+            'key_alg' => Yii::t('hipanel:domain', 'Key algorithm'),
+            'key_flags' => Yii::t('hipanel:domain', 'Key flag'),
+            'key_protocol' => Yii::t('hipanel:domain', 'Key protocol'),
+            'pub_key' => Yii::t('hipanel:domain', 'Public key'),
+        ]);
+    }
+
     /**
      * SecDNS Algorithms with labels
      *
@@ -71,6 +131,23 @@ class Secdns extends \hipanel\base\Model
         ];
     }
 
+    public function getDigestAlgorithm(): string
+    {
+        return $this->getAlgorithmType('digest_alg');
+    }
+
+    public function getKeyAlgorithm(): string
+    {
+        return $this->getAlgorithmType('key_alg');
+    }
+
+    public function getAlgorithmType(string $attribute): string
+    {
+        $algs = self::algorithmTypesWithLabels();
+
+        return (string) ($algs[$this->$attribute] ?? '');
+    }
+
     /**
      * Digest types with labels
      *
@@ -84,6 +161,13 @@ class Secdns extends \hipanel\base\Model
             self::DIGEST_TYPE_GOST_R => Yii::t('hipanel:domain', 'GOST R 34.10-2001'),
             self::DIGEST_TYPE_SHA384 => Yii::t('hipanel:domain', 'SHA-384'),
         ];
+    }
+
+    public function getDigestType(): string
+    {
+        $types = self::digestTypesWithLabels();
+
+        return (string) ($types[$this->digest_type] ?? '');
     }
 
     /**
@@ -115,51 +199,17 @@ class Secdns extends \hipanel\base\Model
         ];
     }
 
-    use \hipanel\base\ModelTrait;
-
-    /** {@inheritdoc} */
-    public function rules()
+    public function validateDigestLength($attr, $value)
     {
-        return [
-            [['id', 'domain_id', 'client_id', 'seller_id', 'key_tag', 'digest_alg', 'digest_type', 'key_alg', 'key_flags', 'key_protocol'], 'integer'],
-            [['domain', 'client', 'seller', 'digest', 'pub_key'], 'safe'],
-            [['id'], 'required', 'on' => ['delete']],
-            [['domain_id', 'key_tag'], 'required', 'on' => ['create']],
-            [['key_tag'], 'integer', 'min' => 1, 'max' => 65535],
-            [['digest', 'pub_key'], 'filter', 'filter' => 'trim'],
-            [['digets'], 'filter', 'filter' => function($value) {
-                return mb_strtoupper($value);
-            }],
-            [['digest_alg', 'digest_type'], 'required', 'when' => function($model) {
-                return !empty($model->digest);
-            }, 'on' => ['create']],
-            [['digest_alg', 'key_alg'], 'in', 'range' => array_keys(self::algorithmTypesWithLabels())],
-            [['digest_type'], 'in', 'range' => array_keys(self::getDigestTypeLength())],
-            [['key_alg', 'key_flags', 'key_protocol'], 'required', 'when' => function($model) {
-                return !empty($model->pub_key);
-            }, 'on' => ['create']],
-            [['digest'], 'match', 'pattern' => '/[^0-9A-Z]/', 'not' => true],
-            [['pub_key'], 'match', 'pattern' => '/[^\s]/', 'not' => true],
-            [['digest'], 'string', 'length' => function($model) {
-                $lenghts = self::getDigestTypeLength();
-                return $lenghts[$model->digest_type];
-            }],
-        ];
+
+        $length = self::getDigestTypeLength();
+
+        if (strlen($this->$attr) === $length[$this->digest_type]) {
+            return true;
+        }
+
+        $this->addError($attr, Yii::t("hipanel:domain", "Length of `$attr` should be {$length[$this->digest_type]}"));
+        return false;
     }
 
-    /** {@inheritdoc} */
-    public function attributeLabels()
-    {
-        return $this->mergeAttributeLabels([
-            'domain' => Yii::t('hipanel:domain', 'Domain'),
-            'key_ta' => Yii::t('hipanel:domain', 'Key tag'),
-            'digest' => Yii::t('hipanel:domain', 'Digest'),
-            'digest_alg' => Yii::t('hipanel:domain', 'Digest algorithm'),
-            'digest_type' => Yii::t('hipanel:domain', 'Digest type'),
-            'key_alg' => Yii::t('hipanel:domain', 'Key algorythm'),
-            'key_flags' => Yii::t('hipanel:domain', 'Key flag'),
-            'key_protocol' => Yii::t('hipanel:domain', 'Key protocol'),
-            'pub_key' => Yii::t('hipanel:domain', 'Public key'),
-        ]);
-    }
 }
