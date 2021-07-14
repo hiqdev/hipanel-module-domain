@@ -59,15 +59,13 @@ class Secdns extends \hipanel\base\Model
             [['domain_id', 'key_tag'], 'required', 'on' => ['create']],
             [['key_tag'], 'integer', 'min' => 1, 'max' => 65535],
             [['digest', 'pub_key'], 'filter', 'filter' => 'trim'],
-            [['digest'], 'filter', 'filter' => function($value) {
-                return mb_strtoupper($value);
-            }],
+            [['digest'], 'filter', 'filter' => 'strtoupper'],
             [['digest_alg', 'key_alg'], 'in', 'range' => array_keys(self::algorithmTypesWithLabels())],
             [['digest_type'], 'in', 'range' => array_keys(self::getDigestTypeLength())],
             [
                 ['key_alg', 'key_flags', 'key_protocol'],
                 'required',
-                'when' => function($model) {
+                'when' => function($model): bool {
                     return !empty($model->pub_key);
                 },
                 'whenClient' => "function (attribute, value) {
@@ -78,7 +76,7 @@ class Secdns extends \hipanel\base\Model
             [
                 ['digest_alg', 'digest_type'],
                 'required',
-                'when' => function($model) {
+                'when' => function($model): bool {
                     return !empty($model->digest);
                 },
                 'whenClient' => "function (attribute, value) {
