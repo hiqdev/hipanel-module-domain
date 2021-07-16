@@ -71,7 +71,7 @@ class SecdnsGridView extends BoxedGridView
                 'attribute' => 'pub_key',
                 'format' => 'raw',
                 'value' => function($model): string {
-                    return Html::tag('span', isset($model->pub_key) ? Html::encode($model->pub_key) '');
+                    return Html::tag('span', isset($model->pub_key) ? Html::encode($model->pub_key) : '');
                 },
             ],
         ]);
