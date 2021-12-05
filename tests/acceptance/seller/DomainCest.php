@@ -35,6 +35,7 @@ class DomainCest
         $I->needPage(Url::to('@domain/index'));
         $I->see('Domains', 'h1');
         $I->seeLink('Register domain', Url::to('@domain-check'));
+        $I->seeLink('Buy certificate', Url::to('/certificate/certificate-order/index'));
         $this->ensureICanSeeAdvancedSearchBox($I);
         $this->ensureICanSeeBulkDomainSearchBox();
     }
