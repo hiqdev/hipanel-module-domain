@@ -5,7 +5,6 @@ namespace hipanel\modules\domain\tests\acceptance\seller;
 
 use Codeception\Example;
 use hipanel\helpers\Url;
-use hipanel\tests\_support\Page\IndexPage;
 use hipanel\tests\_support\Step\Acceptance\Seller;
 use hipanel\tests\_support\Page\Widget\Input\Input;
 use hipanel\tests\_support\Page\Widget\Input\MultipleSelect2;
