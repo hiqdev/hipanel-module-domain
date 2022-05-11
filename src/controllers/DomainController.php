@@ -281,9 +281,12 @@ class DomainController extends \hipanel\base\CrudController
             ],
             'validate-nss' => [
                 'class' => ValidateFormAction::class,
-                'model' => Ns::class,
-                'scenario' => 'default',
                 'allowDynamicScenario' => false,
+                'scenario' => 'default',
+                'collection' => [
+                    'class' => Collection::class,
+                    'model' => new Ns(),
+                ],
             ],
             'validate-push-form' => [
                 'class' => ValidateFormAction::class,
