@@ -27,6 +27,8 @@ class Urlfw extends \hipanel\base\Model
             [['type', 'value'], 'required'],
             [['name'], DomainPartValidator::class],
             [['value'], 'url'],
+            [['domain_id', 'name', 'type', 'value'], 'required', 'on' => ['validate-urlfw-form']],
+
         ];
     }
 

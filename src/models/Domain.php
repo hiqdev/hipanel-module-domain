@@ -246,6 +246,7 @@ class Domain extends Model
             [['id', 'premium_autorenewal'], 'required', 'on' => ['set-paid-feature-autorenewal']],
             [['expires'], 'safe', 'on' => ['renew-in-data-base']],
             [['id', 'expires', 'domain'], 'required', 'on' => ['renew-in-data-base']],
+            [['domain_id', 'name', 'type', 'value'], 'required', 'on' => ['validate-urlfw-form']],
         ];
     }
 
