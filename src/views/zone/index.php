@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'add_grace_limit',
                         'autorenew_grace_period',
                         'redemption_grace_period',
+                        'access',
                     ],
                 ]) ?>
             <?php $page->endBulkForm() ?>
