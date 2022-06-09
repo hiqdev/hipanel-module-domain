@@ -14,6 +14,7 @@ use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
 use yii\helpers\Html;
+use Yii;
 
 $model->nameservers = str_replace(',', ', ', $model->nameservers);
 
@@ -366,11 +367,13 @@ JS
                         <?= Yii::t('hipanel:domain', 'URL forwarding') ?>
                     </a>
                 </li>
-                <li>
-                    <a href="#email-forwarding" role="tab" data-toggle="tab">
-                        <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
-                    </a>
-                </li>
+                <?php if (Yii::$app->params['module.domain.mail-forwarding.disabled'] === false): ?>
+                    <li>
+                        <a href="#email-forwarding" role="tab" data-toggle="tab">
+                            <?= Yii::t('hipanel:domain', 'Email forwarding') ?>
+                        </a>
+                    </li>
+                <?php endif ?>
                 <li>
                     <a href="#parking" role="tab" data-toggle="tab">
                         <?= Yii::t('hipanel:domain', 'Parking') ?>

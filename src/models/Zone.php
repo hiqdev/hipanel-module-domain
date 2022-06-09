@@ -30,6 +30,7 @@ class Zone extends Model
             [['max_delegation', 'max_periods'], 'integer', 'max' => 10],
             [['id', 'state', 'registry'], 'safe', 'on' => ['enable', 'disable']],
             [['days_before_expire'], 'integer'],
+            [['access'], 'safe'],
         ];
     }
 
