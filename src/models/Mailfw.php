@@ -41,6 +41,7 @@ class Mailfw extends \hipanel\base\Model
                     }
                 },
             ],
+            [['domain_id', 'status', 'name', 'value'], 'required',  'on' => ['validate-mailfw-form']],
         ];
     }
 
