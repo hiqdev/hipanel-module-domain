@@ -125,4 +125,5 @@ abstract class AbstractDomainProduct extends AbstractCartPosition implements Don
 
         return sprintf('%s<br/>%s', $description, implode('<br/>', $relatedPositions));
     }
+
 }

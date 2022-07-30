@@ -123,6 +123,9 @@ class CheckForm extends Model
      */
     public function getZone(): ?string
     {
+        if (strpos($this->fqdn, '.') === false) {
+            return null;
+        }
         list(, $zone) = explode('.', $this->fqdn, 2);
 
         return $zone;

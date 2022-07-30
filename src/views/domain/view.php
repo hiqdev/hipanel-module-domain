@@ -16,7 +16,7 @@ use hipanel\widgets\Pjax;
 use yii\helpers\Html;
 use Yii;
 
-$model->nameservers = str_replace(',', ', ', $model->nameservers);
+$model->nameservers = str_replace(',', ', ', $model->nameservers ?? '');
 
 $this->title = Html::encode($model->domain);
 $this->params['subtitle'] = Yii::t('hipanel:domain', 'Domain detailed information') . ' #' . $model->id;

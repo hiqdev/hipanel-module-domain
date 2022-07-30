@@ -176,7 +176,7 @@ class TransferController extends \hipanel\base\CrudController
         }
 
         return $this->render('index', [
-            'models' => $models,
+            'models' => $models ?? [],
             'model' => $model,
             'transferDataProvider' => $transferDataProvider,
         ]);

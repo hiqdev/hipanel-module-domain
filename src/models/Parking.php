@@ -22,6 +22,7 @@ class Parking extends \hipanel\base\Model
             [['id', 'domain_id', 'dns_id', 'type_id', 'park_id'], 'integer'],
             [['title', 'siteheader', 'sitetext'], 'string'],
             [['title', 'siteheader', 'sitetext', 'type_id'], 'required'],
+            [['title', 'siteheader', 'sitetext'], 'required', 'on' => ['validate-park-form']],
         ];
     }
 
