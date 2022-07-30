@@ -45,8 +45,7 @@
     "require": {
         "hiqdev/hipanel-core": "dev-master",
         "hiqdev/hipanel-module-client": "dev-master",
-        "toriphes/yii2-widget-lazyload": "~1.0",
-        "seostats/seostats": "dev-master"
+        "toriphes/yii2-widget-lazyload": "~1.0"
     },
     "require-dev": {
         "hiqdev/hidev-php": "dev-master",
