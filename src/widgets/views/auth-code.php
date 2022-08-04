@@ -12,11 +12,9 @@ use yii\web\View;
  */
 ?>
 
-<?= Html::beginForm([
-    'options' => [
+<?= Html::beginForm('', 'post', [
         'class' => 'form-horizontal',
-    ],
-]); ?>
+]) ?>
 <?= Html::hiddenInput('id', $model->id); ?>
 <div class="row">
     <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
