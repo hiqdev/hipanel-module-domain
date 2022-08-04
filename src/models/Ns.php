@@ -27,7 +27,7 @@ class Ns extends Model
             [['name'],  FqdnValueValidator::className()],
             [['ip'], 'filter', 'filter' => function ($value) {
                 return StringHelper::explode($value, ',', true, true);
-            }, 'skipOnArray' => true],
+            }, 'skipOnArray' => true, 'skipOnEmpty' => true],
             [['ip'], 'each', 'rule' => ['ip']],
             [['ip'],  function ($attribute, $params) {
                 if (!StringHelper::endsWith(DomainValidator::convertIdnToAscii($this->name), DomainValidator::convertIdnToAscii($this->domain_name))) {
