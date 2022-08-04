@@ -62,9 +62,6 @@ class Whois extends ActiveRecord
             'ip' => Yii::t('hipanel:domain', 'IP'),
             'country_name' => Yii::t('hipanel:domain', 'Country'),
             'city' => Yii::t('hipanel:domain', 'City'),
-            'google' => Yii::t('hipanel:domain', 'Google PR'),
-            'alexa' => Yii::t('hipanel:domain', 'Alexa Rank'),
-            'yandex' => Yii::t('hipanel:domain', 'Yandex TIC'),
         ];
     }
 
@@ -76,53 +73,5 @@ class Whois extends ActiveRecord
     public function getUrl()
     {
         return 'http://' . $this->domain;
-    }
-
-    public function getGoogle()
-    {
-        try {
-            $result = intval(\SEOstats\Services\Google::getPageRank($this->url));
-
-            return $result;
-        } catch (Exception $e) {
-        }
-
-        return null;
-    }
-
-    public function getAlexa()
-    {
-        try {
-            $seostats = new SEOstats();
-            if ($seostats->setUrl($this->url)) {
-                return Alexa::getGlobalRank();
-            }
-        } catch (Exception $e) {
-        }
-
-        return null;
-    }
-
-    public function getYandex()
-    {
-        try {
-            $str = file('http://bar-navig.yandex.ru/u?ver=2&show=32&url=' . $this->url);
-            if ($str === false) {
-                $ans = false;
-            } else {
-                $is_find = preg_match("/value=\"(.\d*)\"/", implode('', $str), $tic);
-
-                if ($is_find < 1) {
-                    $ans = 0;
-                } else {
-                    $ans = $tic[1];
-                }
-            }
-
-            return $ans;
-        } catch (Exception $e) {
-        }
-
-        return null;
     }
 }

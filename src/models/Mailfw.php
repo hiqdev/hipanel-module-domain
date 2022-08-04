@@ -41,7 +41,11 @@ class Mailfw extends \hipanel\base\Model
                     }
                 },
             ],
+<<<<<<< HEAD
             [['name', 'value'], 'required', 'on' => ['validate-mailfw-form']],
+=======
+            [['domain_id', 'status', 'name', 'value'], 'required',  'on' => ['validate-mailfw-form']],
+>>>>>>> ffe46693e89036dd364442e564f2097560d21897
         ];
     }
 
