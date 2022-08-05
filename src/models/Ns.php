@@ -23,7 +23,7 @@ class Ns extends Model
     public function rules()
     {
         return [
-            [['name', 'domain_name'], 'filter', 'filter' => 'trim'],
+            [['name', 'domain_name'], 'filter', 'filter' => 'trim', 'skipOnEmpty' => true],
             [['name'],  FqdnValueValidator::className()],
             [['ip'], 'filter', 'filter' => function ($value) {
                 return StringHelper::explode($value, ',', true, true);

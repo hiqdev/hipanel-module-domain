@@ -204,12 +204,12 @@ class Domain extends Model
             [['send_to'], 'safe', 'on' => ['force-notify-transfer-in']],
 
             // NSs
-            [['domain', 'nameservers', 'nsips'], 'safe', 'on' => 'set-nss'],
+            [['domain', 'nameservers', 'nsips'], 'safe', 'on' => 'set-nss', 'skipOnEmpty' => true],
             [['nameservers', 'nsips'], 'filter', 'filter' => function ($value) {
                 return !is_array($value) ? StringHelper::mexplode($value) : $value;
             }, 'on' => 'OLD-set-ns'],
             [['nameservers'], 'each', 'rule' => [DomainValidator::class], 'on' => 'OLD-set-ns'],
-            [['nsips'], 'each', 'rule' => [NsValidator::class], 'on' => 'OLD-set-ns'],
+            [['nsips'], 'each', 'rule' => [NsValidator::class], 'on' => 'OLD-set-ns', 'skipOnEmpty' => true],
 
             // Get zones
             [['dumb'], 'safe', 'on' => ['get-zones']],
