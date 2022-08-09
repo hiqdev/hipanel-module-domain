@@ -27,6 +27,7 @@ class WhoisController extends \hipanel\base\CrudController
         } catch (Exception $e) {
             $apiData['message'] = $e->getMessage();
         }
+        $apiData['message'] = $apiData['message'] ?? '';
         if ($apiData['message'] === 'domain available') {
             $whoisDefault['availability'] = Whois::REGISTRATION_AVAILABLE;
         }
@@ -37,7 +38,8 @@ class WhoisController extends \hipanel\base\CrudController
             $whoisDefault['availability'] = Whois::REGISTRATION_UNSUPPORTED;
         }
 
-        $model = reset(Whois::find()->populate([array_merge($whoisDefault, $apiData)]));
+        $populate = [array_merge($whoisDefault, $apiData)];
+        $model = reset(Whois::find()->populate($populate));
 
         return $model;
     }

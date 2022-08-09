@@ -24,7 +24,7 @@ $this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { fi
             <div class="box box-widget">
                 <div class="box-body">
                     <p class="text-bold">
-                        <?= Html::encode(strtoupper($model->domains)) ?>
+                        <?= Html::encode(strtoupper($model->domains ?? '')) ?>
                     </p>
                     <p><?= Yii::t('hipanel:domain', 'Please read the following important information about transferring your domain name:') ?></p>
                     <ul>
@@ -57,7 +57,7 @@ $this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { fi
                     <?= Html::activeHiddenInput($model, 'confirm_data') ?>
                     <?= Html::submitButton(
                         '<b>' . Yii::t('hipanel:domain', 'I APPROVE.') . ' ' .
-                        Yii::t('hipanel:domain', 'Please transfer my domain: {domain}', ['domain' => strtoupper($model->domains)])
+                        Yii::t('hipanel:domain', 'Please transfer my domain: {domain}', ['domain' => strtoupper($model->domains ?? '')])
                         , ['class' => 'btn btn-success btn-block btn-lg hover-item']) ?>
                     <?php ActiveForm::end() ?>
                     <p class="text-muted bg-success" style="padding: 1em;">
@@ -86,7 +86,7 @@ $this->registerCss('.hover-item {  white-space: normal; } .hover-item:hover { fi
                     <p>
                         <?= Yii::t('hipanel:domain', 'ATTENTION: If you do not respond by {till_date}, domains: {domains} will not be transferred to us.', [
                             'till_date' => Yii::$app->formatter->asDate($model->till_date),
-                            'domains' => strtoupper($model->domains),
+                            'domains' => strtoupper($model->domains ?? ''),
                         ]) ?>
                     </p>
                 </div>

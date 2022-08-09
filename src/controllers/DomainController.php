@@ -200,8 +200,8 @@ class DomainController extends \hipanel\base\CrudController
                 'collectionLoader' => function ($action) {
                     /** @var SmartPerformAction $action */
                     $data = Yii::$app->request->post($action->collection->getModel()->formName());
-                    $pincode = $data['pincode'];
-                    $receiver = $data['receiver'];
+                    $pincode = $data['pincode'] ?? null;
+                    $receiver = $data['receiver'] ?? null;
                     unset($data['pincode'], $data['receiver']);
                     foreach ($data as &$item) {
                         $item['pincode'] = $pincode;
