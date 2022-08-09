@@ -117,7 +117,10 @@ $(document).on('pjax:complete', function(event) {
 
                 <div class="container-items">
                     <?php foreach ($nsModels as $i => $nsModel): ?>
-                        <?= Html::activeHiddenInput($nsModel, "[$i]domain_name", ['value' => $model->domain, 'class' => 'domain_name']) ?>
+                        <?= Html::activeHiddenInput($nsModel, "[$i]domain_name", [
+                                'value' => is_array($model->domain) ? reset($model->domain) : $model->domain,
+                                'class' => 'domain_name',
+                        ]) ?>
                         <div class="item">
                             <div class="row" style="margin-bottom: 5pt">
                                 <div class="col-md-5">
