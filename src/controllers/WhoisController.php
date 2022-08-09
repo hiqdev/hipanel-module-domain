@@ -39,9 +39,9 @@ class WhoisController extends \hipanel\base\CrudController
         }
 
         $populate = [array_merge($whoisDefault, $apiData)];
-        $model = reset(Whois::find()->populate($populate));
+        $models = Whois::find()->populate($populate);
 
-        return $model;
+        return reset($models);
     }
 
     public function actionIndex($domain = null)
