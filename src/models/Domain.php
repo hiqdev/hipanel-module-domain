@@ -167,6 +167,7 @@ class Domain extends Model
                 'force-notify-transfer-in',
                 'reject-transfer',
                 'cancel-transfer',
+                'approve-transfer',
             ]],
 
             // Check domain
