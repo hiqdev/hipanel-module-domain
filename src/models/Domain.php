@@ -731,7 +731,7 @@ class Domain extends Model
 
     public function canDeleteAGP()
     {
-        if ($this->add_grace_period === null) {
+        if ($this->add_grace_period === null || $this->created_date === null || $this->expires === null) {
             return false;
         }
 
