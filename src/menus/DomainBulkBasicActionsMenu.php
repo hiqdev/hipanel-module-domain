@@ -98,19 +98,19 @@ class DomainBulkBasicActionsMenu extends \hiqdev\yii2\menus\Menu
                 'label' => '<i class="fa fa-check"></i>' . Yii::t('hipanel:domain', 'Approve outgoing transfer'),
                 'url' => '#',
                 'linkOptions' => ['data-action' => Url::to(['@domain/approve-transfer'])],
-                'visible' => Yii::$app->user->can('support'),
+                'visible' => Yii::$app->user->can('domain.delete'),
             ],
             [
                 'label' => '<i class="fa fa-ban"></i>' . Yii::t('hipanel:domain', 'Reject outgoing transfer'),
                 'url' => '#',
                 'linkOptions' => ['data-action' => Url::to(['@domain/reject-transfer'])],
-                'visible' => Yii::$app->user->can('support'),
+                'visible' => Yii::$app->user->can('domain.delete'),
             ],
             [
                 'label' => '<i class="fa fa-ban"></i>' . Yii::t('hipanel:domain', 'Cancel incoming transfer'),
                 'url' => '#',
                 'linkOptions' => ['data-action' => Url::to(['@domain/cancel-transfer'])],
-                'visible' => Yii::$app->user->can('support'),
+                'visible' => Yii::$app->user->can('domain.delete'),
             ],
         ];
     }
