@@ -29,7 +29,7 @@ class ZonesCest
     /**
      * @var array $testZoneValues
      */
-    private $testZoneValues;
+    private array $testZoneValues = [];
 
     public function _before(Seller $I): void
     {
@@ -93,10 +93,13 @@ class ZonesCest
 
     protected function getZoneTestData(): array
     {
+        if (!empty($this->testZoneValues)) {
+            return $this->testZoneValues;
+        }
         return [
-            'registry'                  => 'untagged',
+            'registry'                  => 'test-registry',
             'state'                     => 'Ok',
-            'name'                      => '.testtt',
+            'name'                      => '.test' . mt_rand(),
             'no'                        => time(),
             'add_period'                => '100',
             'add_limit'                 => '50',

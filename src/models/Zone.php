@@ -23,7 +23,13 @@ class Zone extends Model
             [['id'], 'integer', 'on' => ['create', 'update']],
             [['name', 'registry', 'no', 'state', 'add_grace_period', 'autorenew_grace_period', 'redemption_grace_period'], 'string', 'on' => ['create', 'update']],
             [['idn'], 'string'],
-            [['has_contacts', 'password_required', 'whois_protect_disabled', 'sync_whois', 'wp_disabled'], 'boolean', 'on' => ['create', 'update']],
+            [
+                ['has_contacts', 'password_required', 'whois_protect_disabled', 'sync_whois', 'wp_disabled'],
+                'boolean',
+                'trueValue' => '1',
+                'falseValue' => '0',
+                'on' => ['create', 'update'],
+            ],
             [['name', 'registry', 'no', 'state'], 'required', 'on' => ['create', 'update']],
             [['id'], 'required', 'on' => ['update', 'delete']],
             [['add_grace_limit'], 'integer', 'min' => 0, 'max' => 100],
@@ -52,14 +58,6 @@ class Zone extends Model
             'sync_whois' => Yii::t('hipanel.domain.zone', 'Sync Whois'),
             'wp_disabled' => Yii::t('hipanel.domain.zone', 'WP Prohibited'),
         ]);
-    }
-
-    public function scenarioActions()
-    {
-        return [
-            'disable' => 'update',
-            'enable' => 'update',
-        ];
     }
 
     public function getTypeList()

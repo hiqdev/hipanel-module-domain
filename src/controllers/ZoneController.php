@@ -78,28 +78,10 @@ class ZoneController extends CrudController
             'disable' => [
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Zone has been disabled'),
-                'on beforeSave' => function (Event $event): void {
-                    /** @var \hipanel\actions\Action $action */
-                    $action = $event->sender;
-                    $registry = Yii::$app->request->post('registry');
-                    foreach ($action->collection->models as $model) {
-                        $model->state = Zone::STATE_NOT_WORKING;
-                        $model->registry = $registry[$model->id];
-                    }
-                },
             ],
             'enable' => [
                 'class' => SmartPerformAction::class,
                 'success' => Yii::t('hipanel:domain', 'Zone has been enabled'),
-                'on beforeSave' => function (Event $event): void {
-                    /** @var \hipanel\actions\Action $action */
-                    $action = $event->sender;
-                    $registry = Yii::$app->request->post('registry');
-                    foreach ($action->collection->models as $model) {
-                        $model->state = Zone::STATE_OK;
-                        $model->registry = $registry[$model->id];
-                    }
-                },
             ],
             'validate-form' => [
                 'class' => ValidateFormAction::class,

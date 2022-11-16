@@ -97,8 +97,8 @@ use yii\helpers\Url;
                     </div>
 
                     <div class="col-md-4">
-                        <?= $form->field($model, "[$i]has_contacts")->checkbox(); ?>
-                        <?= $form->field($model, "[$i]password_required")->checkbox(); ?>
+                        <?= $form->field($model, "[$i]has_contacts")->checkbox() ?>
+                        <?= $form->field($model, "[$i]password_required")->checkbox() ?>
                     </div>
                     <?php Box::end() ?>
                 </div>

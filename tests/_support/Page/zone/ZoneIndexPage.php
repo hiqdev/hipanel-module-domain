@@ -2,13 +2,13 @@
 
 namespace hipanel\modules\domain\tests\_support\Page\zone;
 
+use Facebook\WebDriver\WebDriverKeys;
 use hipanel\tests\_support\Page\Authenticated;
 use hipanel\tests\_support\Page\IndexPage;
 use hipanel\tests\_support\Page\Widget\Input\CheckBox;
 use hipanel\tests\_support\Page\Widget\Input\Dropdown;
 use hipanel\tests\_support\Page\Widget\Input\Input;
 use hipanel\tests\_support\Page\Widget\Input\Select2;
-use WebDriverKeys;
 
 class ZoneIndexPage extends Authenticated
 {
@@ -57,10 +57,10 @@ class ZoneIndexPage extends Authenticated
     public function getCreatedZoneOnIndexPage($name)
     {
         $I = $this->tester;
-        $sortinputSelector = "td input[name*=name]";
-        (new Input($I, $sortinputSelector))
+        $sortInputSelector = "td input[name*=name_ilike]";
+        (new Input($I, $sortInputSelector))
             ->setValue($name);
-        $I->pressKey($sortinputSelector, WebDriverKeys::ENTER);
+        $I->pressKey($sortInputSelector, WebDriverKeys::ENTER);
         $I->waitForPageUpdate();
     }
 }
