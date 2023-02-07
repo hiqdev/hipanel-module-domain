@@ -226,6 +226,8 @@ class Domain extends Model
                 }
             }, 'on' => ['push-with-pincode']],
             [['domain', 'sender', 'pincode'], 'safe', 'on' => ['push', 'push-with-pincode']],
+            [['with_contacts'], 'boolean', 'on' => ['push', 'push-with-pincode']],
+            [['skip_notify'], 'boolean', 'on' => ['push', 'push-with-pincode']],
 
             // Bulk set contacts
             [['id', 'domain'], 'safe', 'on' => ['bulk-set-contacts']],
