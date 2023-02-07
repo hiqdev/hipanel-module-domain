@@ -69,6 +69,12 @@ $unPushable = array_filter(array_map(
 
 <?= $form->field($model, 'receiver')->textInput(['autocomplete' => 'off']) ?>
 
+<?= $form->field($model, 'with_contacts')->checkbox() ?>
+
+<?php if (Yii::$app->user->can('domain.force-push')) : ?>
+    <?= $form->field($model, 'skip_notify')->checkbox() ?>
+<?php endif ?>
+
 <?php if ($hasPincode) : ?>
     <?= $form->field($model, 'pincode')->input('password', ['autocomplete' => 'off']) ?>
 <?php endif; ?>

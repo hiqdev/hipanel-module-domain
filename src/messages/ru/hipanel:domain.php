@@ -402,4 +402,6 @@ return [
     'Key flag' => 'Zone Key flag',
     'Public key' => 'Публичный ключ',
     'Create SecDNS record' => 'Создать SecDNS запись',
+    'With contacts' => 'С контактами',
+    'Skip notify' => 'Не уведомлять',
 ];
