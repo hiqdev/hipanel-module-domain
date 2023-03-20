@@ -49,7 +49,7 @@ class DomainSettingsCest
         $note = time();
         $this->viewPage->setNote($note);
         $I->waitForPageUpdate();
-        $I->see($note);
+        $I->see((string)$note);
     }
 
     public function ensureICanChangeWhoisSettings(Client $I)

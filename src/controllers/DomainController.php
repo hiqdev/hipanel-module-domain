@@ -203,7 +203,7 @@ class DomainController extends \hipanel\base\CrudController
                     $pincode = $data['pincode'] ?? null;
                     $receiver = $data['receiver'] ?? null;
                     $withContacts = $data['with_contacts'] ?? null;
-                    $skipNotify = $data['skip_notify'] ? Yii::$app->user->can('domain.force-push') ? null;
+                    $skipNotify = $data['skip_notify'] ? Yii::$app->user->can('domain.force-push') : null;
                     unset($data['pincode'], $data['receiver'], $data['with_contacts']);
                     foreach ($data as &$item) {
                         $item['pincode'] = $pincode;
