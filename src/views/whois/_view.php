@@ -67,7 +67,7 @@ $this->registerCss('
                             'attribute' => 'nss',
                             'value' => ArraySpoiler::widget([
                                 'data' => array_map(fn ($ip, $ns) => $ns . ' - ' . $ip, $model->nss ?? [], array_keys($model->nss ?? [])),
-                                'visibleCount' => count($model->nss),
+                                'visibleCount' => count($model->nss ?? []),
                                 'delimiter' => '<br>',
                             ]),
                             'format' => 'html',
