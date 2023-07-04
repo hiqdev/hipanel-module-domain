@@ -34,7 +34,7 @@ class WhoisController extends \hipanel\base\CrudController
         if ($apiData['message'] === 'domain is premium') {
             $whoisDefault['availability'] = Whois::REGISTRATION_PREMIUM;
         }
-        if ($apiData['message'] === 'domain unsupported' || ($apiData['rawdata'] && strstr(reset($apiData['rawdata']), 'domain is not supported'))) {
+        if ($apiData['message'] === 'domain unsupported' || (!empty($apiData['rawdata']) && strstr(reset($apiData['rawdata']), 'domain is not supported'))) {
             $whoisDefault['availability'] = Whois::REGISTRATION_UNSUPPORTED;
         }
 
