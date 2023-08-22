@@ -45,6 +45,30 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Key flag') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::flagTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Key protocol') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::protocolTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
