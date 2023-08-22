@@ -4,7 +4,7 @@ use hipanel\modules\domain\models\Secdns;
 use hipanel\modules\domain\widgets\combo\DomainCombo;
 use hipanel\widgets\Box;
 use hipanel\widgets\DynamicFormWidget;
-use hiqdev\combo\StaticCombo;
+use hipanel\modules\domain\widgets\combo\AlgorithmCombo;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -19,6 +19,57 @@ $this->title = Yii::t('hipanel:domain', 'Create SecDNS record');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hipanel', 'SecDNS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Encryption algorithm') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::algorithmTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Encryption type') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::digestTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Key flag') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::flagTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t('hipanel:domain', 'Key protocol') ?></h3>
+            </div>
+            <div class="box-body table-responsive">
+                <?php foreach (Secdns::protocolTypesWithLabels() as $no => $name): ?>
+                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -70,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= $form->field($model, "[$i]key_tag")->textInput(['placeholder' => Yii::t('hipanel:domain', 'Key tag')])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]digest_alg")->widget(StaticCombo::class, [
+                            <?= $form->field($model, "[$i]digest_alg")->widget(AlgorithmCombo::class, [
                                 'data' => Secdns::algorithmTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
@@ -88,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]digest_type")->widget(StaticCombo::class, [
+                            <?= $form->field($model, "[$i]digest_type")->widget(AlgorithmCombo::class, [
                                 'data' => Secdns::digestTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
@@ -109,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= $form->field($model, "[$i]digest")->textInput(['placeholder' => Yii::t('hipanel:domain', "Digest")])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]key_alg")->widget(StaticCombo::class, [
+                            <?= $form->field($model, "[$i]key_alg")->widget(AlgorithmCombo::class, [
                                 'data' => Secdns::algorithmTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
@@ -127,14 +178,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]key_flags")->widget(StaticCombo::class, [
+                            <?= $form->field($model, "[$i]key_flags")->widget(AlgorithmCombo::class, [
                                 'data' => Secdns::flagTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
                                 'multiple' => false,
                                 'selectAllButton' => false,
                                 'inputOptions' => [
-                                    'value' => $model->key_alg,
+                                    'value' => $model->key_flags ?? reset(array_keys(Secdns::flagTypesWithLabels())),
                                     'class' => 'form-control',
                                 ],
                                 'pluginOptions' => [
@@ -145,14 +196,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]key_protocol")->widget(StaticCombo::class, [
+                            <?= $form->field($model, "[$i]key_protocol")->widget(AlgorithmCombo::class, [
                                 'data' => Secdns::protocolTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
                                 'multiple' => false,
                                 'selectAllButton' => false,
                                 'inputOptions' => [
-                                    'value' => $model->key_alg,
+                                    'value' => $model->key_protocol ?? reset(array_keys(Secdns::protocolTypesWithLabels())),
                                     'class' => 'form-control',
                                 ],
                                 'pluginOptions' => [

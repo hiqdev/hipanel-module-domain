@@ -404,4 +404,6 @@ return [
     'Create SecDNS record' => 'Создать SecDNS запись',
     'With contacts' => 'С контактами',
     'Skip notify' => 'Не уведомлять',
+    'Encryption algorithm' => 'Алгоритм шифрования',
+    'Encryption type' => 'Тип шифрования',
 ];
