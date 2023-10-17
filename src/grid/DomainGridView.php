@@ -128,6 +128,10 @@ class DomainGridView extends BoxedGridView
                 'format' => 'raw',
                 'filter' => false,
                 'value' => function ($model) {
+                    if (empty($model->abuse_email)) {
+                        return '';
+                    }
+
                     return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Html::encode($model->abuse_email);
                 }
             ],
