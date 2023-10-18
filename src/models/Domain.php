@@ -130,7 +130,7 @@ class Domain extends Model
             [['registered', 'operated'], 'date'],
             [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid', 'wp_disabled'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
-            [['foa_sent_to'], 'email'],
+            [['foa_sent_to', 'abuse_email'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
             [['block', 'epp_client_id', 'nameservers', 'nsips', 'request_date', 'name'], 'safe'],
             [['note'], 'safe', 'on' => ['set-note', 'default']],
@@ -290,6 +290,7 @@ class Domain extends Model
             'is_expired' => Yii::t('hipanel:domain', 'Is expired'),
             'expires_soon' => Yii::t('hipanel:domain', 'Expires soon'),
             'foa_sent_to' => Yii::t('hipanel:domain', 'FOA sent'),
+            'abuse_email' => Yii::t('hipanel:domain', 'Abuse E-Mail'),
 
             // domain transfer
             'password' => Yii::t('hipanel:domain', 'Transfer (EPP) password'),

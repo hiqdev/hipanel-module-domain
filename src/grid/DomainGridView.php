@@ -124,6 +124,17 @@ class DomainGridView extends BoxedGridView
                     return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Html::encode($model->foa_sent_to);
                 },
             ],
+            'abuse_email' => [
+                'format' => 'raw',
+                'filter' => false,
+                'value' => function ($model) {
+                    if (empty($model->abuse_email)) {
+                        return '';
+                    }
+
+                    return Html::tag('span', '', ['class' => Menu::iconClass('fa-envelope')]) . ' ' . Html::encode($model->abuse_email);
+                }
+            ],
             'whois_protected' => [ // don't forget to update `whois_protected_with_label` column as well
                 'attribute' => 'whois_protected',
                 'filter' => false,

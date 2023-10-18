@@ -167,6 +167,7 @@ JS
                         'created_date',
                         'expires',
                         'autorenewal_with_label',
+                        'abuse_email',
                         [
                             'attribute' => 'authCode',
                             'label' => Yii::t('hipanel:domain', 'Authorization code'),
