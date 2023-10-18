@@ -404,4 +404,5 @@ return [
     'Create SecDNS record' => 'Создать SecDNS запись',
     'With contacts' => 'С контактами',
     'Skip notify' => 'Не уведомлять',
+    'Abuse E-Mail' => 'E-Mail для жалоб',
 ];

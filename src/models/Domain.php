@@ -290,6 +290,7 @@ class Domain extends Model
             'is_expired' => Yii::t('hipanel:domain', 'Is expired'),
             'expires_soon' => Yii::t('hipanel:domain', 'Expires soon'),
             'foa_sent_to' => Yii::t('hipanel:domain', 'FOA sent'),
+            'abuse_email' => Yii::t('hipanel:domain', 'Abuse E-Mail'),
 
             // domain transfer
             'password' => Yii::t('hipanel:domain', 'Transfer (EPP) password'),
