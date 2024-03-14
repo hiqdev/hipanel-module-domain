@@ -228,6 +228,34 @@ class DomainGridView extends BoxedGridView
                     ],
                 ],
             ],
+            'is_domain_premium' => [
+                'attribute' => 'is_domain_premium',
+                'filter' => false,
+                'contentOptions' => ['class' => 'text-center', 'style' => 'vertical-align: middle;'],
+                'enableSorting' => false,
+                'encodeLabel' => false,
+                'label' => Html::tag('span', Yii::t('hipanel:domain', 'Premium domain')),
+                'popover' => Yii::t('hipanel:domain', 'Premium domain'),
+                'popoverOptions' => [
+                    'placement' => 'bottom',
+                    'selector' => 'span',
+                ],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return IconStateLabel::widget([
+                        'model' => $model,
+                        'attribute' => 'is_domain_premium',
+                        'icons' => 'fa-btc',
+                        'messages' => [
+                            Yii::t('hipanel:domain', 'Domain is premium'),
+                            Yii::t('hipanel:domain', 'Domain is standart'),
+                        ],
+                    ]);
+                },
+                'exportedValue' => function ($model) {
+                    return $model->is_domain_premium ? 'Yes' : 'No';
+                }
+            ],
             'note' => [
                 'class' => XEditableColumn::class,
                 'attribute' => 'note',
