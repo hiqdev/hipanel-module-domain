@@ -29,6 +29,7 @@ class DomainRepresentations extends RepresentationCollection
                     'state',
                     'whois_protected',
                     'is_secured',
+                    'is_domain_premium',
                     'created_date',
                     'expires',
                     'autorenewal',

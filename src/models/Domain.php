@@ -128,7 +128,7 @@ class Domain extends Model
             [['premium_expires', 'premium_days_left'], 'safe'],
             [['created_date', 'updated_date', 'transfer_date', 'expiration_date', 'expires', 'since', 'prem_expires'], 'date', 'format' => 'php:Y-m-d'],
             [['registered', 'operated'], 'date'],
-            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid', 'wp_disabled'], 'boolean'],
+            [['is_expired', 'is_served', 'is_holded', 'is_premium', 'is_secured', 'is_freezed', 'wp_freezed', 'is_wp_paid', 'wp_disabled', 'is_domain_premium'], 'boolean'],
             [['premium_autorenewal', 'expires_soon', 'autorenewal', 'whois_protected'], 'boolean'],
             [['foa_sent_to', 'abuse_email'], 'email'],
             [['url_fwval', 'mailval', 'parkval', 'soa', 'dns', 'counters'], 'safe'],
@@ -279,6 +279,7 @@ class Domain extends Model
             'is_holded' => Yii::t('hipanel:domain', 'On hold'),
             'is_freezed' => Yii::t('hipanel:domain', 'Domain changes freezed'),
             'wp_freezed' => Yii::t('hipanel:domain', 'Domain WHOIS freezed'),
+            'is_domain_premium' => Yii::t('hipanel:domain', 'Premium domain'),
             'prem_expires' => Yii::t('hipanel:domain', 'Premium expires'),
             'prem_daysleft' => Yii::t('hipanel:domain', 'Premium days left'),
             'is_premium' => Yii::t('hipanel:domain', 'Premium package'),
@@ -917,6 +918,11 @@ class Domain extends Model
     public function isWhoisProtectEnabled(): bool
     {
         return isset($this->whois_protected) && (bool)$this->whois_protected !== false;
+    }
+
+    public function isPremium(): bool
+    {
+        return isset($this->is_domain_premium) && (bool) $this->is_domain_premium === true;
     }
 
     /**
