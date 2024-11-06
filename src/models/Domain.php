@@ -405,7 +405,7 @@ class Domain extends Model
 
     public function isPreincoming()
     {
-        return $this->state === static::STATE_PREINCOMING;
+        return false;
     }
 
     public function isIncoming()
