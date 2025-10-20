@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::begin(array_merge(Yii::$app->params['pjax'], ['enablePushState' => true])) ?>
     <?php $page = IndexPage::begin(compact('model', 'dataProvider')) ?>
 
-        <?= $page->setSearchFormData(compact(['types', 'brands', 'states'])) ?>
         <?php $page->beginContent('main-actions') ?>
             <?php  if (Yii::$app->user->can('zone.create')) : ?>
                 <?= Html::a(Yii::t('hipanel:domain', 'Create zone'), ['@zone/create'], ['class' => 'btn btn-sm btn-success']) ?>
