@@ -52,6 +52,9 @@ class DomainSettingsCest
         $I->see((string)$note);
     }
 
+    /**
+     * @group require-epp-connection
+     */
     public function ensureICanChangeWhoisSettings(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
@@ -60,6 +63,9 @@ class DomainSettingsCest
         $I->closeNotification('WHOIS protect has been changed');
     }
 
+    /**
+     * @group require-epp-connection
+     */
     public function ensureICanChangeProtectionSettings(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
@@ -76,6 +82,9 @@ class DomainSettingsCest
         $I->closeNotification('Autorenewal has been changed');
     }
 
+     /**
+     * @group require-epp-connection
+     */
     public function ensureICanChangeAuthorizationCode(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));

@@ -44,6 +44,9 @@ class DomainNSsCest
         $I->see($this->domain->getName(), 'h1');
     }
 
+    /**
+     * @group require-epp-connection
+     */
     public function ensureICanAddNS(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));
@@ -55,6 +58,9 @@ class DomainNSsCest
         $this->viewPage->checkAmountOfNSs($nsAmount + 1);
     }
 
+    /**
+     * @group require-epp-connection
+     */
     public function ensureICanDeleteNS(Client $I)
     {
         $I->needPage(Url::to('@domain/view?id=' . $this->domain->getDomainId()));

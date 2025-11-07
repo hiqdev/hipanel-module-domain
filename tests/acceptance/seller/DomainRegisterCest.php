@@ -52,7 +52,7 @@ class DomainRegisterCest
         return [
             [
                 'name' => 'hiqdev',
-                'zone'        => '.test',
+                'zone'        => '.com',
             ],
         ];
     }

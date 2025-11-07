@@ -24,6 +24,9 @@ class DomainSidebarMenuCest
             'Register domain' => '@domain-check/check-domain',
             'Transfer domain' => '/domain/transfer/index',
             'WHOIS lookup' => '/domain/whois/index',
+            'Zone' => '/domain/zone/index',
+            'SecDNS' => '/domain/secdns/index',
+            'DNS' => '/dns/zone/index',
         ]);
     }
 }
