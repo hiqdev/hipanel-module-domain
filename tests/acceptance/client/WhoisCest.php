@@ -26,6 +26,7 @@ class WhoisCest
     }
 
     /**
+     * @group require-epp-connection
      * @dataprovider _domainSearchProvider
      */
     public function ensureSearchWorks(Client $I, \Codeception\Example $example)

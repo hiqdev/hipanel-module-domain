@@ -43,6 +43,7 @@ class WhoisCest
     }
 
     /**
+     * @group require-epp-connection
      * @dataprovider _domainSearchProvider
      */
     public function ensureSearchWorks(Admin $I, Example $example)
