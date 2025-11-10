@@ -12,6 +12,7 @@ use hipanel\tests\_support\Page\Widget\Input\MultipleSelect2;
 class DomainRegisterCest
 {
     /**
+     * @group require-epp-connection
      * @dataProvider provideDomainData
      */
     public function ensureMainPageWorksCorrcetly(Seller $I, Example $example): void
@@ -52,7 +53,7 @@ class DomainRegisterCest
         return [
             [
                 'name' => 'hiqdev',
-                'zone'        => '.com',
+                'zone' => '.com',
             ],
         ];
     }
