@@ -248,7 +248,7 @@ class DomainGridView extends BoxedGridView
                         'icons' => 'fa-btc',
                         'messages' => [
                             Yii::t('hipanel:domain', 'Domain is premium'),
-                            Yii::t('hipanel:domain', 'Domain is standart'),
+                            Yii::t('hipanel:domain', 'Domain is standard'),
                         ],
                     ]);
                 },

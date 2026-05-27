@@ -43,14 +43,26 @@ class SecdnsGridView extends BoxedGridView
                 'attribute' => 'digest_alg',
                 'format' => 'raw',
                 'value' => function($model): string {
-                    return Html::tag('span', $model->getDigestAlgorithm());
+                    $alg = $model->getDigestAlgorithm();
+                    if (in_array($model->digest_alg, Secdns::deprecatedAlgorithms(), true)) {
+                        return Html::tag('span', Html::encode($alg), ['class' => 'text-danger'])
+                            . ' '
+                            . Html::tag('span', Yii::t('hipanel:domain', 'Deprecated'), ['class' => 'label label-danger']);
+                    }
+                    return Html::tag('span', Html::encode($alg));
                 },
             ],
             'digest_type' => [
                 'attribute' => 'digest_type',
                 'format' => 'raw',
                 'value' => function($model): string {
-                    return Html::tag('span', $model->getDigestType());
+                    $type = $model->getDigestType();
+                    if (in_array($model->digest_type, Secdns::deprecatedDigestTypes(), true)) {
+                        return Html::tag('span', Html::encode($type), ['class' => 'text-danger'])
+                            . ' '
+                            . Html::tag('span', Yii::t('hipanel:domain', 'Deprecated'), ['class' => 'label label-danger']);
+                    }
+                    return Html::tag('span', Html::encode($type));
                 },
             ],
             'digest' => [
@@ -64,7 +76,13 @@ class SecdnsGridView extends BoxedGridView
                 'attribute' => 'key_alg',
                 'format' => 'raw',
                 'value' => function($model): string {
-                    return Html::tag('span', $model->getKeyAlgorithm());
+                    $alg = $model->getKeyAlgorithm();
+                    if (in_array($model->key_alg, Secdns::deprecatedAlgorithms(), true)) {
+                        return Html::tag('span', Html::encode($alg), ['class' => 'text-danger'])
+                            . ' '
+                            . Html::tag('span', Yii::t('hipanel:domain', 'Deprecated'), ['class' => 'label label-danger']);
+                    }
+                    return Html::tag('span', Html::encode($alg));
                 },
             ],
             'pub_key' => [

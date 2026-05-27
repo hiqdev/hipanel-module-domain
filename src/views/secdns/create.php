@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="box-body table-responsive">
                 <?php foreach (Secdns::algorithmTypesWithLabels() as $no => $name): ?>
-                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                    <?php $deprecated = in_array($no, Secdns::deprecatedAlgorithms(), true); ?>
+                    <p>
+                        <b><?= $no ?></b> - <i class="<?= $deprecated ? 'text-muted' : 'text-success' ?>"><?= $name ?></i>
+                        <?php if ($deprecated): ?>
+                            <span class="label label-danger"><?= Yii::t('hipanel:domain', 'Deprecated') ?></span>
+                        <?php endif ?>
+                    </p>
                 <?php endforeach ?>
             </div>
         </div>
@@ -40,7 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="box-body table-responsive">
                 <?php foreach (Secdns::digestTypesWithLabels() as $no => $name): ?>
-                    <p><b><?= $no ?></b> - <i class="text-danger"><?= $name ?></i></p>
+                    <?php $deprecated = in_array($no, Secdns::deprecatedDigestTypes(), true); ?>
+                    <p>
+                        <b><?= $no ?></b> - <i class="<?= $deprecated ? 'text-muted' : 'text-success' ?>"><?= $name ?></i>
+                        <?php if ($deprecated): ?>
+                            <span class="label label-danger"><?= Yii::t('hipanel:domain', 'Deprecated') ?></span>
+                        <?php endif ?>
+                    </p>
                 <?php endforeach ?>
             </div>
         </div>
@@ -122,7 +134,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-sm-5">
                             <?= $form->field($model, "[$i]digest_alg")->widget(AlgorithmCombo::class, [
-                                'data' => Secdns::algorithmTypesWithLabels(),
+                                'data' => $model->isNewRecord
+                                    ? array_diff_key(Secdns::algorithmTypesWithLabels(), array_flip(Secdns::deprecatedAlgorithms()))
+                                    : Secdns::algorithmTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
                                 'multiple' => false,
@@ -140,7 +154,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-sm-5">
                             <?= $form->field($model, "[$i]digest_type")->widget(AlgorithmCombo::class, [
-                                'data' => Secdns::digestTypesWithLabels(),
+                                'data' => $model->isNewRecord
+                                    ? array_diff_key(Secdns::digestTypesWithLabels(), array_flip(Secdns::deprecatedDigestTypes()))
+                                    : Secdns::digestTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
                                 'multiple' => false,
@@ -161,7 +177,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-sm-5">
                             <?= $form->field($model, "[$i]key_alg")->widget(AlgorithmCombo::class, [
-                                'data' => Secdns::algorithmTypesWithLabels(),
+                                'data' => $model->isNewRecord
+                                    ? array_diff_key(Secdns::algorithmTypesWithLabels(), array_flip(Secdns::deprecatedAlgorithms()))
+                                    : Secdns::algorithmTypesWithLabels(),
                                 'hasId' => true,
                                 'formElementSelector' => '.item',
                                 'multiple' => false,
