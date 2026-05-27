@@ -10,40 +10,12 @@
 
 namespace hipanel\modules\domain\models;
 
-use Exception;
-use hipanel\helpers\ArrayHelper;
-use hipanel\helpers\StringHelper;
-use hipanel\validators\DomainValidator;
-use hiqdev\hiart\ResponseErrorException;
+use hipanel\modules\domain\Enum\Algorithm;
+use hipanel\modules\domain\Enum\DigestType;
 use Yii;
 
 class Secdns extends \hipanel\base\Model
 {
-    /**
-     * Cryptographic algorythm
-     */
-    const ALGORITHM_RSA_MD5 = 1;
-    const ALGORITHM_DH = 2;
-    const ALGORITHM_DSA_SHA1 = 3;
-    const ALGORITHM_RSA_SHA1 = 5;
-    const ALGORITHM_DSA_NSEC3_SHA1 = 6;
-    const ALGORITHM_RSASHA1_NSEC3_SHA1 = 7;
-    const ALGORITHM_RSA_SHA256 = 8;
-    const ALGORITHM_RSA_SHA512 = 10;
-    const ALGORITHM_GOST_R = 12;
-    const ALGORITHM_ECDSA_P256_SHA256 = 13;
-    const ALGORITHM_ECDSA_P384_SHA384 = 14;
-    const ALGORITHM_ED25519 = 15;
-    const ALGORITHM_ED448 = 16;
-
-    /**
-     * Digest types
-     */
-    const DIGEST_TYPE_SHA1 = 1;
-    const DIGEST_TYPE_SHA256 = 2;
-    const DIGEST_TYPE_GOST_R = 3;
-    const DIGEST_TYPE_SHA384 = 4;
-
     const DNSKEY_FLAGS = 257;
     const DNSKEY_PROTOCOL = 3;
 
@@ -62,6 +34,22 @@ class Secdns extends \hipanel\base\Model
             [['digest'], 'filter', 'filter' => 'strtoupper'],
             [['digest_alg', 'key_alg'], 'in', 'range' => array_keys(self::algorithmTypesWithLabels())],
             [['digest_type'], 'in', 'range' => array_keys(self::getDigestTypeLength())],
+            [
+                ['digest_alg', 'key_alg'],
+                'in',
+                'range' => self::deprecatedAlgorithms(),
+                'not' => true,
+                'message' => Yii::t('hipanel:domain', 'This DNSSEC algorithm is deprecated per RFC and MUST NOT be used for new records'),
+                'on' => ['create'],
+            ],
+            [
+                ['digest_type'],
+                'in',
+                'range' => self::deprecatedDigestTypes(),
+                'not' => true,
+                'message' => Yii::t('hipanel:domain', 'This digest type is deprecated per RFC and MUST NOT be used for new records'),
+                'on' => ['create'],
+            ],
             [
                 ['key_alg', 'key_flags', 'key_protocol'],
                 'required',
@@ -107,27 +95,38 @@ class Secdns extends \hipanel\base\Model
         ]);
     }
 
-    /**
-     * SecDNS Algorithms with labels
-     *
-     * @return array
-     */
-    public static function algorithmTypesWithLabels() : array
+    public static function deprecatedAlgorithms(): array
+    {
+        return array_map(
+            fn(Algorithm $a) => $a->value,
+            array_filter(Algorithm::cases(), fn(Algorithm $a) => $a->isDeprecated())
+        );
+    }
+
+    public static function deprecatedDigestTypes(): array
+    {
+        return array_map(
+            fn(DigestType $t) => $t->value,
+            array_filter(DigestType::cases(), fn(DigestType $t) => $t->isDeprecated())
+        );
+    }
+
+    public static function algorithmTypesWithLabels(): array
     {
         return [
-            self::ALGORITHM_RSA_MD5 => Yii::t('hipanel:domain', 'RSA/MD5'),
-            self::ALGORITHM_DH => Yii::t('hipanel:domain', 'Diffie-Hellman'),
-            self::ALGORITHM_DSA_SHA1 => Yii::t('hipanel:domain', 'DSA/SHA1'),
-            self::ALGORITHM_RSA_SHA1 => Yii::t('hipanel:domain', 'RSA/SHA1'),
-            self::ALGORITHM_DSA_NSEC3_SHA1 => Yii::t('hipanel:domain', 'DSA-NSEC3-SHA1'),
-            self::ALGORITHM_RSASHA1_NSEC3_SHA1 => Yii::t('hipanel:domain', 'RSASHA1-NSEC3-SHA1'),
-            self::ALGORITHM_RSA_SHA256 => Yii::t('hipanel:domain', 'RSA/SHA-256'),
-            self::ALGORITHM_RSA_SHA512 => Yii::t('hipanel:domain', 'RSA/SHA-512'),
-            self::ALGORITHM_GOST_R => Yii::t('hipanel:domain', 'GOST R 34.10-2001'),
-            self::ALGORITHM_ECDSA_P256_SHA256 => Yii::t('hipanel:domain', 'ECDSA Curve P-256 with SHA-256'),
-            self::ALGORITHM_ECDSA_P384_SHA384 => Yii::t('hipanel:domain', 'ECDSA Curve P-384 with SHA-384'),
-            self::ALGORITHM_ED25519 => Yii::t('hipanel:domain', 'ED25519'),
-            self::ALGORITHM_ED448 => Yii::t('hipanel:domain', 'ED448'),
+            Algorithm::RsaMd5->value          => Yii::t('hipanel:domain', 'RSA/MD5'),
+            Algorithm::Dh->value              => Yii::t('hipanel:domain', 'Diffie-Hellman'),
+            Algorithm::DsaSha1->value         => Yii::t('hipanel:domain', 'DSA/SHA1'),
+            Algorithm::RsaSha1->value         => Yii::t('hipanel:domain', 'RSA/SHA1'),
+            Algorithm::DsaNsec3Sha1->value    => Yii::t('hipanel:domain', 'DSA-NSEC3-SHA1'),
+            Algorithm::Rsasha1Nsec3Sha1->value => Yii::t('hipanel:domain', 'RSASHA1-NSEC3-SHA1'),
+            Algorithm::RsaSha256->value       => Yii::t('hipanel:domain', 'RSA/SHA-256'),
+            Algorithm::RsaSha512->value       => Yii::t('hipanel:domain', 'RSA/SHA-512'),
+            Algorithm::GostR->value           => Yii::t('hipanel:domain', 'GOST R 34.10-2001'),
+            Algorithm::EcdsaP256Sha256->value => Yii::t('hipanel:domain', 'ECDSA Curve P-256 with SHA-256'),
+            Algorithm::EcdsaP384Sha384->value => Yii::t('hipanel:domain', 'ECDSA Curve P-384 with SHA-384'),
+            Algorithm::Ed25519->value         => Yii::t('hipanel:domain', 'ED25519'),
+            Algorithm::Ed448->value           => Yii::t('hipanel:domain', 'ED448'),
         ];
     }
 
@@ -148,18 +147,13 @@ class Secdns extends \hipanel\base\Model
         return (string) ($algs[$this->$attribute] ?? '');
     }
 
-    /**
-     * Digest types with labels
-     *
-     * @return array
-     */
-    public static function digestTypesWithLabels() : array
+    public static function digestTypesWithLabels(): array
     {
         return [
-            self::DIGEST_TYPE_SHA1 => Yii::t('hipanel:domain', 'SHA-1'),
-            self::DIGEST_TYPE_SHA256 => Yii::t('hipanel:domain', 'SHA-256'),
-            self::DIGEST_TYPE_GOST_R => Yii::t('hipanel:domain', 'GOST R 34.10-2001'),
-            self::DIGEST_TYPE_SHA384 => Yii::t('hipanel:domain', 'SHA-384'),
+            DigestType::Sha1->value   => Yii::t('hipanel:domain', 'SHA-1'),
+            DigestType::Sha256->value => Yii::t('hipanel:domain', 'SHA-256'),
+            DigestType::GostR->value  => Yii::t('hipanel:domain', 'GOST R 34.10-2001'),
+            DigestType::Sha384->value => Yii::t('hipanel:domain', 'SHA-384'),
         ];
     }
 
@@ -170,29 +164,24 @@ class Secdns extends \hipanel\base\Model
         return (string) ($types[$this->digest_type] ?? '');
     }
 
-    /**
-     * Length of digest for digest types
-     *
-     * @return array
-     */
-    public static function getDigestTypeLength() : array
+    public static function getDigestTypeLength(): array
     {
         return [
-            self::DIGEST_TYPE_SHA1 => 32,
-            self::DIGEST_TYPE_SHA256 => 64,
-            self::DIGEST_TYPE_GOST_R => 32,
-            self::DIGEST_TYPE_SHA384 => 96,
+            DigestType::Sha1->value   => 32,
+            DigestType::Sha256->value => 64,
+            DigestType::GostR->value  => 32,
+            DigestType::Sha384->value => 96,
         ];
     }
 
-    public static function protocolTypesWithLabels() : array
+    public static function protocolTypesWithLabels(): array
     {
         return [
             self::DNSKEY_PROTOCOL => Yii::t('hipanel:domain', 'DNSSEC'),
         ];
     }
 
-    public static function flagTypesWithLabels() : array
+    public static function flagTypesWithLabels(): array
     {
         return [
             self::DNSKEY_FLAGS => Yii::t('hipanel:domain', 'KSK'),
@@ -201,7 +190,6 @@ class Secdns extends \hipanel\base\Model
 
     public function validateDigestLength($attr, $value)
     {
-
         $length = self::getDigestTypeLength();
 
         if (strlen($this->$attr) === $length[$this->digest_type]) {
@@ -211,5 +199,4 @@ class Secdns extends \hipanel\base\Model
         $this->addError($attr, Yii::t("hipanel:domain", "Length of `$attr` should be {$length[$this->digest_type]}"));
         return false;
     }
-
 }
