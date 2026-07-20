@@ -14,7 +14,6 @@ use hipanel\modules\domain\widgets\NsWidget;
 use hipanel\widgets\ClientSellerLink;
 use hipanel\widgets\Pjax;
 use yii\helpers\Html;
-use Yii;
 
 $model->nameservers = str_replace(',', ', ', $model->nameservers ?? '');
 
