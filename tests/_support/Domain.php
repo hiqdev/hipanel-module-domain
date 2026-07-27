@@ -13,7 +13,7 @@ namespace hipanel\modules\domain\tests\_support;
 class Domain
 {
     /** @var string */
-    private $name = 'bladeroot.net';
+    private $name = 'bladeroot-test.net';
 
     /** @var string */
     private $domainId;

@@ -26,6 +26,7 @@ class Whois extends Authenticated
         $I = $this->tester;
 
         $I->amOnPage(Url::to(['/domain/whois']));
+        $I->waitForPageUpdate();
         $I->performOnContent(ActionSequence::build()
             ->see('WHOIS lookup')
             ->see('WHOIS lookup result')
