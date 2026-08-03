@@ -29,7 +29,11 @@ class ServiceTerminationNoticeBootstrap implements BootstrapInterface
             return;
         }
 
-        if (!in_array($user->identity->seller, Yii::$app->params['service-termination-notice.sellers'], true)) {
+        $sellers = Yii::$app->params['service-termination-notice.sellers'] ?? [];
+        if (!is_array($sellers)) {
+            $sellers = [];
+        }
+        if (!in_array($user->identity->seller, $sellers, true)) {
             return;
         }
 

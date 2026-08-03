@@ -34,14 +34,19 @@ class ServiceTerminationNotice extends Widget
         // read from the raw $_COOKIE superglobal, not Yii::$app->request->cookies —
         // Yii's CookieCollection silently drops unsigned cookies when cookie validation
         // is enabled (the default), which would otherwise make this check always fail.
-        return isset($_COOKIE[self::COOKIE_NAME])
-            && $_COOKIE[self::COOKIE_NAME] == Yii::$app->user->id;
+        return isset($_COOKIE[$this->getCookieName()]);
+    }
+
+    // Scoped per user id so one account dismissing the notice in a shared browser
+    // doesn't overwrite (and hide) another account's separate dismissal state.
+    private function getCookieName(): string
+    {
+        return self::COOKIE_NAME . '-' . Yii::$app->user->id;
     }
 
     private function registerClientScript(): void
     {
-        $cookieName = self::COOKIE_NAME;
-        $userId = Yii::$app->user->id;
+        $cookieName = $this->getCookieName();
 
         $this->view->registerJs(<<<JS
 
@@ -55,7 +60,7 @@ class ServiceTerminationNotice extends Widget
         if (dontShowAgain.is(':checked')) {
             var expires = new Date();
             expires.setFullYear(expires.getFullYear() + 5);
-            document.cookie = '{$cookieName}={$userId}; expires=' + expires.toUTCString() + '; path=/';
+            document.cookie = '{$cookieName}=1; expires=' + expires.toUTCString() + '; path=/';
         }
         modal.modal('hide');
     });
