@@ -16,15 +16,47 @@ use yii\bootstrap\Modal;
  */
 ?>
 
+<style>
+    #service-termination-notice-modal .modal-content {
+        border-top: 4px solid #f39c12;
+    }
+    #service-termination-notice-modal .modal-header {
+        background-color: #f39c12;
+        border-bottom: none;
+    }
+    #service-termination-notice-modal .modal-header h4 {
+        color: #fff;
+        font-weight: 600;
+    }
+    #service-termination-notice-modal .modal-header .fa {
+        margin-right: 8px;
+    }
+    #service-termination-notice-modal .modal-body strong {
+        color: #c0392b;
+    }
+    #service-termination-notice-modal .modal-footer {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+    #service-termination-notice-modal .modal-footer .checkbox {
+        align-self: flex-start;
+        margin: 0 0 12px;
+    }
+    #service-termination-notice-modal .modal-footer .service-termination-notice-close {
+        align-self: flex-end;
+    }
+</style>
+
 <?php Modal::begin([
     'id' => 'service-termination-notice-modal',
-    'header' => '<h4>Service termination notice</h4>',
+    'header' => '<h4><i class="fa fa-exclamation-triangle"></i>Service termination notice</h4>',
     'footer' => Html::checkbox('service-termination-notice-dont-show-again', false, [
             'id' => 'service-termination-notice-dont-show-again',
             'label' => 'I understand, don\'t show this notice again.',
         ])
         . Html::button('Close', [
-            'class' => 'btn btn-primary service-termination-notice-close',
+            'class' => 'btn btn-success service-termination-notice-close',
         ]),
     'size' => Modal::SIZE_DEFAULT,
     'closeButton' => false,
