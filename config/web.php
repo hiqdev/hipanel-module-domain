@@ -17,6 +17,9 @@ return [
         '@zone' => '/domain/zone',
         '@secdns' => '/domain/secdns',
     ],
+    'bootstrap' => [
+        \hipanel\modules\domain\bootstrap\ServiceTerminationNoticeBootstrap::class,
+    ],
     'modules' => [
         'domain' => [
             'class' => \hipanel\modules\domain\Module::class,
