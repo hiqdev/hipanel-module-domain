@@ -70,6 +70,7 @@ class ZonesCest
         $I->needPage(Url::to('@zone/update?id='.$this->zoneId));
         $this->updateValues();
         $page->setupZoneForm($this->testZoneValues);
+        $I->needPage(Url::to('@zone/view?id=' . $this->zoneId));
         $I->see($this->testZoneValues['name'], 'h1');
     }
 
