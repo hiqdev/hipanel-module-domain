@@ -17,6 +17,11 @@ class ServiceTerminationNotice extends Widget
 {
     public const string COOKIE_NAME = 'service-termination-notice-dismissed';
 
+    /**
+     * YYYY-MM-DD the service termination takes effect; null leaves the date out of the text.
+     */
+    public ?string $startDate = null;
+
     public function run(): string
     {
         if ($this->isDismissedByCurrentUser()) {
@@ -25,7 +30,21 @@ class ServiceTerminationNotice extends Widget
 
         $this->registerClientScript();
 
-        return $this->render('service-termination-notice');
+        return $this->render('service-termination-notice', [
+            'startDate' => $this->formatStartDate(),
+        ]);
+    }
+
+    /**
+     * Long date in the application language, e.g. "October 16, 2026" for English.
+     */
+    private function formatStartDate(): ?string
+    {
+        if ($this->startDate === null || $this->startDate === '') {
+            return null;
+        }
+
+        return Yii::$app->formatter->asDate($this->startDate, 'long');
     }
 
     private function isDismissedByCurrentUser(): bool
