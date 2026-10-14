@@ -13,6 +13,7 @@ use yii\bootstrap\Modal;
 
 /**
  * @var \yii\web\View $this
+ * @var string|null $startDate
  */
 ?>
 
@@ -63,8 +64,11 @@ use yii\bootstrap\Modal;
 ]) ?>
 
 <p>
-    Please be advised that effective <strong>August 5, 2026</strong>, the registration of new
-    domains through our service will be suspended.
+    Please be advised that
+    <?php if ($startDate !== null) : ?>
+        effective <strong><?= Html::encode($startDate) ?></strong>,
+    <?php endif ?>
+    the registration of new domains through our service will be suspended.
 </p>
 
 <p>
