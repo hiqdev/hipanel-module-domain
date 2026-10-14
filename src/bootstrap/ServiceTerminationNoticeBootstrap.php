@@ -27,7 +27,8 @@ class ServiceTerminationNoticeBootstrap implements BootstrapInterface
 
     public function bootstrap($app)
     {
-        if (empty(Yii::$app->params['service-termination-notice.enabled'])) {
+        // Accepts string values from env as well: "false" must disable the notice.
+        if (!filter_var(Yii::$app->params['service-termination-notice.enabled'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
             return;
         }
 
