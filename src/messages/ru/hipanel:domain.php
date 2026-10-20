@@ -309,6 +309,8 @@ return [
     'Transfer confirmation email would be send to domain owner after comparing and checking contact data from our partner ARDIS-RU' => 'Письмо для подтверждения трансфера будет отправлено владельцу домена после проверки контактных данных нашими партнерами ARDIS-RU',
     'Transfer domain' => 'Трансфер домена',
     'Transferred out' => 'Странсферен от нас',
+    'Unconfirmed transfer out' => 'Неподтверждённый уход',
+    'The registry reported this domain name as not ours. It is being checked at the registry and in whois, then it will be marked transferred out or returned to its state.' => 'Реестр сообщил, что домен не наш. Он проверяется в реестре и whois, после чего будет отмечен как странсферен от нас или вернётся в прежнее состояние.',
     'Unavailable' => 'Занятые',
     'Unfreeze domain' => 'Разморозить домен',
     'Up to 13 IPv4 or IPv6 addresses separated with comma' => 'До 13 IPv4 или IPv6 адресов, разделенных запятыми',

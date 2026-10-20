@@ -45,6 +45,8 @@ class Domain extends Model
     const STATE_DELETING = 'deleting';
     const STATE_DELETED = 'deleted';
     const STATE_GONE = 'gone';
+    /** The registry once said the domain is not ours; hiapi is verifying it (HQD-577) */
+    const STATE_UNCONFIRMED_GONE = 'unconfirmed_gone';
 
     const DEFAULT_ZONE = 'com';
 
@@ -94,6 +96,7 @@ class Domain extends Model
                 self::STATE_DELETED => Yii::t('hipanel:domain', 'Deleted'),
                 self::STATE_DELETING => Yii::t('hipanel:domain', 'Deleting'),
                 self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'FOA sent'),
+                self::STATE_UNCONFIRMED_GONE => Yii::t('hipanel:domain', 'Unconfirmed transfer out'),
                 self::STATE_GONE => Yii::t('hipanel:domain', 'Transferred out'),
             ]);
         }
@@ -110,6 +113,7 @@ class Domain extends Model
             self::STATE_DELETED => Yii::t('hipanel:domain', 'The domain name has been deleted because it was not renewed during the month after the expiration date. If you want to get your domain back, you should register it again.'),
             self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.'),
             self::STATE_GONE => Yii::t('hipanel:domain', 'Domain name has been transferred to another registrar.'),
+            self::STATE_UNCONFIRMED_GONE => Yii::t('hipanel:domain', 'The registry reported this domain name as not ours. It is being checked at the registry and in whois, then it will be marked transferred out or returned to its state.'),
             self::STATE_DELETING => Yii::t('hipanel:domain', 'The domain name has been expired and you have not renewed it during the month after the expiration date. Domain name will be dropped in 2 months after the expiration date, after that it may be occupied by someone else. Domain names usually got occupied by bots in minutes after dropping, then sold for many times higher price on auctions. If you don\'t want to miss your domain name, contact support to restore it.'),
         ];
 

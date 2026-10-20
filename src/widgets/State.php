@@ -18,7 +18,7 @@ class State extends \hipanel\widgets\Type
     public $defaultValues = [
         'none'   => ['ok'],
         'danger'    => ['blocked', 'expired'],
-        'warning'   => [],
+        'warning'   => ['unconfirmed_gone'],
     ];
     public $field = 'state';
     public $foaField = 'foa_sent_to';
