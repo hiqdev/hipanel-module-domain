@@ -113,7 +113,7 @@ class Domain extends Model
             self::STATE_DELETED => Yii::t('hipanel:domain', 'The domain name has been deleted because it was not renewed during the month after the expiration date. If you want to get your domain back, you should register it again.'),
             self::STATE_PREINCOMING => Yii::t('hipanel:domain', 'Domain name transfer from another registrar is requested. Check your email and confirm transfer, then wait for status change.'),
             self::STATE_GONE => Yii::t('hipanel:domain', 'Domain name has been transferred to another registrar.'),
-            self::STATE_UNCONFIRMED_GONE => Yii::t('hipanel:domain', 'The registry reported this domain name as not ours. It is being checked at the registry and in whois, then it will be marked transferred out or returned to its state.'),
+            self::STATE_UNCONFIRMED_GONE => Yii::t('hipanel:domain', 'The registry reported this domain name as not ours. If it says so again in 12 hours, the domain will be marked transferred out; otherwise it returns to its state.'),
             self::STATE_DELETING => Yii::t('hipanel:domain', 'The domain name has been expired and you have not renewed it during the month after the expiration date. Domain name will be dropped in 2 months after the expiration date, after that it may be occupied by someone else. Domain names usually got occupied by bots in minutes after dropping, then sold for many times higher price on auctions. If you don\'t want to miss your domain name, contact support to restore it.'),
         ];
 
