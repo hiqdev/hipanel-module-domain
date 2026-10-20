@@ -310,7 +310,7 @@ return [
     'Transfer domain' => 'Трансфер домена',
     'Transferred out' => 'Странсферен от нас',
     'Unconfirmed transfer out' => 'Неподтверждённый уход',
-    'The registry reported this domain name as not ours. If the registry says so again in 12 hours and whois names another registrar, the domain will be marked transferred out; otherwise it returns to its state.' => 'Реестр сообщил, что домен не наш. Если через 12 часов реестр подтвердит это снова, а whois покажет другого регистратора, домен будет отмечен как странсферен от нас, иначе вернётся в прежнее состояние.',
+    'The registry reported this domain name as not ours. If the registry says so again in 12 hours and RDAP or whois names another registrar, the domain will be marked transferred out; otherwise it returns to its state.' => 'Реестр сообщил, что домен не наш. Если через 12 часов реестр подтвердит это снова, а RDAP или whois покажет другого регистратора, домен будет отмечен как странсферен от нас, иначе вернётся в прежнее состояние.',
     'Unavailable' => 'Занятые',
     'Unfreeze domain' => 'Разморозить домен',
     'Up to 13 IPv4 or IPv6 addresses separated with comma' => 'До 13 IPv4 или IPv6 адресов, разделенных запятыми',
