@@ -68,8 +68,8 @@ class DomainRenewalProduct extends AbstractDomainProduct implements BatchPurchas
     /** {@inheritdoc} */
     public function getPurchaseModel($options = [])
     {
-        $this->ensureRelatedData(); // To get fresh domain expiration date
-
+        // Expiration date is taken when the domain is added to the cart and must not be refreshed here:
+        // otherwise a repeated checkout (e.g. after a timeout) would pass the API check and renew the domain again
         return parent::getPurchaseModel(array_merge(['expires' => $this->_model->expires], $options));
     }
 
