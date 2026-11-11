@@ -232,7 +232,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])->label(false) ?>
                         </div>
                         <div class="col-sm-5">
-                            <?= $form->field($model, "[$i]pub_key")->textInput(['placeholder' => Yii::t('hipanel:domain', "Public key")])->label(false) ?>
+                            <?= $form->field($model, "[$i]key_pub")->textInput(['placeholder' => Yii::t('hipanel:domain', "Public key")])->label(false) ?>
                         </div>
 
                         <div class="col-sm-2">

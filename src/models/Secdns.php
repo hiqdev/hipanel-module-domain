@@ -26,11 +26,11 @@ class Secdns extends \hipanel\base\Model
     {
         return [
             [['id', 'domain_id', 'client_id', 'seller_id', 'key_tag', 'digest_alg', 'digest_type', 'key_alg', 'key_flags', 'key_protocol'], 'integer'],
-            [['domain', 'client', 'seller', 'digest', 'pub_key'], 'safe'],
+            [['domain', 'client', 'seller', 'digest', 'key_pub'], 'safe'],
             [['id'], 'required', 'on' => ['delete']],
             [['domain_id', 'key_tag'], 'required', 'on' => ['create']],
             [['key_tag'], 'integer', 'min' => 1, 'max' => 65535],
-            [['digest', 'pub_key'], 'filter', 'filter' => 'trim'],
+            [['digest', 'key_pub'], 'filter', 'filter' => 'trim'],
             [['digest'], 'filter', 'filter' => 'strtoupper'],
             [['digest_alg', 'key_alg'], 'in', 'range' => array_keys(self::algorithmTypesWithLabels())],
             [['digest_type'], 'in', 'range' => array_keys(self::getDigestTypeLength())],
@@ -54,10 +54,10 @@ class Secdns extends \hipanel\base\Model
                 ['key_alg', 'key_flags', 'key_protocol'],
                 'required',
                 'when' => function($model): bool {
-                    return !empty($model->pub_key);
+                    return !empty($model->key_pub);
                 },
                 'whenClient' => "function (attribute, value) {
-                    return $(this).parents('.item').find('input[id^=pub_key]').val() == '';
+                    return $(this).parents('.item').find('input[id^=key_pub]').val() == '';
                 }",
                 'on' => ['create']
             ],
@@ -73,7 +73,7 @@ class Secdns extends \hipanel\base\Model
                 'on' => ['create']
             ],
             [['digest'], 'match', 'pattern' => '/[^0-9A-Z][0-9A-Z]+/ui', 'not' => true],
-            [['pub_key'], 'match', 'pattern' => '/[^\s][\s]+/ui', 'not' => true],
+            [['key_pub'], 'match', 'pattern' => '/[^\s][\s]+/ui', 'not' => true],
             [['digest'], 'string', 'on' => 'create'],
             [['digest'], 'validateDigestLength', 'on' => ['create']],
         ];
@@ -91,7 +91,7 @@ class Secdns extends \hipanel\base\Model
             'key_alg' => Yii::t('hipanel:domain', 'Key algorithm'),
             'key_flags' => Yii::t('hipanel:domain', 'Key flag'),
             'key_protocol' => Yii::t('hipanel:domain', 'Key protocol'),
-            'pub_key' => Yii::t('hipanel:domain', 'Public key'),
+            'key_pub' => Yii::t('hipanel:domain', 'Public key'),
         ]);
     }
 
