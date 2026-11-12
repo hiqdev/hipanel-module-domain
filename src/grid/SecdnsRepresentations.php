@@ -30,7 +30,7 @@ class SecdnsRepresentations extends RepresentationCollection
                     'digest_type',
                     'digest',
                     'key_alg',
-                    'pub_key',
+                    'key_pub',
                 ],
             ],
         ]);
