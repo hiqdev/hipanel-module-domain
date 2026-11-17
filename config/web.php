@@ -30,7 +30,12 @@ return [
                 'as domainRelatedProducts' => [
                     'class' => \hipanel\modules\domain\cart\DomainRelatedProductsBehavior::class,
                 ]
-            ]
+            ],
+            // Agreements shown in the cart while it holds a domain registration, renewal or transfer
+            'agreements' => array_map(static fn ($label) => [
+                'label' => $label,
+                'positions' => [\hipanel\modules\domain\cart\AbstractDomainProduct::class],
+            ], $params['module.domain.cart.agreements'] ?? []),
         ]
     ],
     'components' => [
